@@ -1,0 +1,195 @@
+<div class="modal-header">
+  <span *ngIf="!evento" class="modal-title pl-0"> Inclusão de Evento</span>
+  <span *ngIf="evento" class="modal-title pl-0">Alteração de Evento</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+<form [formGroup]="formGroup" class="modal-body pt-0">
+  <div class="row">
+    <div [class]="tipoProcesso.id != 33 ? 'col-md-10' : 'col-md-12'">
+      <label class="col-form-label-sm" for="descricao-input"> <b>Descrição:</b> </label>
+      <input
+        type="text"
+        id="nome-input"
+        #input [value]="input.value.toUpperCase()"
+        [formControl]="descricaoFormControl" class="form-control"
+        [disableTooltip]="descricaoFormControl.valid || descricaoFormControl.untouched"
+        [ngbTooltip]="descricaoError"
+        maxlength="50" />
+      <ng-template #descricaoError>
+        <span *ngIf="descricaoFormControl.hasError('required')"> Campo obrigatório </span>
+        <span *ngIf="descricaoFormControl.hasError('maxlength')"> O Limite é de 50 caracteres </span>
+      </ng-template>
+    </div>
+    <div class="check-ativo col-md-2">
+      <input id="ativo" type="checkbox" [formControl]="ativoFormControl">
+      <label for="ativo" class="pl-1">Ativo</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row pt-3">
+        <div class="col-md-12">
+          <input id="decisao" type="checkbox" disabled="true" [formControl]="possuiDecisaoFormControl" class="mb-2">
+          <label for="decisao" class="m-0 p-0 pl-1 mb-1">Possui Decisão</label>
+        </div>
+      </div>
+
+      <div class="row pt-3" *ngIf="tipoProcesso.id === 2">
+        <div class="col-md-12">
+          <input id="reverCalculo" type="checkbox" [formControl]="reverCalculoFormControl" class="mb-2">
+          <label for="reverCalculo" class="m-0 p-0 pl-1 mb-1">Rever Cálculo</label>
+        </div>
+      </div>
+
+      <div class="row pt-3" *ngIf="tipoProcesso.id === 2">
+        <div class="col-md-12">
+          <input class="mb-2"
+            id="finalizacaoContabil"
+            type="checkbox"
+            [formControl]="finalizacaoContabilFormControl">
+
+          <label for="finalizacaoContabil" class="m-0 p-0 pl-1 mb-1">Finalização Contábil</label>
+        </div>
+      </div>
+
+
+      <div class="row pt-2" *ngIf="tipoProcesso.id === 3">
+        <div class="col-md-12">
+          <input
+            id="preencheMulta"
+            type="checkbox"
+            [formControl]="preencheMultaFormControl"
+            class="mb-2">
+          <label for="preencheMulta" class="m-0 p-0 pl-1 mb-1">Preenche Multa</label>
+        </div>
+      </div>
+
+      <div class="row pt-2" *ngIf="tipoProcesso.id !== 6 && tipoProcesso.id !== 2">
+        <div class="col-md-12" >
+          <input id="cumprimentoDePrazo" type="checkbox" [formControl]="cumprimentodePrazoFormControl" class="mb-2">
+          <label for="cumprimentoDePrazo" class="m-0 p-0 pl-1 mb-1">Cumprimento de Prazo</label>
+        </div>
+      </div>
+
+      <div class="row pt-2" *ngIf="tipoProcesso.id == 4  || tipoProcesso.id == 5">
+        <div class="col-md-12" >
+          <input id="ocultaEventoWeb" type="checkbox" [formControl]="atualizaEscritorioFormControl" class="mb-2">
+          <label for="ocultaEventoWeb" class="m-0 p-0 pl-1 mb-1">Ocultar Evento Web</label>
+        </div>
+      </div>
+
+
+      <div class="row pt-2" *ngIf="tipoProcesso.id === 1 || tipoProcesso.id === 9">
+        <div class="col-md-12">
+          <input id="enviaEmail" type="checkbox" [formControl]="notificarViaEmailFormControl" class="mb-2">
+          <label for="enviaEmail" class="m-0 p-0 pl-1 mb-1">Notificar via E-mail</label>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-12" *ngIf="tipoProcesso.id === 1">
+      <div class="row pt-2"  >
+        <div class="col-md-12">
+          <label class="col-form-label-sm font-weight-bold" for="depara">
+            Evento Correspondente Cível Estratégico (DExPARA Migração de Processo)
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="depara"
+            [items]="eventosEstrategico"
+            bindLabel="nome"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            clearAllText="Limpar"
+            [formControl]="comboEstrategicoFormControl"
+            placeholder="Selecione uma opção"
+            [virtualScroll]="true"
+          >
+          </ng-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12" *ngIf="tipoProcesso.id === 9">
+      <div class="row pt-2"  >
+        <div class="col-md-12">
+          <label class="col-form-label-sm font-weight-bold" for="depara">
+            Evento Correspondente Cível Consumidor (DExPARA Migração de Processo)
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="depara"
+            [items]="eventosConsumidor"
+            bindLabel="nome"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            clearAllText="Limpar"
+            [formControl]="comboConsumidorFormControl"
+            placeholder="Selecione uma opção"
+            [virtualScroll]="true"
+          >
+          </ng-select>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-6" *ngIf="tipoProcesso.id === 3">
+      <div class="row instancia">
+        <div class="col-md-12">
+          <label class="col-form-label-sm" for="instancia"> <b>Instância:</b> </label>
+          <ng-select
+          [ngStyle]="{'fontSize': '10px'}"
+          [items]="instancia"
+          bindLabel="descricao"
+          bindValue="id"
+          [formControl] = "instanciaIdFormControl"
+          appearance="outline"
+          notFoundText="Nenhuma opção disponível"
+          [searchable]="false"
+          [clearable]="false"></ng-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6" *ngIf="tipoProcesso.id === 2">
+
+      <div class="row pt-3">
+        <div class="col-md-12">
+          <input id="cumprimentoDePrazo" type="checkbox" [formControl]="cumprimentodePrazoFormControl" class="mb-2">
+          <label for="cumprimentoDePrazo" class="m-0 p-0 pl-1 mb-1">Cumprimento de Prazo</label>
+        </div>
+      </div>
+
+      <div class="row pt-3">
+        <div class="col-md-12">
+          <input id="alterarExcluir" type="checkbox" disabled="true" [formControl]="alterarExcluirFormControl" class="mb-2">
+          <label for="alterarExcluir" class="m-0 p-0 pl-1 mb-1">Alterar Excluir</label>
+        </div>
+      </div>
+
+      <div class="row pt-3">
+        <div class="col-md-12">
+          <input class="mb-2" id="finalizacaoEscritorio" type="checkbox" [formControl]="finalizacaoEscritorioFormControl">
+          <label for="FinalizacaoEscritorio" class="m-0 p-0 pl-1 mb-1">Finalização Escritório</label>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</form>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>

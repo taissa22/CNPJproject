@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <span class="modal-title pl-0" *ngIf="municipio">Alterar Municipio</span>
+    <span class="modal-title pl-0" *ngIf="!municipio">Incluir Municipio</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row mb-3">
+        <div class="col">
+            <label class="col-form-label-sm pb-0 mb-1">
+                <b>Nome:</b>
+            </label>
+            <input type="text" [ngbTooltip]="nomeError" [disableTooltip]="desabilitaTooltip(nomeFormControl)"
+                [formControl]="nomeFormControl" style="text-transform:uppercase;" maxlength="50" class="form-control" />
+            <ng-template #nomeError>
+                <span *ngIf="nomeFormControl.hasError('required')">
+                    Campo obrigatório
+                </span>
+                <span *ngIf="nomeFormControl.hasError('maxlength')">
+                    O Limite é de 50 caracteres
+                </span>
+            </ng-template>
+        </div>
+    </div>
+</form>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()">Confirmar</button>
+</div>

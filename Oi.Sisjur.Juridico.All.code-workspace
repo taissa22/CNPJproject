@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "Oi.Sisjur.Juridico.Frontend",
+			"path": "Frontend"
+		},
+		{
+			"name": "Oi.Sisjur.Juridico.Backend",
+			"path": "Backend"
+		}
+	]
+}

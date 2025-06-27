@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="row tituloTab pt-3 d-flex ">
+    <div class="col-auto  pt-1 pr-2 pl-2 pb-0  " [ngClass]="ifGarantia? 'ativo ' : '' "
+      (click)="verificarAbaAberta('garantia')">
+      Garantias
+
+    </div>
+    <div class="col-auto pt-1 pr-2 pl-2 pb-0 " [ngClass]="ifDespesa? 'ativo ' : '' "
+      (click)="verificarAbaAberta('despesa')">
+      Despesas
+    </div>
+    <div class="col-auto   pt-1 pr-2 pl-2 pb-0 " [ngClass]="ifPagamento? 'ativo' : '' "
+      (click)="verificarAbaAberta('pagamentos')">
+      Pagamentos
+    </div>
+    <div class="col-auto estorno p-0 align-self-end" >
+      <button (click)="onClickEstornar()"
+              class="btn btn-primary"
+              [disabled]="!(isDespesaSelecionada || isGarantiaSelecionada || isPagamentoSelecionado)">
+        <i class="fas fa-trash" style="font-size: 14px;"></i>
+        Estornar Selecionado
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="total">
+  <div *ngIf="ifGarantia" class=" conteudoTab" [ngClass]="(totalQtdGarantias | async) > 0 ? '' : 'conteudoTabVazio'">
+    <estorno-garantias-tab  (garantiaSelecionada)="setGarantiaSelecionado($event)"></estorno-garantias-tab>
+  </div>
+
+  <div *ngIf="ifDespesa" class=" conteudoTab" [ngClass]="(totalQtdDespesas | async)> 0 ? '' : 'conteudoTabVazio'">
+    <estorno-despesa-tab  (despesaSelecionada)="setDespesaSelecionado($event)"></estorno-despesa-tab>
+  </div>
+  <div *ngIf="ifPagamento" class=" conteudoTab" [ngClass]="(totalQtdPagamentos | async)> 0 ? '': 'conteudoTabVazio'">
+    <estorno-pagamentos-tab  (pagamentoSelecionado)="setPagamentoSelecionado($event)"></estorno-pagamentos-tab>
+  </div>
+  <div class="d-flex">
+    <label class="pr-2">
+      Total de Lançamentos: {{ (ifGarantia && (totalQtdGarantias | async))
+         || (ifPagamento && (totalQtdPagamentos | async))
+         || (ifDespesa && (totalQtdDespesas | async)) || 0 }}
+    </label>
+
+    <label class="pad">
+      Total: {{ (ifGarantia && totalGarantias) || (ifPagamento && totalPagamentos) || (ifDespesa && totalDespesa) || 0 | currency: "BRL":'':"1.2-2":"pt" }}
+    </label>
+  </div>
+
+</div>

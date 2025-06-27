@@ -1,0 +1,44 @@
+<app-manutencao-generica tituloLista="% ATM" titulo="% ATM"
+  [exibirAdicionar]="tipoProcesso != undefined" [breadcrump]="breadcrumb"
+  [(colunas)]="colunas" [registros]="obterResultados" [totalDeRegistros]="totalDeRegistros" [(pagina)]="pagina"
+  [(ordenacaoColuna)]="ordenacaoColuna" [(ordenacaoDirecao)]="ordenacaoDirecao"
+  [(totalDeRegistrosPorPagina)]="totalDeRegistrosPorPagina" (aoClicarNovoRegistro)="abrirModalUpload()"
+  (aoCarregarRegistros)="obter()" (aoClicarExportar)="exportar()">
+
+  <div class="row">
+    <div class="col-4 pr-1">
+      <label class="col-form-label-sm" for="tipos-processo">
+        <b>Tipos de Processo:</b>
+      </label>
+      <ng-select appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="false" [clearable]="false"
+        [placeholder]="'Selecione'" (change)="alteraTipoProcesso($event)">
+        <ng-option *ngFor="let tipo of tiposProcesso" [value]="tipo">{{ tipo.descricao }}</ng-option>
+      </ng-select>
+    </div>
+
+    <div class="col-2 pr-1" [hidden]="tipoProcesso == undefined">
+      <label class="col-form-label-sm" for="tipos-processo">
+        <b>Vigência:</b>
+      </label>
+      <ng-select [formControl]="dataVigenciaFormControl" appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="false" [clearable]="false"
+        [placeholder]="'Selecione'" (change)="obter()">
+        <ng-option *ngFor="let dataVigencia of datasVigencia" [value]="dataVigencia">{{ dataVigencia | date:'dd/MM/yyyy' }}</ng-option>
+      </ng-select>
+    </div>
+  </div>
+
+  <ng-container *ngIf="tipoProcesso != undefined">
+
+    <div *ngIf="registros.length < 1">
+
+      <br>
+      <br>
+      <br>
+
+      <label class="d-flex justify-content-center">
+        Nenhum resultado foi encontrado na busca
+      </label>
+    </div>
+
+  </ng-container>
+</app-manutencao-generica>

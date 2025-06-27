@@ -1,0 +1,73 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Esfera" 
+  [breadcrump]="breadcrumb" >
+
+  <div class="mt-4 row" >
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" >Lista de Esferas</b>
+    </div>
+
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <div>
+
+    <sisjur-table (sort)="buscarTabela()"> 
+      <sisjur-table-header>
+        <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="Id" width="7"> Código </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="Nome" width="35"> Nome</sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="CorrigePrincipal" > Corrige Principal</sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="CorrigeMultas" > Corrige Multas</sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="CorrigeJuros" > Corrige Juros</sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+      </sisjur-table-header>
+
+        <ng-container *ngFor="let esfera of dataSource; let i = index">
+        <sisjur-table-row  >
+          <sisjur-table-row-cell>
+            <button type="button" class="btn pt-2 " (click)="abreIndiceCorrecaoEsferas(i)">
+                <i class="fas fa-plus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada != i"></i>
+                <i class="fas fa-minus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada == i"></i>
+            </button>
+        </sisjur-table-row-cell>
+          <sisjur-table-row-cell> {{esfera.id}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell> {{esfera.nome}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{esfera.corrigePrincipal ?  "Sim" : "Não" }} </sisjur-table-row-cell>        
+          <sisjur-table-row-cell>{{esfera.corrigeMultas ?  "Sim" : "Não"}} </sisjur-table-row-cell>        
+          <sisjur-table-row-cell>{{esfera.corrigeJuros ?  "Sim" : "Não"}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn"  (click)="alterar(esfera)">
+                <i class="fas fa-edit fa-sm btn-acao"></i>
+            </button>
+        </sisjur-table-row-cell>
+        <sisjur-table-row-cell >
+            <button type="button" class="btn" (click)="excluir(esfera)">
+                <i class="fas fa-trash fa-sm btn-acao"></i>
+            </button>
+        </sisjur-table-row-cell>
+          
+ 
+
+        </sisjur-table-row>
+
+        <sisjur-table-row *ngIf="linhaSelecionada == i" [heightAuto]="true" background="#fff">
+          <sisjur-table-row-cell width="100">
+              <div style="position: relative;" class="esfera" style="width: 100%;">
+                  <indice-correcao-esfera [esfera]="esfera"></indice-correcao-esfera>
+              </div>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+
+      </ng-container>
+    </sisjur-table>
+    <br>
+    <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>    
+</div>
+
+</app-manutencao-generica>

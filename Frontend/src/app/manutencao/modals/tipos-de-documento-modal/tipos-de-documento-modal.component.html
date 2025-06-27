@@ -1,0 +1,153 @@
+<style>
+    .modal-header button {
+      color: gray;
+    }
+
+    .modal-title {
+      margin: auto;
+    }
+
+    .btn-icon {
+      font-size: 18px;
+    }
+  </style>
+
+  <div class="modal-header">
+    <span class="modal-title pl-0">{{titulo}}</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+
+    <div class="d-flex mb-3">
+        <div class="col-9 pr-0 pl-0">
+            <label class="col-form-label-sm" for="descricao-input">
+                <b>Descrição:</b>
+            </label>
+            <input type="text" id="descricao-input"
+              [formControl]="descricaoFormControl"
+              class="form-control descricao"
+              [disableTooltip]="desabilitaTooltip(descricaoFormControl)"
+              [ngbTooltip]="descricaoError"
+              placeholder="Insira a descrição"
+              maxlength="50" />
+            <ng-template #descricaoError>
+                <span *ngIf="descricaoFormControl.hasError('required')">
+                Campo obrigatório
+                </span>
+                <span *ngIf="descricaoFormControl.hasError('maxlength')">
+                O Limite é de 50 caracteres
+                </span>
+            </ng-template>
+
+        </div>
+
+        <div class="d-flex align-items-end pb-1 col-2">
+            <input
+              id="ehAtivo-input"
+              type="checkbox"
+              class="mr-2 mb-2"
+              [formControl]="ativoFormControl"
+            >
+            <label class="fonte-padrao" for="ehAtivo-input">Ativo</label>
+
+        </div>
+    </div>
+
+    <div class="d-flex align-items-end pl-0 pr-0 pb-1 col-12" *ngIf="codTipoDeProcesso == 1 || codTipoDeProcesso == 7 || codTipoDeProcesso == 17">
+        <input id="cadastraProcesso-input" type="checkbox" class="mr-2 mb-2" [formControl]="cadastraProcessoFormControl" >
+        <label class="fonte-padrao" for="cadastraProcesso-input"> Cadastra Processo</label>
+    </div>
+
+    <div class="d-flex align-items-end pl-0 pr-0 pb-1 col-12" *ngIf="codTipoDeProcesso == 1 || codTipoDeProcesso == 7">
+        <input id="prioritarioFilaCadastro-input" type="checkbox" class="mr-2 mb-2" [formControl]="prioritarioFilaCadastroProcessoFormControl">
+        <label class="fonte-padrao" for="prioritarioFilaCadastro-input"> Prioritário na Fila de Cadastro de Processo</label>
+    </div>
+
+    <div class="d-flex align-items-end pl-0 pr-0 pb-1 col-12" *ngIf="codTipoDeProcesso == 7">
+        <input id="requerDataAudiencia-input" type="checkbox" class="mr-2 mb-2" [formControl]="requerDataAudienciaFormControl">
+        <label class="fonte-padrao" for="requerDataAudiencia-input"> Requer Data de Audiência / Prazo</label>
+    </div>
+
+    <div class="d-flex align-items-end pl-0 pr-0 pb-1 col-12" *ngIf="codTipoDeProcesso == 17">
+        <input id="utilizadoEmProtocolo-input" type="checkbox" class="mr-2 mb-2" [formControl]="utilizadoEmProtocoloFormControl">
+        <label class="fonte-padrao" for="utilizadoEmProtocolo-input"> Utilizado em Protocolo</label>
+    </div>
+    <div class="d-flex align-items-end pl-0 pr-0 pb-1 col-12" *ngIf="codTipoDeProcesso == 1 || codTipoDeProcesso == 7 || codTipoDeProcesso == 17">
+        <input id="indDocumentoApuracao-input" (change)="controlaDisabledEnviarAppPrepostoCheck()"
+        type="checkbox" class="mr-2 mb-2" [formControl]="documentoApuracaoFormControl">
+        <label class="fonte-padrao" for="indDocumentoApuracao-input">Documento de Apuração?</label>
+    </div>
+    <div class="d-flex align-items-end pl-0 pr-0 pb-1 col-12" *ngIf="codTipoDeProcesso == 1 || codTipoDeProcesso == 7 || codTipoDeProcesso == 17">
+        <input id="indEnviarAppPreposto-input" type="checkbox" class="mr-2 mb-2" [formControl]="enviarAppPrepostoFormControl">
+        <label class="fonte-padrao" for="indEnviarAppPreposto-input">Enviar App Preposto?</label>
+    </div>
+
+    <div *ngIf="codTipoDeProcesso == 14 || codTipoDeProcesso == 15">
+      <label class="col-form-label-sm" for="tipoDePrazo">
+        <b>Tipo de Prazo:</b>
+      </label>
+      <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        id="tipoDePrazo"
+        [items]="tiposDePrazo"
+        [formControl]="tipoDePrazoFormControl"
+        bindLabel="descricao"
+        bindValue="id"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        [placeholder]="'Selecione uma opção'"></ng-select>
+    </div>
+
+    <div *ngIf="codTipoDeProcesso == 1">
+      <label class="col-form-label-sm" for="tipoDePrazo">
+        <b>Tipo de Documento Correspondente Cível Estratégico (DExPARA Migração de Processo)</b>
+      </label>
+      <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        id="tipoDocumento"
+        [items]="comboDeparaEstrategico"
+        [formControl]="comboDeparaEstrategicoFormControl"
+        bindLabel="nome"
+        bindValue="idEstrategico"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        clearAllText="Limpar"
+        [placeholder]="'Selecione uma opção'"></ng-select>
+    </div>
+
+
+	<div *ngIf="codTipoDeProcesso == 9">
+		<label class="col-form-label-sm" for="tipoDePrazo">
+		<b>Tipo de Documento Correspondente Cível Consumidor (DE x PARA Migração de Processo)</b>
+		</label>
+		<ng-select
+		[ngStyle]="{'fontSize': '11px'}"
+		id="tipoDocumento"
+		[items]="comboDeparaConsumidor"
+		[formControl]="comboDeparaConsumidorFormControl"
+		bindLabel="nome"
+		bindValue="idConsumidor"
+		appearance="outline"
+		notFoundText="Nenhuma opção disponível"
+		[searchable]="true"
+		[clearable]="true"
+		clearAllText="Limpar"
+		[placeholder]="'Selecione uma opção'"></ng-select>
+	</div>
+
+
+
+  </form>
+
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+  </div>

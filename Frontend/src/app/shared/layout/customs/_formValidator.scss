@@ -1,0 +1,67 @@
+.form-control {
+  &:focus {
+    box-shadow: inset 0px 0px 2px 0.5px rgba(0, 0, 0, 0.69);
+  }
+
+  &.ng-invalid {
+    &.ng-touched {
+      border: 1px solid red;
+      outline: none;
+      box-shadow: 0 0 3px red;
+      box-shadow: inset 0px 0px 2px 0.5px rgba(255, 0, 0, 0.69);
+    }
+  }
+}
+
+ngb-timepicker {
+  &.ng-invalid {
+    &.ng-touched {
+      .form-control {
+        border: 1px solid red;
+        outline: none;
+        box-shadow: 0 0 3px red;
+        box-shadow: inset 0px 0px 2px 0.5px rgba(255, 0, 0, 0.69);
+      }
+    }
+  }
+}
+
+ngx-select.ng-invalid.ng-touched {
+  .form-control {
+    border: 1px solid red;
+    outline: none;
+    box-shadow: 0 0 3px red;
+    box-shadow: inset 0px 0px 2px 0.5px rgba(255, 0, 0, 0.69);
+  }
+}
+
+.ng-select.ng-invalid.ng-touched {
+  .ng-select-container {
+    border: 1px solid red !important;
+    outline: none !important;
+    box-shadow: 0 0 3px red !important;
+    box-shadow: inset 0px 0px 2px 0.5px rgba(255, 0, 0, 0.69) !important;
+  }
+}
+
+.ng-select,
+.form-control,
+ngb-timepicker,
+ngx-select {
+  &.ng-invalid ~ ngb-tooltip-window {
+    &.bs-tooltip-top {
+      top: 9px !important;
+    }
+
+    .arrow {
+      display: none;
+    }
+    .tooltip-inner {
+      color: red;
+      font-size: 11px;
+      border: 1px solid red;
+      border-radius: 3px;
+      padding: 3px 5px;
+    }
+  }
+}

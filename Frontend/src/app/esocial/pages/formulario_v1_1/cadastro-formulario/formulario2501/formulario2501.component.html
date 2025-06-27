@@ -1,0 +1,296 @@
+<app-container-pagina>
+  <div id="page-grid" #pageGrid>
+
+    <div class="header">
+      <div class="roxo-padrao cabecalho">
+        <h4 class="mb-0">Preenchimento do Formulário 2501 para o eSocial</h4>
+        <div (click)="voltar(true)">
+          <i class="fa fa-angle-double-left"></i> Voltar
+        </div>
+      </div>
+
+      <div class="card-head mt-3" *ngIf="pesquisaProcesso">
+        <div class="d-flex">
+          <b>{{pesquisaProcesso.nomeParte}} {{parseString(pesquisaProcesso.cpfParte) | cpfCnpj }}</b>
+          <div class="ml-auto mr-2 status-finalizacoes" id="status-finalizacoes">
+              <div id="status-finalizado-contador" class="status-finalizacoes">
+                <span>Contador: </span>
+                <ng-template *ngTemplateOutlet="iconeCheckContador"></ng-template>
+              </div>
+              <span class="mr-1 ml-1">|</span>
+              <div id="status-finalizado-escritorio" class="status-finalizacoes">
+                <span>Escritório: </span>
+                <ng-template *ngTemplateOutlet="iconeCheckEscritorio"></ng-template>
+              </div>
+            </div>
+          <div class="tag-status p-1 pl-2 pr-2"
+            [ngStyle]="{'color': pesquisaProcesso.statusFormulario == 0 ? 'black' : 'white', 'background-color':defineCorTagStatusFormulario(pesquisaProcesso.statusFormulario),
+          'border-color': pesquisaProcesso.statusFormulario == 0 ? 'black' : defineCorTagStatusFormulario(pesquisaProcesso.statusFormulario)}" style="border-radius: 5px;">
+            {{obtemDescricaoStatus(pesquisaProcesso.statusFormulario)}}
+          </div>
+        </div>
+        <div class="d-flex">
+          <ng-template [ngTemplateOutlet]="cabecalhoProcesso"></ng-template>
+          <ng-template [ngTemplateOutlet]="textoLog"></ng-template>
+        </div>
+      </div>
+      <div class="btn-head mt-3 mb-3" style="display: flex; justify-content: flex-end; align-items: center;">
+        <p *ngIf="temPermissaoLimparFormulario && !modoConsulta" class="mb-0 limparFormulario roxo-padrao mr-auto"
+          (click)="limparFormulario2501()">Limpar Formulário</p>
+        <ng-template *ngTemplateOutlet="botoesSalvarEFinalizar"></ng-template>
+      </div>
+    </div>
+
+    <div class="grid-cadastro mt-4" #gridCadastro id="grid-cadastro">
+      <div class="roxo-padrao pt-2 pb-2"
+        style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between;">
+        <div></div>
+        <div class="header-numero-versao">
+          <h4 class="header-f2501">{{'FORMULÁRIO 2501'+ (ideeventoIndretifFormControl.value == 2 ? ' - RETIFICAÇÃO' : '') }}</h4>
+          <h6 class="versao-esocial">{{'ID '+ idF2501+' (versão 1.1)'}}</h6>
+        </div>        
+        <button type="button" class="btn btn-link btn-download-manual p-0" [ngbTooltip]="downloadManual"
+          tooltipClass="tooltip-download-manual" triggers="click" [autoClose]="'outside'"> <i
+            class="fas fa-info-circle ml-auto roxo-padrao" style="font-size:16px;"></i> </button>
+        <ng-template #downloadManual>
+          <a [href]="getPdfUrl()" download class="font-purple btn-link btn-text-cursor">
+            <span class="roxo-padrao" style="font-size:13px;"><i class="fas fa-download pr-1"></i>Manual de
+              preenchimento</span>
+          </a>
+        </ng-template>
+      </div>
+
+      <form [formGroup]="formulario2501" *ngIf="formulario2501" class="quadros pb-5">
+        <!-- QUADRO A -->
+        <div class="quadro-a" style="border: 1px solid #ccc;">
+          <div>
+            <h4 class="roxo-padrao title mb-0" style="width: 150px;">Identificação (A)</h4>
+          </div>
+          <div class="grid-quadro">
+            <div style="width:47%">
+              <div class="d-flex mt-2" style="flex-direction: column">
+                <label for="finalidadeRegistro"><b>Finalidade do Registro:</b></label>
+                <ng-select style="width: 30rem" id="finalidadeRegistro" [tabIndex]="1" [disabled]="true"
+                  [items]="finalidadeRegistroList" [formControl]="ideeventoIndretifFormControl"
+                  class="disabled form-control form-control-select" bindLabel="descricao" bindValue="id"></ng-select>
+              </div>
+
+              <div class="d-flex mt-2" style="flex-direction: column">
+                <label for="tipoInscricao" class="tooltip-insc"><b>Tipo e Número de Inscrição do Empregador ou Contribuinte:</b><i title="{{tooltipInsc}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+                <div style="display: flex;">
+                  <div style="width: 8rem; display: flex; align-items: center;">
+                    <ng-select style="width: 8rem" id="tipoInscricao" [tabIndex]="1" [disabled]="true"
+                      [items]="tipoInscricaoList" [formControl]="ideempregadorTpinscFormControl"
+                      class="disabled form-control form-control-select" bindLabel="descricao" bindValue="id"></ng-select>
+                  </div>
+                  <div style="width: 21rem; display: flex; align-items: center; margin-left: 1rem;">
+                    <input style="width: 21rem" class="form-control" type="text" maxlength="20" id="numero" tabindex="3" (change)="ajustaValidadoresIdeResp()"
+                    [textMask]="{ mask: mascaraCnpj }" [formControl]="ideempregadorNrinscFormControl"  [disableTooltip]="desabilitaTooltip(ideempregadorNrinscFormControl)"
+                    [ngbTooltip]="validacaoNroInscEmpregador" [disabled]="!temPermissaoBlocoAeB || modoConsulta || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+                    [class.disabled]="!temPermissaoBlocoAeB || modoConsulta || (finalizadoEscritorio && !temPermissaoEnviarEsocial)">
+                  </div>
+                </div>
+                <ng-template #validacaoNroInscEmpregador>
+                  <span *ngIf="
+                      ideempregadorNrinscFormControl.invalid &&
+                      ideempregadorNrinscFormControl.hasError('required')
+                    ">
+                    Campo obrigatório.
+                  </span>
+                  <span *ngIf="
+                      ideempregadorNrinscFormControl.invalid &&
+                      ideempregadorNrinscFormControl.hasError('cnpjNotValid')
+                    ">
+                    CNPJ inválido.
+                  </span>
+                </ng-template>
+              </div>
+
+              <div class="d-flex mt-2" style="flex-direction: column">
+                  <label for="obsProcessoDemanda"><b>Observação do Pagamento:</b></label>
+                <textarea class="form-control" id="obsProcessoDemanda" #obs (keyup)="calculaTamanho(obs.value)" maxlength="999"
+                  rows="4" cols="50" tabindex="4" [formControl]="ideprocObsFormControl" [disabled]="!temPermissaoBlocoAeB || modoConsulta || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" [class.disabled]="!temPermissaoBlocoAeB || modoConsulta || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"></textarea>
+                <span class="ml-auto">{{totalCaracterObs}}/999</span>
+              </div>
+            </div>
+            <div style="width:47%">
+
+              <div class="d-flex mt-2" style="flex-direction: column">
+                <label for="numero"><b>Número do Processo/Demanda:</b></label>
+                <input class="form-control" style="width: 30rem" type="text" id="numero" tabindex="3"
+                [formControl]="ideprocNrproctrabFormControl"
+                [disableTooltip]="desabilitaTooltip(ideprocNrproctrabFormControl)"
+                [ngbTooltip]="validacaoNroProcesso"
+                (change)="ajustaNumeroProcesso($event)"
+                [disabled]="!temPermissaoBlocoAeB || modoConsulta || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" [class.disabled]="!temPermissaoBlocoAeB || modoConsulta || (finalizadoEscritorio && !temPermissaoEnviarEsocial)">
+              </div>
+              <ng-template #validacaoNroProcesso>
+                <span *ngIf="
+                ideprocNrproctrabFormControl.invalid &&
+                ideprocNrproctrabFormControl.hasError('maxlength')
+                                                                                                          ">
+                  O número do processo não pode conter mais que 20 algarismos.
+                </span>
+                <span *ngIf="
+                ideprocNrproctrabFormControl.invalid &&
+                ideprocNrproctrabFormControl.hasError('required')
+                                                                          ">
+                  Campo obrigatório
+                </span>
+                <span *ngIf="
+                ideprocNrproctrabFormControl.invalid &&
+                ideprocNrproctrabFormControl.hasError('minlength')
+                                                                          ">
+                  O número do processo deve conter 20 algarismos.
+                </span>
+              </ng-template>
+
+              <div class="d-flex mt-2" style="flex-direction: column">
+                <label for="periodoApuracao"><b>Período de Apuração:</b></label>
+                <mes-ano-new id="compIni" [control]="ideprocPerapurpgtoFormControl"
+                  [msgMaxDate]="'Informe um Período de Apuração menor ou igual ao Ano/Mês atual.'"
+                  [maxDate]="mesAtual" [required]="true" [disabled]="!temPermissaoPeriodoApuracaoBlocoA || modoConsulta || (finalizadoContador && !temPermissaoEnviarEsocial)"
+                  [class.disabled]="!temPermissaoPeriodoApuracaoBlocoA || modoConsulta || (finalizadoContador && !temPermissaoEnviarEsocial)"
+                  ></mes-ano-new>
+              </div>
+
+              <div class="d-flex mt-2" style="flex-direction: column">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- QUADRO B -->
+        <div class="quadro-b" style="border: 1px solid #ccc; border-top: none;">
+          <div>
+            <h4 class="roxo-padrao title mb-0" style="width: 280px;">Identificação do Trabalhador (B)</h4>
+          </div>
+          <div class="grid-quadro">
+            <div style="width:47%">
+              <div class="d-flex mt-2" style="flex-direction: column">
+                <label for="cpfTrabalhador"><b>CPF do Trabalhador:</b></label>
+                <input style="width: 30rem" type="text" id="cpfTrabalhador" tabindex="5" class="form-control"
+                  [textMask]="{ mask: mascaraCpf }" [formControl]="idetrabCpftrabFormControl"
+                  [disableTooltip]="desabilitaTooltip(idetrabCpftrabFormControl)"
+                  [ngbTooltip]="validacaoCpfTrab" [disabled]="!temPermissaoBlocoAeB || modoConsulta || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" [class.disabled]="!temPermissaoBlocoAeB || modoConsulta || (finalizadoEscritorio && !temPermissaoEnviarEsocial)">
+              </div>
+
+              <div style="width:47%"></div>
+            </div>
+            <ng-template #validacaoCpfTrab>
+              <span *ngIf="idetrabCpftrabFormControl.invalid && idetrabCpftrabFormControl.hasError('required') ">
+                CPF Obrigatório.
+              </span>
+              <span *ngIf="idetrabCpftrabFormControl.invalid && idetrabCpftrabFormControl.hasError('cpfNotValid') ">
+                CPF inválido.
+              </span>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- QUADRO C -->
+        <div class="quadro-c" style="border: 1px solid #ccc; border-top: none;">
+          <div>
+            <h4 class="roxo-padrao title mb-0" style="width: 360px;">Período e Base de Cálculo dos Tributos (C)</h4>
+          </div>
+          <div class="grid-quadro">
+            <app-esocial-periodo-base-subgrupo *ngIf="idF2501 != undefined" (aoAbrirPopup)="salvarComoRascunho(false, false, true)" (carregado)="setHeight($event)" [formularioId]="idF2501" [temPermissaoBlocoCeDeE]="temPermissaoBlocoCeDeE && !modoConsulta && (!finalizadoContador ||(finalizadoContador && temPermissaoEnviarEsocial))" class="grid"></app-esocial-periodo-base-subgrupo>
+          </div>
+        </div>
+
+        <!-- QUADRO E -->
+        <div class="quadro-e" style="border: 1px solid #ccc; border-top: none;">
+          <div>
+            <h4 class="roxo-padrao title mb-0" style="width: 320px;">Imposto de Renda Retido na Fonte (E)</h4>
+          </div>
+          <div class="grid-quadro">
+            <app-esocial-imposto-subgrupo *ngIf="idF2501 != undefined" (aoAbrirPopup)="salvarComoRascunho(false, false, true)" (carregado)="setHeight($event)" class="grid" [codF2501]="idF2501" [temPermissaoBlocoCeDeE]="temPermissaoBlocoCeDeE && !modoConsulta && (!finalizadoContador ||(finalizadoEscritorio && temPermissaoEnviarEsocial))"></app-esocial-imposto-subgrupo>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <ng-template #iconeCheckEscritorio>
+    <svg xmlns="src\assets\icons\check-circle-fill.svg" width="13" height="13" fill="white" class="svg-check" viewBox="0 0 16 16" *ngIf="finalizadoEscritorio == null">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+    <svg xmlns="src\assets\icons\check-circle-fill.svg" width="13" height="13" fill="#a1dea7" class="svg-check" viewBox="0 0 16 16" *ngIf="finalizadoEscritorio == true">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+    <svg  xmlns="src\assets\icons\check-circle-fill.svg" width="13" height="13" fill="#fefe0a" class="svg-check" viewBox="0 0 16 16" *ngIf="finalizadoEscritorio == false">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+  </ng-template>
+
+  <ng-template #iconeCheckContador>
+    <svg  xmlns="src\assets\icons\check-circle-fill.svg" width="13" height="13" fill="white" class="svg-check" viewBox="0 0 16 16" *ngIf="finalizadoContador == null">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+    <svg  xmlns="src\assets\icons\check-circle-fill.svg" width="13" height="13" fill="#a1dea7" class="svg-check" viewBox="0 0 16 16" *ngIf="finalizadoContador == true">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+    <svg  xmlns="src\assets\icons\check-circle-fill.svg" width="13" height="13" fill="#fefe0a" class="svg-check" viewBox="0 0 16 16" *ngIf="finalizadoContador == false">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+  </ng-template>
+
+  <ng-template #botoesSalvarEFinalizar>
+    <button class="btn btn-primary" (click)="salvarComoRascunho()" *ngIf="!modoConsulta && (temPermissaoEnviarEsocial ||
+                                        (temPermissaoFinalizarContadorF2501 && !finalizadoContador) ||
+                                        (!temPermissaoFinalizarContadorF2501 && (temPermissaoBlocoCeDeE || temPermissaoPeriodoApuracaoBlocoA)  && !finalizadoContador) ||
+                                        (temPermissaoFinalizarEscritorioF2501 && !finalizadoEscritorio) ||
+                                        (!temPermissaoFinalizarEscritorioF2501 && temPermissaoBlocoAeB && !finalizadoEscritorio))">
+      Salvar como Rascunho
+    </button>
+    <button class="btn btn-primary ml-3" (click)="validaFinalizacaoEscritorio()" *ngIf="!modoConsulta && !temPermissaoEnviarEsocial && temPermissaoFinalizarEscritorioF2501 && !finalizadoEscritorio">
+      Finalizar Preenchimento Escritório
+    </button>
+    <button class="btn btn-primary ml-3" (click)="validaFinalizacaoEscritorio()" *ngIf="!modoConsulta && (temPermissaoEnviarEsocial || temPermissaoFinalizarEscritorioF2501) && finalizadoEscritorio">
+      Reabrir Preenchimento Escritório
+    </button>
+    <button class="btn btn-primary ml-3" (click)="validaFinalizacaoContador()" *ngIf="!modoConsulta && !temPermissaoEnviarEsocial && temPermissaoFinalizarContadorF2501 && !finalizadoContador">
+      Finalizar Preenchimento Contador
+    </button>
+    <button class="btn btn-primary ml-3" (click)="validaFinalizacaoContador()" *ngIf="!modoConsulta && (temPermissaoEnviarEsocial || temPermissaoFinalizarContadorF2501) && finalizadoContador">
+      Reabrir Preenchimento Contador
+    </button>
+    <button class="btn btn-primary ml-3" (click)="salvarParaEnvio()" *ngIf="!modoConsulta && temPermissaoEnviarEsocial">
+      Salvar e Enviar
+    </button>
+
+    <div class="roxo-padrao pt-2 pb-2" style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between;">
+      <div></div>
+      <div class="row-card-grid mt-1 pr-3">
+        <span *ngIf="nrReciboExclusao != null && nrReciboExclusao != '' && modoConsulta" class="btn-link" style="cursor: auto; text-decoration: none; font-size: 14px;">
+          <span style="font-weight: bold; font-size: 14px;">Nº Recibo Exclusão: </span>{{nrReciboExclusao}}</span>
+      </div>
+      <div class="row-card-grid mt-1">
+        <span *ngIf="nrRecibo != null && nrRecibo != '' && modoConsulta" class="btn-link" style="cursor: auto; text-decoration: none; font-size: 14px;">
+          <span style="font-weight: bold; font-size: 14px;">Nº Recibo: </span>{{nrRecibo}}</span>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #cabecalhoProcesso>
+    <span>
+      Processo: {{pesquisaProcesso.nroProcessoCartorio}} | {{pesquisaProcesso.ufVara}} -
+      {{pesquisaProcesso.nomeComarca}} | {{pesquisaProcesso.nomeVara}} <br>
+      {{pesquisaProcesso.indAtivo}} | {{pesquisaProcesso.nomeEmpresaGrupo}} |
+      {{pesquisaProcesso.indProprioTerceiro}} | Código Interno: {{pesquisaProcesso.codProcesso}}
+    </span>
+  </ng-template>
+
+  <ng-template #textoLog>
+    <span class="ml-auto" style="text-align: end;" *ngIf="pesquisaProcesso.statusFormulario != 0">
+      {{salvoAutomaticamente ? 'Rascunho salvo automaticamente em' : 'Última atualização em'}}
+      {{pesquisaProcesso.logDataOperacaoFormatada }}
+      <br>
+      por {{pesquisaProcesso.nomeUsuario}}
+    </span>
+  </ng-template>
+</app-container-pagina>

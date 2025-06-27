@@ -1,0 +1,61 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Backend/V2/Oi.Juridico.WebApi.V2/Oi.Juridico.WebApi.V2.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publishApi",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/Backend/Perlink.Oi.Juridico.WebApi/Perlink.Oi.Juridico.WebApi.csproj",
+                "/t:restore;rebuild;publish",
+                "/property:GenerateFullPaths=true", 
+                "/consoleloggerparameters:NoSummary",
+                "/property:PublishDir=C:\\Publish\\Api\\",
+                "/property:Configuration=Release;Runtimeidentifier=win-x64;SelfContained=true"
+                
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publishApiV2",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/Backend/V2/Oi.Juridico.WebApi.V2/Oi.Juridico.WebApi.V2.csproj",
+                "/t:restore;rebuild;publish",
+                "/property:GenerateFullPaths=true",     
+                "/consoleloggerparameters:NoSummary",
+                "/property:PublishDir=C:\\Publish\\ApiV2\\",
+                "/property:Configuration=Release;Runtimeidentifier=win-x64;SelfContained=true"
+                
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/V2/Oi.Juridico.WebApi.V2/Oi.Juridico.WebApi.V2.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

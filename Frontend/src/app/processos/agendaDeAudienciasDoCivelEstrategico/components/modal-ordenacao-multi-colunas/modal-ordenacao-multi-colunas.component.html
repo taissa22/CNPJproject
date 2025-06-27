@@ -1,0 +1,111 @@
+
+<div class="modal-header">
+  <h5 class="modal-title pl-0">{{ titulo }}</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body py-0">
+  <div class="row py-0">
+    <div class="col-md-12 text-primary pb-3" style="font-size: 12px;">
+      Utilize as setas para alterar a prioridade de ordenação das colunas.
+    </div>
+  </div>
+  <div class="row py-0">
+    <div class="col-md-12">
+      <!-- <table class="table table-hover border">
+        <thead>
+          <tr>
+            <th
+              scope="col"
+              class="small font-weight-bold"
+              style="width: 40px;">
+            </th>
+            <th
+              scope="col"
+              class="font-weight-bold text-center">
+              Coluna
+            </th>
+            <th
+              scope="col"
+              *ngFor="let col of colunas; let i = index"
+              class="font-weight-bold">
+              {{ col.nomeExibicao }}
+            </th>
+            <th
+              scope="col"
+              class="font-weight-bold"
+              style="width: 47%">
+              Tipo Ordenação
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let l of listaOrdenacaoPorPrioridade; let j = index">
+            <td class="">
+              <i
+                class="fas fa-sort-up icon-lg d-block float-left mt-2"
+                [ngClass]="{ 'disabled-icon': l.prioridade === 0 }"
+                [ngStyle]="{ 'cursor': (l.prioridade === 0 ? 'initial' : 'pointer') }"
+                title="Aumentar Prioridade"
+                (click)="aumentarPrioridade(l)">
+              </i>
+              <i
+                class="fas fa-sort-down icon-lg d-block float-left"
+                [ngClass]="{ 'disabled-icon': l.prioridade === indexDaUltimaPrioridade }"
+                [ngStyle]="{ 'cursor': (l.prioridade === indexDaUltimaPrioridade ? 'initial' : 'pointer') }"
+                title="Diminuir Prioridade"
+                (click)="diminuirPrioridade(l)">
+              </i>
+            </td>
+            <td class="pt-3 text-center">
+              {{ l.prioridade }}
+            </td>
+            <td class="pt-3" *ngFor="let col of colunas; let i = index">
+              {{ l[col.nomePropriedade] }}
+            </td>
+            <td class="pt-3">
+              <div class="row pl-3">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input
+                      type="radio"
+                      [id]="'ascendente_' + l.id"
+                      [name]="l.nomeColuna + '-' + l.id"
+                      [value]="true"
+                      [formControl]="l.formControl"
+                      class="form-check-input"
+                    />
+                    <label class="form-check-label pt-1" [for]="'ascendente_' + l.id" style="cursor: pointer;">
+                      Ascendente
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <input
+                      type="radio"
+                      [id]="'descendente_' + l.id"
+                      [name]="l.nomeColuna + '-' + l.id"
+                      [value]="false"
+                      [formControl]="l.formControl"
+                      class="form-check-input"
+                    />
+                    <label class="form-check-label pt-1" [for]="'descendente_' + l.id" style="cursor: pointer;">
+                      Descendente
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table> -->
+      <app-ordenacao-drag-drop [title]="titulo" [values]="colunas" (orderedValues)="teste($event)"></app-ordenacao-drag-drop>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" data-dismiss="modal" (click)="activeModal.dismiss()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="ordenar()">Confirmar</button>
+</div>

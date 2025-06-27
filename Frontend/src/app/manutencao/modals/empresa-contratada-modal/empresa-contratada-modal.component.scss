@@ -1,0 +1,45 @@
+#box-matriculas {
+    border: 1px solid #ccc;
+    min-height: 8.3rem !important;
+    max-height: 8.3rem !important;
+    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    align-content: flex-start;
+}
+
+.box-matricula {
+    display: flex;
+    width: 8rem;
+    height: 1.8rem;
+    font-size: 12px;
+    align-items: center;
+    padding: 0;
+    background-color: #e8f0fe;
+    margin: 8px 0 0 8px;
+}
+
+.btn-matricula {
+    padding: 0 7px;
+    margin-right: 5px;
+    height: -webkit-fill-available;
+    display: flex;
+    align-items: center;
+    background-color: #e8f0fe;
+}
+
+.btn-matricula:hover {
+    background-color: #c4d9ff;
+}
+
+::ng-deep .empresa-contratada-modal {
+    .modal-content {
+        min-width: 670px !important;
+        max-width: 671px !important;
+    }
+    .modal-lg {
+        min-width: 670px !important;
+        max-width: 671px !important;
+    }
+}

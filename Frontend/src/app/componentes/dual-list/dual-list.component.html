@@ -1,0 +1,41 @@
+<!--Listboxes-->
+
+<div class="filters-listbox" style="max-width: 100%;">
+  <div class="listbox-left"  style="min-width: 405px; max-width: 50%;">
+    <div class="listbox-label">{{label}} Disponíveis</div>
+
+    <div class="listbox-list" style="max-width: 100%;">
+      <ul>
+        <li [class.active]="item.marcado" [class.somente-leitura]="item.somenteLeitura" [class.invisivel]="item.clone"
+          *ngFor="let item of dualList; index as i " (click)="marcarItem(item, i,  $event)">
+          <span *ngIf="!item.selecionado"  [title]="item.codigoMenu==null?item.label:'Código: '+item.codigoMenu+'\nFuncionalidade: '+item.label+'\nCaminho de Menu: '+(item.caminho ? item.caminho: '[Não cadastrado]' )">{{item.label}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="listbox-buttons">
+    <button (click)="selecionarTodos()" class="bt-select-all"></button>
+    <button (click)="selecionar()" class="bt-select"></button>
+    <button (click)="desselecionar()" class="bt-deselect"></button>
+    <button (click)="desselecionarTodo()" class="bt-deselect-all"></button>
+  </div>
+
+  <div class="listbox-right" style="min-width: 405px; max-width: 50%;">
+    <div class="listbox-label">{{label}} {{habilitaSelecionadas == true ? 'Associadas' : 'Associados'}} </div>
+    <div class="listbox-list" style="max-width: 100%;">
+      <ul>
+        <span *ngIf="habilitaCheck" class="titulo-existe">Existe</span>
+        <li *ngFor="let item of dualList; index as i" [class.active]="item.marcado"
+          [class.somente-leitura]="item.somenteLeitura" [class.invisivel]="item.somenteLeitura && !item.clone"
+          (click)="marcarItem(item, i ,  $event)">
+          <span *ngIf="item.selecionado" class="linha_composta">
+            <span [title]="item.codigoMenu==null?item.label:'Código: '+item.codigoMenu+'\nFuncionalidade: '+item.label+'\nCaminho de Menu: '+(item.caminho ? item.caminho: '[Não cadastrado]' )">{{item.label}}</span>
+            <input *ngIf="habilitaCheck" checked type="checkbox"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<ng-content></ng-content>

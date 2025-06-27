@@ -1,0 +1,109 @@
+<div class="modal-header pb-0">
+    <span class="modal-title pl-0">{{operacaoTitulo}} Vara</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0 pb-0">
+
+    <div class="mb-12">
+
+        <div class="d-flex col-12 px-0">
+
+            <div class="col-3 pr-0 pl-0 mt-1 mr-1">
+
+                <label class="col-form-label-sm pb-0 mb-1" for="vara-input">
+                    <b>Vara:</b>
+                </label>
+                <input type="text" id="vara" [ngbTooltip]="varaError" [disableTooltip]="desabilitaTooltip(varaIdFormControl)" numberData [formControl]="varaIdFormControl"
+                    class="form-control" maxlength="3" />
+                <ng-template #varaError>
+                    <span *ngIf="varaIdFormControl.hasError('required')">
+                        Campo obrigatório
+                    </span>
+                    <span *ngIf="varaIdFormControl.hasError('maxlength')">
+                        O Limite é de 3 caracteres
+                    </span>
+                </ng-template>
+            </div>
+            <div class="col-1 d-flex px-0 justify-content-center align-items-end">
+                <p class="mb-2 text-center">a</p>
+            </div>
+
+            <div class="col-8 pl-0 pr-1  d-flex flex-column justify-content-end">
+
+                <label class="col-form-label-sm mb-1" for="descricao-input" style="line-height:12px;">
+                    <b>Tipo:</b>
+                </label>
+
+                <ng-select  [ngStyle]="{'fontSize': '11px', 'opacity': tipoVaraFormControl.enabled ? 1 : 0.5}" [items]="tiposDeVaras" [formControl]="tipoVaraFormControl"
+                    bindLabel="nome" bindValue="codigo" appearance="outline" notFoundText="Nenhuma opção disponível"
+                    [searchable]="true" [ngbTooltip]="tipoError" [disableTooltip]="desabilitaTooltip(tipoVaraFormControl)" [clearable]="true" [placeholder]="'Selecione uma opção'">
+                    <ng-template ng-option-tmp let-item="item">
+                        <div [title]="item.nome">{{item.nome}}</div>
+                    </ng-template>
+                </ng-select>
+                <ng-template #tipoError>
+                    <span *ngIf="tipoVaraFormControl.hasError('required')">
+                        Campo obrigatório
+                    </span>
+                </ng-template>
+            </div>
+        </div>
+
+
+        <div class="col-12 px-0 mt-1">
+
+            <label class="col-form-label-sm pb-0 mb-1" for="descricao-input">
+                <b>Endereço:</b>
+            </label>
+            <input type="text" id="descricao-input" [formControl]="enderecoFormControl" class="form-control"
+                maxlength="50" />
+
+        </div>
+
+
+        <div class="col-12 px-0 mt-2">
+
+            <label class="col-form-label-sm mb-1" for="descricao-input" style="line-height:12px;">
+                <b>Tribunal de Justiça BB:</b>
+            </label>
+
+            <ng-select (change)="aoMudarTribunalDeJustica()" [formControl]="tribunalBBFormControl"
+                [ngStyle]="{'fontSize': '11px', 'opacity': tribunalBBFormControl.enabled ? 1 : 0.5}" [items]="tribunaisBB" bindLabel="nome" bindValue="id"
+                appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="true"
+                [placeholder]="placeholderTribunalBB">
+                <ng-template ng-option-tmp let-item="item">
+                    <div title="{{item.nome}}">{{item.nome}}</div>
+                </ng-template>
+            </ng-select>
+
+        </div>
+
+        <div class="col-12 px-0 my-2">
+            <label class="col-form-label-sm mb-1" for="descricao-input" style="line-height:12px;">
+                <b>Vara BB:</b>
+            </label>
+            <ng-select [ngStyle]="{'fontSize': '11px','opacity': orgaoBBFormControl.enabled ? 1 : 0.5}" [items]="orgaosBB" [formControl]="orgaoBBFormControl"
+                bindLabel="nome" bindValue="id" appearance="outline" notFoundText="Nenhuma opção disponível"
+                [ngbTooltip]="varaBBError" [disableTooltip]="desabilitaTooltip(orgaoBBFormControl)"  [searchable]="true" [clearable]="true" [placeholder]="placeholderOrgaoBB">
+                <ng-template ng-option-tmp let-item="item">
+                    <div title="{{item.nome}}">{{item.nome}}</div>
+                </ng-template>
+            </ng-select>
+            <ng-template #varaBBError>
+                <span *ngIf="orgaoBBFormControl.hasError('required')">
+                    Campo obrigatório
+                </span>
+            </ng-template>
+        </div>
+    </div>
+
+</form>
+
+
+<div class="modal-footer pt-0">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid " (click)="salvar()">Confirmar</button>
+</div>

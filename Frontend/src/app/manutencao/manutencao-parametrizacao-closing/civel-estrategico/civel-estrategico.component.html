@@ -1,0 +1,81 @@
+<div [formGroup]="form" style="padding: 12px; padding-top: 12px;">
+    <div class="borda-externa row" style="margin-bottom: 12px;">
+        <div class="col">
+            <div class="col">
+                <div class="fonte-padrao-negrito" style="padding-bottom: 5px;">Classificação "Híbrido" Ligada: </div>
+            </div>
+
+            <div class="col-8 d-flex justify-content-start">
+              <!-- Grupo Oi Movel -->
+              <div class="d-flex flex-column align-items-start mr-4">
+                <label for="">Móvel</label>
+                <div class="d-flex flex-column">
+                  <div class="d-flex align-items-center mb-1">
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoHibrido" value="S"
+                      (change)="alterarLista()" />
+                    <span>Sim</span>
+                  </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoHibrido" value="N"
+                      (change)="alterarLista()" />
+                    <span>Não</span>
+                </div>
+              </div>
+            </div>
+
+              <!-- Grupo Oi Fibra -->
+              <div class="d-flex flex-column align-items-start ml-5">
+                  <label for="">Fibra</label>
+                <div class="d-flex flex-column">
+                  <div class="d-flex align-items-center mb-1">
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoHibridoFibra" value="S"
+                      (change)="alterarLista()" />
+                    <span>Sim</span>
+                  </div>
+                  <div class="d-flex align-items-center mb-1">
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoHibridoFibra" value="N"
+                      (change)="alterarLista()" />
+                    <span>Não</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="col-8">
+          <div class="col">
+            <div class="fonte-padrao-negrito" style="padding-bottom: 5px;">
+                Escritório Padrão (processos secundários):
+            </div>
+          </div>
+          <div class="col">
+            <ng-select formControlName="escritorioSelected" appearance="outline"
+                notFoundText="Nenhuma opção disponível" [searchable]="false" [clearable]="false"
+                [placeholder]="'Selecione'" (change)="alterarLista()">
+                <ng-option *ngFor="let escritorio of escritorios" [value]="escritorio.id">
+                    {{ escritorio.nome }}
+                </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-12" style="margin-bottom: 4.0rem;">
+        </div>
+        <br>
+        <br>
+
+        <div class="modal-footer" style="width: 100%; padding-top: 0px;">
+            <button type="button" class="btn btn-cancelar-oi roxo-padrao" [disabled]="verificaDesabilitado()"
+                (click)="cancelar()">
+                <span class="texto-btn-oi cancelar">Cancelar</span>
+            </button>
+
+            <button type="button" class="btn btn-primary pull-right" [disabled]="verificaDesabilitado()"
+                (click)="salvar()">
+                <span class="texto-btn-oi confirmar">Salvar</span>
+            </button>
+        </div>
+    </div>
+</div>

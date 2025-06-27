@@ -1,0 +1,17 @@
+<label *ngIf='pagamentos.length == 0'>Nenhum pagamento encontrado.</label>
+<table class="table table-striped fonte-padrao" *ngIf='pagamentos.length > 0'>
+    <thead>
+        <th nowrap *ngFor="let header of pagamentosKeys">
+            {{ header | estornoLancamentoTabelaAlias }}
+        </th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pagamento of pagamentos" class="pointer"
+            [ngClass]="(pagamento.selected) && 'selected'"
+            (click)="onClickPagamento(pagamento)">
+            <td nowrap *ngFor="let header of pagamentosKeys" [ngClass]="{'alignDireita': header == 'valor'}">
+                {{ header == 'valor'? (pagamento[header]  | currency: "BRL":'':"1.2-2":"pt") :pagamento[header] }}
+            </td>
+        </tr>
+    </tbody>
+</table>

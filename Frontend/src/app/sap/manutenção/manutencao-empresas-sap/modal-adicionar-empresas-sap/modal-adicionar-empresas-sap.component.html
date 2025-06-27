@@ -1,0 +1,72 @@
+
+
+<div bsModal #template="bs-modal" style="height: 1500;" tabindex="-1" role="dialog"
+aria-labelledby="dialog-sizes-name1" [config]="{backdrop: 'static'}">
+<div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">{{titulo}} Empresas do SAP</h4>
+      <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body modalAjuste height-fix">
+      <form [formGroup]="registerForm">
+        <div class="form-row">
+          <div class="col-2">
+            <label class="fonte-padrao" for="sigla">Sigla:</label> <br>
+            <input id="sigla" class="width form-control" maxlength="4"
+            formControlName="sigla"
+            [ngClass]="{'is-invalid': registerForm.get('sigla').errors && registerForm.get('sigla').touched}"
+            [ngbTooltip]="validacaoTextos('sigla', 'Sigla', true)"
+            tooltipClass="erroTooltip" StartWithSpace oninput="this.value = this.value.toUpperCase()">
+
+          </div>
+          <div class="col-8">
+            <label class="fonte-padrao" for="nome">Nome:</label> <br>
+            <input id="nome" class="width form-control" maxlength="100"
+            formControlName="nome"
+            [ngClass]="{'is-invalid': registerForm.get('nome').errors && registerForm.get('nome').touched}"
+            [ngbTooltip]="validacaoTextos('nome', 'Nome', false)"
+            tooltipClass="erroTooltip" StartWithSpace oninput="this.value = this.value.toUpperCase()">
+          </div>
+          <div class="col-2 d-flex checkbox">
+            <input id="ativo" type="checkbox" formControlName="indicaAtivo" >
+            <label for="ativo" class=" fonte-padrao-negrito m-0 p-0 pl-1">Ativo</label>
+          </div>
+
+
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-4">
+            <label class="fonte-padrao" for="orgCompras">Organização de Compras:</label> <br>
+            <input id="orgCompras" class="width form-control"  maxlength="4" formControlName="codigoOrganizacaocompra"
+            [ngClass]="{'is-invalid': registerForm.get('codigoOrganizacaocompra').errors && registerForm.get('codigoOrganizacaocompra').touched}"
+            [ngbTooltip]="validacaoTextos('codigoOrganizacaocompra', 'Organização de Compras', true)"
+            tooltipClass="erroTooltip" oninput="this.value = this.value.toUpperCase()">
+          </div>
+        </div>
+        <div class="form-row ">
+          <div class="col-12 d-flex align-items-center">
+            <input id="enviaSap" class="m-0" type="checkbox" formControlName="indicaEnvioArquivoSolicitacao" >
+            <label for="enviaSap" class="fonte-padrao pl-1 mb-0">Envia para o SAP</label>
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="bsModalRef.hide()"><span class="texto-btn-oi cancelar">
+          Cancelar </span></button>
+
+      <button type="button" class="btn btn-primary" (click)="salvarAlteracao()" [ngClass]="!registerForm.valid ? 'btn-primary-disabled' : '' "
+      [disabled]="!registerForm.valid" ><span
+          class="texto-btn-oi confirmar"> Confirmar </span></button>
+    </div>
+  </div>
+  <div>
+  </div>
+
+
+</div>
+</div>

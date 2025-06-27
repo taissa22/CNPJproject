@@ -1,0 +1,251 @@
+.logContainer {
+  border: 1px solid #dbdbdb;
+  padding: 0;
+  color: #9d9da9;
+  height: 38px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.float{
+  float: right;
+}
+
+.align {
+  text-align: end;
+}
+
+.sucess{
+  color:#46a049 ;
+}
+.point{
+  cursor: pointer;
+}
+.cancel{
+  color: rgba(255,0,0,0.69);
+}
+.icons-editar i{
+  cursor: pointer;
+}
+.icons-editar input{
+  padding: 3px;
+  border: 1px solid #ced4da;
+  width: 100px;
+
+}
+.form-control{
+  display: inherit;
+}
+
+.desabilitado{
+  opacity: 0.5;
+  cursor: default;
+
+}
+
+input:focus{
+  box-shadow: inset 0px 0px 2px 0.5px rgba(0,0,0,0.69);
+}
+
+.erros {
+      border: 1px solid red !important;
+      outline: none !important;
+       box-shadow: 0 0 3px red;
+      box-shadow: inset 0px 0px 2px 0.5px rgba(255,0,0,0.69);
+}
+
+span.icons-editar input{
+  padding: 5px;
+  border: 1px solid #ced4da;
+
+}
+
+.plus {
+  text-align: right;
+  align-self: center;
+}
+
+th div {
+  position: absolute;
+  background: transparent;
+  color: #fff;
+  padding: 5px 25px;
+  top: 0;
+  margin-left: -25px;
+  line-height: normal;
+}
+
+//css da tabela
+.tabela {
+  border: 1px solid #d2d2da;
+  border-top: none;
+  width: 100%;
+  display: block;
+}
+
+div.tabela-resultados {
+  font-family: "Roboto", sans-serif;
+  flex: auto;
+  flex-grow: 1 1;
+  -ms-flex-grow: 1 1 auto;
+  padding: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: 200px;
+  background-color: white;
+}
+
+div.tabela-resultados div.tabela-resultados-inner {
+  border: solid 1px #d3d3d3;
+  -ms-flex: 1 1 auto;
+  flex: auto;
+  max-height: 330px;
+  overflow: auto;
+}
+
+div.tabela-resultados div.tabela-resultados-inner table {
+  font-size: 12px;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  min-width: 100%;
+  width: auto;
+}
+
+div.tabela-resultados div.tabela-resultados-inner table thead {
+  font-weight: bold;
+}
+
+div.tabela-resultados div.tabela-resultados-inner table thead th {
+  font-size: 13px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.15;
+  letter-spacing: 0.13px;
+  text-align: left;
+  color: #525267;
+
+  border-bottom: solid 1px #d3d3d3;
+
+  padding-left: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  min-width: 50px;
+  max-width: 200px;
+  width: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.tabela-resultados div.tabela-resultados-inner table tr {
+  height: 35px;
+}
+.button-parent {
+  text-align: right;
+}
+.btn-roxo {
+  display: inline-block;
+  font-size: 14px;
+  color: #786bb9;
+}
+
+div.tabela-resultados div.tabela-resultados-inner table tr.selected,
+div.tabela-resultados
+  div.tabela-resultados-inner
+  table
+  tr:nth-child(even).selected {
+  background-color: rgb(231, 228, 246);
+  text-align: left;
+  position: relative;
+}
+
+div.tabela-resultados div.tabela-resultados-inner table tr.selected td,
+div.tabela-resultados
+  div.tabela-resultados-inner
+  table
+  tr:nth-child(even).selected
+  td {
+  border-bottom: dotted 1px rgba(83, 83, 128, 0.7);
+  border-top: dotted 1px rgba(83, 83, 128, 0.7);
+}
+
+div.tabela-resultados div.tabela-resultados-inner table tr.selected,
+div.tabela-resultados div.tabela-resultados-inner table tr.selected td {
+  position: relative;
+  border-bottom: dotted 1px rgba(83, 83, 128, 0.7);
+  border-top: dotted 1px rgba(83, 83, 128, 0.7);
+}
+
+div.tabela-resultados div.tabela-resultados-inner table tr.selected td:before {
+  content: "";
+  width: 100%;
+  height: 0px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  border: none;
+  border-bottom: dotted 1px rgba(83, 83, 128, 0.7);
+  z-index: 2;
+}
+
+div.tabela-resultados div.tabela-resultados-inner table tr td {
+  padding-left: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: #333;
+  border-bottom: solid 1px #d3d3d3;
+  min-width: 50px;
+  width: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.tabela-resultados div.tabela-resultados-inner table tr:nth-child(even) {
+  background-color: #e9e9e9;
+}
+
+div.tabela-resultados div.tabela-resultados-inner table tr:nth-child(even) td {
+  border-bottom: solid 1px #d3d3d3;
+}
+
+//   .container {
+//     width: 50%;
+//     position: relative;
+//     //top: 50%;
+//     //left: 50%;
+// 	//transform: translate(-50%, -50%);
+
+// 	//overflow:auto
+// }
+// .tamanho{
+//   height: 100px;
+// }
+
+.titulo-resultado-detalhamento {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: 0.14px;
+  text-align: left;
+}
+
+.desabilitado {
+  opacity: 0.5;
+  cursor: default !important;
+}
+
+
+.tabela-resultados .btn-roxo{
+
+ text-align: right;
+
+}

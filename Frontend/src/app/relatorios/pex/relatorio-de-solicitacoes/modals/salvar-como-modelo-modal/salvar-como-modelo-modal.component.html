@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <span class="modal-title pl-0">Salvar Relatório como Modelo</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-2 pb-0">
+    <div class="row mb-3">
+        <div class="col-3">
+            <label class="col-form-label-sm pb-0 mb-1 text-right w-100">
+                <b>Nome do Relatório:</b>
+            </label>
+        </div>
+        <div class="col"> 
+            <input type="text"  
+                formControlName="nome" class="form-control"  />  
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-3">
+            <label class="col-form-label-sm pb-0 mb-1 text-right w-100">
+                <b>Descrição:</b>
+            </label>
+        </div>
+        <div class="col">
+            <input type="text"  
+                formControlName="descricao" class="form-control" >
+        </div>
+    </div>
+
+</form>
+
+<div class="modal-footer pt-0">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">VOLTAR</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()">SALVAR MODELO</button>
+
+</div>

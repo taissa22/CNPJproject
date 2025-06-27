@@ -1,0 +1,28 @@
+.pg-interna {
+    .nav-pills {
+        border-bottom: 1px solid #9597A6!important;
+
+        .nav-item {
+          &:nth-child(1) {
+              a.nav-link {
+              padding-left: 0!important;
+          }
+        }
+
+          .nav-link {
+            color: #525267!important;
+
+            &:hover {
+               color: #555!important;
+               font-weight: bold!important;
+             }
+
+            &.active {
+               background-color: #FFF!important;
+               color: #786BB9!important;
+               font-weight: bold!important;
+            }
+        }
+      }
+    }
+}

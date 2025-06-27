@@ -1,0 +1,211 @@
+/*filters-box*/
+app-escritorio {
+  width: 100%;
+}
+app-empresas-grupo {
+  width: 100%;
+}
+app-criterios {
+  width: 100%;
+}
+
+.filters-box {
+  border: solid 1px rgb(180, 180, 180);
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+  letter-spacing: -0.3px;
+  letter-spacing: -0.3px;
+  color: rgb(120, 120, 120);
+  flex-basis: 75%;
+  /*justify-content: center;*/
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  min-width: 200px;
+  min-height: 400px;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+div.filters-box-container {
+  width: auto;
+  height: auto;
+  min-height: 200px;
+  margin: 0 auto;
+}
+
+.filters-box-line {
+  display: flex;
+  min-height: 40px;
+  max-width: 600px;
+  clear: both;
+  width: 100%;
+  justify-content: center;
+}
+
+.filters-box-items,
+.filters-box-label {
+  display: flex;
+  align-items: center;
+}
+
+.filters-box-label {
+  width: 250px;
+  flex-basis: 40%;
+}
+
+.filters-box-items {
+  flex-basis: 60%;
+}
+
+.filters-box-items div {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.filters-box-items input[type="text"].date {
+  max-width: 70px;
+  width: 70px;
+}
+
+/*-- listbox  --*/
+
+.filters-listbox {
+  display: flex;
+  min-height: 300px;
+  clear: both;
+  width: 100%;
+  padding-top: 20px;
+  font-size: 12px;
+}
+
+.listbox-left {
+  flex-grow: 7;
+  flex-basis: 47%;
+  border: solid 1px rgb(180, 180, 180);
+  position: relative;
+}
+
+.listbox-right {
+  flex-grow: 7;
+  flex-basis: 47%;
+  border: solid 1px rgb(180, 180, 180);
+  position: relative;
+}
+
+.listbox-left ul,
+.listbox-right ul {
+  padding-left: 0px;
+  margin-top: 5px;
+  position: relative;
+}
+
+.listbox-list li span {
+  display: block;
+  padding-left: 7px;
+  padding-top: 5px;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 30px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 12px;
+  /*white-space: nowrap;*/
+
+  height: 100%;
+  /*border-bottom: solid 1px rgb(180,180,180);*/
+  line-height: 18px;
+}
+
+/* .listbox-list li span:before{
+    content: "";
+    height: 30px;
+    pointer-events: none;
+    border-bottom:solid 1px black;
+    background-color: rgba(23,55,180,.3);
+    width: 100%;
+    position: absolute;
+    left: 0px;
+  }*/
+// CRIAR SOLUÇÃO COM SPAN E AFTER PARA ADICIONAR A LINHA EMBAIXO
+.listbox-list li.active,
+.listbox-list li.active:hover {
+  background: #786bb9;
+  color: white;
+}
+
+.listbox-left li,
+.listbox-right li {
+  text-transform: capitalize;
+  list-style: none;
+  font-size: 14px;
+  line-height: 3;
+  /*border-bottom: solid 1px rgb(180,180,180);*/
+  cursor: pointer;
+}
+
+.listbox-left li:hover,
+.listbox-right li:hover {
+  background-color: #eeeeee;
+}
+
+.listbox-list {
+  position: relative;
+  width: auto;
+  height: 300px;
+  overflow: auto;
+}
+
+.listbox-buttons {
+  /*flex-grow: 1;*/
+  flex-basis: 6%;
+  display: flex;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.listbox-buttons button {
+  height: 30px;
+  width: 30px;
+  background: none;
+  border: none;
+
+  margin-bottom: 10px;
+
+  background-position: center center;
+  /*background-size: cover;*/
+  cursor: pointer;
+}
+
+// .listbox-buttons button.bt-select-all {
+//   background-image: url("assets/sap/img/select_all.png");
+// }
+.listbox-buttons button.bt-select {
+  background-image: url("assets/sap/img/select.png");
+}
+.listbox-buttons button.bt-deselect {
+  background-image: url("assets/sap/img/deselect.png");
+}
+.listbox-buttons button.bt-deselect-all {
+  background-image: url("assets/sap/img/deselect_all.png");
+}
+
+// .listbox-buttons button.bt-select-all[disabled="disabled"],
+// .listbox-buttons button.bt-select[disabled="disabled"],
+// .listbox-buttons button.bt-deselect[disabled="disabled"],
+// .listbox-buttons button.bt-deselect-all[disabled="disabled"] {
+//   opacity: 0.3;
+//   cursor: default;
+// }
+
+.listbox-label {
+  position: absolute;
+  top: -17px;
+  /*font-weight: bold;*/
+  color: #6f62b2;
+}

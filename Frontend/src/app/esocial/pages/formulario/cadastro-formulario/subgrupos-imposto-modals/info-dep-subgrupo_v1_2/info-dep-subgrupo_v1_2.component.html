@@ -1,0 +1,51 @@
+<div>
+    <div class="roxo-padrao btn-novo mt-1" *ngIf="temPermissaoBlocoG">       
+        <i class="fas fa-plus-circle ml-auto mr-1 fs-2" (click)="incluir()"></i>
+        <span class="fs-1" (click)="incluir()">Incluir</span>
+    </div>
+
+    <div style="margin-top: 5px">
+        <sisjur-table (sort)="buscarTabela()">
+            <ng-container>
+                <sisjur-table-header>
+                    <sisjur-table-header-cell width="10">CPF</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="15">Data Nascimento</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="23">Nome</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="15">Depedente IR?</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="15">Tipo Dependente</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="15">Descrição da Dependência</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                </sisjur-table-header>
+
+                <ng-container *ngFor="let item of dataSource; let i = index">
+                    <sisjur-table-row>                        
+                        <sisjur-table-row-cell>{{item.infodepCpfdep| cpf}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infodepDtnasctoTexto}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infodepNome}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infodepDepirrf != null && item.infodepDepirrf == 'S' ? 'Sim' : null}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.descricaoTpDep}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infodepDescrdep}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>
+
+                            <button type="button" class="btn btn-icon" (click)="consultar(item.idEsF2501Infodep)" *ngIf="!temPermissaoBlocoG">
+                                <i class="fa fa-magnifying-glass"></i>
+                            </button>
+                            <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501Infodep)" *ngIf="temPermissaoBlocoG">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+
+                        <sisjur-table-row-cell>
+                            <button type="button" class="btn btn-icon" (click)="excluir(item)" *ngIf="temPermissaoBlocoG">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+
+                    </sisjur-table-row>
+                </ng-container>
+
+            </ng-container>
+        </sisjur-table>
+    </div>
+</div>

@@ -1,0 +1,168 @@
+<app-container-pagina [titulo]="'Importação e Consulta do Arquivo de Retorno'"
+  [caminho]="'SAP > Interface BB > Importação e Consulta do Arquivo de Retorno'">
+
+  <section>
+  
+<div class="row ml-0">
+  <div class="col-md-9 col-lg-10">
+
+  </div>
+  <div class="col-md-3 col-lg-2">
+    <label class="col-form-label-sm label-combo" for="tipoDePrazo">
+      <b>Arquivos da Importação:</b>
+    </label>
+    <ng-select [ngStyle]="{'fontSize': '11px'}" id="dadosCombo" [items]="dadosCombo" [formControl]="comboArquivos"
+      bindLabel="descricao" bindValue="id" appearance="outline" notFoundText="Nenhuma opção disponível"
+      (change)="trocarAba($event.id)" [searchable]="false" [clearable]="false" [placeholder]="'Selecione uma opção'">
+    </ng-select>
+  </div>
+  </div>
+
+</section>
+  <ng-container *ngIf="dadosArquivo">
+    <div class="header-container d-flex mt-4 justify-content-between align-items-end">
+      <span class="d-flex align-items-center tituloArqEncontrado">
+        Dados do Arquivo
+      </span>
+    </div>
+
+
+    <div class="container-fluid p-0 mt-3">
+      <div class="row ml-0">
+        <div class="p-0 col-12">
+          <div class="align-self-start title">
+            <b>
+              {{dadosArquivo.tipoProcesso }} - {{dadosArquivo.numeroLoteBB}} - {{dadosArquivo.status}}
+            </b>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-2 ml-0">
+        <div class="p-0 col-4">
+          <div class="align-self-start valores">Data da remessa:
+            {{dadosArquivo.dataRemessa}}
+          </div>
+        </div>
+        <div class="p-0 col-4">
+          <div class="align-self-start valores pad">Qtd de Registros do Arquivo:
+            {{dadosArquivo.quantidadeRegistrosArquivo | number:'1.0'}}</div>
+        </div>
+        <div class="p-0 col-4">
+          <div class="align-self-start valores pad">Valor Total da Remessa:
+            {{dadosArquivo.valorTotalRemessa
+              |  currency: "BRL":'':"1.2-2":"pt"}}
+          </div>
+        </div>
+      </div>
+      <div class="row pt-1 ml-0">
+        <div class="p-0 col-4">
+          <div class="align-self-start valores">Data Processamento da remessa:
+            {{dadosArquivo.dataProcessamentoRemessa}}</div>
+        </div>
+
+
+        <div class="p-0 col-4">
+          <div class="align-self-start valores pad">Qtd Registros Processados:
+            {{dadosArquivo.quantidadeRegistrosProcessados}}
+          </div>
+        </div>
+
+        <div class="p-0 col-4">
+          <div class="align-self-start valores pad">Valor Total Processado:
+            {{dadosArquivo.valorTotalGuiaProcessada |
+              currency: "BRL":'':"1.2-2":"pt"}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="header-container d-flex mt-4 justify-content-between align-items-end">
+      <span class="d-flex align-items-center tituloArqEncontrado">
+        Guias do Arquivo
+      </span>
+      <div class="col p-0" style="text-align: right;">
+        <button class="btn roxo-padrao" (click)="exportar(true)" [disabled]="guiasOK.guias.length <= 0">
+          <i class="fa fa-download"></i> Exportar
+        </button>
+
+      </div>
+    </div>
+
+    <div class="tabela-border">
+      <div class="row ml-0">
+        <div class="p-0 col-12 d-flex align-items-end justify-content-between">
+          <div class="align-self-start title">
+            GUIAS OK
+          </div>
+        </div>
+
+      </div>
+      <hr>
+      <div class='overflow-scroll' *ngIf="guiasOK.guias.length > 0">
+        <table class='table table-striped fonte-padrao'>
+          <th col nowrap *ngFor="let header of guiasOK.guiasHeaders" style="border-top: none!important">
+            {{ header | GuiasOkAlias }}
+          </th>
+          <tr row nowrap class="table-item" *ngFor="let item of guiasOK.guias; index as i">
+            <td class="text-limit" nowrap *ngFor="let header of guiasOK.guiasHeaders"
+            [ngClass]="header == 'valorLiquido' ? 'text-right' : '' "
+            >
+              <span [ngbTooltip]='(item[header] && item[header].length > 40) && item[header]'>
+                {{ header == 'valorLiquido' ? (item[header] |  currency: "BRL":"":"1.2-2":"pt") :
+              item[header]  }} </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div *ngIf="guiasOK.guias.length <= 0" class="pt-2">
+        Não há registros.
+      </div>
+    </div>
+
+    <div class="header-container d-flex mt-4 justify-content-between align-items-end">
+
+      <div class="col p-0" style="text-align: right;">
+
+
+        <button class="btn roxo-padrao" (click)="exportar(false)" [disabled]="guiasComProblema.guias.length <= 0">
+          <i class="fa fa-download"></i> Exportar
+        </button>
+
+      </div>
+    </div>
+
+    <div class="tabela-border">
+      <div class="row ml-0">
+        <div class="p-0 col-12 d-flex align-items-end justify-content-between">
+          <div class="align-self-start title">
+            GUIAS COM PROBLEMAS
+          </div>
+        </div>
+
+      </div>
+      <hr>
+      <div class='overflow-scroll' *ngIf="guiasComProblema.guias.length > 0">
+        <table class='table table-striped fonte-padrao'>
+          <th col nowrap *ngFor="let header of guiasComProblema.guiasHeaders" style="border-top: none!important">
+            {{ header | guiaComProblemas }}
+          </th>
+          <tr row nowrap class="table-item" *ngFor="let item of guiasComProblema.guias">
+            <td class="text-limit" nowrap *ngFor="let header of guiasComProblema.guiasHeaders">
+              <span [ngbTooltip]='(item[header] && item[header].length > 40) && item[header]'>
+                {{ item[header] }} </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div *ngIf="guiasComProblema.guias.length <= 0" class="pt-2">
+        Não há registros.
+      </div>
+    </div>
+    <div style="float: right;" class="mt-3">
+      <button class="btn roxo-padrao" (click)="cancelar()">Cancelar Importações</button>
+      <button class="btn btn-primary" (click)="salvar()">Salvar Importação</button>
+      <button class="btn btn-laranja" (click)="salvarTodos()">Salvar todas as importações</button>
+    </div>
+  </ng-container>
+</app-container-pagina>

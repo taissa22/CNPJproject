@@ -1,0 +1,78 @@
+.fechamentoCC{
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+}
+
+.optionsEmpresas {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#marcarTodas {
+    position: relative;
+    top: 1px;
+    padding-left: 3px;
+}
+
+.radio {
+    position: relative;
+    top: 1px;
+    padding-left: 3px;
+}
+
+.optinsCheck {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+
+    label {
+        padding-top: 3px;
+    }
+}
+
+.empresas {
+    border: 1px solid #dee2e6;
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.tooltipContent {
+    text-align: left;
+    padding: 10px;
+
+    p {
+        font-size: 14px
+    }
+
+    b {
+        font-size: 14px
+    }
+}
+
+.cancelar {
+    background: white !important;
+    color: #786bb9 !important;
+    border: 1px solid #786bb9 !important;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.buttons{
+    margin-left: 685px;
+    position: absolute;
+    bottom: 20px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.content-modal{
+    max-height: 180px !important;
+    overflow: auto !important;
+    z-index: 1 !important;
+}

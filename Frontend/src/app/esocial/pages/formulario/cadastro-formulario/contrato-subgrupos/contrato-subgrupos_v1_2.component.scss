@@ -1,0 +1,92 @@
+.grid-quadro {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-control-select {
+    padding: 0;
+    border: none;
+}
+
+.quadro {
+    border-top: 1px solid #ccc;
+    width: -webkit-fill-available;
+}
+
+.title {
+    margin-left: 1.2rem;
+    background-color: white;
+    text-align: center;
+    margin-top: -10px;
+    width: 500px;
+}
+
+.input-date {
+    width: 100px !important;
+    text-align: center;
+}
+
+input {
+    height: 30px;
+    border: 1px solid #ccc;
+    padding: 7px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#objDetContratPrazoDet {
+    border: 1px solid #ccc;
+    height: 6.5rem;
+    resize: none;
+    padding: 7px;
+}
+
+.input-number {
+    text-align: initial !important;
+}
+
+.tooltip-data-bloco-e {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tooltip-insc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 34.2rem;
+}
+
+.tooltip-data-adm {
+    width: 10.2rem;
+}
+
+.tooltip-data-transf {
+    width: 11.5rem;
+}
+
+.tooltip-data-projetada {
+    width: 28rem;
+}
+
+.tooltip-percentual {
+    width: 8rem;
+}
+
+.tooltip-vlr-pen {
+    width: 23rem;
+}
+
+.check-abono {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: -4px;
+    margin-left: 6px;
+}

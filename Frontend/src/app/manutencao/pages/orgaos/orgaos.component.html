@@ -1,0 +1,41 @@
+<app-manutencao-generica
+  tituloAdicionar="Adicionar Orgão"
+  tituloLista="Órgãos"
+  titulo="Manutenção - Órgãos"
+  [breadcrump]="breadcrumb"
+  [(colunas)]="colunas"
+  [registros]="obterResultados"
+  [totalDeRegistros]="totalDeRegistros"
+  [(pagina)]="pagina"
+  [(ordenacaoColuna)]="ordenacaoColuna"
+  [(ordenacaoDirecao)]="ordenacaoDirecao"
+  [(totalDeRegistrosPorPagina)]="totalDeRegistrosPorPagina"
+  (aoClicarNovoRegistro)="abrirDialogoDeCriar()"
+  (aoClicarEditarRegistro)="abrirDialogoDeAtualizar($event.id)"
+  (aoRemoverRegistro)="remover($event.id)"
+  (aoCarregarRegistros)="trocarPagina()"
+  (aoClicarExportar)="exportar()"
+  [exibirAdicionar]="true">
+
+  <div class="row">
+    <div class="col-12 py-3">
+      <p class="font-purple">
+        Selecione o tipo de processo para localizar os Órgãos.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4 pr-1">
+      <label class="col-form-label-sm" for="tipos-processo">
+        <b>Tipos de Processo:</b>
+      </label>
+      <ng-select appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="false" [clearable]="false" [placeholder]="'Selecione'" (change)="alteraTipoOrgao($event)">
+        <ng-option *ngFor="let tipo of tiposOrgao" [value]="tipo">{{ tipo.descricao }}</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-2 pl-1 pt-4"  [ngStyle]="{ marginTop: '0.3rem' }">
+      <button type="button" class="btn btn-primary" (click)="obter()">Buscar</button>
+    </div>
+  </div>
+
+</app-manutencao-generica>

@@ -1,0 +1,29 @@
+@media (min-width: 1200px) {
+  .container-xl,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container {
+    max-width: 1350px;
+    //max-width: 65%;
+  }
+}
+
+table {
+  th,
+  td {
+    border: none !important;
+  }
+  tr {
+    border: 1px solid #dee2e6 !important;
+  }
+}
+.col-form-label-sm {
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+
+.semregistro{
+  height : 58px !important;
+  background-color : #f2f2f2 !important;
+}

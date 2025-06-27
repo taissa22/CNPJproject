@@ -1,0 +1,197 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">{{ titulo }}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body pt-0" [formGroup]="formulario">
+  <form>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="col-form-label-sm" for="cnpj">
+          <b>CNPJ:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="cnpj" name="cnpj"
+          [textMask]="{ mask: mascaraCnpj }"
+          [formControl]="cnpjFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(cnpjFormControl)"
+          [ngbTooltip]="validacaoCnpj" />
+        <ng-template #validacaoCnpj>
+          <span *ngIf="cnpjFormControl.invalid && cnpjFormControl.errors.required">
+            Campo obrigatório
+          </span>
+          <span *ngIf="formulario.get('cnpj').getError('cnpjNotValid')">
+            CNPJ incorreto. Favor informá-lo novamente
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="col-form-label-sm" for="nome">
+          <b>Nome:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="nome" name="nome"
+          maxlength="50"
+          [formControl]="nomeFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(nomeFormControl)"
+          [ngbTooltip]="validacaoNome" />
+        <ng-template #validacaoNome>
+          <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.required">
+            Campo obrigatório
+          </span>
+          <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.maxlength">
+            O nome não pode ter mais de 50 caracteres
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="col-form-label-sm" for="endereco">
+          <b>Endereço:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="endereco" name="endereco"
+          maxlength="60"
+          [formControl]="enderecoFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(enderecoFormControl)"
+          [ngbTooltip]="validacaoEndereco" />
+        <ng-template #validacaoEndereco>
+          <span *ngIf="enderecoFormControl.invalid && enderecoFormControl.errors.maxlength">
+            O endereço não pode ter mais de 60 caracteres
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="col-form-label-sm" for="bairro">
+          <b>Bairro:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="bairro" name="bairro"
+          maxlength="30"
+          [formControl]="bairroFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(bairroFormControl)"
+          [ngbTooltip]="validacaoBairro" />
+        <ng-template #validacaoBairro>
+          <span *ngIf="bairroFormControl.invalid && bairroFormControl.errors.maxlength">
+            O bairro não pode ter mais de 30 caracteres
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <label class="col-form-label-sm" for="cidade">
+          <b>Cidade:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="cidade" name="cidade"
+          maxlength="30"
+          [formControl]="cidadeFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(cidadeFormControl)"
+          [ngbTooltip]="validacaoCidade" />
+        <ng-template #validacaoCidade>
+          <span *ngIf="cidadeFormControl.invalid && cidadeFormControl.errors.maxlength">
+            A cidade não pode ter mais de 30 caracteres
+          </span>
+        </ng-template>
+      </div>
+      <div class="col-md-5">
+        <label class="col-form-label-sm" for="estado">
+          <b>Estado:</b>
+        </label>
+        <ng-select
+          [ngStyle]="{'fontSize': '11px'}"
+          id="estado"
+          [items]="estados"
+          bindLabel="nome"
+          bindValue="id"
+          appearance="outline"
+          notFoundText="Nenhuma opção disponível"
+          [searchable]="true"
+          [clearable]="true"
+          [placeholder]="'Selecione uma opção'"
+          [formControl]="estadoFormControl"></ng-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <label class="col-form-label-sm" for="cep">
+          <b>CEP:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="cep" name="cep"
+          [textMask]="{ mask: mascaraCep }"
+          [formControl]="cepFormControl"
+          />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <label class="col-form-label-sm" for="telefone">
+          <b>Telefone:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="telefone" name="telefone"
+          [textMask]="{ mask: mascaraTelefone, guide: false }"
+          [formControl]="telefoneFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(telefoneFormControl)"
+          [ngbTooltip]="validacaoTelefone" />
+        <ng-template #validacaoTelefone>
+          <span *ngIf="formulario.get('telefone').getError('telefoneInvalido')">
+            O telefone não pode ter menos de 10 caracteres.
+          </span>
+        </ng-template>
+      </div>
+      <div class="col-md-5">
+        <label class="col-form-label-sm" for="celular">
+          <b>Celular:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="celular" name="celular"
+          [textMask]="{ mask: mascaraCelular, guide: false }"
+          [formControl]="celularFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(celularFormControl)"
+          [ngbTooltip]="validacaoCelular"/>
+        <ng-template #validacaoCelular>
+          <span *ngIf="formulario.get('celular').getError('telefoneInvalido')">
+            O celular não pode ter menos de 11 caracteres.
+          </span>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="activeModal.dismiss()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">Confirmar</button>
+</div>
+

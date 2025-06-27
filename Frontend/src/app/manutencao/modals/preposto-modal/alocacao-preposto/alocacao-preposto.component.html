@@ -1,0 +1,59 @@
+<app-manutencao-generica titulo="Manutenção - Preposto"
+  breadcrump="Manutenção > Cadastros Compartilhados > Preposto" [exibirAdicionar]=false>
+
+  <div>
+  "O preposto {{preposto.nome}} não poderá ser desvinculado pois está alocado em audiência(s) e/ou agenda(s)/pauta(s) em datas futuras para os tipos de processo listados abaixo:"
+  </div>  
+  
+  <div class="mt-4 row">
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" >Alocações Futuras</b>
+    </div>
+
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <sisjur-table (sort)="buscarTabela()">      
+      <ng-container>
+        <sisjur-table-header>   
+          <sisjur-table-header-cell width="10">Tipo de Alocação</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="10">Data</sisjur-table-header-cell>        
+          <sisjur-table-header-cell width="5">UF</sisjur-table-header-cell>        
+          <sisjur-table-header-cell width="10">Comarca</sisjur-table-header-cell>   
+          <sisjur-table-header-cell width="5">Vara</sisjur-table-header-cell>     
+          <sisjur-table-header-cell width="10">Tipo Vara</sisjur-table-header-cell>                     
+          <sisjur-table-header-cell width="13">Nº do Processo</sisjur-table-header-cell>                     
+          <sisjur-table-header-cell width="10">Tipo de Processo</sisjur-table-header-cell>                     
+          <sisjur-table-header-cell width="15">Código Interno Processo</sisjur-table-header-cell>           
+        </sisjur-table-header>
+        <sisjur-table-row *ngFor="let item of alocacoes;let i = index" >
+          <sisjur-table-row-cell> {{item.tipo}}  </sisjur-table-row-cell>
+          <sisjur-table-row-cell> {{item.data | date : 'dd/MM/yyyy'}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell> {{item.uf}}</sisjur-table-row-cell>       
+          <sisjur-table-row-cell> {{item.comarca}}</sisjur-table-row-cell>            
+          <sisjur-table-row-cell> {{item.varaId}}</sisjur-table-row-cell>  
+          <sisjur-table-row-cell> {{item.varaNome}}</sisjur-table-row-cell>                      
+          <sisjur-table-row-cell> {{item.numeroProcesso}}</sisjur-table-row-cell>          
+          <sisjur-table-row-cell> {{item.tipoProcesso}}</sisjur-table-row-cell>          
+          <sisjur-table-row-cell> {{item.codProcessoInterno == 0? '-' : item.codProcessoInterno}}</sisjur-table-row-cell>
+        </sisjur-table-row>                
+      </ng-container>       
+    </sisjur-table> 
+    
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>  
+    </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button> 
+</div>
+
+
+</app-manutencao-generica>

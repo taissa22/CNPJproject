@@ -1,0 +1,82 @@
+<app-container-pagina [titulo]="'Provisão Trabalhista por Média'"
+  [caminho]="breadcrumb"
+  [texto]="'Selecione uma data de fechamento para realizar uma pesquisa. Você também pode utilizar com a data de fechamento anterior para realizar uma comparação na pesquisa.'">
+
+  <div class="fonte-padrao-negrito" style="color: #6f62b2; font-size: 14px;">Critérios para Pesquisa de Fechamento</div>
+  <hr class="mt-0">
+
+  <div class="borda-externa" style="margin-bottom: 12px;">
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 12px; padding-top: 24px;">
+      <div class="fonte-padrao-negrito" fxFlex="10">Outliers:</div>
+      <div fxFlex="22" *ngIf="exibeSemExclusao">
+        <input type="checkbox" class="mr-2 checkbox" [disabled]="tipoOutlierUnico" [(ngModel)]="semExclusao">
+        <span>Sem exclusão de Outliers</span>
+      </div>
+      <div fxFlex="34" *ngIf="exibeExclusaoPorDesvioPadrao">
+        <input type="checkbox" class="mr-2 checkbox" [disabled]="tipoOutlierUnico"
+          [(ngModel)]="exclusaoPorDesvioPadrao">
+        <span>Com exclusão de Outliers por Desvio Padrão</span>
+      </div>
+      <div fxFlex="34" *ngIf="exibeExclusaoPorPercentual">
+        <input type="checkbox" class="mr-2 checkbox" [disabled]="tipoOutlierUnico" [(ngModel)]="exclusaoPorPercentual">
+        <span>Com exclusão de Outliers por Percentual</span>
+      </div>
+      <span fxFlex></span>
+    </div>
+
+    <hr class="mr-3 ml-3 mt-0 mb-0" />
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="6%" style="padding: 12px;">
+      <div fxFlex>
+        <label class="col-form-label-sm" for="tipos-processo">
+          <b>Data de Fechamento:</b>
+        </label>
+        <ng-select appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="false" [clearable]="false"
+          [virtualScroll]="true" [placeholder]="'Selecione'" [(ngModel)]="fechamentoAtual" (change)="carregarFechamentoDetalhado()">
+          <ng-option *ngFor="let f of fechamentos" [value]="f">
+            {{ f.dataFechamento | date:'dd/MM/yyyy' }} - {{ f.numeroDeMeses + ' meses - ' + f.tipoDeOutliers.descricao }}
+          </ng-option>
+          <ng-option *ngIf="fechamentos.length > 0" disabled></ng-option>
+        </ng-select>
+      </div>
+
+      <div fxFlex>
+        <label class="col-form-label-sm" for="tipos-processo">
+          <b>Data de Fechamento Anterior:</b>
+        </label>
+        <ng-select appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="false" [clearable]="false"
+          [virtualScroll]="true" [placeholder]="'- - -'" [(ngModel)]="fechamentoAnterior">
+          <ng-option [value]="undefined">- - -</ng-option>
+          <ng-option *ngFor="let f of fechamentosAnteriores" [value]="f">
+            {{ f.dataFechamento | date:'dd/MM/yyyy' }} - {{ f.numeroDeMeses + ' meses - ' + f.tipoDeOutliers.descricao }}
+          </ng-option>
+          <ng-option *ngIf="fechamentosAnteriores.length > 0" disabled></ng-option>
+        </ng-select>
+      </div>
+    </div>
+
+    <div class="m-3">
+      <app-dual-list [label]="'Empresas Centralizadoras'" [habilitaSelecionadas]="true"
+        [dualList]="empresasCentralizadoras" (listaSelecionados)="carregarFechamentosAnteriores($event)">
+      </app-dual-list>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" style="margin-bottom: 36px;"
+    *ngIf="exibeSemExclusao || exibeExclusaoPorDesvioPadrao || exibeExclusaoPorPercentual; else noperms;">
+    <button class="btn btn-link" (click)="clear()">Limpar</button>
+    <button class="btn btn-primary" [disabled]="!fechamentoAtual || empresasCentralizadorasSelecionadas.length === 0"
+      (click)="paginaResult()">Pesquisar</button>
+  </div>
+
+  <ng-template #noperms>
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" style="margin-bottom: 36px;">
+      <button class="btn btn-link" disabled>Limpar</button>
+      <button class="btn btn-primary" disabled
+        title="Se faz necessário ter ao menos uma permissão de seleção de outliers.">Pesquisar</button>
+    </div>
+  </ng-template>
+
+</app-container-pagina>

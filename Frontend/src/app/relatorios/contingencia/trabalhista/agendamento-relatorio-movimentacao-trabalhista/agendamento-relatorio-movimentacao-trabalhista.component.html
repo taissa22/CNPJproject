@@ -1,0 +1,122 @@
+<h4>Relatório de Movimentações Trabalhista - Agendamento</h4>
+<!-- <br> -->
+<div style="display: flex; flex-direction: column">
+  <span style="color: #786bb9; margin-top: 10px;">Selecione um período e clique em buscar para listar os fechamentos trabalhista executados.</span>
+  
+  <span style="color: #786bb9; margin-top: 10px; font-weight: 520"><b>Fechamento Inicial</b></span> 
+  <a (click)="limparFiltrosInicial()" style="text-align: right; color: #786bb9; text-decoration: underline; cursor: pointer">Limpar filtros</a>
+  <span style="display: flex; align-items: center;">
+  <span class="mr-auto" style="display: flex; align-items: center;">
+    <b style="width: 145px;">Fechamentos no Período: </b>
+    <app-data-range 
+      [dataInicio] = "dataFechamentoInicialIni"
+      [dataFim] = "dataFechamentoInicialFim"
+      (retDataFim) = "dataFechamentoInicialFim = $event"
+      (retDataInicio) =  "dataFechamentoInicialIni = $event"
+      >
+    </app-data-range>
+    <button style="margin-left: 10px;" type="button" class="btn btn-primary" (click)="obterFechamentosInicial(dataFechamentoInicialIni, dataFechamentoInicialFim, 0)">Buscar</button>
+  </span>
+  <span class="ml-auto">
+    <label (click)="listarFechamentosMensaisInicial()" for="fechamentoMensalInicialCheck" style="margin-left: 5px; margin-top: 3px; margin-bottom: 0"><input style="position: relative; top: 1px;" type="checkbox" id="fechamentoMensalInicialCheck">  Somente fechamentos mensais</label>
+  </span>
+</span>
+</div>
+
+<section class="base-dropdown" style="margin-top: 5px; margin-bottom: -5px;">
+  <div class="card fechamentos-card">
+    <ul class="list-group">
+      <li (click)="selecionarFechamentoInicial(item)" class="list-group-item"
+        *ngFor="let item of fechamentosInicial"
+        [ngStyle]="{'background': FechamentoIni == item ? '#786bb9' : '#fff'}">
+        <div class="row opcoesFechamentos" [ngStyle]="{'color': FechamentoIni == item ? '#fff' : '#777'}">
+          <div class="col-12 px-2">
+            <p>
+              <span style="font-weight: bold; color: black;">{{item.dataFechamento | date:'dd/MM/yyyy'}}</span> -
+              <span>{{item.numeroMeses}} meses</span> - 
+              <span>Fechamento Mensal: {{item.indFechamentoMensal == 'S' ? "Sim" : "Não"}}</span> - 
+              <span>{{item.codTipoOutlier == 0 ? 'Sem exclusão de outliers' : item.codTipoOutlier == 1 ? 'Com exclusão de Outliers por Desvio Padrão' : item.codTipoOutlier == 2 ? 'Com exclusão de Outliers por Percentual':''}}</span> 
+              <i class="fa fa-question-circle fa-lg" aria-hidden="true" title="{{item.empresasGrupo}}"></i>
+              <i *ngIf="item.indFechamentoParcial == true" class="fa fa-exclamation-circle fa-lg" style="color: #ffd100;"  aria-hidden="true" title="Fechamento Parcial"></i>
+            </p>
+          </div>
+          
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <span style="font-weight: 600;">Total de registros: {{ totalFechamentosInicial }} - Itens por página 5 </span>
+    <app-paginacao-buttons
+    class="ml-auto"
+    [pageMax]="quantidadePagina" 
+    [totalRegistro]="totalFechamentosInicial" 
+    [currentPage]="paginaFechamentoInicial"
+    (onPageSelect)="atualizarPaginaInicial($event)"
+    (onClickNextPage)="atualizarPaginaInicial($event)"
+    >
+    </app-paginacao-buttons>
+</div>
+<!-- FECHAMENTO FINAL -->
+
+<div style="display: flex; flex-direction: column">
+<span style="color: #786bb9; margin-top: 10px; font-weight: 520"><b>Fechamento Final</b></span> 
+  <a (click)="limparFiltrosFinal()" style="text-align: right; color: #786bb9; text-decoration: underline; cursor: pointer">Limpar filtros</a>
+  <span style="display: flex; align-items: center;">
+    <span class="mr-auto" style="display: flex; align-items: center;">
+      <b style="width: 145px;">Fechamentos no Período: </b>
+      <app-data-range 
+        [dataInicio] = "dataFechamentoFinalIni"
+        [dataFim] = "dataFechamentoFinalFim"
+        (retDataFim) = "dataFechamentoFinalFim = $event"
+        (retDataInicio) =  "dataFechamentoFinalIni = $event"
+        >
+      </app-data-range>
+      <button style="margin-left: 10px;" type="button" class="btn btn-primary" (click)="obterFechamentosFinal(dataFechamentoFinalIni, dataFechamentoFinalFim, 0)">Buscar</button>
+    </span>
+  <span class="ml-auto">
+    <label (click)="listarFechamentosMensaisFinal()" for="fechamentoMensalFinalCheck" style="margin-left: 5px; margin-top: 3px; margin-bottom: 0"><input style="position: relative; top: 1px;" type="checkbox" id="fechamentoMensalFinalCheck">  Somente fechamentos mensais</label>
+  </span>
+</span>
+</div>
+<section class="base-dropdown" style="margin-top: 5px; margin-bottom: -5px;">
+  <div class="card fechamentos-card">
+    <ul class="list-group">
+      <li (click)="selecionarFechamentoFinal(item)" class="list-group-item"
+        *ngFor="let item of fechamentosFinal"
+        [ngStyle]="{'background': FechamentoFim == item ? '#786bb9' : '#fff'}">
+        <div class="row opcoesFechamentos" [ngStyle]="{'color': FechamentoFim == item ? '#fff' : '#777'}">
+          <div class="col-12 px-2">
+            <p>
+              <span style="font-weight: bold; color: black;">{{item.dataFechamento | date:'dd/MM/yyyy'}}</span> -
+              <span>{{item.numeroMeses}} meses</span> - 
+              <span>Fechamento Mensal: {{item.indFechamentoMensal == 'S' ? "Sim" : "Não"}}</span> - 
+              <span>{{item.codTipoOutlier == 0 ? 'Sem exclusão de outliers' : item.codTipoOutlier == 1 ? 'Com exclusão de Outliers por Desvio Padrão' : item.codTipoOutlier == 2 ? 'Com exclusão de Outliers por Percentual':''}}</span> 
+              <i class="fa fa-question-circle fa-lg" aria-hidden="true" title="{{item.empresasGrupo}}"></i>
+              <i *ngIf="item.indFechamentoParcial == true" class="fa fa-exclamation-circle fa-lg" style="color: #ffd100;"  aria-hidden="true" title="Fechamento Parcial"></i>
+            </p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <span style="font-weight: 600;">Total de registros: {{ totalFechamentosFinal }} - Itens por página 5 </span>
+  <app-paginacao-buttons
+  class="ml-auto"
+  [pageMax]="quantidadePagina" 
+  [totalRegistro]="totalFechamentosFinal" 
+  [currentPage]="paginaFechamentoFinal"
+  (onPageSelect)="atualizarPaginaFinal($event)"
+  (onClickNextPage)="atualizarPaginaFinal($event)"
+  >
+  </app-paginacao-buttons>
+</div>
+
+
+<section class="footer" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="verificaDatas()">Confirmar</button>
+</section>

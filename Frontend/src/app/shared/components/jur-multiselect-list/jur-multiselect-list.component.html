@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col "  [ngStyle]="{'height': height+'px'}">
+        <h3 class="titulo">{{titulo1}} ({{itensParaSelecaoCount}})</h3>
+        <div class="card card-listas" >
+            <div class="card-body p-0">
+                <ul class="list-group">
+                    <li class="list-group-item item-lista"
+                    [ngClass]="{'marcado': item.marcado}"
+                    (click)="item.marcado ? item.marcado = false : item.marcado = true"
+                    [hidden]="item.hide"
+                    *ngFor="let item of itensParaSelecao">
+                        {{item.descricao}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div #divBotoes class="col-1 p-0 div-botoes" [ngStyle]="{'height': height+'px'}">
+        <div class="row setas" [ngStyle]="{'margin-top': marginSetas+'px'}">
+            <div class="col-12 p-0"><h3 class="text-center" (click)="selecionarTodosOsItens()" >>></h3></div>
+            <div class="col-12 p-0"><h3 class="text-center" (click)="selecionarItensMarcados()" >></h3></div>
+            <div class="col-12 p-0"><h3 class="text-center" (click)="limparItensMarcados()" ><</h3></div>
+            <div class="col-12 p-0"><h3 class="text-center" (click)="limparItensSelecionados()" ><<</h3></div>
+        </div>
+    </div>
+    <div class="col " [ngStyle]="{'height': height+'px'}">
+        <h3 class="titulo">{{titulo2}} ({{itensSelecionados.length}})</h3>
+        <div class="card card-listas">
+            <div class="card-body p-0">
+                <ul class="list-group">
+                    <li class="list-group-item item-lista"
+                    [ngClass]="{'marcado': item.marcado}"
+                    (click)="item.marcado ? item.marcado = false : item.marcado = true"
+                    *ngFor="let item of itensSelecionados">
+                        {{item.descricao}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,69 @@
+<div class="grupo-input">
+  <div class="form-group" style="max-width: 120px; position: relative">
+    <input
+      type="search"
+      [id]="id"
+      mask="[00]\[000]"
+      [formControl]="control"
+      autocomplete="on"
+      class="form-control"
+      #dp="bsDatepicker"
+      name="date"
+      triggers=""
+      bsDatepicker
+      [bsConfig]="customBsConfig"
+      [outsideClick]="true"
+      (onShown)="onOpenCalendar($event)"
+      maxlength="7"
+      placeholder="mm/aaaa"
+      [disabled]="disabled"
+      [maxDate]="maxDate"
+      [minDate]="minDate"
+      [required]="required"
+      placement="bottom"
+    />
+    <span
+      class="guarda-erro"
+      *ngIf="control.invalid && control.errors.bsDate?.minDate"
+    >
+      {{ msgMinDate }}
+    </span>
+    <span
+      class="guarda-erro"
+      *ngIf="control.invalid && control.errors.bsDate?.maxDate"
+    >
+      {{ msgMaxDate }}
+    </span>
+    <span
+      class="guarda-erro"
+      *ngIf="control.invalid && control.hasError('required')"
+    >
+      Campo obrigatório.
+    </span>
+  </div>
+
+  <!-- <div class="form-group" *ngIf="!control.disabled"> -->
+  <div class="form-group">
+    <button
+      class="btn btn-success botao-calendario"
+      (click)="dp.toggle()"
+      type="button"
+      [disabled]="control.disabled"
+    >
+      <i class="fa-solid fa-calendar-days fa-lg"></i>
+    </button>
+  </div>
+
+  <ng-template #validacaoDtPeriod>
+    <span *ngIf="control.invalid && control.errors.bsDate?.minDate">
+      {{ msgMinDate }}
+    </span>
+    <span *ngIf="control.invalid && control.errors.bsDate?.maxDate">
+      {{ msgMaxDate }}
+    </span>
+    <span *ngIf="control.invalid && control.hasError('required')">
+      Campo obrigatório.
+    </span>
+  </ng-template>
+</div>
+<div></div>

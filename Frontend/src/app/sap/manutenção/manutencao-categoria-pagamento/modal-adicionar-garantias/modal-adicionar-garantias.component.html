@@ -1,0 +1,487 @@
+<div bsModal #template="bs-modal" style=" width: 600px;" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name1" [config]="{backdrop: 'static'}">
+  <div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">
+          {{titulo}} de Categoria de Pagamento - Garantias
+        </h4>
+        <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm" [ngSwitch]="tipoProcessoSelecionado">
+
+          <!-- Parte igualitária a todos os tipos de processo -->
+
+          <div class="form-row">
+            <div class="col-8">
+              <label for="descricao">Descrição da Categoria de Pagamento:</label> <br>
+              <input id="descricao" type="search" class="width form-control" maxlength="100" formControlName="descricao"
+                [ngClass]="{'is-invalid': registerForm.get('descricao').errors && registerForm.get('descricao').touched}"
+                [ngbTooltip]="validacaoTextos('descricao', 'Descrição da Categoria de Pagamento', true)" tooltipClass="erroTooltip"
+                oninput="this.value = this.value.toUpperCase()" StartWithSpace>
+            </div>
+            <div class="col-2 d-flex checkbox">
+              <input id="ativo" type="checkbox" formControlName="indicaAtivo">
+              <label for="ativo" class="m-0 p-0 pl-1">Ativo</label>
+            </div>
+          </div>
+
+          <!-- Cível Consumidor -->
+
+          <ng-container *ngSwitchCase="tipoProcessoEnum.civelConsumidor">
+            <div class="form-row">
+              <div class="col-8">
+                <label for="codigoMaterial">Código do Material SAP:</label> <br>
+                <input id="codigoMaterial" type="search" class="width form-control" maxlength="18" formControlName="codigoMaterial"
+                  [ngClass]="{'is-invalid': registerForm.get('codigoMaterial').errors && registerForm.get('codigoMaterial').touched}"
+                  [ngbTooltip]="validacaoTextos('codigoMaterial', 'Código do Material SAP', false)" tooltipClass="erroTooltip"
+                  OnlyNumberNoStartWith0>
+              </div>
+              <div class="col-2 d-flex checkbox">
+                <input id="indicaEnvioSAP" type="checkbox"
+                  formControlName="indicaEnvioSAP">
+                <label for="indicaEnvioSAP" class="m-0 p-0 pl-1">Envia SAP</label>
+              </div>
+            </div>
+            <div class="form-row mb-3">
+              <div class="col-6">               
+                <label class="col-form-label-sm" for="garantias">
+                  <i
+                  *ngIf="modalAdicionarService.tooltip"
+                  [ngbTooltip]="modalAdicionarService.tooltip"
+                  class="fas fa-info-circle roxo-padrao cursor"></i> 
+                  Classe de Garantia:
+                </label>
+                <ng-select
+                  [ngStyle]="{'fontSize': '11px'}"
+                  id="garantias"
+                  [items]="garantias"
+                  bindLabel="descricao"
+                  bindValue="id"
+                  appearance="outline"
+                  notFoundText="Nenhuma opção disponível"
+                  [searchable]="true"
+                  [clearable]="true"
+                  formControlName="codigoClasseGarantia"
+                  [placeholder]="'Selecione a Classe de Garantia'">        
+                </ng-select>
+              </div> 
+             
+
+              <div class="col-6">
+                <label class="col-form-label-sm" for="grupoCorrecao">
+                  Grupo de Correção:
+                </label>
+                <ng-select
+                  [ngStyle]="{'fontSize': '11px'}"
+                  id="grupoCorrecao"
+                  [items]="grupoCorrecao"
+                  bindLabel="descricao"
+                  bindValue="id"
+                  appearance="outline"
+                  notFoundText="Nenhuma opção disponível"
+                  [searchable]="false"
+                  [clearable]="false"
+                  formControlName="codigoGrupoCorrecao"                  
+                  [disabled]="registerForm.get('codigoGrupoCorrecao').disabled">        
+                </ng-select>
+              </div>
+            </div>
+            <div class="form-row ">
+              <div class="col-12 d-flex align-items-center">
+                <input id="registrarProcessosFinalizadoContabil" type="checkbox"
+                  formControlName="registrarProcessosFinalizadoContabil">
+                <label for="registrarProcessosFinalizadoContabil" class="m-0 p-0 pl-1">
+                  Registrar em Processos Finalizados Contabilmente
+                </label>
+              </div>              
+            </div>
+            <br/>
+            <div class="form-row mb-3 " style="margin-top: 2px;">
+              <div class="col-12">
+                <label class="col-form-label-sm" for="civelEstrategico">                
+                  Categoria de Pagamento Correspondente Cível Estratégico (DE x PARA migração de processo)
+                </label>
+                <ng-select
+                      [ngStyle]="{'fontSize': '11px'}"
+                      id="civelEstrategico"
+                      [items]="listCivelEstrategico"
+                      bindLabel="descricao"
+                      bindValue="id"
+                      appearance="outline"
+                      notFoundText="Nenhuma opção disponível"
+                      [searchable]="true"
+                      [clearable]="true"
+                      clearAllText="Limpar"
+                      formControlName="comboCivelEstrategico"
+                      placeholder="Selecione uma opção"
+                      [virtualScroll]="true">        
+                </ng-select>
+              </div>
+            </div>
+          </ng-container>
+
+            <!-- Juizado Especial -->
+
+          <ng-container  *ngSwitchCase="tipoProcessoEnum.juizadoEspecial">
+            <div class="form-row">
+              <div class="col-8">
+                <label for="codigoMaterial">Código do Material SAP:</label> <br>
+                <input id="codigoMaterial" type="search" class="width form-control" maxlength="18" formControlName="codigoMaterial"
+                  [ngClass]="{'is-invalid': registerForm.get('codigoMaterial').errors && registerForm.get('codigoMaterial').touched}"
+                  [ngbTooltip]="validacaoTextos('codigoMaterial', 'Código do Material SAP', false)" tooltipClass="erroTooltip"
+                  OnlyNumberNoStartWith0>
+              </div>
+              <div class="col-2 d-flex checkbox">
+                <input id="indicaEnvioSAP" type="checkbox"
+                  formControlName="indicaEnvioSAP">
+                <label for="indicaEnvioSAP" class="m-0 p-0 pl-1">Envia SAP</label>
+              </div>
+            </div>
+            <div class="form-row mb-3">
+              <div class="col-6">
+                <label class="col-form-label-sm" for="garantias">
+                  <i
+                  *ngIf="modalAdicionarService.tooltip"
+                  [ngbTooltip]="modalAdicionarService.tooltip"
+                  class="fas fa-info-circle roxo-padrao cursor"></i> 
+                  Classe de Garantia:
+                </label>
+                <ng-select
+                  [ngStyle]="{'fontSize': '11px'}"
+                  id="garantias"
+                  [items]="garantias"
+                  bindLabel="descricao"
+                  bindValue="id"
+                  appearance="outline"
+                  notFoundText="Nenhuma opção disponível"
+                  [searchable]="true"
+                  [clearable]="true"
+                  formControlName="codigoClasseGarantia"
+                  [placeholder]="'Selecione a Classe de Garantia'">        
+                </ng-select>
+              </div>
+              <div class="col-6">
+                <label class="col-form-label-sm" for="grupoCorrecao">
+                  Grupo de Correção:
+                </label>
+                <ng-select
+                  [ngStyle]="{'fontSize': '11px'}"
+                  id="grupoCorrecao"
+                  [items]="grupoCorrecao"
+                  bindLabel="descricao"
+                  bindValue="id"
+                  appearance="outline"
+                  notFoundText="Nenhuma opção disponível"
+                  [searchable]="false"
+                  [clearable]="false"
+                  formControlName="codigoGrupoCorrecao"                  
+                  [disabled]="registerForm.get('codigoGrupoCorrecao').disabled">        
+                </ng-select>
+              </div>
+              </div>
+              <div class="col-12 d-flex align-items-center p-0">
+                <input id="registrarProcessosFinalizadoContabil" type="checkbox"
+                  formControlName="registrarProcessosFinalizadoContabil">
+                <label for="registrarProcessosFinalizadoContabil" class="m-0 p-0 pl-1">
+                  Registrar em Processos Finalizados Contabilmente
+                </label>
+              </div>
+
+          </ng-container>
+
+           <!-- Cível Estratégico -->
+
+          <ng-container *ngSwitchCase="tipoProcessoEnum.civelEstrategico">
+            <div class="form-row">
+              <div class="col-8">
+                <label for="codigoMaterial">Código do Material SAP:</label> <br>
+                <input id="codigoMaterial" type="search" class="width form-control" maxlength="18" formControlName="codigoMaterial"
+                  [ngClass]="{'is-invalid': registerForm.get('codigoMaterial').errors && registerForm.get('codigoMaterial').touched}"
+                  [ngbTooltip]="validacaoTextos('codigoMaterial', 'Código do Material SAP', false)" tooltipClass="erroTooltip"
+                  OnlyNumberNoStartWith0>
+              </div>
+              <div class="col-2 d-flex checkbox">
+                <input id="indicaEnvioSAP" type="checkbox"
+                  formControlName="indicaEnvioSAP">
+                <label for="indicaEnvioSAP" class="m-0 p-0 pl-1">Envia SAP</label>
+              </div>
+            </div>
+            <div class="form-row mb-3">
+              <div class="col-8">
+                <label class="col-form-label-sm" for="garantias">
+                  <i
+                  *ngIf="modalAdicionarService.tooltip"
+                  [ngbTooltip]="modalAdicionarService.tooltip"
+                  class="fas fa-info-circle roxo-padrao cursor"></i> 
+                  Classe de Garantia:
+                </label>
+                <ng-select
+                  [ngStyle]="{'fontSize': '11px'}"
+                  id="garantias"
+                  [items]="garantias"
+                  bindLabel="descricao"
+                  bindValue="id"
+                  appearance="outline"
+                  notFoundText="Nenhuma opção disponível"
+                  [searchable]="true"
+                  [clearable]="true"
+                  formControlName="codigoClasseGarantia"
+                  [placeholder]="'Selecione a Classe de Garantia'">        
+                </ng-select>
+              </div>
+              </div>
+
+              <br/>
+              <div class="form-row mb-3 " style="margin-top: 2px;">
+                <div class="col-12">
+                  <label class="col-form-label-sm" for="civelConsumidor">                
+                    Categoria de Pagamento Correspondente Cível Consumidor (DE x PARA migração de processo)
+                  </label>
+                  <ng-select
+                  [ngStyle]="{'fontSize': '11px'}"
+                  id="civelConsumidor"
+                  [items]="listCivelConsumidor"
+                  bindLabel="descricao"
+                  bindValue="id"
+                  appearance="outline"
+                  notFoundText="Nenhuma opção disponível"
+                  [searchable]="true"
+                  [clearable]="true"
+                  clearAllText="Limpar"
+                  formControlName="comboCivelConsumidor"
+                  placeholder="Selecione uma opção"
+                  [virtualScroll]="true"
+                  >       
+                  </ng-select>
+                </div>
+              </div>
+
+
+          </ng-container>
+
+         <!-- Trabalhista -->
+
+         <ng-container *ngSwitchCase="tipoProcessoEnum.trabalhista">
+          <div class="form-row">
+            <div class="col-8">
+              <label for="codigoMaterial">Código do Material SAP:</label> <br>
+              <input id="codigoMaterial" type="search" class="width form-control" maxlength="18" formControlName="codigoMaterial"
+                [ngClass]="{'is-invalid': registerForm.get('codigoMaterial').errors && registerForm.get('codigoMaterial').touched}"
+                [ngbTooltip]="validacaoTextos('codigoMaterial', 'Código do Material SAP', false)" tooltipClass="erroTooltip"
+                OnlyNumberNoStartWith0>
+            </div>
+            <div class="col-2 d-flex checkbox">
+              <input id="indicaEnvioSAP" type="checkbox"
+                formControlName="indicaEnvioSAP">
+              <label for="indicaEnvioSAP" class="m-0 p-0 pl-1">Envia SAP</label>
+            </div>
+          </div>
+          <div class="form-row mb-3">
+            <div class="col-6">
+              <label class="col-form-label-sm" for="garantias">
+                <i
+                *ngIf="modalAdicionarService.tooltip"
+                [ngbTooltip]="modalAdicionarService.tooltip"
+                class="fas fa-info-circle roxo-padrao cursor"></i> 
+                Classe de Garantia:
+              </label>
+              <ng-select
+                [ngStyle]="{'fontSize': '11px'}"
+                id="garantias"
+                [items]="garantias"
+                bindLabel="descricao"
+                bindValue="id"
+                appearance="outline"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                formControlName="codigoClasseGarantia"
+                [placeholder]="'Selecione a Classe de Garantia'">        
+              </ng-select>
+            </div>
+            <div class="col-6">
+              <label class="col-form-label-sm" for="grupoCorrecao">
+                Grupo de Correção:
+              </label>
+              <ng-select
+                [ngStyle]="{'fontSize': '11px'}"
+                id="grupoCorrecao"
+                [items]="grupoCorrecao"
+                bindLabel="descricao"
+                bindValue="id"
+                appearance="outline"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="false"
+                [clearable]="false"
+                formControlName="codigoGrupoCorrecao"                  
+                [disabled]="registerForm.get('codigoGrupoCorrecao').disabled">        
+              </ng-select>
+
+            </div>
+          </div>
+          <div class="form-row ">
+            <div class="col-12 d-flex align-items-center">
+              <input id="registrarProcessosFinalizadoContabil" type="checkbox"
+                formControlName="registrarProcessosFinalizadoContabil">
+              <label for="registrarProcessosFinalizadoContabil" class="m-0 p-0 pl-1">
+                Registrar em Processos Finalizados Contabilmente
+              </label>
+            </div>
+          </div>
+          <div class="form-row ">
+            <div class="col-12 d-flex align-items-center">
+              <input id="influenciaContingenciaMedia" type="checkbox"
+                formControlName="influenciaContingenciaMedia">
+              <label for="influenciaContingenciaMedia" class="m-0 p-0 pl-1">
+                Influencia a Contingência por Média
+              </label>
+            </div>
+          </div>
+         </ng-container>
+
+         <!-- PEX -->
+
+         <ng-container *ngSwitchCase="tipoProcessoEnum.PEX">
+          <div class="form-row">
+            <div class="col-8">
+              <label for="codigoMaterial">Código do Material SAP:</label> <br>
+              <input id="codigoMaterial" type="search" class="width form-control" maxlength="18" formControlName="codigoMaterial"
+                [ngClass]="{'is-invalid': registerForm.get('codigoMaterial').errors && registerForm.get('codigoMaterial').touched}"
+                [ngbTooltip]="validacaoTextos('codigoMaterial', 'Código do Material SAP', false)" tooltipClass="erroTooltip"
+                OnlyNumberNoStartWith0>
+            </div>
+            <div class="col-2 d-flex checkbox">
+              <input id="indicaEnvioSAP" type="checkbox"
+                formControlName="indicaEnvioSAP">
+              <label for="indicaEnvioSAP" class="m-0 p-0 pl-1">Envia SAP</label>
+            </div>
+          </div>
+          <div class="form-row mb-3">
+            <div class="col-6">
+              <label class="col-form-label-sm" for="garantias">
+                <i
+                *ngIf="modalAdicionarService.tooltip"
+                [ngbTooltip]="modalAdicionarService.tooltip"
+                class="fas fa-info-circle roxo-padrao cursor"></i> 
+                Classe de Garantia:
+              </label>
+              <ng-select
+                [ngStyle]="{'fontSize': '11px'}"
+                id="garantias"
+                [items]="garantias"
+                bindLabel="descricao"
+                bindValue="id"
+                appearance="outline"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                formControlName="codigoClasseGarantia"
+                [placeholder]="'Selecione a Classe de Garantia'">        
+              </ng-select>
+            </div>
+            <div class="col-6">
+              <label class="col-form-label-sm" for="grupoCorrecao">
+                Grupo de Correção:
+              </label>
+              <ng-select
+                [ngStyle]="{'fontSize': '11px'}"
+                id="grupoCorrecao"
+                [items]="grupoCorrecao"
+                bindLabel="descricao"
+                bindValue="id"
+                appearance="outline"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="false"
+                [clearable]="false"
+                formControlName="codigoGrupoCorrecao"                  
+                [disabled]="registerForm.get('codigoGrupoCorrecao').disabled">        
+              </ng-select>
+            </div>
+          </div>
+          <div class="form-row mb-2 ">
+            <div class="col-12 d-flex align-items-center">
+              <input id="registrarProcessosFinalizadoContabil" type="checkbox"
+                formControlName="registrarProcessosFinalizadoContabil">
+              <label for="registrarProcessosFinalizadoContabil" class="m-0 p-0 pl-1">
+                Registrar em Processos Finalizados Contabilmente
+              </label>
+            </div>
+          </div>
+          <div class="form-row ">
+            <div class="col-12 d-flex align-items-center">
+            <input id="escritorioPodeSolicitar" type="checkbox" formControlName="escritorioPodeSolicitar" >
+            <label for="escritorioPodeSolicitar" class="m-0 p-0 pl-1">Escritório Pode Solicitar</label>
+          </div>
+          </div>
+         </ng-container>
+
+         <!-- Tributário Judicial -->
+
+         <ng-container *ngSwitchCase="tipoProcessoEnum.tributarioJudicial">
+          <div class="form-row ">
+            <div class="col-8">
+              <label class="col-form-label-sm" for="garantias">                
+                Classe de Garantia:
+              </label>
+              <ng-select
+                [ngStyle]="{'fontSize': '11px'}"
+                id="garantias"
+                [items]="garantias"
+                bindLabel="descricao"
+                bindValue="id"
+                appearance="outline"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                formControlName="codigoClasseGarantia"
+                [placeholder]="'Selecione a Classe de Garantia'">        
+              </ng-select>
+            </div>
+            </div>
+         </ng-container>
+
+         <!-- Tributário Administrativo -->
+
+         <ng-container *ngSwitchCase="tipoProcessoEnum.tributarioAdministrativo">
+          <div class="form-row ">
+            <div class="col-8">
+              <label class="col-form-label-sm" for="garantias">              
+                Classe de Garantia:
+              </label>
+              <ng-select
+                [ngStyle]="{'fontSize': '11px'}"
+                id="garantias"
+                [items]="garantias"
+                bindLabel="descricao"
+                bindValue="id"
+                appearance="outline"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                formControlName="codigoClasseGarantia"
+                [placeholder]="'Selecione a Classe de Garantia'">        
+              </ng-select>
+            </div>
+            </div>
+         </ng-container>
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="bsModalRef.hide()"><span
+            class="texto-btn-oi cancelar">
+            Cancelar </span></button>
+        <button type="button" class="btn btn-primary" [ngClass]="!registerForm.valid ? 'btn-primary-disabled' : '' "
+          [disabled]="!registerForm.valid" (click)="onConfirmar()"><span class="texto-btn-oi confirmar"> Confirmar </span></button>
+      </div>
+    </div>
+    <div>
+    </div>
+  </div>
+</div>

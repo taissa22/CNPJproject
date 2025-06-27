@@ -1,0 +1,25 @@
+.fa-sm {
+  font-size: 16px;
+}
+
+.btn {
+  color: #786bb9 !important;
+}
+
+.painel-varas {
+  padding: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: #fff;
+}
+.fa-arrows-alt-v {
+  opacity: 0.5;
+}
+
+::ng-deep {
+  sisjur-table {
+    table thead th i {
+      color: #6f62b2 !important;
+    }
+  }
+}

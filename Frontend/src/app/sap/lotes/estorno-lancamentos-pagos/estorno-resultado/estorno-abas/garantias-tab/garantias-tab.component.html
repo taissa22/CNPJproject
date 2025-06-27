@@ -1,0 +1,17 @@
+<label *ngIf='garantias.length == 0'>Nenhuma garantia encontrada.</label>
+<table class="table table-striped fonte-padrao" *ngIf='garantias.length > 0'>
+    <thead>
+        <th nowrap *ngFor="let header of garantiasKeys">
+            {{ header | estornoLancamentoTabelaGarantiasAlias }}
+        </th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let garantia of garantias" class="pointer"
+            [ngClass]="(garantia.selected) && 'selected'"
+            (click)="onClickGarantia(garantia)">
+            <td nowrap *ngFor="let header of garantiasKeys"  [ngClass]="{'alignDireita': header == 'valor'}">
+                {{ header == 'valor'? (garantia[header]  | currency: "BRL":'':"1.2-2":"pt") :garantia[header] }}
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,191 @@
+<app-container-pagina
+  [titulo]="'Agenda de Audiências Trabalhista'"
+  [caminho]="breadcrumb"
+  [hasAdicionar]="false"
+  rota="/agenda/agendaAudienncia/trabalhista/criteriosGuia"
+  [textoRota]="'Voltar'"
+  (voltou)="voltar($event)"
+>
+  <!-- inicio criterio -->
+
+  <div class="d-flex align-items-end mt-3" style="height: 100%">
+    <button
+      class="btn btn-roxo pl-0"
+      [autoClose]="false"
+      triggers="manual"
+      #t="ngbTooltip"
+      [ngbTooltip]="parametrosTemplate"
+      placement="bottom"
+      tooltipClass="consultaSaldo"
+      style="text-align: left"
+      (click)="abrirCriterio(t)"
+    >
+      <div style="cursor: pointer">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          width="20"
+          height="22.581"
+          viewBox="0 0 20 22.581"
+        >
+          <defs>
+            <pattern
+              id="pattern"
+              preserveAspectRatio="none"
+              width="100%"
+              height="100%"
+              viewBox="0 0 31 35"
+            >
+              <image
+                width="31"
+                height="35"
+                xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAjCAYAAABsFtHvAAAABHNCSVQICAgIfAhkiAAAAzhJREFUWIXtlVtoXFUUQNe+985kgnk0EZKUxjbkYbCRJOqPSquJHVDoR0f0o76goSI4KVRB7fghiqJUakEREhSEQXwipYGCzvSnUROV0JqkmpDYGFM7YGwT85gQMpOZ2X6klkruDZPMjAp2/d1z9tlrH84+58I1/m+I3WDAH6rF0Eq7uWTKM3Kko3UyJ/KAP/QyIi/YBSsaE5Up1LzrcKd3PFO5YTP2kFOwqLyCEMFIfvPck1/U50AudgX9xaJH3V5gQkR6Mi1gLZEtL3W0LnjU7RWRn0Wk51B7qCFrchX7JnQsQPn66f2h0o3IrfUEq2h7wB/eA7BEHEVdIlJi5lMM/JFTuSA1CDVXfa/X9zfWfebZZJVcVDPbTibyf5KM5J58i90P1PPq0V0f6Qr9qnpcVX3prF/dcGl20fbGMh587GbmZ5Y49uHQ7dG5GCI0V2wpbN7Rus2nql1Am4jMpi9Pg+q6Eva2NXLisxFOfxvBtAzKNxewMB9n/NwMfb0R2vy3+qrrSgHuz5rck2/x6BO3cOyDHxk8M0lDUxl79zViuVZOMPLrPB+/N0iws5+Dz9/hU9V9IhK0y7X6zFWia8kbGsuIzsYYPDNJbX0pjzzefEUMULm1iIf3N7EcT9J98heAg065VslTpF5UNOK0YHNlIcM/XATAu7sWsemQLVuLuKGqmOGzFwGa19rMulDV7q5PhzXQHtbofEyd+CR4VgPtYU0kUqqqVXa5NnLVBoqK8wCYvrToGDR9aRG328Q0BRGZyJq8oakcgO++umAbMDYyzYWJOepuuh7gS6dEG5F3lVVcd77ptgoGTv/GyRNjJBN6ZXJ0aIr33+nHsgzu23MjwJtOiTb0jqtqy3I8eSrY+T3j52awXAblFQUsROPMzS5RUOimaFMeLpc5eX4svv1w586ZrMkvF+BLpTTY1xspHh2aIraUwDCEqpoSdu7axufHf+rp643sUHQosZzXcvTd1qmsyS8XsAl4Cmhh5UoNABNAUES6A/7Q24gcUNVR02Xd/dpb3t+zJk+HQ/7wERGeQRk3XOadVxeQ81/q6x33PqvKGwjVqXjC8Z3PKYED4Xv+FfE1/lP8CUX7RYQkE2bsAAAAAElFTkSuQmCC"
+              />
+            </pattern>
+          </defs>
+          <rect
+            id="buscar"
+            width="20"
+            height="22.581"
+            rx="10"
+            fill="url(#pattern)"
+          />
+        </svg>
+
+        <label class="roxo-padrao" style="cursor: pointer"
+          >Critérios de Pesquisa</label
+        >
+      </div>
+      <ng-template #parametrosTemplate>
+        <app-criterios-de-pesquisa
+          [listaSelecionados]="valoresCriterio"
+          [ordenacaoColuna]="ordenacao"
+          (modalFechou)="fecharCriterio(t)"
+          [referenciaTooltip]="t"
+          [origem]="'Agenda_de_Audiencias_Trabalhista'"
+        ></app-criterios-de-pesquisa>
+      </ng-template>
+    </button>
+  </div>
+  <!-- fim criterio -->
+
+  <div class="titulo mt-3">
+    <h1>Audiências Localizadas</h1>
+    <hr />
+  </div>
+
+  <div class="roxo-padrao2 pt-3 d-flex justify-content-between">
+    <div class="itensEsquerda">
+      <button class="btn btn-roxo pl-0" (click)="modalOrdenar()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="14"
+          viewBox="0 0 16 14"
+        >
+          <path
+            id="ic_subject_24px"
+            d="M14,17H4v2H14Zm6-8H4v2H20ZM4,15H20V13H4ZM4,5V7H20V5Z"
+            transform="translate(-4 -5)"
+            fill="#786bb9"
+          />
+        </svg>
+        Ordenar lista de audiências
+      </button>
+    </div>
+
+    <div class="roxo-padrao itensDireita">
+      <button
+        (click)="modalPedidos()"
+        class="btn btn-roxo pr-1"
+        [disabled]="!service.audienciaSelecionada"
+      >
+        <i class="fas fa-list-ul pr-1" style="color: #786bb9"></i>
+        Pedidos
+      </button>
+      <button
+        class="pl-3"
+        (click)="modalPartes()"
+        class="btn btn-roxo pr-1"
+        [disabled]="!service.audienciaSelecionada"
+      >
+        <i class="fas fa-user-friends pr-1" style="color: #786bb9"> </i>
+        Partes
+      </button>
+      <button
+        (click)="modalEditar()"
+        class="btn btn-roxo pr-1"
+        [disabled]="!service.audienciaSelecionada"
+      >
+        <i class="fas fa-edit pr-1"></i>
+        Editar
+      </button>
+      <button (click)="download()" class="btn btn-roxo pr-1">
+        <i class="fas fa-print pr-1"></i>
+        Exportar Agenda (PDF)
+      </button>
+      <button (click)="exportarCompleto()" class="btn btn-roxo pr-1">
+        <i class="fas fa-download pr-1"></i>
+        Exportar Agenda (CSV)
+        </button>
+        <button (click)="exportar()" class="btn btn-roxo pr-1">
+          <i class="fas fa-download pr-1"></i>
+          Exportar Lista (CSV)
+      </button>
+    </div>
+  </div>
+  <div *ngIf="notFound">Nenhuma audiência encontada</div>
+  <div style="overflow: auto; border: 1px solid #dee2e6" *ngIf="!notFound">
+    <table class="table table-striped" style="font-size: 12px">
+      <th col nowrap *ngFor="let header of headerTabela">
+        {{ header | ResultadoAgendaAudienciaAlias }}
+      </th>
+      <tbody>
+        <tr
+          row
+          nowrap
+          class="table-item"
+          *ngFor="let dado of dadosTabela.dado"
+          (click)="onRowClick(dado)"
+          [ngClass]="dado == service.audienciaSelecionada && 'rowSelected'"
+        >
+          <td class="text-limit" nowrap *ngFor="let header of headerTabela">
+            <span
+              [ngbTooltip]="
+                dado[header] && dado[header].length > 40 && dado[header]
+              "
+            >
+              {{ dado[header] | boolToPT }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div
+    class="row pt-3 d-flex align-items-center"
+    *ngIf="headerTabela.length > 0"
+  >
+    <div class="col-sm-6">
+      <span class="title pr-2"
+        >Total de registros: {{ dadosTabela.totalElementos }} - Itens por
+        página</span
+      >
+      <app-table-options
+        *ngIf="headerTabela.length > 0"
+        (valueChange)="atualizarQuantidadePagina($event)"
+      >
+      </app-table-options>
+    </div>
+    <div class="col-sm-6">
+      <app-paginacao-buttons
+        [pageMax]="quantidadePagina"
+        [totalRegistro]="dadosTabela.totalElementos"
+        [currentPage]="pagina"
+        (onPageSelect)="atualizarPagina($event)"
+        (onClickNextPage)="atualizarPagina($event)"
+      >
+      </app-paginacao-buttons>
+    </div>
+  </div>
+</app-container-pagina>

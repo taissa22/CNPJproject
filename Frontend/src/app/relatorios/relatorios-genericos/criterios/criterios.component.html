@@ -1,0 +1,302 @@
+<div class="filters-box-container">
+
+
+  <form [formGroup]="formCriterios">
+    <ng-content ></ng-content>
+
+  <div class="filters-box-line">
+         <div class="filters-box-label">
+           Status do Processo:
+         </div>
+
+         <div class="filters-box-items">
+           <div><input type="radio" formControlName ="statusProcesso"  value="ativo" >Ativo</div>
+           <div><input type="radio" formControlName ="statusProcesso"  value="inativo">Inativo</div>
+           <div><input type="radio" formControlName ="statusProcesso"   value="excluido">Excluído</div>
+           <div><input type="radio" formControlName ="statusProcesso"   value="ambos">Ambos</div>
+         </div>
+       </div>
+
+        <div class="filters-box-line">
+         <div class="filters-box-label">
+           Status Contábil do Processo:
+         </div>
+
+         <div class="filters-box-items">
+           <div><input  formControlName="statusContabilProcesso" type="radio"  value="ativo">Ativo</div>
+           <div><input  formControlName="statusContabilProcesso" type="radio"  value="inativo">Inativo</div>
+           <div><input  formControlName="statusContabilProcesso" type="radio"  value="ambos">Ambos</div>
+         </div>
+       </div>
+
+
+       <div class="filters-box-line">
+         <div class="filters-box-label">
+           Possuam audiências no período de:
+         </div>
+
+         <div class="filters-box-items">
+           <div>
+        <div class="form-inline">
+               <div class="form-group">
+                 <div class="input-group">
+                   <input class="form-control"
+                       placeholder="dd-mm-yyyy"
+                        type="text"
+                        name="dp"
+                        formControlName="inicioPeriodoAudiencia"
+                          ngbDatepicker
+                            #d="ngbDatepicker"
+                            [navigation]="'arrows'"
+                          [outsideDays]="'hidden'"
+                          >
+                   <div class="input-group-append">
+                     <button class="btn calendar" (click)="d.toggle()" type="button"><i class="fa-solid fa-calendar-days fa-lg"></i></button>
+                   </div>
+                 </div>
+               </div>
+            </div>
+
+
+
+
+           </div>
+           <div>até</div>
+           <div>
+
+
+         <div class="form-inline">
+               <div class="form-group">
+                 <div class="input-group">
+                   <input class="form-control" placeholder="dd-mm-yyyy"
+                          name="dp2"
+                          formControlName="fimPeriodoAudiencia"
+                          ngbDatepicker
+                          #e="ngbDatepicker"
+                          [navigation]="'arrows'"
+                          [outsideDays]="'hidden'">
+                   <div class="input-group-append">
+                     <button class="btn calendar" (click)="e.toggle()" type="button"><i class="fa-solid fa-calendar-days fa-lg"></i></button>
+                   </div>
+                 </div>
+               </div>
+            </div>
+           </div>
+         </div>
+       </div>
+
+
+       <div class="filters-box-line">
+         <div class="filters-box-label">
+           Data de Cadastro:
+         </div>
+
+         <div class="filters-box-items">
+           <div>
+
+       <div class="form-inline">
+               <div class="form-group">
+                 <div class="input-group">
+                   <input class="form-control" placeholder="dd-mm-yyyy"
+                          name="dp3"
+                          formControlName="inicioDataCadastro"
+                           ngbDatepicker
+                           #f="ngbDatepicker"
+                           [navigation]="'arrows'"
+                          [outsideDays]="'hidden'">
+                   <div class="input-group-append">
+                     <button class="btn calendar" (click)="f.toggle()" type="button"><i class="fa-solid fa-calendar-days fa-lg"></i></button>
+                   </div>
+                 </div>
+               </div>
+            </div>
+
+
+           </div>
+           <div>até</div>
+           <div>
+
+
+            <div class="form-inline">
+               <div class="form-group">
+                 <div class="input-group">
+                   <input class="form-control" placeholder="dd-mm-yyyy"
+                          name="dp4"
+                          formControlName="fimDataCadastro"
+                           ngbDatepicker
+                            #g="ngbDatepicker"
+                            [navigation]="'arrows'"
+                          [outsideDays]="'hidden'">
+                   <div class="input-group-append">
+                     <button class="btn calendar" (click)="g.toggle();" type="button"><i class="fa-solid fa-calendar-days fa-lg"></i></button>
+                   </div>
+                 </div>
+               </div>
+            </div>
+
+
+           </div>
+         </div>
+       </div>
+
+        <div class="filters-box-line">
+         <div class="filters-box-label">
+           Data de Distribuição:
+         </div>
+
+         <div class="filters-box-items">
+           <div>
+
+           <div class="form-inline">
+               <div class="form-group">
+                 <div class="input-group">
+                   <input class="form-control" placeholder="dd-mm-yyyy"
+                          name="dp5"
+                          formControlName="inicioDataDistribuicao"
+
+                           ngbDatepicker
+                            #h="ngbDatepicker"
+                            [navigation]="'arrows'"
+                          [outsideDays]="'hidden'">
+                   <div class="input-group-append">
+                     <button class="btn calendar" (click)="h.toggle();" type="button"><i class="fa-solid fa-calendar-days fa-lg"></i></button>
+                   </div>
+                 </div>
+               </div>
+              </div>
+
+
+           </div>
+           <div>até</div>
+           <div>
+
+            <div class="form-inline">
+               <div class="form-group">
+                 <div class="input-group">
+                   <input class="form-control" placeholder="dd-mm-yyyy"
+                          name="dp6"
+                          formControlName="fimDataDistribuicao"
+                          ngbDatepicker
+                          #i="ngbDatepicker"
+                          [navigation]="'arrows'"
+                          [outsideDays]="'hidden'">
+                   <div class="input-group-append">
+                     <button class="btn calendar" (click)="i.toggle();" type="button"><i class="fa-solid fa-calendar-days fa-lg"></i></button>
+                   </div>
+                 </div>
+               </div>
+            </div>
+
+           </div>
+         </div>
+       </div>
+
+       <div class="filters-box-line">
+         <div class="filters-box-label">
+           Data de Finalização Contábil:
+         </div>
+
+         <div class="filters-box-items">
+           <div>
+
+              <div class="form-inline">
+               <div class="form-group">
+                 <div class="input-group">
+                   <input class="form-control" placeholder="dd-mm-yyyy"
+                          name="dp7"
+                          formControlName="inicioDataFinalizacaoContabil"
+                          ngbDatepicker
+                           #j="ngbDatepicker"
+                            [navigation]="'arrows'"
+                          [outsideDays]="'hidden'">
+                   <div class="input-group-append">
+                     <button class="btn calendar" (click)="j.toggle();" type="button"><i class="fa-solid fa-calendar-days fa-lg"></i></button>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+
+           </div>
+           <div>até</div>
+           <div>
+
+        <div class="form-inline">
+               <div class="form-group">
+                 <div class="input-group">
+                   <input class="form-control" placeholder="dd-mm-yyyy"
+                           name="dp8"
+                           formControlName="fimDataFinalizacaoContabil"
+                           ngbDatepicker
+                           #k="ngbDatepicker"
+                           [navigation]="'arrows'"
+                           [outsideDays]="'hidden'">
+                   <div class="input-group-append">
+                     <button class="btn calendar" (click)="k.toggle();" type="button"><i class="fa-solid fa-calendar-days fa-lg"></i></button>
+                   </div>
+                 </div>
+               </div>
+              </div>
+
+           </div>
+         </div>
+       </div>
+
+       <div class="filters-box-line">
+         <div class="filters-box-label">
+           Data de Finalização Escritório:
+         </div>
+
+         <div class="filters-box-items">
+           <div>
+
+
+              <div class="form-inline">
+               <div class="form-group">
+                 <div class="input-group">
+                   <input class="form-control" placeholder="dd-mm-yyyy"
+                          name="dp9"
+                          formControlName="inicioDataFinalizacaoEscritorio"
+                          ngbDatepicker
+                           #l="ngbDatepicker"
+                           [navigation]="'arrows'"
+                          [outsideDays]="'hidden'">
+                   <div class="input-group-append">
+                     <button class="btn calendar" (click)="l.toggle();" type="button"><i class="fa-solid fa-calendar-days fa-lg"></i></button>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+
+
+           </div>
+           <div>até</div>
+           <div>
+
+
+             <div class="form-inline">
+               <div class="form-group">
+                 <div class="input-group">
+                   <input class="form-control" placeholder="dd-mm-yyyy"
+                          name="dp10"
+                          formControlName="fimDataFinalizacaoEscritorio"
+                          ngbDatepicker
+                            #m="ngbDatepicker"
+                            [navigation]="'arrows'"
+                          [outsideDays]="'hidden'">
+                   <div class="input-group-append">
+                     <button
+                     class="btn calendar"
+                     (click)="m.toggle();"
+                     type="button"><i class="fa-solid fa-calendar-days fa-lg"></i></button>
+                   </div>
+                 </div>
+               </div>
+              </div>
+           </div>
+         </div>
+       </div>
+      </form>
+      <!-- <app-form-debug [form]="formCriterios"></app-form-debug> -->
+     </div>

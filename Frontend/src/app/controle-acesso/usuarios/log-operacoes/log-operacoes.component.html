@@ -1,0 +1,327 @@
+<!-- <div *ngIf="logUsuario"> -->
+<div [ngClass]="{'hidden': !logUsuario}">
+    <section class="popup" *ngIf="popupLigada">
+        <div class="operacaoUsuario" >
+            <div class="popupOperacoes">
+                <div>
+                    <h3>Agendamento/Downloads de Exportações de Log</h3>
+                    <p class="info">Os agendamentos são processados a cada 15 minutos e disponibilizados para download.</p>
+                    <form [formGroup]="novoAgendamento" >
+                    <div class="conjunto-dados-formulario">
+                            <div>
+                                <div class="linha-formulario">
+                                    <div class="dado-formulario">
+                                        <label for="">Período:</label>
+                                        <div>
+                                            <app-data-range
+                                                (retDataInicio) = "inicioAgendamento = $event"
+                                                (retDataFim) = "fimAgendamento = $event"
+                                                (rangeValido) = "dataValidaAgendamento = $event"
+                                                [showWeekNumbers] = "false"
+                                                [dataInicio] = "this.inicioAgendamento"
+                                                [dataFim] = "this.fimAgendamento"
+                                                >
+                                                <!-- formControlName="dataAgendamento"> -->
+                                            </app-data-range>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="linha-formulario">
+                                    <div class="dado-formulario">
+                                        <label for="operacao">Operação</label>
+                                        <div>
+                                            <select class="form-control" id="operacoes" name="operacoes" formControlName="operacaoSelecionada">
+                                                <option *ngFor="let operacao of comboOperacoes" [ngValue]="operacao.valor">
+                                                {{operacao.texto}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="dado-formulario">
+                                        <label for="operacao">Log</label>
+                                        <div>
+                                            <select class="form-control combo-logs" id="itemLog" name="log" formControlName="log">
+                                                <option *ngFor="let item of comboLogs" [ngValue]="item.id" style="max-width: 60px;">
+                                                {{item.texto}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div>
+                                <div class="grid-checkboxes row">
+
+                                        <div class="col-6 d-flex align-content-between flex-wrap">
+                                            <div class="row">
+                                                <input type="checkbox" id="chk-administrativo" formControlName="chkAdministrativo">
+                                                <label for="chk-administrativo">Administrativo</label>
+                                            </div>
+                                            <div class="row">
+                                                <input type="checkbox" id="chk-civel-consumidor" formControlName="chkCivelConsumidor">
+                                                <label for="chk-civel-consumidor">Cível Consumidor</label>
+                                            </div>
+                                            <div class="row">
+                                                <input type="checkbox" id="chk-civel-estrategico" formControlName="chkCivelEstrategico">
+                                                <label for="chk-civel-estrategico">Cível Estratégico</label>
+                                            </div>
+                                            <div class="row">
+                                                <input type="checkbox" id="chk-desumprimento" formControlName="chkDescumprimento">
+                                            <label for="chk-desumprimento">Descumprimento</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 d-flex align-content-between flex-wrap">
+                                            <div class="row">
+                                                <input type="checkbox" id="chk-jec" formControlName="chkJec">
+                                                <label for="chk-jec">Jec</label>
+                                            </div>
+                                            <div class="row">
+                                                <input type="checkbox" id="chk-pex" formControlName="chkPex">
+                                                <label for="chk-pex">Pex</label>
+                                            </div>
+                                            <div class="row">
+                                                <input type="checkbox" id="chk-trabalhista" formControlName="chkTrabalhista">
+                                                <label for="chk-trabalhista">Trabalhista</label>
+                                            </div>
+                                            <div class="row">
+                                                <input type="checkbox" id="chk-tributario-judicial" formControlName="chkTributarioJudicial">
+                                            <label for="chk-tributario-judicial">Tributário Judicial</label>
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+                            <div class="botaoAgendar">
+                                <button [disabled]="!podeFazerAgendamento()" class="btn btn-primary btn-sm" (click)="criarNovoAgendamento()">Agendar</button>
+                            </div>
+
+                    </div>
+                </form>
+                    <div class="conjunto-caixa-logs">
+                    <div class="d-flex flex-row justify-content-between align-items-end">
+                        <label class="titulo-agendamentos">Lista de Agendamentos</label>
+                        <button class="btn btn-roxo pr-0 pb-0 pt-0" (click)="this.listarAgendar()"><i class="fas fa-redo"></i>Atualizar Lista</button>
+                    </div>
+                        <div class="caixa-logs">
+                            <div class="lista-logs">
+                                <div class="linha-logs" *ngFor="let agendamento of listaAgendar">
+                                    <div class="informativo" *ngIf="agendamento.logAgendado != 0">
+                                        {{ agendamento.Operacao }}
+                                        Log de {{ comboLogs[agendamento.logAgendado].texto }} do usuário {{ agendamento.codUsuarioLogAgendamento }} agendado por {{agendamento.codUsuario}} em {{agendamento.dataCadastro | date:"dd/MM/yyyy HH:mm:ss"}}.
+                                        <!-- Log do Usuário {{ agendamento.codUsuario }} às {{ agendamento.dataCadastro }} -->
+                                    </div>
+                                    <div class="informativo" *ngIf="agendamento.logAgendado == 0">
+                                        {{ agendamento.Operacao }}
+                                        Log do usuário {{ agendamento.codUsuarioLogAgendamento }} agendado por {{agendamento.codUsuario}} em {{agendamento.dataCadastro | date:"dd/MM/yyyy HH:mm:ss"}}.
+                                        <!-- Log do Usuário {{ agendamento.codUsuario }} às {{ agendamento.dataCadastro }} -->
+                                    </div>
+                                    <!-- <div class="informativo">
+                                        Log do Usuário {{ agendamento.codUsuario }} às {{ agendamento.dataCadastro }}
+                                    </div> -->
+                                    <div class="celula-direita">
+                                        <div class="status">{{ agendamento.status }}</div>
+                                        <div class="botao-delete">
+                                            <button (click)="apagarAgendamento(agendamento.id)" *ngIf="agendamento.status != 'Processando'">
+                                                <i class="fas fa-trash fa-lg"></i>
+                                            </button>
+                                        </div>
+                                        <div class="botao-download">
+                                            <button (click)="fazerDownloadAgendamento(agendamento.id)" *ngIf="agendamento.status == 'Finalizado'">
+                                                <i class="fas fa-download fa-lg"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vermais" *ngIf="this.vermaisAgendar"><button (click)="verMaisAgendar()">VER MAIS</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="linha-botoes">
+                    <button class="btn btn-primary btn-sm botaosair" (click)="acionarPopup()">
+                        Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Titulo da pagina, breadcrumb e data range-->
+    <section class="container-breadcrumb">
+        <button class="botaoDeVoltar" onClick="history.go(-1)">
+            <i class="fas fa-angle-double-left"></i> Voltar
+        </button>
+        <h3>Relatório de Log do Usuário</h3>
+        <label>Controle de Acesso > Usuários > Log Operações</label>
+
+        <p class="filtroSapSelecao"></p>
+
+        <!-- <p class="usuarioInfo">Usuário: {{nomeUsuario}} ({{CodUsuarioLogAgendamento}}) </p> -->
+        <p class="usuarioInfo">Usuário: {{nomePesquisado}} ({{codPesquisado}})
+            <button class="btn btn-primary botao-solicitar-agendar" (click)="acionarPopup()">Agendar / Consultar Log Completo</button></p>
+        <div><div class="secao_titulo_inline">Busca rápida de operações do usuário</div></div>
+        <div class="no-gutters">
+            <div class="row align-items-end">
+              <div class="col-2">
+                <label for="tipoDeProcesso" class="tipo-de-processo">Tipo de Processo:</label>
+                <select class="form-control" [formControl]="tipoProcessoSelecionado" (change)="selecionaBusca()">
+                    <option value=0></option>
+                    <option value=3>Administrativo</option>
+                    <option value=1>Cível Consumidor</option>
+                    <option value=9>Cível Estratégico</option>
+                    <option value=10>Descumprimento</option>
+                    <option value=7>Juizado Especial</option>
+                    <option value=18>Pex</option>
+                    <option value=2>Trabalhista</option>
+                    <option value=5>Tributário Judicial</option>
+                </select>
+              </div>
+              <div class="col-4 pl-0">
+                <app-data-range
+                (retDataInicio) = "pegarData($event, true)"
+                (retDataFim) = "pegarData($event, false)"
+                (rangeValido) = "validarData($event)"
+                (botaoBuscarData) = "buscarData()"
+                [exibirBotaoBuscar] =  "true"
+                [habilitarBotaoBuscar] = "this.habilitarBusca"
+                [dataInicio] = "this.dataInicial"
+                [dataFim] = "this.dataFinal"
+                [showWeekNumbers] = "false"
+                >
+            </app-data-range>
+
+              </div>
+              <div class="col-3 d-flex align-content-center"></div>
+              <div class="col-3"></div>
+            </div>
+        </div>
+
+
+    </section>
+
+    <!-- Listando os logs -->
+    <section class="lower">
+        <div [ngClass]="{'hidden': !exibeResultado}" class="quad">
+            <div class="secao_titulo">Resultado</div>
+            <!-- <div class="botoes_topodireita">
+                <button (click)="acionarPopup()"><i class="fas fa-lg fa-file-download"></i>Solicitar e baixar exportação</button>
+            </div> -->
+
+            <!-- célula a ser replicada -->
+            <div class="celula_processos" *ngFor="let log of listaLog">
+                <div class="celula_direita">
+                    <p> Data e Hora da Operação</p>
+                    <div>
+                        <span>{{ log.dataLog }}</span>
+                    </div>
+                </div>
+                <div class="celula_direita">
+                    <p> Última Operação</p>
+                    <div>
+                        <span>{{ log.operacao }}</span>
+                    </div>
+                </div>
+                <div class="celula_direita">
+                    <p> Código Interno</p>
+                    <div>
+                        <span>{{ log.codProcesso ? log.codProcesso : 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="celula_direita">
+                    <p> N° do Processo </p>
+                    <div>
+                        <span>{{ log.numeroProcesso ? log.numeroProcesso : 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="celula_direita">
+                    <p> Estado </p>
+                    <div>
+                        <span>{{ log.estado ? log.estado : 'N/A' }}</span>
+                    </div>
+                </div >
+                <div class="celula_direita">
+                    <p> Comarca </p>
+                    <div>
+                        <span>{{ log.comarca ? log.comarca : 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="celula_direita">
+                    <p> Vara </p>
+                    <div>
+                        <span>{{ log.nomeTipoVara ? log.nomeTipoVara : 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="celula_botaolog" *ngIf="log.codProcesso" [title]="log.itemDeMenu === '' ? 'O processo não possui este item de menu de log' : 'Ver Log'">
+                    <button class="btn btn-primary" (click)="visualizarRelatorioLog(log.codTipoProcesso,log.codProcesso, log.itemDeMenu, log.autorizado)" [disabled]="log.itemDeMenu === ''">Ver Log</button>
+                </div>
+                <div class="celula_botaolog" *ngIf="!log.codProcesso">
+              </div>
+            </div>
+            <div class="vermais" *ngIf="vermais"><button (click)="verMais()">VER MAIS</button></div>
+            <div class="nao-tem-log" *ngIf="this.listaLog.length===0">
+                <span>
+                    Não existem registros de log para o período especificado.
+                </span>
+            </div>
+        </div>
+    </section>
+</div>
+<div *ngIf="!logUsuario">
+
+    <div class="container-botao-voltar-log-operacoes">
+        <button *ngIf="!logUsuario" class="botaoDeVoltar botao-voltar-log-operacoes" (click)="botaoVoltar()">
+            <i class="fas fa-angle-double-left"></i> Voltar
+        </button>
+    </div>
+
+
+    <app-log-civel-consumidor *ngIf="this.tipoProcesso == 1"
+        [logUsuario]="true"
+        [selecionarMenuLogUsuario]="this.itemMenu"
+        [codInternoLogUsuario] = "this.codInterno">
+    </app-log-civel-consumidor>
+
+    <app-log-trabalhista *ngIf="this.tipoProcesso == 2"
+        [logUsuario]="true"
+        [selecionarMenuLogUsuario]="this.itemMenu"
+        [codInternoLogUsuario] = "this.codInterno">
+    </app-log-trabalhista>
+
+    <app-log-administrativo *ngIf="this.tipoProcesso == 3"
+        [logUsuario]="true"
+        [selecionarMenuLogUsuario]="this.itemMenu"
+        [codInternoLogUsuario] = "this.codInterno">
+    </app-log-administrativo>
+
+    <app-log-tributario-judicial *ngIf="this.tipoProcesso == 5"
+        [logUsuario]="true"
+        [selecionarMenuLogUsuario]="this.itemMenu"
+        [codInternoLogUsuario] = "this.codInterno">
+    </app-log-tributario-judicial>
+
+    <app-log-juizado-especial *ngIf="this.tipoProcesso == 7"
+        [logUsuario]="true"
+        [selecionarMenuLogUsuario]="this.itemMenu"
+        [codInternoLogUsuario] = "this.codInterno">
+    </app-log-juizado-especial>
+
+    <app-log-civel-estrategico *ngIf="this.tipoProcesso == 9"
+        [logUsuario]="true"
+        [selecionarMenuLogUsuario]="this.itemMenu"
+        [codInternoLogUsuario] = "this.codInterno">
+    </app-log-civel-estrategico>
+
+    <app-log-descumprimentos *ngIf="this.tipoProcesso == 10"
+        [logUsuario]="true"
+        [selecionarMenuLogUsuario]="this.itemMenu"
+        [codInternoLogUsuario] = "this.codInterno">
+    </app-log-descumprimentos>
+
+    <app-log-pex *ngIf="this.tipoProcesso == 18"
+        [logUsuario]="true"
+        [selecionarMenuLogUsuario]="this.itemMenu"
+        [codInternoLogUsuario] = "this.codInterno">
+    </app-log-pex>
+</div>

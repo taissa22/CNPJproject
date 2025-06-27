@@ -1,0 +1,69 @@
+.modal-header button {
+    color: gray;
+}
+
+fs-1 {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.fs-2 {
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.btn-novo {
+    display: flex;
+    align-items: center;
+}
+
+.modal-title {
+    margin: auto;
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.container-modal {
+    padding: 1.2rem 0.5rem;
+}
+
+.modal-footer {
+    padding-bottom: 0;
+}
+
+.title {
+    padding: 0 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.periodoRef {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control-select {
+    padding: 0;
+    border: none;
+}
+
+s::ng-deep {
+    bs-datepicker-container,
+    bs-daterangepicker-container {
+        z-index: 20000;
+    }
+}
+
+::ng-deep .modal-imposto {
+    .modal-content {
+        min-width: 740px !important;
+        max-width: 740px !important;
+    }
+    .modal-sm {
+        min-width: 740px !important;
+        max-width: 740px !important;
+    }
+}

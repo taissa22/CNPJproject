@@ -1,0 +1,17 @@
+.form-control {
+    &:focus{
+      box-shadow: inset 0px 0px 2px 0.5px rgba(0,0,0,0.69);
+    }
+  
+    &.ng-invalid {
+      &.ng-touched{
+        border: 1px solid red; outline: none; box-shadow: 0 0 3px red;
+        box-shadow: inset 0px 0px 2px 0.5px rgba(255,0,0,0.69);
+      }
+  
+  
+    }
+  
+  
+  }
+  

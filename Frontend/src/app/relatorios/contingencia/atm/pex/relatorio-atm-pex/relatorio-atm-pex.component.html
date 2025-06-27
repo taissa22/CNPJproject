@@ -1,0 +1,88 @@
+<header fxLayout="row" fxLayoutAlign="start center">
+  <span fxFlex>
+    <h1>Relatório ATM PEX</h1>
+    <h3>{{breadcrumb}}</h3>
+  </span>
+  <button class="btn btn-primary" (click)="novoAgendamento()">Novo Agendamento</button>
+</header>
+
+<main fxLayout="column">
+
+  <span fxLayout="row" fxLayoutAlign="start center" class="title">
+    <h4 fxFlex>Relatórios agendados / executados</h4>
+    <button class="btn btn-small" (click)="refresh()">
+      <i class="fas fa-redo-alt"></i>
+      <span>ATUALIZAR LISTA</span>
+    </button>
+  </span>
+
+  <section class="panel-container" fxLayout="column">
+
+    <section class="panel" fxLayout="row" *ngFor="let a of agendamentos">
+
+      <section class="info" fxFlex [ngSwitch]="a.status">
+        <h5>Base de fechamento de {{ a.dataFechamento | date:'dd/MM/yyyy' }} - {{ a.numeroDeMeses }} meses - {{ a.valDesvioPadrao !== null ? a.valDesvioPadrao.toString().replace('.', ',') : a.valDesvioPadrao }} DP</h5>
+
+        <h6>{{ a.fechamentoPexMediaResponse.empresas }}</h6>
+        <h6 *ngIf="a.fechamentoPexMediaResponse.indAplicarHaircut === 'S'">
+          Haircut de {{ a.fechamentoPexMediaResponse.percentualHaircut }}% aplicado também em processos com garantia
+        </h6>
+        <h6 *ngIf="a.fechamentoPexMediaResponse.indAplicarHaircut === 'N'">
+          Haircut de {{ a.fechamentoPexMediaResponse.percentualHaircut }}% aplicado apenas em processos sem garantia
+        </h6>
+        <h6>Fechamento ID {{ a.codSolicFechamento}} solicitado por {{ a.fechamentoPexMediaResponse.nomeUsuario }} em {{ a.fechamentoPexMediaResponse.dataAgendamento  | date:'dd/MM/yyyy' }}</h6>
+
+        <h5 *ngSwitchCase="0">Este agendamento será processado em breve. Por favor, aguarde.</h5>
+        <h5 *ngSwitchCase="1">Execução iniciada em {{ a.dataInicioExecucao | date:'dd/MM/yyyy HH:mm' }}</h5>
+        <h5 *ngSwitchCase="3">Ocorreu um erro ao tentar processar este agendamento. Por favor, faça um novo agendamento.</h5>
+
+        <div [ngSwitch]="a.status">
+
+          <section class="excluir" fxLayout="row" *ngSwitchCase="0">
+
+            <button class="btn btn-small"  (click)="removerAgendamento(a.agendamentoId)">
+              <i class="fas fa-trash"></i>
+              <span>Excluir</span>
+            </button>
+
+        </section>
+
+          <section class="download" fxLayout="row" *ngSwitchCase="2">
+
+            <button class="btn btn-small" (click)="downloadBase(a.agendamentoId)">
+              <i class="fas fa-download"></i>
+              <span>Base de Fechamento</span>
+            </button>
+
+            <button class="btn btn-small" (click)="downloadRelatorio(a.agendamentoId)">
+              <i class="fas fa-download"></i>
+              <span>Resultado Cálculo ATM</span>
+            </button>
+
+          </section>
+
+        </div>
+
+      </section>
+
+      <section class="status" [ngSwitch]="a.status">
+        <span *ngSwitchCase="0" [style.background-color]="'#3270A7'">Agendado</span>
+        <span *ngSwitchCase="1" [style.background-color]="'#FF8C00'">Processando</span>
+        <span *ngSwitchCase="2" [style.background-color]="'#19A519'">Finalizado</span>
+        <span *ngSwitchCase="3" [style.background-color]="'#F80000'">Erro</span>
+
+        <p>Solicitado por {{ a.nomeUsuario }}</p>
+        <p>em {{ a.dataAgendamento | date:'dd/MM/yyyy HH:mm' }}</p>
+        <p *ngSwitchCase="2">Finalizado em {{ a.dataFimExecucao | date:'dd/MM/yyyy HH:mm' }}</p>
+      </section>
+
+    </section>
+
+    <section class="panel" fxLayout="column" fxLayoutAlign="center center">
+      <button class="btn" (click)="loadMore()" [disabled]="!hasMorePages">VER MAIS</button>
+    </section>
+
+  </section>
+
+
+</main>

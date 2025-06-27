@@ -1,0 +1,85 @@
+<div class="seletorComBusca">
+  <div class="titulo_listaselecao">
+    <div class="titulo">Pedidos SAP Adicionados</div>
+  </div>
+
+  <div class="tabelaSeletorComBusca">
+    <table>
+      <thead>
+        <tr>
+        <th>Número Pedido SAP </th>
+
+          <th style="width: 30px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let lote of sapsSelecionados">
+          <td>{{ lote }}</td>
+
+          <td  (click)="removelote(lote)"
+          style="text-align: center;">
+            <i class="fas fa-trash fa-2x roxo-padrao"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="mensagem-tabela" *ngIf="sapsSelecionados.length <= 0">
+
+      Nenhum item adicionado ainda
+
+    </p>
+  </div>
+
+  <div class="titulo_listaselecaoComBusca">
+    <div class="titulo">
+      Pedidos SAP Encontrados
+    </div>
+    <form [formGroup]="loteForm">
+      <div class="busca">
+        Busca:
+        <input
+          type="text"
+          maxlength="55"
+          class="mt-1"
+          formControlName="loteId"
+          OnlyNumberNoStartWith0
+        />
+
+        <!-- <button type="button" class="btn btn-link pr-0">
+        Importar csv
+      </button> -->
+      </div>
+    </form>
+  </div>
+  <div class="tabelaSeletorComBusca">
+    <table>
+      <thead>
+        <tr>
+          <th>Número Pedido SAP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="preAdicionarSap(lote)">
+          <td [class.preselecionado]="preSelecionado(lote)" *ngIf="lote">
+            {{ lote }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="mensagem-tabela" *ngIf="!lote">
+      {{ info }}
+    </p>
+  </div>
+  <div class="buttons-filtros">
+    <button
+      class="btn btn-primary btn-sm btn-sap"
+      (click)="adicionarSapsSelecionados()"
+    >
+      Adicionar Selecionados
+    </button>
+    <!-- <button class="btn btn-primary btn-sm" (click)="adicionarTodosSaps()">
+      Adicionar Todos
+    </button> -->
+  </div>
+</div>

@@ -1,0 +1,53 @@
+.subtitulo{
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #786bb9;
+  }
+  
+  h6{
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: 0.12px;
+    text-align: left;
+    color: #222222;
+    border: 1px solid #d2d2da;
+      padding: 5px;
+      margin: 0;
+      padding-left: 15px;
+  }
+  
+  .modal-title{
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2.29;
+    letter-spacing: normal;
+    text-align: left;
+    color: #554d80;
+  }
+  
+  button.close span {
+    font-size: 28.2px;
+    color: #707070;
+  }
+  
+  .informacao{
+    border: 1px solid #d2d2da;
+    border-top: 0;
+      padding: 3px;
+      margin: 0;
+      overflow-y: scroll;
+      height: 122px;
+      padding-left: 15px;
+  }
+  

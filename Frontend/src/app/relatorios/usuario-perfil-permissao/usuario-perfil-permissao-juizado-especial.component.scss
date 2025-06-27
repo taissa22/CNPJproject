@@ -1,0 +1,559 @@
+  .instrucoes_container{
+    display:none;
+  }
+  
+  .instr_overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0.5;
+    left: 0px;
+    top: 0px;
+  }
+  
+  .instrucoes_container.visible{
+    display:block;
+    position: fixed;
+    top:0px;
+    left:0px;
+    z-index:1000;
+    // opacity:0.5;
+    width: 100%;
+    height: 100%;
+  
+    background-color: rgba(0,0,0,.5);
+  }
+  
+  div.instrucoes{
+    width:400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    height: 90%;
+    background-color: white;
+    border: solid 1px gray;
+    padding: 15px;
+    font-size:12px;
+    font-family: arial;
+    z-index:1001;
+  }
+  
+  .instr_container{
+    position: relative;
+    width: 100%;
+    height: 93%;
+    overflow: auto;
+  }
+  
+  .instr_titulo{
+    position: relative;
+    margin-bottom: 15px;
+    color:#554d80;
+    font-weight:bold;
+    letter-spacing: -0.32px;
+  }
+  
+  .instr_linha{
+    display:flex;
+    margin-bottom: 8px;
+  }
+  
+  .instr_texto{
+    width: 340px;
+    padding-right:5px;
+  }
+  
+  .instr_recuo p{
+    padding-left: 12px;
+  }
+  
+  .instr_ordinais{
+    font-weight: bold;
+    width: 20px;
+  }
+  
+  .instr_fechar{
+    position: absolute;
+    background: none;
+    color:gray;
+    border: none;
+    top: 0px;
+    right: 0px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  /*fim instruções*/
+  
+  button[disabled]{
+    pointer-events: none;
+  }
+  
+  .disable{
+    pointer-events: none;
+    opacity: 50%;
+  }
+  
+  i{
+    margin-right: 5px;
+  }
+  
+  .initial_info{
+    white-space: nowrap;
+    color: #6f62b2;
+    line-height: 13px;
+  
+    a{
+      font-weight:bold;
+    }
+  }
+  
+  button{ cursor: pointer; }
+  
+  section{
+    min-width: 85%;
+    max-width: 600px;
+    // margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto; 
+    // width: 800px;
+    margin-bottom: 30px;
+    font-size: 12px;
+    font-family: arial;
+  }
+  
+  section.container-breadcrumb{
+    margin-top: 8px;
+  
+    h3{
+      color: #554D80;
+    }
+  }
+  
+  section.upper{
+    display: flex;
+    height: 160px;
+    justify-content: space-between;
+  }
+  
+  section.upper>div{
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  section.upper>div:nth-of-type(1){
+    width: 35%;
+    position: relative;
+    padding: 0px;
+  }
+  
+  section.upper>div:nth-of-type(2){
+    width: 63%;
+  }
+  
+  .aviso_nenhum_tipo_selecionado{
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    top:50%;
+    margin-top: -5px;
+    text-align: center;
+    color:#a0a0a0;
+    font-size: 12px;
+  }
+  
+  .tv_treeview{
+    height: 100%;
+  /*background: yellow;*/
+    overflow: auto;
+    position:relative;
+    padding-left: 20px;
+  }
+  
+  .tv_conteudo{
+  position: relative;
+  min-width: 90%;
+  min-height: 100%;
+  margin-top: 0px;
+  /*background: red;*/
+  border-left: solid 1px #e0daff;
+  }
+
+  .tv_linha{
+    position: relative;
+    font-size: 12px;
+    padding-left: 30px;
+    padding-top: 1px;
+    height: 20px;
+    white-space: nowrap;
+  }
+  
+  .tv_espacotopo{
+    position: relative;
+    font-size: 12px;
+    height: 10px;
+    white-space: nowrap;
+  }
+  
+  .tv_traco{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: -15px;
+    left: 0px;
+    border-bottom: solid 1px #e0daff;
+    /*border-left: solid 1px gray;*/
+  }
+  
+  .tv_seta{
+    position: absolute;
+    left: 20px;
+    top: 5px;
+    width: 8px;
+    height: 8px;
+    fill:#554d80;
+  }
+  
+  .campo_file{
+    width: 300px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .botao_instrucoes{
+    position: absolute;
+    top: 5px;
+    right:5px;
+    background: none;
+    border: none;
+    color: #6f62b2;
+  
+    font-size: 11px;
+    padding: 2px;
+    cursor: pointer;
+  }
+  
+  .botao_baixar_planilha{
+    font-size: 10px;
+    padding:2px;
+    padding-left:0px;
+    background: none;
+    border: none;
+    margin-top: 20px;
+  
+    color: #6f62b2;
+  }
+    
+  section.lower > div.quad{
+    // min-height: 112px;
+    position: relative;
+  }
+  
+  div.vermais{
+    // position: absolute;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    height: 30px;
+  }
+  
+  .labelUpload {
+    color: #6f62b2;
+  }
+  
+  div.vermais button{
+    font-size: 12px;
+    // font-weight: bold;
+    line-height: 30px;
+    border: none;
+    background: none;
+    color: #6f62b2;
+  }
+  
+  .secao_titulo{
+    position: absolute;
+    top: -22px;
+    left: 0px;
+  
+    font-size: 15px;
+    font-weight: bold;
+    color: #554D80;
+  }
+  
+  .quad{
+    position:relative;
+    border: solid 1px #e0daff;
+    margin-top: 10px;
+  }
+
+  .celula_processos{
+    width: 100%;
+    height: 91px;
+    display: flex;
+    padding:10px;
+  
+    border-bottom: solid 1px #e0daff;
+    box-sizing: border-box;
+  }
+  
+  .celula_esquerda{
+    width: 80%;
+    position: relative;
+  }
+  
+  .finalizacao_processos{
+    font-size:10px;
+  }
+  
+  .botoes_processos{
+    position: absolute;
+    bottom: 0px;
+  }
+  
+  .descricao_processos{
+    font-size: 14px;
+    color: #6f62b2;
+  }
+  span {
+    font-size: 14px;
+  }
+
+  .botoes_processos button, .botoes_topodireita button {
+    font-size:12px;
+    border: none;
+    background: none;
+    padding-left: 0px;
+    margin-right: 10px;
+    cursor: pointer;
+  
+    color: #6f62b2;
+  
+    i{
+      margin-right: 8px;
+    }
+  
+  }
+  
+  .botoes_processos button{
+    margin-right: 50px;
+  
+    i{
+      margin-right: 5px;
+    }
+  }
+  
+  .botoes_topodireita{
+    position: absolute;
+    top: -18px;
+    right: 0px;
+  
+  }
+  
+  .botoes_topodireita button{
+    margin-right: 0px;
+    padding-right: 0px;
+  }
+  
+  .celula_direita{
+    width: 50%;
+    text-align:right;
+  }
+  
+  .status_processo{
+    color: white;
+    background-color: #3270A7;
+    font-size: 12px;
+    display: inline-block;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+  
+    margin-bottom: 2px;
+    text-align: center;
+    min-width: 50px;
+  }
+  
+  .status_processo.finalizado{ background-color:#19A519; }
+  .status_processo.processando{ background-color:#FF8C00; }
+  .status_processo.erro{ background-color:#F80000; }
+  
+  .data_agendamento_processo{
+    font-size: 12px;
+    color: grey;
+  }
+  
+  .campobusca_file{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 100px;
+    height: 100%;
+    cursor: pointer;
+    opacity:0 !important;
+    z-index:10;
+  
+    &[disabled]{
+      cursor: default;
+    }
+  }
+  
+  .campobusca{
+    position: relative;
+    width: 450px;
+    white-space: nowrap;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: justify;
+    display: flex;
+  }
+  
+  .campobusca_exibe{
+    width: 390px;
+    margin: 0px;
+  
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  
+  .campobusca_botao{
+    width: 100px;
+    pointer-events: none;
+    border: none;
+    margin-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    z-index:1;
+  
+    &[disabled]{
+      opacity: 0.5 !important;
+      background-color: #6f62b2;
+      cursor: default;
+    }
+  }
+  
+  .statusFinalizado {
+    color: grey;
+  }
+
+  span {
+    font-weight: bold;
+    color: #554d80;
+  }
+
+  .dialog_container{
+    display:none;
+  }
+  
+  .dialog_container.visible{
+    display:flex;
+    position: fixed;
+    top:0px;
+    left:0px;
+    z-index:1000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+  }
+  
+  div.dialog{
+    display:block;
+    width:422px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: white;
+    border: solid 1px gray;
+    padding: 15px;
+    height: 302px;
+    font-size:12px;
+    font-family: arial;
+
+    label{
+      font-weight: bold;
+    }
+
+    .btn{
+      color: #786bb9;
+      font-weight: bold;
+    }
+
+    .btn-primary{
+      color: white;
+      font-weight: normal;
+    }
+  }
+  
+  .dlg_container{
+    position: relative;
+    width: 100%;
+    height: 93%;
+    overflow: auto;
+  }
+  
+  .dlg_titulo{
+    position: relative;
+    color:#554d80;
+    font-weight:bold;
+    letter-spacing: -0.32px;
+    font-size: 15px;
+  }
+  
+  .dlg_subtitulo{
+    position: relative;
+    margin-bottom: 15px;
+    letter-spacing: -0.4px;
+  }
+  .botoes_grupo{
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .botoes_grupo button{
+    margin-right: 5px;
+  }
+  
+  .botoes_grupo button:last-of-type{
+    margin-right: 0px;
+  }
+
+  .campo-obs {
+    resize:none;
+    height:65px;
+  }
+  
+  .campo-desvio {
+    width: 50px;
+  }
+
+  .container-breadcrumb p {
+    color: #555555;
+  }
+
+  .bordaVermelhaInicial {
+    border: 1px solid red;
+    -webkit-box-shadow: 0 0 3px red;
+    box-shadow: 0 0 3px red;
+    -webkit-box-shadow: inset 0px 0px 2px 0.5px rgb(255 0 0 / 69%);
+    box-shadow: inset 0px 0px 2px 0.5px rgb(255 0 0 / 69%);
+  }
+  
+  .semBorda{
+    border: 1px solid #ced4da;
+  }
+
+  //ngb tooltips
+ .ajusteTooltip {
+    font-size: 12px !important;
+    text-align: left !important;
+  }
+
+  // .celula_processos.descricao_processos ~ [ngbTooltip] {
+  //     color: red;
+  //     font-size: 11px !important;
+  //     border: 1px solid red;
+  //     border-radius: 3px;
+  //     padding: 3px 5px;
+  // }

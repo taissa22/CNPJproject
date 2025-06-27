@@ -1,0 +1,19 @@
+<app-vertical-dual-list
+    [headers]="['Número da Conta Judicial']"
+    artigo = 'a'
+    nomeContexto="Número de Contas Judiciais"
+    [itens]="dadosEncontrados"
+    (itensAdicionados)="onAdicionar($event)"
+>
+    <form busca [formGroup]="form">
+        <div class="busca">
+            Busca:
+            <input type="text"
+                    maxlength="13"
+                    class="mt-1"
+                    formControlName="numeroContaJudicial"
+                    placeholder="N° Conta Judicial"
+                    numbersOnly />
+        </div>
+    </form>
+</app-vertical-dual-list>

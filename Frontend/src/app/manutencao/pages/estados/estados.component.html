@@ -1,0 +1,78 @@
+<app-manutencao-generica titulo="Estado" [breadcrump]="breadcrumb" [exibirAdicionar]="false">
+    <div class="row" style="margin-left: auto;margin-top: 10px;">
+        <div class="d-flex pr-1 " (keydown.enter)="pesquisar()">
+            <div style="width: 14rem;">
+                <label for="tipos-processo">
+                    <b>Estado:</b>
+                </label>
+                <ng-select [ngStyle]="{'fontSize': '11px'}" [items]="estadosSelect" (change)="pesquisar()"
+                    (clear)="pesquisar()" [formControl]="estadoFormControl" bindLabel="descricao" bindValue="id"
+                    appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="true"
+                    [placeholder]="'Selecione uma opção'">
+                    <ng-template ng-option-tmp let-item="item">
+                        <div title="{{item.descricao}}">{{item.descricao}}</div>
+                    </ng-template>
+                </ng-select>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 mb-2 row">
+        <div class="col-sm-6" style="align-self: flex-end;">
+            <b class="roxo-padrao" style="font-size: 15px;">Lista de Estados</b>
+        </div>
+        <div class="col-sm-6" style="text-align: right;">
+            <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" style="font-family: sans-serif;">
+                <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+                Exportar
+            </button>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12" >
+            <sisjur-table (sort)="pesquisar()">
+                <sisjur-table-header>
+                    <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="sigla" width="8">Sigla</sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="nome" width="25">Nome</sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="taxaJuros">Taxa de Juros ao Mês</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="4"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+                </sisjur-table-header>
+                <ng-container *ngFor="let estado of estados;let i = index">
+                    <sisjur-table-row >
+                        <sisjur-table-row-cell>
+                            <button type="button" class="btn pt-2 " (click)="abrirMunicipios(i)">
+                                <i class="fas fa-plus pt-1" *ngIf="linhaSelecionada != i"></i>
+                                <i class="fas fa-minus pt-1 pt-1" *ngIf="linhaSelecionada == i"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{estado.id}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell ellipsis="true">{{estado.nome}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{estado.valorJuros | number : '3.5'}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>
+                            <button type="button" class="btn" (click)="alterar(estado)">
+                                <i class="fas fa-edit fa-sm"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+                        <sisjur-table-row-cell >
+                            <button type="button" class="btn" (click)="remover(estado)">
+                                <i class="fas fa-trash fa-sm"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+
+                    </sisjur-table-row>
+                    <sisjur-table-row *ngIf="linhaSelecionada == i" [heightAuto]="true" background="#fff">
+                        <sisjur-table-row-cell width="100">
+                            <div style="position: relative;" class="municipio" style="width: 100%;">
+                                <municipios [estado]="estado"></municipios>
+                            </div>
+                        </sisjur-table-row-cell>
+                    </sisjur-table-row>
+                </ng-container>
+            </sisjur-table>
+        </div>
+    </div>
+
+
+    <sisjur-paginator [length]="total" (page)="pesquisar()"></sisjur-paginator>
+</app-manutencao-generica>

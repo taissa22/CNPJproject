@@ -1,0 +1,281 @@
+<div class="row">
+  <div class="col-md-12">
+    <form autocomplete="off">
+      <div class="row mt-2">
+        <div class="col-md-4">
+          <label for="periodo" class="col-form-label-sm font-weight-bold">
+            Período:
+          </label>
+          <div class="form-inline">
+            <div class="form-group">
+              <div class="input-group">
+                <input
+                  class="form-control form-control-sm"
+                  rInputMask="99/99/9999"
+                  maxlength="10"
+                  placeholder="DD/MM/AAAA"
+                  name="data-periodo-primeiro"
+                  min="0"
+                  id="data-periodo-primeiro"
+                  [formControl]="dataPrimeiroPeriodoFormControl"
+                  [maxDate]="dataSegundoPeriodoFormControl.value"
+                  [bsConfig]="{ showWeekNumbers: false }"
+                  bsDatepicker
+                  #dp="bsDatepicker"
+                  style="width: 100px"
+                  placement="top-left top-right bottom-left bottom-right"
+                  [disableTooltip]="desabilitaTooltip(dataPrimeiroPeriodoFormControl)"
+                  [ngbTooltip]="validacaoDataPrimeiro" />
+                <ng-template #validacaoDataPrimeiro>
+                  <span *ngIf="dataPrimeiroPeriodoFormControl.invalid && dataPrimeiroPeriodoFormControl.errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span *ngIf="dataPrimeiroPeriodoFormControl.getError('primeiraDataMaior')">
+                    A data final não pode ser maior que a data inicial
+                  </span>
+                  <span *ngIf="dataPrimeiroPeriodoFormControl.getError('maxDiasExcedido')">
+                    O período de dias não pode ser superior a {{ numeroMaximoDias }} dias
+                  </span>
+                  <!-- <span *ngIf="dataPrimeiroPeriodoFormControl.invalid && dataPrimeiroPeriodoFormControl.errors.minDate">
+                    O período de dias não pode ser superior a {{ dataPrimeiroPeriodoFormControl.errors.minDate.limitDays }} dias
+                  </span> -->
+                </ng-template>
+                <div class="input-group-append">
+                  <button
+                    class="btn calendar"
+                    (click)="dp.toggle()"
+                    type="button">
+                    <i class="fa-solid fa-calendar-days fa-lg"></i>
+                  </button>
+                </div>
+                <div class="mx-3 pt-2">
+                  <p>Até</p>
+                </div>
+                <input
+                  class="form-control form-control-sm"
+                  rInputMask="99/99/9999"
+                  maxlength="10"
+                  placeholder="DD/MM/AAAA"
+                  name="data-periodo-segundo"
+                  min="0"
+                  id="data-periodo-segundo"
+                  [formControl]="dataSegundoPeriodoFormControl"
+                  [minDate]="dataPrimeiroPeriodoFormControl.value"
+                  [bsConfig]="{ showWeekNumbers: false }"
+                  bsDatepicker
+                  #ds="bsDatepicker"
+                  style="width: 100px"
+                  placement="top-left top-right bottom-left bottom-right"
+                  [disableTooltip]="desabilitaTooltip(dataSegundoPeriodoFormControl)"
+                  [ngbTooltip]="validacaoDataSegundo" />
+                <ng-template #validacaoDataSegundo>
+                  <span *ngIf="dataSegundoPeriodoFormControl.invalid && dataSegundoPeriodoFormControl.errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span *ngIf="dataSegundoPeriodoFormControl.getError('primeiraDataMaior')">
+                    A data final não pode ser maior que a data inicial
+                  </span>
+                  <span *ngIf="dataSegundoPeriodoFormControl.getError('maxDiasExcedido')">
+                    O período de dias não pode ser superior a {{ numeroMaximoDias }} dias
+                  </span>
+                </ng-template>
+                <div class="input-group-append">
+                  <button
+                    class="btn calendar"
+                    (click)="ds.toggle()"
+                    type="button">
+                    <i class="fa-solid fa-calendar-days fa-lg"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label class="col-form-label-sm font-weight-bold" for="escritorio">
+            Escritório:
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="escritorio"
+            [items]="escritorios"
+            bindLabel="nome"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            [virtualScroll]="true"
+            [formControl]="escritorioFormControl"
+            placeholder="Selecione uma opção">
+          </ng-select>
+        </div>
+        <div class="col-md-4">
+          <label class="col-form-label-sm font-weight-bold" for="preposto">
+            Preposto:
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="preposto"
+            [items]="prepostos"
+            bindLabel="nome"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            [virtualScroll]="true"
+            [formControl]="prepostoFormControl"
+            placeholder="Selecione uma opção">
+          </ng-select>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-3">
+          <label class="col-form-label-sm font-weight-bold" for="estado">
+            Estado:
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="estado"
+            [items]="estados"
+            bindLabel="nome"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            [virtualScroll]="true"
+            [formControl]="estadosFormControl"
+            (change)="obterComarcas($event)"
+            placeholder="Selecione uma opção">
+          </ng-select>
+        </div>
+        <div class="col-md-3">
+          <label class="col-form-label-sm font-weight-bold" for="comarca">
+            Comarca:
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="comarca"
+            [items]="comarcas"
+            bindLabel="nome"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            [virtualScroll]="true"
+            [formControl]="comarcaFormControl"
+            placeholder="Selecione uma opção">
+          </ng-select>
+        </div>
+        <div class="col-md-3">
+          <label class="col-form-label-sm font-weight-bold" for="empresa-do-grupo">
+            Empresa do Grupo:
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="empresa-do-grupo"
+            [items]="empresasDoGrupo"
+            bindLabel="nome"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            [formControl]="empresaGrupoFormControl"
+            placeholder="Selecione uma opção"
+            [virtualScroll]="true"
+          >
+          </ng-select>
+        </div>
+        <div class="col-md-3">
+          <label class="col-form-label-sm font-weight-bold" for="empresa-do-grupo">
+            Assunto:
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="assuntos"
+            [items]="assuntosBuffer"
+            bindLabel="descricao"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="false"
+            [clearable]="true"
+            [formControl]="assuntoFormControl"
+            placeholder="Selecione uma opção"
+            [virtualScroll]="true"
+            (scroll)="obterAssuntos($event)"
+            (scrollToEnd)="obterAssuntos({})"
+          >
+          </ng-select>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-3">
+          <label class="col-form-label-sm font-weight-bold" for="closing">
+            Classificação Closing Móvel:
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="closing"
+            [items]="closings"
+            bindLabel="nome"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            [formControl]="closingFormControl"
+            placeholder="Selecione uma opção"
+            [virtualScroll]="true"
+          >
+          </ng-select>
+        </div>
+
+        <div class="col-md-3">
+          <label class="col-form-label-sm font-weight-bold" for="clientCo">
+            Classificação Closing Fibra:
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="clientCo"
+            [items]="closings"
+            bindLabel="nome"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            [formControl]="clientCoFormControl"
+            placeholder="Selecione uma opção"
+            [virtualScroll]="true"
+          >
+          </ng-select>
+        </div>
+
+        <div class="col-md-3">
+          <label class="col-form-label-sm font-weight-bold" for="closing">
+            Classificação Hierárquica:
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="classicaco"
+            [items]="classificacoes"
+            bindLabel="nome"
+            bindValue="id"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            [formControl]="classificacaoHierarquicaFormControl"
+            placeholder="Selecione uma opção"
+            [virtualScroll]="true"
+          >
+          </ng-select>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row mt-2">
+  <div class="col-md-12 pt-2">
+    <button class="btn btn-primary float-right" (click)="obterValoresDoFiltro()">
+      Buscar Audiências
+    </button>
+  </div>
+</div>

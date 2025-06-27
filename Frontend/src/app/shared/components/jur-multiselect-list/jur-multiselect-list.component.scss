@@ -1,0 +1,30 @@
+.titulo{
+    color: #786bb9;
+    font-size: 16px; 
+    font-weight: normal !important;
+    margin-bottom: 5px;
+}
+.div-botoes{
+    max-width: 50px !important;
+}
+.div-botoes h3{
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.card-listas{
+    height: 90%;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.setas{
+    margin-top: 50px;
+}
+.marcado {
+     background: #786bb9 ;
+     color: #fff;
+}  
+.item-lista:hover{
+    cursor: pointer; 
+}

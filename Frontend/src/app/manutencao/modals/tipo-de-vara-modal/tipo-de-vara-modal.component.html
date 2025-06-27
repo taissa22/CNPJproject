@@ -1,0 +1,86 @@
+<style>
+    .modal-header button {
+      color: gray;
+    }
+  
+    .modal-title {
+      margin: auto;
+    }
+  
+    .btn-icon {
+      font-size: 18px;
+    }
+  </style>
+  
+  <div class="modal-header">
+    <span class="modal-title">{{ titulo }}</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+  
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+  
+    <div>
+      <label class="col-form-label-sm" for="descricao-input">
+        <b>Nome:</b>
+      </label>
+      <input type="text" id="descricao-input" [formControl]="nomeFormControl" class="form-control"
+        [disableTooltip]="nomeFormControl.valid || nomeFormControl.untouched" [ngbTooltip]="descricaoError"
+        maxlength="30" placeholder="Insira a descrição"/>
+      <ng-template #descricaoError>
+        <span *ngIf="nomeFormControl.hasError('required')">
+          Campo obrigatório
+        </span>
+        <span *ngIf="nomeFormControl.hasError('maxlength')">
+          O Limite é de 30 caracteres
+        </span>
+      </ng-template>
+    </div>
+
+    <div class="row mt-3">
+      <div class="d-flex col-6 align-items-center mb-2">
+        <input id="checkCivel" [formControl]="indCivelFormControl"  type="checkbox" class="mr-1 mb-1" [title]="indCivelFormControl.disabled ? 'A indicação de tipo de vara Cível não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' :  'Cível Consumidor'">
+        <label for="checkCivel" [title]="indCivelFormControl.disabled ? 'A indicação de tipo de vara Cível não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' :  'Cível Consumidor'">Cível Consumidor</label>
+      </div>
+
+      <div class="d-flex col-6 align-items-center mb-2">
+        <input id="checkCivelEstrategico" [formControl]="indCivelEstrategicoFormControl" type="checkbox" class="mr-1 mb-1" [title]="indCivelEstrategicoFormControl.disabled ? 'A indicação de tipo de vara Cível Estratégico não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Cível Estratégico'">
+        <label for="checkCivelEstrategico" [title]="indCivelEstrategicoFormControl.disabled ? 'A indicação de tipo de vara Cível Estratégico não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Cível Estratégico'">Cível Estratégico</label>
+      </div>
+
+      <div class="d-flex col-6 align-items-center mb-2">
+        <input id="checkTrabalhista" [formControl]="indTrabalhistaFormControl" type="checkbox" class="mr-1 mb-1" [title]="indTrabalhistaFormControl.disabled ? 'A indicação de tipo de vara Trabalhista não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Trabalhista'">
+        <label for="checkTrabalhista"  [title]="indTrabalhistaFormControl.disabled ? 'A indicação de tipo de vara Trabalhista não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Trabalhista'">Trabalhista</label>
+      </div>
+
+      <div class="d-flex col-6 align-items-center mb-2">
+        <input id="checkTributaria" [formControl]="indTributariaFormControl" type="checkbox" class="mr-1 mb-1" [title]="indTributariaFormControl.disabled ? 'A indicação de tipo de vara Tributaria não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Tributária'">
+        <label for="checkTributaria" [title]="indTributariaFormControl.disabled ? 'A indicação de tipo de vara Tributaria não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Tributária'">Tributária</label>
+      </div>
+
+      <div class="d-flex col-6 align-items-center mb-2">
+        <input id="checkJuizado" [formControl]="indJuizadoFormControl" type="checkbox" class="mr-1 mb-1" [title]="indJuizadoFormControl.disabled ? 'A indicação de tipo de vara Juizado não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Juizado'">
+        <label for="checkJuizado" [title]="indJuizadoFormControl.disabled ? 'A indicação de tipo de vara Juizado não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Juizado'">Juizado</label>
+      </div>
+
+      <div class="d-flex col-6 align-items-center mb-2">
+        <input id="checkCriminalJudicial" [formControl]="indCriminalJudicialFormControl" type="checkbox" class="mr-1 mb-1" [title]="indCriminalJudicialFormControl.disabled ? 'A indicação de tipo de vara Criminal Judicial não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Criminal Judicial'">
+        <label for="checkCriminalJudicial" [title]="indCriminalJudicialFormControl.disabled ? 'A indicação de tipo de vara Criminal Judicial não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Criminal Judicial'">Criminal Judicial</label>
+      </div>
+
+      <div class="d-flex col-6 align-items-center">
+        <input id="checkProcon" [formControl]="indProconFormControl" type="checkbox" class="mr-1 mb-1" [title]="indProconFormControl.disabled ? 'A indicação de tipo de vara Procon não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Procon'">
+        <label for="checkProcon" [title]="indProconFormControl.disabled ? 'A indicação de tipo de vara Procon não pode ser desmarcada, pois, existem processos cadastrados no mesmo tipo.' : 'Procon'">Procon</label>
+      </div>
+    </div>
+  
+  </form>
+  
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid || !podeGravar()"
+      (click)="save()">Confirmar</button>
+  </div>
+  

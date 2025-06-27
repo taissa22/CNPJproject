@@ -1,0 +1,381 @@
+// Variáveis de Cores para Scrollbar
+$scrollbar-corner: #f2f2f2;
+$scrollbar-track: #e0e0e0;
+$scrollbar-thumb: #7b67f1;
+$scrollbar-thumb-hover: #6151ac;
+
+ h3 {
+  color: #554d80;
+  font-weight: 400;
+  font-size: 24px;
+}
+p {
+  font-size: 14px;
+}
+.lista-de-agendamentos {
+  color: #554d80;
+  font-weight: bold;
+  font-size: 16px;
+}
+.cabecalho-lista {
+  label {
+    margin-top: 18px;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0.8;
+  }
+  p {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+}
+.input-date {
+  width: 79%;
+  float: left;
+}
+.data-ini {
+  margin-left: 4%;
+}
+.atualizar {
+  font-weight: 400;
+  color: #7b67f1;
+  margin-top: 22px;
+  font-size: 14px !important;
+  cursor: pointer;
+}
+.aviso-item {
+  color: #7b67f1;
+  font-size: 12px;
+}
+.item {
+  p {
+    font-size: 12px;
+  }
+  span {
+    color: #7b67f1;
+  }
+  h3 {
+    span {
+      color: #fff;
+    }
+  }
+}
+.paginator {
+  margin-right: 15px;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.iconeAtualizar {
+  width: 12px;
+  margin: 2px;
+  margin-bottom: 4px;
+}
+.colorized {
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: left;
+  white-space: normal;
+}
+.calendario-data {
+  font-size: 1.6em;
+  margin-top: 5px;
+}
+
+.par {
+  background-color: #f2f2f2;
+}
+
+.impar {
+  background-color: #ffffff;
+}
+
+::ng-deep {
+  ngb-datepicker .ngb-dp-arrow {
+    background: #6151ac;
+  }
+}
+
+.titulo-base-fechamento {
+  font-size: 14px;
+  color: #6151ac;
+  font-weight: 400;
+}
+
+span.relatorio-atm {
+  margin-left: 3rem;
+}
+
+//  ########## TABLE ############ //
+
+.table-responsive {
+  height: 300px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #6151ac;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $scrollbar-thumb;
+    border-radius: 16px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $scrollbar-thumb-hover;
+
+    &::-webkit-scrollbar-corner {
+      background: $scrollbar-corner;
+    }
+  }
+}
+
+// Estilos adicionais para Firefox
+.table-responsive {
+  scrollbar-width: thin;
+  scrollbar-color: #c3c3c3;
+}
+
+.table-container {
+  margin: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #dee2e6;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f8f9fa;
+}
+
+.td-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: right;
+  // border-bottom: 1px solid black;
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.actions {
+  margin-top: 12px;
+}
+
+.table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 8px;
+}
+
+.table thead {
+  background-color: #f8f9fa;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.detalhes-agendamento {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.agendado {
+  display: flex;
+  justify-content: end;
+}
+
+.text-body {
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.text-agendado {
+  // background: #3270a7;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+.text-finalizado {
+  background: blue; /* Altere para a cor desejada */
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 2px;
+}
+
+.btn-agendado {
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+button {
+  padding: 5px 10px;
+  // background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-ver-mais {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-ver-mais button {
+  background-color: transparent;
+  color: #6151ac;
+}
+
+.actions span {
+  color: #6151ac;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.tbody-right {
+  text-align: right;
+}
+
+// ####### MODAL ########### //
+
+.text-subtitle-modal {
+  margin-top: 24px;
+  font-size: 16px;
+  color: #6151ac;
+  font-weight: 500;
+}
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.custom-select-trigger {
+  display: block;
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background-color: #fff;
+  z-index: 1;
+}
+
+.custom-options {
+  display: none; /* Hidden by default */
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  z-index: 2;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.custom-select.open .custom-options {
+  display: block; /* Show options when open */
+}
+
+.custom-option {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.custom-option:hover {
+  background-color: #f0f0f0;
+}
+
+.custom-option-detail {
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+button.btn.btn-light {
+  background: transparent;
+  color: #6151ac;
+}
+
+.status-agendado {
+  background-color: #3270a7;
+  color: white;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 4px;
+}
+.status-processando {
+  background-color: #ff8c00;
+  color: white;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 4px;
+}
+
+.status-finalizado {
+  background-color: rgb(25, 165, 25);
+  color: white;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 4px;
+}
+
+// Classe para status erro
+.status-erro {
+  background-color: red;
+  color: white;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 4px;
+}

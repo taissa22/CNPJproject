@@ -1,0 +1,86 @@
+<div class="modal-header">
+  <span class="modal-title pl-0"> {{titulo}}</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+<form [formGroup]="formGroup" class="modal-body pt-0">
+  <div class="form-row">
+    <div class="col-9 pr-1">
+      <label class="col-form-label-sm" for="sigla-input">
+        <b>Tipo de Processo:</b>
+      </label>
+      <ng-select [ngStyle]="{'fontSize': '11px'}" id="tipoDeProcesso" [items]="tiposDeProcesso"
+        [formControl]="tipoDeProcessoFormControl" bindLabel="descricao" bindValue="id" appearance="outline"
+        notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="true"
+        [placeholder]="'Selecione o tipo de processo'">
+      </ng-select>
+    </div>
+    <div class="col-2 pl-4 d-flex align-items-center checkbox">
+      <input id="chkAtivo" type="checkbox" [formControl]="ativoFormControl">
+      <label for="chkAtivo" class="m-0 p-0 pl-1">Ativo</label>
+    </div>
+  </div>
+  <div class="row inputs">
+    <div class="col-md-4">
+      <label class="col-form-label-sm" for="sigla-input">
+        <b>Sigla:</b>
+      </label>
+      <input type="text" id="sigla-input" [formControl]="siglaFormControl" class="form-control"
+        [disableTooltip]="siglaFormControl.valid || siglaFormControl.untouched" [ngbTooltip]="siglaError"
+        maxlength="4" />
+      <ng-template #siglaError>
+        <span *ngIf="siglaFormControl.hasError('required')">
+          Campo obrigatório
+        </span>
+        <span *ngIf="siglaFormControl.hasError('maxlength')">
+          O Limite é de 4 caracteres
+        </span>
+      </ng-template>
+    </div>
+    <div class="col-md-8">
+      <label class="col-form-label-sm" for="descricao-input">
+        <b>Descrição:</b>
+      </label>
+      <input type="text" id="descricao-input" [formControl]="descricaoFormControl" class="form-control"
+        [disableTooltip]="descricaoFormControl.valid || descricaoFormControl.untouched" [ngbTooltip]="descricaoError"
+        maxlength="100" />
+      <ng-template #descricaoError>
+        <span *ngIf="descricaoFormControl.hasError('required')">
+          Campo obrigatório
+        </span>
+        <span *ngIf="descricaoFormControl.hasError('maxlength')">
+          O Limite é de 50 caracteres
+        </span>
+      </ng-template>
+    </div>
+  </div>
+  <div *ngIf="this.tipoDeProcessoFormControl.value === 9">
+    <label class="col-form-label-sm" for="tipoDeAudiencia">
+      <b>Tipo de Audiencia Correspondente Cível Consumidor (DE x PARA Migração de Processo)</b>
+    </label>
+    <ng-select [ngStyle]="{'fontSize': '11px'}" id="tipoAudiencia" [items]="comboDeparaConsumidor"
+      [formControl]="comboDeparaConsumidorFormControl" bindLabel="nome" bindValue="idConsumidor" appearance="outline"
+      notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="true" clearAllText="Limpar"
+      [placeholder]="'Selecione uma opção'"></ng-select>
+  </div>
+  <div *ngIf="this.tipoDeProcessoFormControl.value === 1">
+    <label class="col-form-label-sm" for="tipoDeAudiencia">
+      <b>Tipo de Audiencia Correspondente Cível Estratégico (DE x PARA Migração de Processo)</b>
+    </label>
+    <ng-select [ngStyle]="{'fontSize': '11px'}" id="tipoAudiencia" [items]="comboDeparaEstrategico"
+      [formControl]="comboDeparaEstrategicoFormControl" bindLabel="nome" bindValue="idEstrategico" appearance="outline"
+      notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="true" clearAllText="Limpar"
+      [placeholder]="'Selecione uma opção'"></ng-select>
+  </div>
+  <div *ngIf="exibeRequerLink()" >
+    <br />
+    <label for="chkRequerAudienciaVirtual" class="m-0 p-0 pl-1"><b>Requer link de audiência
+        virtual?&nbsp;&nbsp;&nbsp;</b></label>
+    <input id="chkRequerAudienciaVirtual" type="checkbox" [formControl]="audienciaVirtualFormControl">
+  </div>
+</form>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid " (click)="save()">Confirmar</button>
+</div>

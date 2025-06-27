@@ -1,0 +1,12 @@
+<div class="tableFixHead" #container>
+  <table class="table table-fixed" [ngStyle]="tableStyle">
+    <thead>
+      <tr [ngStyle]="headerStyle">
+        <ng-content select="[col]"></ng-content>
+      </tr>
+    </thead>
+    <tbody [ngStyle]="dataStyle">
+      <ng-content select="[row]"></ng-content>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,159 @@
+<div class="row">
+  <div class="col-12" [formGroup]="CCForm">
+    <section class="painel p-3">
+      <div class="row">
+        <div class="col-12 pr-1">
+          <label for="pdf-comprovante" class="col-form-label-sm font-purple">
+            Arquivo de compromissos que serão carregados:
+          </label>
+
+          <div class="d-flex">
+            <input
+              type="file"
+              style="display: none"
+              (change)="aoAdicionarArquivo()"
+              #arquivo
+            />
+
+            <input
+              type="text"
+              id="pdf-comprovante"
+              class="form-control"
+              placeholder="Nenhum arquivo selecionado"
+              [formControl]="nomeArquivoFormControl"
+              readonly
+            />
+
+            <button
+              type="button"
+              class="btn btn-primary upload ml-2"
+              (click)="arquivo.click()"
+            >
+              <i class="fas fa-folder mr-1"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- <div class="col-2 px-1" [ngStyle]="{ paddingTop: '1.6rem' }">
+                    <button type="button" class="btn btn-primary upload" (click)="arquivo.click()">
+                        <i class="fas fa-folder mr-1"></i>
+                    </button>
+                </div> -->
+        <div class="col-4 pl-1"></div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-12 pr-1">
+          Carregue uma planilha .csv de até 10 MB que esteja no modelo padrão.
+        </div>
+      </div>
+      <div class="col-12 pt-1 pl-0">
+        <a
+          href="assets/arquivo-padrao/ArquivoPadraoCargaCompromisso.csv"
+          class="font-purple btn-link btn-text-cursor"
+        >
+          <span class="roxo-padrao" style="font-size: 10px"
+            >BAIXAR A PLANILHA PADRÃO <i class="fas fa-download pr-1"></i
+          ></span>
+        </a>
+      </div>
+
+      <div class="row pt-1">
+        <div class="col-12 pt-3">
+          <div
+            fxLayout="row"
+            fxLayoutAlign="start flex-start"
+            class="periocidade-selects"
+          >
+            <div class="row">
+              <div class="col-6">
+                <b>Configuração da Execução:</b>
+                <span class="d-flex radio pt-1">
+                  <input
+                    class="mb-1"
+                    type="radio"
+                    name="select"
+                    id="imediata"
+                    value="0"
+                    [checked]="true"
+                    [formControl]="periodicidadeExecucaoFormControl"
+                  />
+                  <label class="ml-1" for="imediata">Execução Imediata</label
+                  ><br />
+                </span>
+                <span class="d-flex radio mt-1">
+                  <input
+                    class="mb-1"
+                    type="radio"
+                    name="select"
+                    id="especifica"
+                    value="1"
+                    [formControl]="periodicidadeExecucaoFormControl"
+                  />
+                  <label class="ml-1" for="especifica">Data Específica</label
+                  ><br />
+                </span>
+                <span
+                  class="d-flex"
+                  style="margin: 0 1.4rem"
+                  *ngIf="periodicidadeExecucaoFormControl.value == 1"
+                >
+                  <app-datas
+                    [dataInicio]="dataEspecificaFormControl.value"
+                    (retDataInicio)="dataEspecificaFormControl.setValue($event)"
+                    [minDate]="dataAtual"
+                  ></app-datas>
+                </span>
+              </div>
+              <div class="col-6">
+                <div class="col-9 pr-1" style="width: 425px;">
+                  <label class="col-form-label-sm" for="sigla-input">
+                    <b>Tipo de Processo:</b>
+                    <i
+                      class="fas fa-info-circle"
+                      style="margin-left: 0.5rem; cursor: pointer; color: #555"
+                      title="A planilha só poderá conter processos do tipo indicado"
+                    ></i>
+                  </label>
+                  <ng-select
+                    [ngStyle]="{ fontSize: '11px' }"
+                    id="tipoDeProcesso"
+                    [items]="tiposDeProcesso"
+                    [formControl]="tipoDeProcessoFormControl"
+                    (change)="aoSelecionarTipoDeProcesso($event)"
+                    bindLabel="descricao"
+                    bindValue="id"
+                    appearance="outline"
+                    notFoundText="Nenhuma opção disponível"
+                    [searchable]="true"
+                    [clearable]="true"
+                    [placeholder]="'Selecione o tipo de processo'"
+                  >
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer p-0">
+        <button
+          type="button"
+          class="btn btn-cancelar-oi roxo-padrao"
+          (click)="activeModal.close(false)"
+        >
+          <span class="texto-btn-oi cancelar"> Cancelar </span>
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="!arquivoSelecionado || !tipoDeProcessoSelecionado"
+          (click)="criar()"
+        >
+          <span class="texto-btn-oi confirmar"> Agendar </span>
+        </button>
+      </div>
+    </section>
+  </div>
+</div>

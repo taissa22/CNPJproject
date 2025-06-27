@@ -1,0 +1,29 @@
+.modal-title{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.inputs {
+    margin-top: 20px;
+}
+
+.checkbox-direita {
+    margin-top: 2.5rem;
+    padding-left: 0;
+}
+
+::ng-deep{
+    .modal-depara-status-negociacao {
+        .modal-dialog {
+            min-width: 450px!important;
+            max-width: 450px!important;
+            min-height: 450px !important;
+        }
+    }
+}
+
+.link-todos {
+    cursor:pointer;
+    color: #6151ac;
+
+}

@@ -1,0 +1,57 @@
+.title{
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #554d80;
+
+}
+
+.titulo {
+  opacity: 0.85;
+  font-family: Roboto;
+
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+  text-align: left;
+  color: #554d80;
+
+}
+
+.titulo h1{
+  font-size: 16px !important;
+  font-weight: bold;
+}
+
+hr{
+  margin: 0;
+}
+
+
+  .selected {
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: 0.12px;
+    text-align: left;
+    color: #ffffff;
+    background-color: #786bb9 !important;
+  }
+
+
+  .text-limit {
+    max-width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .table-item{
+    cursor: pointer;
+  }

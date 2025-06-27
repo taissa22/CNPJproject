@@ -1,0 +1,73 @@
+<div>
+    <div class="roxo-padrao btn-novo mt-1">
+        <div>
+            <h5 class="roxo-padrao title mb-0" style="width: 500px">
+                Valores
+            </h5>
+        </div>
+        <i class="fas fa-plus-circle ml-auto mr-1 fs-2" (click)="incluir()" *ngIf="temPermissaoBlocoCeDeE"></i>
+        <span class="fs-1" (click)="incluir()" *ngIf="temPermissaoBlocoCeDeE">Incluir</span>
+    </div>
+
+    <div style="margin-top: 5px">
+        <sisjur-table (sort)="buscarTabela()">
+            <ng-container>
+                <sisjur-table-header>
+                    <sisjur-table-header-cell width="2"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3">ID</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="15">Período Apuração</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="15">Valor Retenção não Efetuada</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="15">Valor Depósito Judicial</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="15">Valor Compensação Ano Calendário</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="15">Valor Compensação Anos Anteriores</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="15">Valor Rendimento Exigibilidade Suspensa
+                    </sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                </sisjur-table-header>
+
+                <ng-container *ngFor="let item of dataSource; let i = index">
+                    <sisjur-table-row>
+                        <sisjur-table-row-cell class="ml-0">
+                            <button type="button" class="btn pl-2" (click)="selecionarValores(item.idEsF2501Infovalores);">
+                                <i class="fas fa-plus roxo-padrao mr-1" *ngIf="valoresSelecionado != item.idEsF2501Infovalores"></i>
+                                <i class="fas fa-minus roxo-padrao mr-1" *ngIf="valoresSelecionado == item.idEsF2501Infovalores"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.idEsF2501Infovalores}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infovaloresIndapuracao == 1 ? 'Mensal' : 'Anual (13° salário)' }}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infovaloresVlrnretido | currency: "BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infovaloresVlrdepjud | currency: "BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infovaloresVlrcmpanocal | currency: "BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infovaloresVlrcmpanoant | currency: "BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infovaloresVlrrendsusp | currency: "BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>
+                            <button type="button" class="btn btn-icon" (click)="consultar(item.idEsF2501Infovalores)" *ngIf="!temPermissaoBlocoCeDeE">
+                                <i class="fa fa-magnifying-glass"></i>
+                            </button>
+                            <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501Infovalores)" *ngIf="temPermissaoBlocoCeDeE">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+
+                        <sisjur-table-row-cell>
+                            <button type="button" class="btn btn-icon" (click)="excluir(item.idEsF2501Infovalores)" *ngIf="temPermissaoBlocoCeDeE">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+
+                    </sisjur-table-row>
+
+                    <sisjur-table-row *ngIf="valoresSelecionado == item.idEsF2501Infovalores" [heightAuto]="true" background="#fff">
+                        <sisjur-table-row-cell width="100">
+                            <div class="pt-3">
+                                <app-detalhamento-deducoes-modal_v1_2 [formularioId]="formularioId" [codigoInfoValores]="item.idEsF2501Infovalores" [temPermissaoBlocoCeDeE]="temPermissaoBlocoCeDeE" [podeIncluir]="item.infovaloresVlrrendsusp != null && item.infovaloresVlrrendsusp > 0"></app-detalhamento-deducoes-modal_v1_2>
+                            </div>
+                        </sisjur-table-row-cell>
+                    </sisjur-table-row>
+                </ng-container>
+
+            </ng-container>
+        </sisjur-table>
+    </div>
+</div>

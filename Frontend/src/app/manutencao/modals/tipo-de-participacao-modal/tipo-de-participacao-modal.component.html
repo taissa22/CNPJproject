@@ -1,0 +1,48 @@
+<style>
+  .modal-header button {
+    color: gray;
+  }
+
+  .modal-title {
+    margin: auto;
+  }
+
+  .btn-icon {
+    font-size: 18px;
+  }
+</style>
+
+<div class="modal-header">
+  <span  class="modal-title"> {{titulo}}</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+
+  <div>
+    <label class="col-form-label-sm" for="descricao-input">
+      <b>Descrição:</b>
+    </label>
+    <input type="text" id="descricao-input" #input [value]="input.value.toUpperCase()" [formControl]="descricaoFormControl" class="form-control"
+      [disableTooltip]="descricaoFormControl.valid || descricaoFormControl.untouched" [ngbTooltip]="descricaoError"
+      maxlength="20" />
+    <ng-template #descricaoError>
+      <span *ngIf="descricaoFormControl.hasError('required')">
+        Campo obrigatório
+      </span>
+      <span *ngIf="descricaoFormControl.hasError('maxlength')">
+        O Limite é de 20 caracteres
+      </span>
+    </ng-template>
+  </div>
+
+</form>
+
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid"
+    (click)="save()">Confirmar</button>
+</div>

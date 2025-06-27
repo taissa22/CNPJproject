@@ -1,0 +1,18 @@
+::ng-deep {
+    .motivo-modal{
+        .modal-dialog {
+            min-width: 330px!important;
+            max-width: 330px!important;
+        }    
+    }
+}
+
+.btn-roxo{
+    color: #786bb9;
+    font-family: Roboto, sans-serif;
+}
+
+.btn-acao {
+    color: #6f62b2 !important;
+    font-size: 16px !important;
+}

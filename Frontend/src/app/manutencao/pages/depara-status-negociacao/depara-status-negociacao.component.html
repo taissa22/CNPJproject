@@ -1,0 +1,77 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="DE x PARA Status de Negociação"
+  [breadcrump]="breadcrumb" [exibirAdicionar]=exibirTabela>
+  <div class="row">
+    <div class="col-12 py-3">
+      <p class="font-purple">
+        Selecione o tipo de processo para carregar a lista de DE x PARA.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3 pr-1">
+      <label class="col-form-label-sm" for="tipoProcesso">
+        <b>Tipo de Processo:</b>
+      </label>
+      <ng-select [ngStyle]="{'fontSize': '11px'}" [items]="tiposProcesso" bindLabel="descricao" bindValue="id"
+        [formControl]="tipoProcessoFormControl" appearance="outline" notFoundText="Nenhuma opção disponível"
+        [searchable]="false" [clearable]="false" (change)="selecionarTipoProcesso()"
+        [placeholder]="'Selecione o tipo de processo'"></ng-select>
+    </div>
+    <div class="col-6 pr-1" *ngIf="exibirTabela">
+      <label class="col-form-label-sm" for="tipoProcesso" *ngIf="tipoProcessoFormControl.value !== null">
+        <b>Descrição:</b>
+      </label>
+      <input type="search" (search)="onClearInputPesquisar()" class="form-control mr-4" id="descricao"
+        [formControl]="buscarDescricaoFormControl" placeholder="Digite a descrição (ou parte do texto) do status ou substatus da APP ou do status do SISJUR" #input
+        [value]="input.value.toUpperCase()" *ngIf="tipoProcessoFormControl.value !== null"
+        (keydown.enter)="buscarTabela()">
+    </div>
+    <div class="col-3 pr-1 d-flex align-items-end pb-1" *ngIf="exibirTabela">
+      <button class="btn btn-primary btn-sm" *ngIf="tipoProcessoFormControl.value !== null"
+        (click)="buscarTabela()">Buscar</button>
+    </div>
+  </div>
+  <div class="mt-4 row" *ngIf="exibirTabela">
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;">Status de Negociação</b>
+    </div>
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()">
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+  <div *ngIf="exibirTabela">
+    <sisjur-table (sort)="buscarTabela()">
+      <ng-container>
+        <sisjur-table-header>
+          <sisjur-table-header-cell sort="id" width="5">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="tipoProcesso" width="20">Tipo de Processo</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="descricaoStatusApp" width="28">Status / Substatus APP Preposto (DE)
+          </sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="descricaoStatusSisjur" width="28">Status Correspondente no SISJUR (PARA)
+          </sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+        <sisjur-table-row *ngFor="let item of statusDePara;let i = index">
+          <sisjur-table-row-cell> {{item.id}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell> {{item.descricaoTipoProcesso}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell> {{item.descricaoStatusApp}} / {{item.descricaoSubStatusApp}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell> {{item.descricaoStatusSisjur}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(item)"> <i class="fa fa-edit"></i> </button>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="excluir(item)"> <i class="fa fa-trash"></i> </button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </sisjur-table>
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+  </div>
+</app-manutencao-generica>
+

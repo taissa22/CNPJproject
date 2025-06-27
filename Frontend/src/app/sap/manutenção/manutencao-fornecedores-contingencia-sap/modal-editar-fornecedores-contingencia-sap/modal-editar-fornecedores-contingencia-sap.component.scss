@@ -1,0 +1,40 @@
+input.width {
+  width: 100%;
+  border: 1px solid #ced4da;
+  padding: 2px 12px;
+}
+
+.checkbox{
+  align-items: center;
+  height: 64px;
+}
+
+label {
+  color: #555555;
+  font-weight: bold;
+}
+
+
+
+.roxo-padrao{
+  color:#6f62b2;
+}
+
+.form-control {
+  &:focus{
+    box-shadow: inset 0px 0px 2px 0.5px rgba(0,0,0,0.69);
+  }
+
+  &.ng-invalid {
+    &.ng-touched{
+      border: 1px solid red; outline: none; box-shadow: 0 0 3px red;
+      box-shadow: inset 0px 0px 2px 0.5px rgba(255,0,0,0.69);
+    }
+
+
+  }
+
+
+}
+
+

@@ -1,0 +1,47 @@
+.modal-header button {
+  color: gray;
+}
+
+.modal-title {
+  margin: auto;
+}
+
+.btn-icon {
+  font-size: 18px;
+}
+
+.form-control-select {
+  padding: 0;
+  border: none;
+}
+
+.tooltip-categoria{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tooltip-data-mudanca{    
+  width: 20.7rem;
+}
+
+::ng-deep{
+  bs-datepicker-container,
+  bs-daterangepicker-container {
+    z-index: 20000!important;
+  }
+
+}
+
+::ng-deep .modal-categoria  {
+  .modal-content {
+    min-width: 570px !important;
+    max-width: 571px !important;
+  }
+  .modal-sm {
+    min-width: 570px !important;
+    max-width: 571px !important;
+  }
+}
+
+

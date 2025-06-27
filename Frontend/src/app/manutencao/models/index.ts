@@ -1,0 +1,13 @@
+export { Parte } from './parte.model';
+export { Orgao } from './orgao.model';
+export { Competencia } from './competencias.model';
+export { EmpresaCentralizadora } from './empresa-centralizadora.model';
+export { Convenio } from './convenio.model';
+export { TipoOrgao } from './tipo-orgao.enum';
+export { EstadoEnum } from './estado.enum';
+export { Estado } from './estado.model';
+export { TipoParte } from './tipo-parte.enum';
+export { Assunto } from './assunto.model';
+export { Pedido } from './pedido.model';
+export { Profissional } from './profissional.model';
+export { FielDepositario } from './fiel-depositario.model';

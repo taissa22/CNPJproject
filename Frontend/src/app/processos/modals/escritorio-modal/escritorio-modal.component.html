@@ -1,0 +1,228 @@
+<div class="modal-header pb-0">
+  <span class="modal-title pl-0">{{titulo}}</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+<div class="content pb-0">
+  <div class="prmDistribuicao">
+    <div style="width: 100%; display: flex;">
+      <div style="width: 50%">
+        <h5 class="subTitle">Parametros de Distribuição</h5>
+      </div>
+      <div style="width: 50%; display: flex;">
+        <div class="ml-auto" *ngIf="editarDistribuicao">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch1" #customSwitch1
+              (click)="statusDist(customSwitch1.checked)">
+            <label class="custom-control-label subTitle" for="customSwitch1"><b>Status Distribuição</b></label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr style="margin-top: 0">
+    <div style="display: flex; flex-wrap: wrap; width: 100%;">
+      <div style="width: 20%">
+        <b>Natureza:</b>
+        <ng-select [items]="naturezaList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+          [disabled]="!editarDistribuicao" [(ngModel)]="distribuicao.codTipoProcesso" (change)="clearEcritorioList()"
+          (ngModelChange)="obterVara(distribuicao.codComarca, distribuicao.codTipoProcesso)">
+        </ng-select>
+      </div>
+      <div style="width: 8%;margin-left: 1%;">
+        <b>UF:</b>
+        <ng-select [items]="ufList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+          [disabled]="!editarDistribuicao" [(ngModel)]="distribuicao.codEstado"
+          (ngModelChange)="fazerBuscaComarca(distribuicao.codEstado)">
+        </ng-select>
+      </div>
+      <div style="width: 20%;margin-left: 1%;">
+        <b>Comarca:</b>
+        <ng-select [items]="comarcaList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+          [disabled]="!editarDistribuicao" [(ngModel)]="distribuicao.codComarca"
+          (ngModelChange)="obterVara(distribuicao.codComarca, distribuicao.codTipoProcesso)">
+        </ng-select>
+      </div>
+      <div style="width: 20%;margin-left: 1%;">
+        <b>Vara:</b>
+        <ng-select [clearable]="false" [disabled]="!editarDistribuicao"
+          [(ngModel)]="distribuicao.codigos">
+          <ng-option *ngFor="let vara of varaList" [value]="vara.codigos">{{vara.nome}}</ng-option>
+        </ng-select>
+      </div>
+      <div style="width: 28%;margin-left: 1%;">
+        <b>Emp. Centralizadora:</b>
+        <ng-select [items]="empCentList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+          [disabled]="!editarDistribuicao" [(ngModel)]="distribuicao.codEmpresaCentralizadora">
+        </ng-select>
+      </div>
+    </div>
+  </div>
+  <div class="escritorio pt-4">
+    <h5 class="subTitle">Escritório</h5>
+    <ng-container *ngIf="!editar">
+      <span class="d-flex">
+        <hr style="margin-top: 0; width: 97%;"> <i class="fas fa-plus-circle roxo-padrao ml-auto"
+          style="font-size: 25px; margin-top: -14px; cursor: pointer;" id="adicionar-icon"
+          (click)="adicionarEscritorio()"></i>
+      </span>
+    </ng-container>
+    <ng-container *ngIf="editar">
+      <hr style="margin-top: 0;">
+    </ng-container>
+
+    <div style="display: flex; flex-direction: column;">
+      <ng-container *ngIf="editar && !editarDistribuicao">
+        <ng-container *ngTemplateOutlet="escritoriosTemplate"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="!editar && !editarDistribuicao">
+        <div class="gridEscritorio drag-boundary mt-2" style="min-height: 400px; max-height: 400px; overflow: auto">
+          <ng-container *ngTemplateOutlet="escritoriosTemplate"></ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="editarDistribuicao">
+        <div style="text-align: end">
+          <button type="button" class="btn btn-link distribuir-percentual pr-0" (click)="distribuirPercentual()">Distribuir % Processos</button>
+        </div>
+        <div class="gridEscritorio drag-boundary mt-2">
+          <ng-container *ngTemplateOutlet="edicaoDistribuicao"></ng-container>
+        </div>
+      </ng-container>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="validarParametrizacao()">Confirmar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #escritoriosTemplate>
+  <ng-container *ngIf="editar">
+    <div>
+      <div class="d-flex">
+        <div style="width: 50%">
+          <b>Escritório:</b>
+          <ng-select [items]="escritorioList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+            placeholder="Selecione o Escritório" [(ngModel)]="escritorioDistribuicao.codProfissional">
+          </ng-select>
+        </div>
+        <div style="display: flex; flex-direction: column; margin-left: 20px">
+          <b>% Processos:</b>
+          <input type="text" class="percProcesso" percentNumberDirective
+            [(ngModel)]="escritorioDistribuicao.porcentagemProcessos">
+        </div>
+        <div style="display: flex; flex-direction: column; margin-left: 20px">
+          <b>Prioridade:</b>
+          <input style="width: 45px;" [disabled]="true" type="text" class="percProcesso" percentNumberDirective
+            [(ngModel)]="escritorioDistribuicao.prioridade">
+        </div>
+      </div>
+      <div class="d-flex mt-4">
+        <div style="width: 50%">
+          <b>Solicitante:</b>
+          <ng-select [items]="listSolicitante" bindLabel="nome" bindValue="codigo" [clearable]="false"
+            placeholder="Selecione o Solicitante" [(ngModel)]="escritorioDistribuicao.codSolicitante">
+          </ng-select>
+        </div>
+        <div style="margin-left: 20px;">
+          <b>Data da vigência:</b>
+          <app-data-range [dataInicio]="escritorioDistribuicao.datVigenciaInicial"
+            [dataFim]="escritorioDistribuicao.datVigenciaFinal"
+            (retDataFim)="escritorioDistribuicao.datVigenciaFinal = $event"
+            (retDataInicio)="escritorioDistribuicao.datVigenciaInicial = $event">
+          </app-data-range>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!editar">
+    <div cdkDropList (cdkDropListDropped)="drop($event)">
+      <ng-container *ngFor="let item of novoEscritorio; let i = index">
+        <div class="drag-box" cdkDragBoundary=".drag-boundary" cdkDrag>
+          <div class="d-flex">
+            <div style="width: 50%">
+              <b>Escritório:</b>
+              <ng-select [items]="escritorioList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+                placeholder="Selecione o Escritório" [(ngModel)]="item.escritorio">
+              </ng-select>
+            </div>
+            <div style="display: flex; flex-direction: column; margin-left: 20px">
+              <b>% Processos:</b>
+              <input type="text" class="percProcesso" percentNumberDirective [(ngModel)]="item.percProcesso">
+            </div>
+            <div style="display: flex; flex-direction: column; margin-left: 20px">
+              <b>Prioridade:</b>
+              <input style="width: 45px;" [disabled]="true" type="text" class="percProcesso"
+                value="{{totalEscritorio + 1 + i}}">
+            </div>
+          </div>
+          <div class="d-flex mt-4">
+            <div style="width: 50%">
+              <b>Solicitante:</b>
+              <ng-select [items]="listSolicitante" bindLabel="nome" bindValue="codigo" [clearable]="false"
+                placeholder="Selecione o Solicitante" [(ngModel)]="item.solicitante">
+              </ng-select>
+            </div>
+            <div style="margin-left: 20px;">
+              <b>Data da vigência:</b>
+              <app-data-range [dataInicio]="item.dataIni" [dataFim]="item.dataFim" (retDataFim)="item.dataFim = $event"
+                (retDataInicio)="item.dataIni = $event">
+              </app-data-range>
+            </div>
+            <div class="ml-5">
+              <i class="fas fa-trash roxo-padrao fa-2x" style="margin-top: -15px; font-size: 15px; cursor: pointer;"
+                [ngClass]="{ 'disabled': novoEscritorio.length == 1}" (click)="removerEscritorio(item)"></i>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #edicaoDistribuicao>
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    <ng-container *ngFor="let item of escritoriosDistribuicao; let i = index">
+      <div class="drag-box" cdkDragBoundary=".drag-boundary" cdkDrag>
+        <div class="d-flex">
+          <div style="width: 50%">
+            <b>Escritório:</b>
+            <ng-select [items]="escritorioList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+              placeholder="Selecione o Escritório" [(ngModel)]="item.codProfissional">
+            </ng-select>
+          </div>
+          <div style="display: flex; flex-direction: column; margin-left: 20px">
+            <b>% Processos:</b>
+            <input type="text" class="percProcesso" percentNumberDirective [(ngModel)]="item.porcentagemProcessos">
+          </div>
+          <div style="display: flex; flex-direction: column; margin-left: 20px">
+            <b>Prioridade:</b>
+            <input style="width: 45px;" [disabled]="true" type="text" class="percProcesso" value="{{1 + i}}">
+          </div>
+        </div>
+        <div class="d-flex mt-4">
+          <div style="width: 50%">
+            <b>Solicitante:</b>
+            <ng-select [items]="listSolicitante" bindLabel="nome" bindValue="codigo" [clearable]="false"
+              placeholder="Selecione o Solicitante" [(ngModel)]="item.codSolicitante">
+            </ng-select>
+          </div>
+          <div style="margin-left: 20px;">
+            <b>Data da vigência:</b>
+            <app-data-range [dataInicio]="item.datVigenciaInicial" [dataFim]="item.datVigenciaFinal"
+              (retDataFim)="item.datVigenciaFinal = $event" (retDataInicio)="item.datVigenciaInicial = $event">
+            </app-data-range>
+          </div>
+          <div class="ml-5">
+            <i class="fas fa-trash roxo-padrao fa-2x" style="margin-top: -15px; font-size: 15px; cursor: pointer;"
+              [ngClass]="{ 'disabled': escritoriosDistribuicao.length == 1}" (click)="removerEscritorio(item)"></i>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </ng-container>
+  </div>
+</ng-template>

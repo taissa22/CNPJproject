@@ -1,0 +1,23 @@
+export interface GuiasProblema {
+    codigoComarca: string,
+    nomeComarca: string,
+    codigoOrgaoBB: string,
+    nomeOrgaoBB: string,
+    codigoNaturezaAcaoBB: string,
+    nomeNaturezaBB: string,
+    nomeAutor: string,
+    autorCPF_CNPJ: string,
+    nomeReu: string,
+    reuCPF_CNPJ: string,
+    valorParcela: string,
+    dataGuia: string,
+    guia: string,
+    numeroConta: string,
+    numeroParcela: string,
+    idBBStatusParcela: string,
+    descricaoErroGuia: string,
+    dataEfetivacaoParcelaBB: string,
+    statusParcelaBB: string,
+    idProcesso: string,
+    idLancamento: string
+}

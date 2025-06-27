@@ -1,0 +1,132 @@
+<div class="modal-header">
+  <span class="modal-title pl-0">Agendar execução de relatório</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+      <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formAgendamento" class="modal-body pt-2 pb-0">
+  <div class="row mb-3">
+    <div class="col-3">
+      <label class="col-form-label-sm pb-0 mb-1 text-right w-100">
+        <b>Nome do Relatório:</b>
+      </label>
+    </div>
+    <div class="col">
+        <input type="text" formControlName="nomeRelatorio" class="form-control"/>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-3">
+      <label class="col-form-label-sm pb-0 mb-1 text-right w-100">
+        <b>Descrição:</b>
+      </label>
+    </div>
+    <div class="col">
+        <input type="text" formControlName="descricao" class="form-control"/>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-3">
+      <label class="col-form-label-sm pb-0 mb-1 text-right w-100">
+        <b>Executar relatório:</b>
+      </label>
+    </div>
+    <div class="col" fxLayoutAlign="row">
+      <select class="form-control selectExecucao" formControlName="tipoExecucao"   (change)="limparCamposDinamicos()">
+        <option *ngFor="let opcaoExecucao of opcoesExecucao" [value]="opcaoExecucao">
+          {{opcaoExecucao}}
+        </option>
+      </select>
+      <b *ngIf="tipoExecucao.value === 'Semanalmente'" class="m-2">dia da semana</b>
+      <select *ngIf="tipoExecucao.value === 'Semanalmente'" class="form-control selectExecucao" formControlName="diaSemana" (change)="desabilitaCheckDiasUteis()">
+        <option *ngFor="let diaSemana of diasSemana" [value]="diaSemana">
+          {{diaSemana}}
+        </option>
+      </select>
+      <b *ngIf="tipoExecucao.value === 'Mensalmente'" class="m-2">dia do mês</b>
+      <select *ngIf="tipoExecucao.value === 'Mensalmente'" class="form-control selectExecucao" formControlName="diaMes">
+        <option *ngFor="let diaMes of diasMes" [value]="diaMes">
+          {{diaMes}}
+        </option>
+      </select>
+      <b *ngIf="tipoExecucao.value === 'Na data'" class="m-2">Executar na data</b>
+      <div *ngIf="tipoExecucao.value === 'Na data'" class="col-3 p-0">
+        <input
+        class="form-control float-left input-data"
+        name="dp"
+        rInputMask="99/99/9999"
+        placeholder="dd/mm/yyyy"
+        formControlName="dataExecucao"
+        #d1="ngbDatepicker" [displayMonths]="'displayMonths'"
+        [navigation]="'navigation-arrows'"
+        [outsideDays]="'outsideDays'"
+        (focusout)="resetarDatasInvalidas()"
+        [showWeekNumbers]="true"
+        ngbDatepicker id="inputDataFim"
+        maxlength="10"  style="width: 78%;"  >
+        <button class="btn calendar  mt-2" (click)="d1.toggle()" tabindex="-1" type="button"><i
+                class="fa-solid fa-calendar-days fa-lg"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="tipoExecucao.value === 'Diariamente' || tipoExecucao.value === 'Semanalmente' || tipoExecucao.value === 'Mensalmente'" class="row mb-3">
+    <div class="col-3">
+      <label class="col-form-label-sm pb-0 mb-1 text-right w-100">
+        <b>Entre os dias:</b>
+      </label>
+    </div>
+    <div class="col">
+      <div fxLayoutAlign="row">
+        <div class="col-3 p-0">
+          <input
+          class="form-control  float-left input-data"
+          name="dp"
+          rInputMask="99/99/9999"
+          placeholder="dd/mm/yyyy"
+          formControlName="dataIni"
+          #dI="ngbDatepicker" [displayMonths]="'displayMonths'"
+          [navigation]="'navigation-arrows'"
+          (focusout)="resetarDatasInvalidas()"
+          [outsideDays]="'outsideDays'"
+          [showWeekNumbers]="true"
+          ngbDatepicker id="inputDataIni"
+          maxlength="10" style="width: 78%;"  >
+          <button class="btn calendar  mt-2" (click)="dI.toggle()" tabindex="-1" type="button"><i
+                  class="fa-solid fa-calendar-days fa-lg"></i>
+          </button>
+        </div>
+        <b class="col-1 m-0 p-0 mt-2" style="max-width: 15px;">e</b>
+        <div class="col-3 p-0">
+          <input
+          class="form-control float-left input-data"
+          name="dp"
+          rInputMask="99/99/9999"
+          placeholder="dd/mm/yyyy"
+          formControlName="dataFim"
+          #dF="ngbDatepicker" [displayMonths]="'displayMonths'"
+          [navigation]="'navigation-arrows'"
+          (focusout)="resetarDatasInvalidas()"
+          [outsideDays]="'outsideDays'"
+          [showWeekNumbers]="true"
+          ngbDatepicker id="inputDataFim"
+          maxlength="10" style="width:78%"  >
+          <button class="btn calendar  mt-2" (click)="dF.toggle()" tabindex="-1" type="button"><i
+                  class="fa-solid fa-calendar-days fa-lg"></i>
+          </button>
+        </div>
+      </div>
+      <p class="text-info">Agendamentos têm validade de um ano! Atualize seus agendamentos com frequência.</p>
+      <label>
+        <b> <input type="checkbox" formControlName="somenteEmDiasUteis" (change)="desabilitaHabilitaFinaisSemana()"   name="" id=""> Executar somente em dias úteis</b>
+      </label>
+    </div>
+  </div>
+
+
+</form>
+
+<div class="modal-footer pt-0">
+  <button type="button" (click)="salvar()" class="btn btn-primary">AGENDAR E SALVAR MODELO</button>
+</div>

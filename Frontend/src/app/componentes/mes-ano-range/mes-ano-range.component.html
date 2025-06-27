@@ -1,0 +1,12 @@
+<div>
+  <div class="d-flex align-items-center">
+    <form [formGroup]="dadosDaBusca" novalidate>
+      <mes-ano name="mesAnoInicial" formControlName="mesAnoInicial"></mes-ano>
+    </form>
+    <span class="mr-2">até</span>
+    <form [formGroup]="dadosDaBusca" novalidate>
+      <mes-ano name="mesAnoFinal" formControlName="mesAnoFinal"></mes-ano>
+    </form>
+    <!-- <button class="btn btn-primary" (click)="buscarCotacoes()">Buscar</button> -->
+  </div>
+</div>

@@ -1,0 +1,54 @@
+section.container-breadcrumb{
+  margin-top: 30px;
+
+  h3{
+    color: #554D80;
+  }
+}
+
+section{
+  min-width: 85%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+}
+
+.expandir{
+  background:transparent;
+  border:none;
+  outline:none;
+  display:block;
+  cursor:pointer;
+  font-size: 20px;
+  font-weight: 400;
+  color: #ccc;
+}
+
+.titulo{
+  margin-left: 8px;
+  width:95%;
+  color: #555555;
+}
+
+.empresas{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding:5px;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #333;
+  min-width: 320px;
+  position: fixed;
+  left: 50%;
+  padding: 24px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

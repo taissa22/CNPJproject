@@ -1,0 +1,82 @@
+.painel {
+  border: 1px solid #d8d9de;
+  box-shadow: 0px 0px 2px 0px rgba(150, 150, 150, 0.35);
+}
+.w700 {
+  font-weight: 700;
+}
+.w500 {
+  font-weight: 500;
+}
+.btn-text-cursor {
+  cursor: pointer;
+}
+.modal-custom-font-size {
+  font-size: 16px;
+}
+.font-grey {
+  color: #555555;
+}
+.font-light-grey {
+  color: #ababab;
+}
+.font-size-16 {
+  font-size: 16px;
+}
+.font-size-14 {
+  font-size: 14px;
+}
+.font-size-12 {
+  font-size: 12px;
+}
+.custom-badge {
+  background: #28a745;
+  color: #ffffff;
+  font-size: 11px;
+  height: 23px;
+  padding: 0.25rem 0.4rem;
+  border-radius: 0.25rem;
+  font-weight: 700;
+}
+
+.title span {
+  display: inline-block;
+  width: calc(100% - 40px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.title > div {
+  height: 36px;
+  width: 32px;
+  text-align: center;
+  margin-top: 6px;
+}
+
+.competencia > span {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: block;
+  width: 93%;
+}
+
+.competencia:first-of-type > span {
+  border-top: none;
+}
+
+.delete {
+  height: 36px;
+  width: 32px;
+  text-align: center;
+  line-height: 36px;
+}
+
+::ng-deep {
+  bs-datepicker-container {
+    z-index: 9999;
+  }
+
+  .modal-dialog {
+    width: 600px !important;
+    max-width: 600px !important;
+    margin-top: -5px;
+  }
+}

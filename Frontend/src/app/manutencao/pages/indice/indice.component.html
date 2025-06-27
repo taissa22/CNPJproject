@@ -1,0 +1,72 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Cadastro de Índices" 
+  [breadcrump]="breadcrumb" [exibirAdicionar]="true">
+  <div class="row">
+    <div class="col-12 py-3">
+      <!-- <p class="font-purple">
+        Marque o Cálculo Inicial para definir a base de cálculo a ser utilizada.
+      </p> -->
+    </div>
+  </div>
+  <div class="row mb-1">
+    <div class="col-md-6 pr-1">
+      <app-filtro-busca-padrao (nomeBusca)="search = $event"
+        [placeholder]="'Entre com o nome ou parte do nome do índice.'" class="pb-2" [posTop]="'10px'"
+        [posLeft]="'21px'">
+      </app-filtro-busca-padrao>
+    </div>
+
+    <div class="col-md-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" id="btnExportar" (click)="exportar()">
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <jur-table [sortDirection]="'asc'" [sortColumn]="'descricao'" [dataSource]="dataSource">
+
+    <jur-column-template flex="10" headerName="Código" sortColumn="id" *jurRowData="let row">
+      {{ row.id }}
+    </jur-column-template>
+
+    <jur-column-template flex="20" headerName="Nome" sortColumn="descricao" *jurRowData="let row">
+      <span fxFlex="nogrow">{{ row.descricao }}</span>
+    </jur-column-template>
+
+    <jur-column-template flex="10" headerName="Mensal" sortColumn="codigoTipoIndice" *jurRowData="let row">
+      <div *ngIf="row.codigoTipoIndice && row.codigoTipoIndice.toUpperCase().includes('M')">Sim</div>
+      <div *ngIf="row.codigoTipoIndice && row.codigoTipoIndice.toUpperCase() != 'M'">Não</div>
+    </jur-column-template>
+
+    <jur-column-template flex="10" headerName="Acumulado" sortColumn="acumulado" *jurRowData="let row">
+      <div *ngIf="row.acumulado && row.acumulado === true">Sim</div>
+      <div *ngIf="row.acumulado === false">Não</div>
+    </jur-column-template>
+
+    <jur-column-template flex="20" headerName="Acumulado Automaticamente" sortColumn="acumuladoAutomatico"
+      *jurRowData="let row">
+      <div *ngIf="row.acumuladoAutomatico && row.acumuladoAutomatico === true">Sim</div>
+      <div *ngIf="row.acumuladoAutomatico === false">Não</div>
+    </jur-column-template>
+
+    <jur-column-template flex="15" headerName="Tipo de Valor" sortColumn="CodigoValorIndice" *jurRowData="let row">
+      <div *ngIf="row.codigoValorIndice && row.codigoValorIndice.toUpperCase().includes('F')">FATOR</div>
+      <div *ngIf="row.codigoValorIndice && row.codigoValorIndice.toUpperCase().includes('P')">PERCENTUAL</div>
+      <div *ngIf="row.codigoValorIndice && row.codigoValorIndice.toUpperCase().includes('V')">VALOR</div>
+    </jur-column-template>
+
+    <jur-column-template *jurRowData="let row">
+      <span fxFlex></span>
+      <button type="button" class="btn btn-icon" id="btnAlterar" (click)="alterar(row)">
+        <i class="fa fa-edit"></i>
+      </button>
+      <button type="button" class="btn btn-icon" id="btnExcluir" (click)="excluir(row)">
+        <i class="fa fa-trash"></i>
+      </button>
+    </jur-column-template>
+
+  </jur-table>
+
+  <jur-paginator [length]="total"></jur-paginator>
+
+</app-manutencao-generica>

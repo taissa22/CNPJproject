@@ -1,0 +1,77 @@
+<app-container-pagina [titulo]="'Comarcas BB'" [caminho]="breadcrumb" [hasAdicionar]="true"
+  (adicionarClicked)='adicionar($event)'>
+
+
+
+
+  <ng-container *ngIf="data">
+    <div class="roxo-padrao pt-3  mt-3 d-flex align-items-end justify-content-between" style="text-align:right">
+      <app-filtro-busca-padrao (nomeBusca)="pesquisar($event)" [placeholder]="'Entre com a descrição da comarca BB'"
+      class="pb-2">
+      </app-filtro-busca-padrao>
+      <button class="btn btn-roxo pr-1 pb-0" (click)="onClickExportarPorFiltro('Comarca BB', description)">
+        <i class="fas fa-download pr-1" style="font-size:15px; cursor: pointer !important;"></i>
+        Exportar
+      </button>
+
+    </div>
+
+
+    <div class='padrao-table'>
+      <table class='table table-striped m-0' *ngIf="isNotFound">
+        <th col nowrap *ngFor="let headerSemBusca of headerSemBusca">
+          <span *ngIf="headerSemBusca">{{ headerSemBusca }}</span>
+          <app-botao-ordenacao [isActive]="false" [disabled]="true">
+          </app-botao-ordenacao>
+        </th>
+        <tbody>
+          <tr row nowrap>
+            <td colspan=999 class="tdNot-table">
+              <label *ngIf="isNotFound">
+                Nenhum resultado foi encontrado na busca
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class='table table-striped' *ngIf="data.length > 0 && !isNotFound">
+        <th col nowrap *ngFor="let header of listaHeaders">
+          {{ header['campo'] | comarcabbalias }}
+          <app-botao-ordenacao [isActive]="header.isActive" (stateChange)="onChangeOrdenacao(header)">
+          </app-botao-ordenacao>
+        </th>
+        <th></th>
+        <tbody>
+          <tr row nowrap class="table-item" *ngFor="let item of data">
+            <td class="text-limit-table" nowrap *ngFor="let header of listaHeaders">
+              <span
+                [ngbTooltip]='(item[header] && item[header].length > 40) && item[header]'>{{ item[header.campo] | boolToPT | indicaInstancia}}
+              </span>
+            </td>
+            <td style="font-size:10px; text-align: right;">
+              <i class="fas fa-edit roxo-padrao fa-2x mr-1" style="cursor: pointer;" (click)="editar(item)"></i>
+              <i class="fas fa-trash roxo-padrao fa-2x" style="cursor: pointer;"
+                (click)="onClickExcluir(item.id, 'Comarca BB', 'a', item.descricao)"></i>
+            </td>
+
+
+        </tbody>
+      </table>
+    </div>
+    <div class="row pt-3 d-flex align-items-center" *ngIf="listaHeaders.length > 0 ">
+      <div class="col-sm-6"> <span class="title-table pr-2">
+          Total de registros: {{ service.totalSubject.value }} - Itens por página</span>
+        <app-table-options *ngIf="listaHeaders.length > 0" (valueChange)="onChangeQuantidade($event)">
+        </app-table-options>
+      </div>
+      <div class="col-sm-6">
+        <app-paginacao-buttons [pageMax]="service.quantidadePorPagina" [totalRegistro]="service.totalSubject.value"
+          [currentPage]="service.paginaAtual" (onPageSelect)="onChangePagina($event)"
+          (onClickNextPage)="onChangePagina($event)">
+        </app-paginacao-buttons>
+      </div>
+    </div>
+  </ng-container>
+
+</app-container-pagina>

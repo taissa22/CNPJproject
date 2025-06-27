@@ -1,0 +1,62 @@
+<ng-container [formGroup]="agendamentoFormGroup">
+
+  <h4>Novo Cálculo AT<span style="font-size: inherit;padding-left: 1px;">M</span></h4>
+
+  <div class="base-dropdown">
+    <label class="col-form-label-sm" for="descricao-input">
+      <b>Base de Fechamento:</b>
+    </label>
+
+    <div class="card fechamentos-card">
+      <ul class="list-group">
+        <li (click)="selecionarFechamento(f.codSolicFechamentoCont, f.dataFechamento)" *ngFor="let f of fechamentos" class="list-group-item" [ngStyle]="{'background': codSolicFechamento == f.codSolicFechamentoCont && dataFechamento == f.dataFechamento ? '#786bb9' : '#fff'}"
+            >
+          <div class="row" [ngStyle]="{'color': codSolicFechamento == f.codSolicFechamentoCont && dataFechamento == f.dataFechamento ? '#fff' : '#777'}">
+             <div class="col-6 px-2">
+              <p><span style="font-weight: bold;">{{ f.dataFechamento | date:'dd/MM/yyyy' }}</span> - {{ f.empresas }}</p>
+              <p>{{ f.numeroMeses }} meses - {{ f.multDesvioPadrao !== null ? f.multDesvioPadrao.toString().replace('.', ',') : f.multDesvioPadrao }} Desvio Padrão</p>
+              <p *ngIf="f.indAplicarHaircut === 'S'">Haircut de {{ f.percentualHaircut }}% aplicado também em processos com garantia</p>
+              <p *ngIf="f.indAplicarHaircut === 'N'">Haircut de {{ f.percentualHaircut }}% aplicado apenas em processos sem garantia</p>
+            </div>
+             <div class="col px-2" style="text-align: right;">
+              <p>Solicitado por {{ f.nomeUsuario }} em {{ f.dataAgendamento  | date:'dd/MM/yyyy' }} (ID {{f.codSolicFechamentoCont}})</p>
+              <p>Executado em {{ f.dataExecucao  | date:'dd/MM/yyyy' }} às {{ f.dataExecucao  | date:'HH:mm' }}</p>
+             </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <label class="col-form-label-sm" for="descricao-input">
+    <b>Índices por UF para cálculo:</b>
+  </label>
+
+  <sisjur-table #tb class="sisjur-table-agend-atmpex" bodyRowsLimit="5" emptyMessage="Selecione uma base de fechamento">
+    <sisjur-table-header>
+      <sisjur-table-header-cell width="20">UF</sisjur-table-header-cell>
+      <sisjur-table-header-cell>Índice</sisjur-table-header-cell>
+    </sisjur-table-header>
+
+    <sisjur-table-row *ngFor="let indiceFormGroup of indicesFormArray.controls">
+      <sisjur-table-row-cell>{{indiceFormGroup.get('estado').value.id}}</sisjur-table-row-cell>
+      <sisjur-table-row-cell>
+          <ng-select  appendTo="sisjur-table" appearance="outline" notFoundText="Nenhuma opção disponível"
+          [searchable]="false" [clearable]="false" fxFlex placeholder="Selecione"
+          dropdownPosition="top"
+          [formControl]="indiceFormGroup.get('indice')" [compareWith]="indiceCompareFn">
+          <ng-option *ngFor="let indice of indices" [value]="indice">{{ indice.descricao }} ({{ indice.acumulado ?
+            'acumulado' : 'mensal' }})</ng-option>
+        </ng-select>
+      </sisjur-table-row-cell>
+    </sisjur-table-row>
+
+  </sisjur-table>
+
+  <div class="footer" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="agendamentoFormGroup.invalid"
+      (click)="agendar(false)">Agendar</button>
+  </div>
+
+</ng-container>

@@ -1,0 +1,127 @@
+<app-container-pagina [titulo]="'Centro de Custo'"
+ [caminho]="breadcrumb" [hasAdicionar]="true"
+ (adicionarClicked) = 'adicionar($event)'
+  >
+
+
+
+  <ng-container *ngIf="data">
+    <div class="roxo-padrao pt-3  mt-3 d-flex align-items-end justify-content-between" style="text-align:right">
+      <app-filtro-busca-padrao (nomeBusca)="pesquisar($event)"
+      [placeholder] = "'Entre com a descrição do Centro de Custo'"
+      class="pb-2"></app-filtro-busca-padrao>
+      <button class="btn btn-roxo pr-1 pb-0" (click)="onClickExportarPorFiltro('Centro de Custo', description)">
+        <i class="fas fa-download pr-1" style="font-size:15px; cursor: pointer !important;"></i>
+        Exportar
+      </button>
+
+    </div>
+
+
+    <div class='overflow-scroll'>
+      <table class='table table-striped' *ngIf="isNotFound">
+        <th col nowrap *ngFor="let headerSemBusca of headerSemBusca">
+          <span *ngIf="headerSemBusca">{{ headerSemBusca }}</span>
+          <app-botao-ordenacao [isActive]="false" [disabled]="true">
+          </app-botao-ordenacao>
+        </th>
+        <tbody>
+          <tr row nowrap>
+            <td colspan=999 class="tdNot">
+              <label *ngIf="isNotFound">
+                Nenhum resultado foi encontrado na busca
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class='table table-striped' style="border: 1px solid #dee2e6" *ngIf="data.length > 0 && !isNotFound">
+        <th col nowrap *ngFor="let header of listaHeaders">
+          {{ header['campo'] | centrosCustoManutencaoAlias }}
+          <app-botao-ordenacao [isActive]="header.isActive" (stateChange)="onChangeOrdenacao(header)">
+          </app-botao-ordenacao>
+        </th>
+        <th></th>
+        <tbody>
+          <tr row nowrap class="table-item" *ngFor="let item of data">
+            <td class="text-limit" nowrap *ngFor="let header of listaHeaders">
+              <span
+                [ngbTooltip]='(item[header] && item[header].length > 40) && item[header]'>{{ item[header.campo] | boolToPT | indicaInstancia}}
+              </span>
+            </td>
+            <td style="font-size:10px; text-align: right;">
+              <i class="fas fa-edit roxo-padrao fa-2x mr-1" style="cursor: pointer;" (click)="editar(item)"></i>
+              <i class="fas fa-trash roxo-padrao fa-2x" style="cursor: pointer;"
+                (click)="onClickExcluir(item.codigo, 'Centro de Custo', 'o', item.descricaoCentroCusto)"></i>
+            </td>
+
+
+        </tbody>
+      </table>
+    </div>
+    <div class="row pt-3 d-flex align-items-center" *ngIf="listaHeaders.length > 0 ">
+      <div class="col-sm-6"> <span class="title pr-2">
+          Total de registros: {{ service.totalSubject.value }} - Itens por página</span>
+        <app-table-options *ngIf="listaHeaders.length > 0" (valueChange)="onChangeQuantidade($event)">
+        </app-table-options>
+      </div>
+      <div class="col-sm-6">
+        <app-paginacao-buttons [pageMax]="service.quantidadePorPagina" [totalRegistro]="service.totalSubject.value"
+          [currentPage]="service.paginaAtual" (onPageSelect)="onChangePagina($event)"
+          (onClickNextPage)="onChangePagina($event)">
+        </app-paginacao-buttons>
+      </div>
+    </div>
+  </ng-container>
+
+
+
+
+
+
+
+
+
+        <!-- <div class="roxo-padrao2 pt-3" style="text-align:right">
+        <div>
+          <i class="fas fa-download pr-1" style="font-size:15px;cursor: pointer;" (click)="exportarcentrosCusto()"></i>
+          <span style="font-size:12px;cursor: pointer;" (click)="exportarcentrosCusto()">Exportar</span>
+        </div>
+      </div>
+
+
+    <div *ngIf="centroCustoKeys.length > 0" >
+      <table class='table table-striped fonte-padrao' style="border: 1px solid #dee2e6">
+        <th col nowrap *ngFor="let header of centroCustoKeys">
+          {{ header | centrosCustoManutencaoAlias }}
+          <app-botao-ordenacao [isActive]="isButtonActive(header)" (stateChange)="onChangeOrdenacao(header, $event)">
+          </app-botao-ordenacao>
+        </th>
+        <th></th>
+      <tr row nowrap class="table-item"
+          *ngFor="let centroCusto of centrosCusto"  >
+          <td class="text-limit" nowrap *ngFor="let header of centroCustoKeys" >
+            <span [ngbTooltip]="(centroCusto[header] && centroCusto[header].length > 68) && centroCusto[header]">{{ centroCusto[header] | boolToPT }}</span>
+          </td>
+            <td style="font-size:10px">
+              <i class="fas fa-edit roxo-padrao fa-2x mr-1" (click)="editarCentroCusto(centroCusto)"></i>
+              <i class="fas fa-trash roxo-padrao fa-2x" (click)="excluirCentroCusto(centroCusto)"></i>
+            </td>
+        </tr>
+      </table>
+    </div>
+    <div class="row pt-3 d-flex align-items-center" *ngIf="centroCustoKeys.length > 0 && !isNotFound">
+      <div class="col-sm-6"> <span class="title pr-2">Total de registros: {{ itensTotal }}
+        - Itens por página</span>
+        <app-table-options *ngIf="centroCustoKeys.length > 0" (valueChange)="onChangeTableLength($event)">
+        </app-table-options>
+      </div>
+      <div class="col-sm-6">
+        <app-paginacao-buttons [pageMax]="service.quantidadeSubject.value" [totalRegistro]="itensTotal"
+          [currentPage]="service.paginaSubject.value" (onPageSelect)="onPageClick($event)"
+          (onClickNextPage)="onPageClick($event)"></app-paginacao-buttons>
+      </div>
+    </div> -->
+
+ </app-container-pagina>

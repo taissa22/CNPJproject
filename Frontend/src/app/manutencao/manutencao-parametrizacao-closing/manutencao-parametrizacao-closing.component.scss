@@ -1,0 +1,31 @@
+.borda-externa {
+    border: 1px solid rgba(145, 145, 145, 0.5);
+    width: 100%;
+    height: auto;
+}
+
+
+
+// :host ::ng-deep #tab1-link{
+//     color:pink;
+// }
+
+:host ::ng-deep .nav-item{
+    font-size: 12px;
+    // font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    color: #495057;
+}
+
+:host ::ng-deep .nav-item .active{
+    font-size: 12px;
+    // font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    color: #495057;
+}
+
+.tab-pane{
+    height: 145px;
+}
+
+  

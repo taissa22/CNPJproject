@@ -1,0 +1,61 @@
+<div class="pagina">
+  <div class="header">
+    <div class="header_row">
+      <h4 class="roxo-padrao">Anexar Documentos</h4>
+      <button *ngIf="codParamDistribuicao > 0" type="button" class="btn btn-icon" (click)="close()">
+        <i class="fa fa-times"></i>
+      </button>
+      <button *ngIf="codParamDistribuicao == 0" type="button" class="btn btn-icon" (click)="closeLista()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+    <div class="header_row mt-2">
+      <span class="roxo-padrao">Abaixo, a lista de anexos. Clique em "Anexar novo documento" para anexar novos arquivos
+        ou no ícone de download para baixa-los.</span>
+      <span class="iconsHover mr-2 d-flex" style="cursor: pointer" (click)="novoDocumento()">
+        <i class="fas roxo-padrao fa-plus-circle roxo-padrao" style="font-size: 20px" id="adicionar-icon"></i>
+        <span style="color:#6151ac; font-size: 13px; margin-left: 5px;">
+          Anexar novo documento
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="content mt-4">
+    <div class="content_row" *ngIf="listaAnexo">
+      <h5 class="roxo-padrao">Lista de anexos</h5>
+      <button class="btn btn-roxo p-0" style="font-family: sans-serif;" [ngClass]="{ 'disabled': listaAnexo.length == 0}"  (click)="downloadAnexos()">
+        <i class="fas roxo-padrao fa-download pr-1 " [ngClass]="{ 'disabled': listaAnexo.length == 0}" 
+          style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Baixar todos
+      </button>
+    </div>
+    <div class="grid mt-1">
+      <sisjur-table>
+        <ng-container>
+          <sisjur-table-header>
+            <sisjur-table-header-cell width="23">Nome do arquivo</sisjur-table-header-cell>
+            <sisjur-table-header-cell width="23">Comentário</sisjur-table-header-cell>
+            <sisjur-table-header-cell width="23">Data e Hora da inclusão</sisjur-table-header-cell>
+            <sisjur-table-header-cell width="23">Nome Usuário inclusão</sisjur-table-header-cell>
+            <sisjur-table-header-cell width="8"></sisjur-table-header-cell>
+          </sisjur-table-header>
+          <sisjur-table-row *ngFor="let anexo of listaAnexo">
+            <sisjur-table-row-cell><span class="data_row" title="{{anexo.nomeArquivo}}">{{anexo.nomeArquivo}} </span></sisjur-table-row-cell>
+            <sisjur-table-row-cell><span class="data_row" title="{{anexo.comentario}}">{{anexo.comentario}} </span></sisjur-table-row-cell>
+            <sisjur-table-row-cell><span class="data_row" title="{{anexo.dataUpload | date:'dd/MM/yyyy HH:mm'}}">{{anexo.dataUpload | date:'dd/MM/yyyy HH:mm'}} </span></sisjur-table-row-cell>
+            <sisjur-table-row-cell><span class="data_row" title="{{anexo.nomeUsuario}}">{{anexo.nomeUsuario}} </span></sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <div class="m-auto">
+                <i class="fas roxo-padrao fa-download fa-sm mr-4" style="cursor:pointer; font-size: 16px;" (click)="downloadAnexo(anexo.idAnexoDistEscritorio)"></i>
+                <i class="fas roxo-padrao fa-trash fa-sm" style="cursor:pointer; font-size: 16px;"
+                  (click)="excluirAnexo(anexo.idAnexoDistEscritorio, anexo.nomeArquivo)"></i>
+              </div>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+        </ng-container>
+      </sisjur-table>
+    </div>
+  </div>
+
+</div>

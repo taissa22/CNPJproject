@@ -1,0 +1,62 @@
+:host {
+    padding: 16px 24px;
+  }
+  
+  h4 {
+    color: #786bb9;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 4px;
+  }
+  
+  section.base-dropdown {
+    margin: 16px 0;
+  }
+  
+  section.footer {
+    margin-top: 16px;
+  }
+  
+  section.panel {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+  }
+  
+  .fa{
+    font-size: 14px;
+    margin-left: 5px;
+  }
+
+  .fechamentos-card{
+    height: 500px;
+    overflow: hidden;
+    overflow-x: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .fechamentos-card ul li.list-group-item{
+    border: none;
+    cursor: pointer;
+    height: 32px;
+    display: flex;
+  }
+  .fechamentos-card ul li.list-group-item:hover{
+    border-top: 0.1px solid rgba(0,0,0,0.3);
+    border-bottom: 0.1px solid rgba(0,0,0,0.3);
+    height: 32px;
+    display: flex;
+  }
+
+  .fechamentos-card ul li.list-group-item p{
+    margin-bottom: 5px;
+  }
+
+  .card{
+    border: 1px solid #707070;
+    height: 157px;
+  }
+
+  .opcoesFechamentos{
+    width: 100%
+  }

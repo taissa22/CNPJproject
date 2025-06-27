@@ -1,0 +1,31 @@
+<div class="row  card-view ">
+    <div class="col-3" [ngStyle]="{'height' : height}">
+        <div class="row h-100">
+            <div class="col-12 p-0 h-100 ">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row item" (click)="selecionarItem(item)"
+                            [ngClass]="{'selecionado': item.selecionado}" *ngFor="let item of itens;let i = index">
+                            <div class="col-auto p-0">
+                                <jur-radio-symbol [primeiro]="i == 0" [ultimo]="i == (itens.length - 1)"
+                                    [selecionado]="item.selecionado"></jur-radio-symbol>
+                            </div>
+                            <div class="col p-0">
+                                <p class="descricao">{{item.descricao}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col" [ngStyle]="{'height' : height}" >
+        <div class="card mb-2 h-100" [hidden]="card.name != itemSelecionado.name" *ngFor="let card of cards;let i = index">
+            <ng-container *ngIf="card.name == itemSelecionado.name ">
+                <div class="card-body">
+                    <ng-container [ngTemplateOutlet]="card.templateRef"></ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

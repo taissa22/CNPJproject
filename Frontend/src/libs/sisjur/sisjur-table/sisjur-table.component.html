@@ -1,0 +1,36 @@
+<table fxFlexFill>
+  <thead *ngIf="header?.cells.length > 0">
+    <tr fxLayout="row" [ngStyle]="{'height': header?.height, 'align-items': 'center' }">
+      <th *ngFor="let cell of header.cells" [fxFlex]="cell.width || 0" fxLayout="row" fxLayoutAlign="start center"
+        [class.sortable]="cell.sort" (click)="sortBy(cell.sort)">
+        <ng-container [ngTemplateOutlet]="cell.templateRef"></ng-container>
+        <ng-container *ngIf="cell.sort">
+          <i *ngIf="sortColumn !== cell.sort; else sortThisColumn" class="fas fa-arrows-alt-v"></i>
+          <ng-template #sortThisColumn>
+            <i class="fas" [class.fa-long-arrow-alt-up]="sortDirection == 'asc'"
+              [class.fa-long-arrow-alt-down]="sortDirection == 'desc'"></i>
+          </ng-template>
+        </ng-container>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody [ngSwitch]="rows.length > 0" [style.max-height]="!!bodyRowsLimit ? 41 * bodyRowsLimit + 'px' : 'auto'">
+    <tr class="solo" *ngSwitchDefault fxLayout="column" fxLayoutAlign="space-around stretch">
+      <td fxLayout="row" fxLayoutAlign="center center">{{ emptyMessage }}</td>
+    </tr>
+    <ng-container *ngSwitchCase="true">
+      <tr fxLayout="row" *ngFor="let row of rows" [ngStyle]="row.background ? {'background': row.background } :{}">
+        <ng-container  *ngFor="let cell of row.cells; let i = index">
+          <td fxLayout="row" [title]="cell.title" [fxFlex]="!cell.width? header.cells.toArray()[i].width ||0: cell.width" fxLayoutAlign="start center"
+          [ngStyle]="{'heigth': row.heightAuto ? 'auto': '32px'}">
+            <span *ngIf="cell.ellipsis">
+              <ng-container [ngTemplateOutlet]="cell.templateRef"></ng-container>
+            </span>
+            <ng-container *ngIf="!cell.ellipsis" [ngTemplateOutlet]="cell.templateRef"></ng-container>
+          </td>
+        </ng-container>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

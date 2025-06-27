@@ -1,0 +1,91 @@
+<div class="modal-header">
+  <span *ngIf="!advogado" class="modal-title pl-0"> Inclusão de Advogado</span>
+  <span *ngIf="advogado" class="modal-title pl-0">Alteração de Advogado</span>
+
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+<form [formGroup]="formGroup" class="modal-body pt-0">
+  <div class="container">
+
+    <div class="row">
+      <label for="nome" style="padding-right: 13px;"> <b>Nome:</b>  </label>
+    </div>
+    <div class="row">
+      <input type="text" class="form-control mr-2" id="nome" style="text-transform:uppercase; " [formControl] = "nomeFormControl">
+    </div>
+
+
+    <div class="row" style="padding-top: 8px;">
+      <div class="col-sm-3" style="    padding-left: 0px;">
+        <label for="estado" style="padding-right: 13px;"> <b>Estado:</b>  </label>
+        <ng-select
+        [ngStyle]="{'fontSize': '11px','width':'77px'}"
+        [items]="estados"
+        bindLabel="id"
+        bindValue="id"
+        [formControl] = "estadoFormControl"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        [placeholder]="'Selecione um Estado'"></ng-select>
+      </div>
+
+      <div class="col-sm-4"  style="margin-left:4px;" >
+        <label for="NumeroOAB" style="padding-right: 13px;"> <b>Nº OAB:</b>  </label>
+        <input type="text" class="form-control mr-2" id="numeroOAB"   onkeypress="return event.charCode >= 48 && event.charCode <= 57" [formControl] = "numeroOABFormControl">
+      </div>
+
+      <div class="col-sm-4" style="margin-left:21px;">
+
+        <label for="lbltelefone"> <b> Telefone: </b>   </label>
+        <div class="d-flex">
+          <input type="text" class="form-control " id="telefoneDDD" maxlength="3"   onkeypress="return event.charCode >= 48 && event.charCode <= 57" style=" width: 4rem;"  [formControl] = "telefoneDDDFormControl"
+          [disableTooltip]="telefoneDDDFormControl.valid || telefoneDDDFormControl.untouched" [ngbTooltip]="telefoneDDDError">
+          <ng-template #telefoneDDDError>
+            <span *ngIf="telefoneDDDFormControl.hasError('required')">
+              Campo obrigatório
+            </span>
+          </ng-template>
+
+          <input type="text" class="form-control ml-2" id="telefone" maxlength="9" style="  width: 8rem;"   onkeypress="return event.charCode >= 48 && event.charCode <= 57" [formControl] = "telefoneFormControl"
+          [disableTooltip]="telefoneFormControl.valid || telefoneFormControl.untouched" [ngbTooltip]="telefoneError">
+          <ng-template #telefoneError>
+            <span *ngIf="telefoneFormControl.hasError('required')">
+              Campo obrigatório
+            </span>
+          </ng-template>
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <br>
+    <div class="row">
+      <div class="col-sm-7" style="padding: 0px;">
+        <label for="email"> <b>Email:</b>  </label>
+        <input type="text" class="form-control mr-2" id="email" style="text-transform:uppercase; " [formControl] = "emailFormControl">
+      </div>
+
+      <div class="col-sm-5" style="padding-top: 30px">
+        <input type="checkbox" id="ehContato" style="margin-left: 24px;" [formControl]=" ehContatoFormControl">
+        <label for="ehContato" style="margin-left: 5px"> <b> Contato do Escritório</b> </label>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+</form>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>
+

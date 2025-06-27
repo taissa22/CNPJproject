@@ -1,0 +1,24 @@
+.selected {
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: 0.12px;
+    text-align: left;
+    color: #ffffff;
+    background-color: #786bb9 !important;
+}
+
+.table thead th{
+  border-top: none!important;
+}
+
+.alignDireita{
+  text-align: right;
+}
+
+.pointer{
+  cursor: pointer;
+}

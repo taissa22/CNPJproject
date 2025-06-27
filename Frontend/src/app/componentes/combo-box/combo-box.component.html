@@ -1,0 +1,38 @@
+<div class="combo-box combo-sap" [ngClass]="classe">
+  <h1>
+    <i
+      *ngIf="txtTooltip"
+      [ngbTooltip]="txtTooltip"
+      class="fas fa-info-circle roxo-padrao cursor"
+    ></i>
+    {{ label }}
+    <i *ngIf="icone" class="fas fa-question-circle cursor"></i>
+  </h1>
+  <ng-select
+    [searchable]="false"
+    [clearable]="false"
+    [(ngModel)]="currentIndex"
+    (change)="onSelect()"
+    virtualScroll="true"
+    [placeholder]="titulo"
+    searchWhileComposing="true"
+    [disabled]="isDisabled"
+    [ngClass]="isDisabled ? 'disabled' : ''" 
+    (open)="hasFocus = true"
+    (close)="hasFocus = false"
+    notFoundText= {{semResultado}}
+  >
+    <ng-option value="" *ngIf="isWhite">{{ todos }}</ng-option>
+    <ng-option
+      [value]="valorAtualCombo.id"
+      *ngIf="!hasFocus && currentIndex && opcoes && valorAtualCombo"
+    >
+      <p class="fonte-padrao mb-0">{{ valorAtualCombo.descricao }}</p>
+    </ng-option>
+    <ng-container *ngIf="hasFocus">
+      <ng-option *ngFor="let opcao of opcoes" [value]="opcao.id">
+        <p class="fonte-padrao mb-0">{{ opcao.descricao }}</p>
+      </ng-option>
+    </ng-container>
+  </ng-select>
+</div>

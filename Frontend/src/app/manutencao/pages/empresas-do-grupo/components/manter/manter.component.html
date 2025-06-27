@@ -1,0 +1,413 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">{{ titulo }}</h5>
+</div>
+<div class="modal-body pt-0" style="padding-bottom: 0px;">
+  <ngb-tabset [destroyOnHide]="false" justify="justified"  [activeId]="activeId" (tabChange)="verificaCarregamentoDeListas($event)">
+    <ngb-tab class="ngb-tab" id="tab-dados-empresa">
+      <ng-template ngbTabTitle>
+        <span  class="ngb-tab-title">Dados Empresa</span>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <form [formGroup]="formulario">
+          <div class="row px-4 pt-3">
+            <div class="col-md-4 px-1">
+              <label class="col-form-label-sm" for="cnpj">
+                <b>CNPJ:</b>
+              </label>
+              <input type="text"
+                class="form-control"
+                id="cnpj" name="cnpj"
+                [formControl]="cnpjFormControl"
+                placement="top-left"
+                [disableTooltip]="desabilitaTooltip(cnpjFormControl)"
+                [textMask]="{ mask: mascaraCnpj }"
+                [ngbTooltip]="validacaoCnpj" />
+              <ng-template #validacaoCnpj>
+                <span *ngIf="cnpjFormControl.invalid && cnpjFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+                <span *ngIf="formulario.get('cnpj').getError('cnpjNotValid')">
+                  CNPJ incorreto. Favor informá-lo novamente
+                </span>
+              </ng-template>
+            </div>
+            <div class="col-md-8 px-1">
+              <label class="col-form-label-sm" for="razao-social">
+                <b>Razão Social:</b>
+              </label>
+              <input type="text"
+                class="form-control"
+                id="razao-social" name="razao-social"
+                [formControl]="razaoSocialFormControl"
+                maxlength="400"
+                placement="top-left"
+                [disableTooltip]="desabilitaTooltip(razaoSocialFormControl)"
+                [ngbTooltip]="validacaoRazaoSocial" />
+              <ng-template #validacaoRazaoSocial>
+                <span *ngIf="razaoSocialFormControl.invalid && razaoSocialFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+                <span *ngIf="razaoSocialFormControl.invalid && razaoSocialFormControl.errors.maxlength">
+                  A Razão Social não pode ter mais de 400 caracteres
+                </span>
+              </ng-template>
+            </div>
+          </div>
+          <!-- Divisão -->
+          <div class="row px-4 pt-2">
+            <div class="col-md-8 px-1">
+              <label class="col-form-label-sm" for="endereco">
+                <b>Endereço:</b>
+              </label>
+              <input type="text"
+                class="form-control"
+                id="endereco" name="endereco"
+                maxlength="400"
+                [formControl]="enderecoFormControl"
+                placement="top-left"
+                [disableTooltip]="desabilitaTooltip(enderecoFormControl)"
+                [ngbTooltip]="validacaoEndereco" />
+              <ng-template #validacaoEndereco>
+                <span *ngIf="enderecoFormControl.invalid && enderecoFormControl.errors.maxlength">
+                  O Endereço não pode ter mais de 400 caracteres
+                </span>
+              </ng-template>
+            </div>
+            <div class="col-md-4 px-1">
+              <label class="col-form-label-sm" for="bairro">
+                <b>Bairro:</b>
+              </label>
+              <input type="text"
+                class="form-control"
+                id="bairro" name="bairro"
+                maxlength="30"
+                [formControl]="bairroFormControl"
+                placement="top-left"
+                [disableTooltip]="desabilitaTooltip(bairroFormControl)"
+                [ngbTooltip]="validacaoBairro" />
+              <ng-template #validacaoBairro>
+                <span *ngIf="bairroFormControl.invalid && bairroFormControl.errors.maxlength">
+                  O Bairro não pode ter mais de 30 caracteres
+                </span>
+              </ng-template>
+            </div>
+          </div>
+          <!-- Divisão -->
+          <div class="row px-4 pt-2">
+            <div class="col-md-5 px-1">
+              <label class="col-form-label-sm" for="estado">
+                <b>Estado:</b>
+              </label>
+              <ng-select
+              [ngStyle]="{'fontSize': '11px'}"
+              id="estado"
+              [items]="estados"
+              bindLabel="nome"
+              bindValue="id"
+              notFoundText="Nenhuma opção disponível"
+              [searchable]="true"
+              [clearable]="false"
+              [placeholder]="'Selecione uma opção'"
+              [formControl]="estadoFormControl"
+              placeholder="Selecione uma opção"></ng-select>
+            </div>
+            <div class="col-md-4 px-1">
+              <label class="col-form-label-sm" for="cidade">
+                <b>Cidade:</b>
+              </label>
+              <input type="text"
+                class="form-control"
+                id="cidade" name="cidade"
+                maxlength="30"
+                [formControl]="cidadeFormControl"
+                [disableTooltip]="desabilitaTooltip(cidadeFormControl)"
+                placement="top-left"
+                [ngbTooltip]="validacaoCidade" />
+              <ng-template #validacaoCidade>
+                <span *ngIf="cidadeFormControl.invalid && cidadeFormControl.errors.maxlength">
+                  A Cidade não pode ter mais de 30 caracteres
+                </span>
+              </ng-template>
+            </div>
+            <div class="col-md-3 px-1">
+              <label class="col-form-label-sm" for="cep">
+                <b>CEP:</b>
+              </label>
+              <input type="text"
+                class="form-control"
+                id="cep" name="cep"
+                [formControl]="cepFormControl"
+                [textMask]="{ mask: mascaraCep }"/>
+            </div>
+          </div>
+          <!-- Divisão -->
+          <div class="row px-4 pt-2">
+            <div class="col-md-3 px-1">
+              <label class="col-form-label-sm" for="telefone">
+                <b>Telefone:</b>
+              </label>
+              <input type="text"
+                class="form-control"
+                id="telefone" id="name"
+                [formControl]="telefoneFormControl"
+                [textMask]="{ mask: mascaraTelefone }"/>
+            </div>
+            <div class="col-md-3 px-1">
+              <label class="col-form-label-sm" for="fax">
+                <b>Fax:</b>
+              </label>
+              <input type="text"
+                class="form-control"
+                id="fax" name="fax"
+                [formControl]="faxFormControl"
+                [textMask]="{ mask: mascaraFax }"/>
+            </div>
+            <div class="col-md-3 px-1">
+              <label class="col-form-label-sm" for="emp-recuperanda">
+                <b>Emp. Recuperanda:</b>
+              </label>
+              <select class="form-control" [formControl]="empRecuperandaFormControl">
+                <option value="false">Não</option>
+                <option value="true">Sim</option>
+              </select>
+            </div>
+            <div class="col-md-3 px-1">
+              <label class="col-form-label-sm" for="emp-recuperanda">
+                <b>Emp. do Trio:</b>
+              </label>
+              <select class="form-control" [formControl]="empTrioFormControl">
+                <option value="false">Não</option>
+                <option value="true">Sim</option>
+              </select>
+            </div>
+          </div>
+          <!-- Divisão -->
+          <div class="row px-4 pt-2">
+            <div class="col-md-5 px-1">
+              <label class="col-form-label-sm" for="regional">
+                <b>Regional:</b>
+              </label>
+              <ng-select
+                id="regionais"
+                notFoundText="Nenhuma opção disponível"
+                dropdownPosition="top"
+                [ngStyle]="{ fontSize: '11px' }"
+                appearance="outline"
+                [searchable]="true"
+                [clearable]="false"
+                [placeholder]="'Selecione'"
+                [formControl]="regionalFormControl"
+                [disableTooltip]="desabilitaTooltip(regionalFormControl)"
+                [ngbTooltip]="validacaoRegional">
+                <ng-option *ngFor="let regional of regionais" [value]="regional.id">{{ regional.nome }}</ng-option>
+              </ng-select>
+              <!-- <ngx-select
+                id="regionais"
+                [allowClear]="true"
+                [items]="regionais"
+                [formControl]="regionalFormControl"
+                placeholder="Selecione uma opção"
+                [disableTooltip]="desabilitaTooltip(regionalFormControl)"
+                placement="top-left"
+                [ngbTooltip]="validacaoRegional">
+              </ngx-select> -->
+              <ng-template #validacaoRegional>
+                <span *ngIf="regionalFormControl.invalid && regionalFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+              </ng-template>
+            </div>
+            <div class="col-md-5 px-1">
+              <label class="col-form-label-sm" for="empresa-centralizadora">
+                <b>Emp. Centralizadora:</b>
+              </label>
+              <ng-select
+                id="empresaCentralizadora"
+                notFoundText="Nenhuma opção disponível"
+                dropdownPosition="top"
+                [ngStyle]="{ fontSize: '11px' }"
+                appearance="outline"
+                [searchable]="true"
+                [clearable]="false"
+                [placeholder]="'Selecione'"
+                [formControl]="empresaCentralizadoraFormControl"
+                [disableTooltip]="desabilitaTooltip(empresaCentralizadoraFormControl)"
+                [ngbTooltip]="validacaoEmpresaCentralizadora">
+                <ng-option *ngFor="let empresa of empresasCentralizadoras" [value]="empresa.id">{{ empresa.nome }}</ng-option>
+              </ng-select>
+              <!-- <ngx-select
+                id="empresaCentralizadora"
+                [allowClear]="true"
+                [items]="empresasCentralizadoras"
+                [formControl]="empresaCentralizadoraFormControl"
+                placeholder="Selecione uma opção"
+                [disableTooltip]="desabilitaTooltip(empresaCentralizadoraFormControl)"
+                placement="top-left"
+                [ngbTooltip]="validacaoEmpresaCentralizadora">
+              </ngx-select> -->
+              <ng-template #validacaoEmpresaCentralizadora>
+                <span *ngIf="empresaCentralizadoraFormControl.invalid && empresaCentralizadoraFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+              </ng-template>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="tab-sap">
+      <ng-template ngbTabTitle>
+        <span  class="ngb-tab-title">SAP</span>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <form [formGroup]="formulario">
+          <div class="row px-4 pt-3">
+            <div class="col-md-6 px-1">
+              <label class="col-form-label-sm" for="empresa">
+                <b>Empresa:</b>
+              </label>
+              <ng-select
+              [ngStyle]="{'fontSize': '11px'}"
+              id="empresa"
+              [items]="empresasSap"
+              bindLabel="nome"
+              bindValue="id"
+              appearance="outline"
+              notFoundText="Nenhuma opção disponível"
+              [searchable]="true"
+              [clearable]="false"
+              [placeholder]="'Selecione uma opção'"
+              [formControl]="empresaSapFormControl"
+              [disableTooltip]="desabilitaTooltip(empresaSapFormControl)"
+              placement="top-left"
+              [ngbTooltip]="validacaoEmpresaSap"></ng-select>
+              <ng-template #validacaoEmpresaSap>
+                <span *ngIf="empresaSapFormControl.invalid && empresaSapFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+              </ng-template>
+            </div>
+            <div class="col-md-6 px-1">
+              <label class="col-form-label-sm" for="fornecedor-default">
+                <b>Fornecedor Default para Juizado:</b>
+              </label>
+              <ng-select
+              [ngStyle]="{'fontSize': '11px'}"
+              id="fornecedor-default"
+              [items]="fornecedores"
+              bindLabel="nome"
+              bindValue="id"
+              appearance="outline"
+              notFoundText="Nenhuma opção disponível"
+              [searchable]="true"
+              [clearable]="false"
+              [placeholder]="'Selecione uma opção'"
+              [formControl]="fornecedorDefaultFormControl"></ng-select>
+            </div>
+          </div>
+          <!-- Divisão -->
+          <div class="row px-4 pt-3">
+            <div class="col-md-2 px-1">
+              <label class="col-form-label-sm" for="centro">
+                <b>Centro:</b>
+              </label>
+              <input type="text"
+                class="form-control"
+                id="centro" name="centro"
+                maxlength="4"
+                [formControl]="centroSapFormControl"
+                [disableTooltip]="desabilitaTooltip(centroSapFormControl)"
+                [ngbTooltip]="validacaoCentro" />
+              <ng-template #validacaoCentro>
+                <span *ngIf="centroSapFormControl.invalid && centroSapFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+                <span *ngIf="centroSapFormControl.invalid && centroSapFormControl.errors.maxlength">
+                  O Centro não pode ter mais de 4 caracteres
+                </span>
+              </ng-template>
+            </div>
+            <div class="col-md-4 px-1">
+              <label class="col-form-label-sm" for="centro-custo">
+                <b>Centro de Custo:</b>
+              </label>
+              <ng-select
+              id="centroCusto"
+              [ngStyle]="{'fontSize': '11px'}"
+              [items]="centrosDeCusto"
+              bindLabel="nome"
+              bindValue="id"
+              appearance="outline"
+              notFoundText="Nenhuma opção disponível"
+              [searchable]="true"
+              [clearable]="false"
+              [placeholder]="'Selecione uma opção'"
+              [formControl]="centroDeCustoFormControl"
+              [disableTooltip]="desabilitaTooltip(centroDeCustoFormControl)"
+              [ngbTooltip]="validacaoCentroCusto"
+              ></ng-select>
+              <ng-template #validacaoCentroCusto>
+                <span *ngIf="centroDeCustoFormControl.invalid && centroDeCustoFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+              </ng-template>
+            </div>
+          </div>
+          <!-- Divisão -->
+          <div class="row px-4 pt-3">
+            <div class="col-md-6 px-1">
+              <label class="pt-4 col-form-label-sm" for="centro">
+                <b>Gerar arquivo p/ o BB:</b>
+              </label>
+              <label class="pl-4 pt-4 radio-inline col-form-label-sm">
+                <input type="radio"
+                  name="arquivo-bb"
+                  [value]="true"
+                  (change)="aoMarcarGeraArquivoBB()"
+                  [formControl]="geraArquivoBBFormControl"
+                  ><b class="pl-2">Sim</b>
+              </label>
+              <label class="pl-4 pt-4 radio-inline col-form-label-sm">
+                <input type="radio"
+                  name="arquivo-bb"
+                  [value]="false"
+                  (change)="aoMarcarGeraArquivoBB()"
+                  [formControl]="geraArquivoBBFormControl">
+                  <b class="pl-2">Não</b>
+              </label>
+            </div>
+            <div class="col-md-6 px-1">
+              <label class="col-form-label-sm" for="interface-bb">
+                <b>Interface BB:</b>
+              </label>
+              <ng-select
+              id="interfaceBB"
+              [ngStyle]="{'fontSize': '11px'}"
+              [items]="interfacesBB"
+              bindLabel="nome"
+              bindValue="id"
+              appearance="outline"
+              notFoundText="Nenhuma opção disponível"
+              [searchable]="true"
+              [clearable]="false"
+              [placeholder]="'Selecione uma opção'"
+              [formControl]="interfaceBBFormControl"
+              [disableTooltip]="desabilitaTooltip(interfaceBBFormControl)"
+              [ngbTooltip]="validacaoInterfaceBB"></ng-select>
+              <ng-template #validacaoInterfaceBB>
+                <span *ngIf="interfaceBBFormControl.invalid && interfaceBBFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+              </ng-template>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="activeModal.close('cancel')">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="confirmar()">Confirmar</button>
+</div>
+

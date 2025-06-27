@@ -1,0 +1,131 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "CriminalContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "CriminalContext\\Data",
+   "OutputPath": "CriminalContext\\Entities",
+   "ProjectRootNamespace": "Oi.Juridico.Contextos.V2",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "Name": "JUR.PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PROCESSO_ACESSO_RECENTES",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ASSUNTO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ASSUNTO_PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ESTADO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PROCEDIMENTO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ACAO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PARTE",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PARTE_PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.MUNICIPIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.COMARCA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.COMPETENCIA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.REGIONAL",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.TIPO_PARTICIPACAO_EMPRESA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PARTICIPACAO_EMPRESA_PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.VARA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.TIPO_VARA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.USUARIO_REGIONAL",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ACA_USUARIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ACA_USUARIO_ESCRITORIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.TESTEMUNHAS_PROCESSOS",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PROFISSIONAL",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.TIPO_PARTICIPACAO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.V_ESCRITORIOS",
+      "ObjectType": 3
+    }
+  ],
+   "UiHint": "SISJUR_HML",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

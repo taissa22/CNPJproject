@@ -1,0 +1,222 @@
+
+.dropdown-menu {
+    width: 240px;
+    height: 240px;
+    padding: 0 0.2rem 0.5rem 0.2rem;
+    margin-left:-119px;
+
+    overflow: hidden;
+    
+
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 10px 0 #aaa;
+
+}
+.card-body{
+  padding: 0;
+  margin: 0px;
+  text-align: center;
+  cursor: pointer;
+  height: 25px;
+  width: 48px;
+
+  border-radius: 3px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+
+  &:hover{
+    background-color: #b0a7da;
+  }
+
+  span.outter{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 0px;
+  }
+
+}
+.card-div{
+    display: inline-flex;
+    align-items: center;
+    width: 28%;
+    height: 20%;
+    margin: 3px;
+}
+.dropdown-toggle{
+    padding-left: 3px;
+}
+.dropdown-toggle::after {
+    display:none;
+}
+
+.dropdown-toggle i::before{
+    color:#2e59a3;
+
+}
+.select{
+    background-color: #b0a7da;
+}
+.outrange
+{
+    color:gray;
+}
+.ngb-dp-navigation-arrow {
+    border-style: solid;
+    border-width: 0.2em 0.2em 0 0;
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+}
+.right {
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    margin-left: 0.15em;
+    margin-right: 0.25em;
+}
+.left{
+    margin-left: 0.25em;
+    margin-right: 0.15em;
+    transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+}
+.calendar
+{
+  background-position: center center;
+background-repeat: no-repeat;
+background-size: 1rem;
+height:1rem;
+width: 1rem;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMzQgMjgiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDM0IDI4IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxnPg0KCQk8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iIzQ0NDQ0NCIgZD0iTTMxLDBIM0MxLjMsMCwwLDEuMywwLDN2MjJjMCwxLjcsMS4zLDMsMywzaDI4YzEuNywwLDMtMS4zLDMtMyAgICBWM0MzNCwxLjMsMzIuNywwLDMxLDB6IE0zMiwyNWMwLDAuNi0wLjQsMS0xLDFIM2MtMC42LDAtMS0wLjQtMS0xVjhoMzBWMjV6IE0zMiw2SDJWM2MwLTAuNiwwLjQtMSwxLTFoMjhjMC42LDAsMSwwLjQsMSwxVjZ6ICAgICBNOCwxNmMxLjEsMCwyLTAuOSwyLTJzLTAuOS0yLTItMmMtMS4xLDAtMiwwLjktMiwyUzYuOSwxNiw4LDE2eiBNMTQsMTZjMS4xLDAsMi0wLjksMi0ycy0wLjktMi0yLTJjLTEuMSwwLTIsMC45LTIsMiAgICBTMTIuOSwxNiwxNCwxNnogTTIwLDE2YzEuMSwwLDItMC45LDItMnMtMC45LTItMi0yYy0xLjEsMC0yLDAuOS0yLDJTMTguOSwxNiwyMCwxNnogTTI2LDE2YzEuMSwwLDItMC45LDItMnMtMC45LTItMi0yICAgIGMtMS4xLDAtMiwwLjktMiwyUzI0LjksMTYsMjYsMTZ6IE04LDIyYzEuMSwwLDItMC45LDItMmMwLTEuMS0wLjktMi0yLTJjLTEuMSwwLTIsMC45LTIsMkM2LDIxLjEsNi45LDIyLDgsMjJ6IE0xNCwyMiAgICBjMS4xLDAsMi0wLjksMi0yYzAtMS4xLTAuOS0yLTItMmMtMS4xLDAtMiwwLjktMiwyQzEyLDIxLjEsMTIuOSwyMiwxNCwyMnogTTIwLDIyYzEuMSwwLDItMC45LDItMmMwLTEuMS0wLjktMi0yLTIgICAgYy0xLjEsMC0yLDAuOS0yLDJDMTgsMjEuMSwxOC45LDIyLDIwLDIyeiBNMjYsMjJjMS4xLDAsMi0wLjksMi0yYzAtMS4xLTAuOS0yLTItMmMtMS4xLDAtMiwwLjktMiwyQzI0LDIxLjEsMjQuOSwyMiwyNiwyMnoiLz4NCgk8L2c+DQo8L2c+DQo8L3N2Zz4=')
+}
+
+.mes-ano-topo{
+   
+    background-color: #6151ac !important;
+    padding: 11px;
+    
+    color: white;
+    font-size: larger;
+    border: none;
+    border-top: solid 3px #b0a7da;
+    margin:0px;
+    
+   
+}
+
+.mes-ano-input{
+    width: 150px;
+    display: inline-flex;
+}
+
+.mes-ano-largura{
+    width: 240px;
+}
+
+input.form-control{
+    background-color: white !important;
+    background: white !important;
+}
+
+.months-buttons{
+    display: block;
+    width: calc(100% - 40px);
+    height: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    text-align: center;
+}
+
+//
+.mes-ano div.input-group input.form-control.erro + span.guarda-erro:before,
+.mes-ano div.input-group input.form-control.erro + span.guarda-erro:before {
+  content: attr(title);
+  color: red;
+  border: solid 1px red;
+  font-size: 11px;
+  min-height: 14px;
+  max-width: 200px;
+  overflow: hidden;
+  white-space: normal;
+  background: white;
+  position: absolute;
+  left: 3px;
+  bottom: 25px;
+  padding: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+  z-index: 10;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  opacity: 0;
+  transition: linear opacity 0.1s, linear bottom 0.1s;
+  pointer-events: none;
+}
+
+.mes-ano div.input-group input.form-control.erro:hover + span.guarda-erro:before,
+.mes-ano div.input-group input.form-control.erro:hover + span.guarda-erro:before {
+  content: attr(title);
+  color: red;
+  border: solid 1px red;
+  font-size: 11px;
+  min-height: 14px;
+  max-width: 200px;
+  overflow: hidden;
+  white-space: normal;
+  background: white;
+  position: absolute;
+  left: 3px;
+  bottom: 30px;
+  padding: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+  z-index: 10;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  opacity: 1;
+  transition: linear opacity 0.1s, linear bottom 0.1s;
+  display: block;
+  pointer-events: none;
+  /*transition-delay: 1.5s;*/
+}
+/*.prlnk-datepicker div.input-group input.form-control.erro:active,
+.prlnk-datepicker div.input-group input.form-control.erro:focus*/
+.mes-ano div.input-group input.form-control.erro:active,
+// .prlnk-datepicker div.input-group input.form-control.erro:focus {
+//   border: solid 3px rgba(255, 0, 0, 0.1);
+//   transition: linear border 0.3s, linear -webkit-box-shadow 0.3s, linear box-shadow 0.3s;
+//   -webkit-box-shadow: inset 0 0 0 1px rgba(255, 0, 0, 1);
+//   box-shadow: inset 0 0 0 1px rgba(255, 0, 0, 1);
+// }
+.mes-ano div.input-group input.form-control.erro {
+  border: solid 3px rgba(255, 0, 0, 0.1);
+  transition: linear border 0.3s, linear -webkit-box-shadow 0.3s, linear box-shadow 0.3s;
+  -webkit-box-shadow: inset 0 0 0 1px rgba(255, 0, 0, 1);
+  box-shadow: inset 0 0 0 1px rgba(255, 0, 0, 1);
+}
+
+.mes-ano div.input-group input.form-control.erro.primeira-linha + span.guarda-erro:before,
+.mes-ano div.input-group input.form-control.erro.primeira-linha + span.guarda-erro:before {
+  bottom: -20px;
+}
+
+input[disabled]{
+  opacity: 0.4 !important;
+  color: black !important;
+  background-color: #d2d2d2 !important;
+  border: solid 1px gray !important;
+}
+
+button.dropdown-toggle-split[disabled]{
+  opacity: 0.3 !important;
+}
+
+
+

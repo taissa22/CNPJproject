@@ -1,0 +1,53 @@
+<app-vertical-dual-list [headers]="service.listaHeaderTabela" nomeContexto="Lotes" [itens]="dadosEncontrados"
+  (itensAdicionados)="onAdicionar($event)" >
+
+  <ng-container busca temple *ngTemplateOutlet="busca">
+
+  </ng-container>
+
+</app-vertical-dual-list>
+
+<ng-template #busca >
+  <form [formGroup]="form">
+    <div class="busca">
+      Busca:
+      <input
+        type="text"
+        maxlength="15"
+        class="mt-1"
+        formControlName="loteId"
+        OnlyNumberNoStartWith0
+      />
+    </div>
+  </form>
+</ng-template>
+<!-- 
+<ng-template #numeroProcesso >
+
+  <form busca [formGroup]="form" >
+    <div class="busca">
+      Busca:
+      <combo-box [opcoes]="valoresCombo" (selectionChange)="onTypeSelect($event)" [currentIndex]="valorComboSelecionado"
+        [icone]="false">
+
+      </combo-box>
+      <input type="text" maxlength="50" class="mt-1" formControlName="numeroProcesso" placeholder="N° Processo"
+        numbersPontoHifenOnly />
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #codigoInterno >
+
+  <form busca [formGroup]="form">
+    <div class="busca">
+      Busca:
+      <combo-box [opcoes]="valoresCombo" (selectionChange)="onTypeSelect($event)" [currentIndex]="valorComboSelecionado"
+        [icone]="false">
+
+      </combo-box>
+      <input type="text" maxlength="50" class="mt-1" formControlName="numeroProcesso" placeholder="Codigo Interno"
+        numbersOnly />
+    </div>
+  </form>
+</ng-template> -->

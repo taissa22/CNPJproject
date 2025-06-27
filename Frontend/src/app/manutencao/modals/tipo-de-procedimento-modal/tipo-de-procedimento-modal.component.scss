@@ -1,0 +1,113 @@
+.modal-title{
+  padding-left: 0px;
+  font-size: 15px;
+  font-weight: bold;
+}
+  jur-column-template {
+      &.calculo-inicial {
+        font-weight: bold;
+      }
+      > span:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    
+    .tag {
+      background-color: #988eca;
+      color: #fff;
+      padding: 4px 6px;
+      font-weight: normal;
+      border-radius: 2px;
+      line-height: 16px;
+      height: 24px;
+      margin: 5px;
+    }
+
+    .campoEhOrgao[disabled], .campoPoloPassivoUnico[disabled]{
+      color: rgba(0,0,0,.3);
+    }
+
+    // .campoEhOrgao[disabled]:hover:before{
+    //   position: absolute;
+    //   left:5px;
+    //   bottom:25px;
+    //   height: 80px;
+    //   width: 200px;
+    //   background-color: white;
+    //   font-size: 10px;
+    //   //color: gray;
+    //   color:rgba(0,0,0,0.7);
+    //   border: solid 1px rgba(0,0,0,0.5);
+    //   padding: 8px;
+    //   pointer-events: none;
+
+    //   //content: 'Não pode ser selecionada a coluna órgão para o tipo de participação 1 e a coluna órgão para o tipo de participação 2 simultaneamente.';
+    //   content: attr[title];
+
+    // }
+
+    // .campoPoloPassivoUnico[disabled]:hover:before{
+
+    //   position: absolute;
+    //   left:20px;
+    //   bottom:27px;
+    //   //height: 80px;
+    //   width: 200px;
+    //   background-color: white;
+    //   font-size: 10px;
+    //   //color: gray;
+    //   color:rgba(0,0,0,0.7);
+    //   border: solid 1px rgba(0,0,0,0.4);
+    //   padding: 8px;
+    //   pointer-events: none;
+
+    //   content: 'Não pode ser selecionada a coluna pólo passivo único e a coluna órgão para o tipo de participação 2 simultaneamente.';
+
+    // }
+
+    .campoEhOrgao[disabled] + label, .campoPoloPassivoUnico[disabled] + label{
+      color:rgba(0,0,0,0.5);
+    }
+
+    .mensagensEhOrgao, .mensagensEhPoloPassivo{
+
+      position: absolute;
+      left:10px;
+      bottom:25px;
+      width: 200px;
+      background-color: white;
+      font-size: 10px;
+      color:rgba(0,0,0,0.7);
+      border: solid 1px rgba(0,0,0,0.5);
+      padding: 8px;
+      pointer-events: none;
+
+      span{
+          &.blocoMsgOrgao2{
+            display: block;
+            color: inherit;
+            font-size: inherit;
+
+            &+span{
+              margin-top: 5px;
+            }
+          }
+
+      }
+    }
+
+    .mensagensEhPoloPassivo{
+      left: 20px;
+    }
+
+    ::ng-deep{
+  @media (min-width: 576px){
+    .modal-sm{
+      max-width:350px !important;
+    }
+  }
+
+}
+    

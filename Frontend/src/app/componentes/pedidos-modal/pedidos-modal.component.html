@@ -1,0 +1,26 @@
+<div bsModal #template="bs-modal" style="height: 1500;" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name1">
+  <div>
+    <div class="modal-content">
+      <div class="modal-header pb-1">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">{{titulo}}</h4>
+        <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pt-0">
+        <label class="pb-3 pt-2 subtitulo">
+          {{subTitulo}}
+        </label>
+        <h6>
+          {{tituloPedido}}
+        </h6>
+        <div class="informacao">
+          <div *ngFor="let pedido of pedidos">{{ pedido.descricao}}</div>
+        </div>
+      </div>
+      <div>
+      </div>
+    </div>
+  </div>
+</div>

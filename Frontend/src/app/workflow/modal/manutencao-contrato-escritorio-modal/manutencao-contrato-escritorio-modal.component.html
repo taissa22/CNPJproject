@@ -1,0 +1,239 @@
+<div class="modal-header">
+    <span *ngIf="codContrato == 0" class="modal-title pl-0"> Inclusão de Contrato</span>
+    <span *ngIf="codContrato > 0" class="modal-title pl-0">Alteração de Contrato</span>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="d-flex" style="align-items: flex-end;">
+        <div style="width: 180px">
+            <label for="tipoContrato"> <b>Tipo Contrato:</b> </label>
+            <ng-select [ngStyle]="{ fontSize: '11px' }" [items]="tipoContratosList" bindLabel="descricao" bindValue="codigo" appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="true" [formControl]="codTipoContratoEscritorioFormControl"
+                (blur)="validator()" [disableTooltip]="codTipoContratoEscritorioFormControl.valid || codTipoContratoEscritorioFormControl.untouched" [ngbTooltip]="codTipoContratoEscritorio"></ng-select>
+            <ng-template #codTipoContratoEscritorio>
+                <span *ngIf="codTipoContratoEscritorioFormControl.invalid && codTipoContratoEscritorioFormControl.hasError('required')">
+              Campo obrigatório
+            </span>
+            </ng-template>
+        </div>
+
+        <div class="ml-5 d-flex mb-2">
+            <input type="checkbox" name="indAtivo" id="indAtivo" [formControl]="indAtivoFormControl">
+            <label class="mb-0 mt-1 ml-1" for="indAtivo"><b>Ativo</b></label>
+        </div>
+
+        <div class="ml-5 d-flex mb-2">
+            <input type="checkbox" name="indConsiderarCalcVep" id="indConsiderarCalcVep" [formControl]="indConsideraCalculoVepFormControl">
+            <label class="mb-0 mt-1 ml-1" for="indConsiderarCalcVep"><b>Considerar no Cálculo VEP</b></label>
+        </div>
+    </div>
+
+    <h4 class="d-flex roxo-padrao mt-4">Dados do Contrato</h4>
+
+    <div class="d-flex" style="align-items: flex-end; justify-content: space-between;">
+        <div style="width: -webkit-fill-available">
+            <label for="tipoContrato"> <b>Nome Contrato:</b> </label>
+            <input type="text" class="form-control mr-2" maxlength="400" [formControl]="nomContratoFormControl" (blur)="validator()" [disableTooltip]="nomContratoFormControl.valid || nomContratoFormControl.untouched" [ngbTooltip]="nomContrato" />
+            <ng-template #nomContrato>
+                <span *ngIf="nomContratoFormControl.invalid && nomContratoFormControl.hasError('required')">
+                  Campo obrigatório
+                </span>
+            </ng-template>
+        </div>
+    </div>
+
+    <!-- COLOCAR ATUAÇÃO E DIRETORIA -->
+    <div class="d-flex mt-3" style="align-items: flex-end">
+        <div style="width: 24rem">
+            <label for="atuacao"> <b>Atuação:</b> </label>
+            <ng-select [ngStyle]="{ fontSize: '11px' }" [items]="atuacaoList" bindLabel="descricao" bindValue="codigo" appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="false" [formControl]="contratoAtuacaoFormControl"
+                (ngModelChange)="validator()" [disableTooltip]="contratoAtuacaoFormControl.valid || contratoAtuacaoFormControl.untouched" [ngbTooltip]="codTipoContratoEscritorio"></ng-select>
+            <ng-template #contratoAtuacao>
+                <span *ngIf="contratoAtuacaoFormControl.invalid && contratoAtuacaoFormControl.hasError('required')">
+              Campo obrigatório
+            </span>
+            </ng-template>
+        </div>
+
+        <div class="ml-3" style="width: 18rem">
+            <label for="diretoria"> <b>Diretoria:</b> </label>
+            <ng-select style="font-size: 11px; width: 98%;" [items]="diretoriaList" bindLabel="descricao" bindValue="codigo" appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="false" [formControl]="contratoDiretoriaFormControl"
+                (ngModelChange)="validator()" [disableTooltip]="contratoDiretoriaFormControl.valid || contratoDiretoriaFormControl.untouched" [ngbTooltip]="codTipoContratoEscritorio"></ng-select>
+            <ng-template #contratoDiretoria>
+                <span *ngIf="contratoDiretoriaFormControl.invalid && contratoDiretoriaFormControl.hasError('required')">
+              Campo obrigatório
+            </span>
+            </ng-template>
+        </div>
+
+    </div>
+
+    <!-- COLOCAR NUMEROS DO CONTRATO -->
+    <div class="d-flex mt-3" style="align-items: flex-end; justify-content: space-between;">
+        <div style="width: 13rem">
+            <label for="tipoContrato"> <b>Número Contrato JEC/VC:</b> </label>
+            <input type="text" mask="00000000000000000000" class="form-control mr-2" style="text-transform: uppercase" maxlength="20" [formControl]="numContratoJecVcFormControl" (blur)="validator()" [disableTooltip]="numContratoJecVcFormControl.valid || numContratoJecVcFormControl.untouched"
+                [ngbTooltip]="numContratoJecVc" />
+            <ng-template #numContratoJecVc>
+                <span *ngIf="numContratoJecVcFormControl.invalid && numContratoJecVcFormControl.hasError('required')">
+            Campo obrigatório
+          </span>
+            </ng-template>
+        </div>
+
+        <div style="width: 14rem">
+            <label for="tipoContrato"> <b>Número Contrato PROCON:</b> </label>
+            <input type="text" mask="00000000000000000000" class="form-control mr-2" style="text-transform: uppercase" maxlength="20" [formControl]="numContratoProconFormControl" (blur)="validator()" [disableTooltip]="numContratoProconFormControl.valid || numContratoProconFormControl.untouched"
+                [ngbTooltip]="numContratoProcon" />
+            <ng-template #numContratoProcon>
+                <span *ngIf="numContratoProconFormControl.invalid && numContratoProconFormControl.hasError('required')">
+            Campo obrigatório
+          </span>
+            </ng-template>
+        </div>
+
+        <div style="width: 12rem">
+            <label for="tipoContrato"> <b>Número SGPAG JEC/VC:</b> </label>
+            <input type="text" mask="0000000000" class="form-control mr-2" style="text-transform: uppercase" maxlength="10" [formControl]="numSgpagJecVcFormControl" (blur)="validator()" [disableTooltip]="numSgpagJecVcFormControl.valid || numSgpagJecVcFormControl.untouched"
+                [ngbTooltip]="numSgpagJecVc" />
+            <ng-template #numSgpagJecVc>
+                <span *ngIf="numSgpagJecVcFormControl.invalid && numSgpagJecVcFormControl.hasError('required')">
+                  Campo obrigatório
+                </span>
+            </ng-template>
+        </div>
+
+        <div style="width: 12rem">
+            <label for="tipoContrato"> <b>Número SGPAG PROCON:</b> </label>
+            <input type="text" mask="0000000000" class="form-control mr-2" style="text-transform: uppercase" maxlength="10" [formControl]="numSgpagProconFormControl" (blur)="validator()" [disableTooltip]="numSgpagProconFormControl.valid || numSgpagProconFormControl.untouched"
+                [ngbTooltip]="numSgpagProcon" />
+            <ng-template #numSgpagProcon>
+                <span *ngIf="numSgpagProconFormControl.invalid && numSgpagProconFormControl.hasError('required')">
+                  Campo obrigatório
+                </span>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="d-flex mt-3" style="align-items: flex-end; justify-content: space-between;">
+        <div style="width: 12rem">
+            <label for="tipoContrato"> <b>Preço Unitário JEC/VC:</b> </label>
+            <input type="text" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }" [maxLength]="'19'" class="form-control mr-2" style="text-transform: uppercase; width: 8rem" [formControl]="valUnitarioJecCcFormControl" (blur)="validator()" [disableTooltip]="valUnitarioJecCcFormControl.valid || valUnitarioJecCcFormControl.untouched"
+                [ngbTooltip]="valUnitarioJecCc" />
+            <ng-template #valUnitarioJecCc>
+                <span *ngIf="valUnitarioJecCcFormControl.invalid && valUnitarioJecCcFormControl.hasError('required')">Campo obrigatório </span>
+            </ng-template>
+        </div>
+        <div style="width: 12rem">
+            <label for="tipoContrato"> <b>Preço Unitário PROCON:</b> </label>
+            <input type="text" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }" [maxLength]="'19'" class="form-control mr-2" style="text-transform: uppercase; width: 8rem" [formControl]="valUnitarioProconFormControl" (blur)="validator()" [disableTooltip]="valUnitarioProconFormControl.valid || valUnitarioProconFormControl.untouched"
+                [ngbTooltip]="valUnitarioProcon" />
+            <ng-template #valUnitarioProcon>
+                <span *ngIf="valUnitarioProconFormControl.invalid && valUnitarioProconFormControl.hasError('required')">Campo obrigatório </span>
+            </ng-template>
+        </div>
+        <div style="width: 13rem">
+            <label for="tipoContrato"> <b>P. Unit. Audiências Capital:</b> </label>
+            <input type="text" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }" [maxLength]="'19'" class="form-control mr-2" style="text-transform: uppercase; width: 8rem" [formControl]="valUnitAudCapitalFormControl" (blur)="validator()" [disableTooltip]="valUnitAudCapitalFormControl.valid || valUnitAudCapitalFormControl.untouched"
+                [ngbTooltip]="valUnitAudCapital" />
+            <ng-template #valUnitAudCapital>
+                <span *ngIf="valUnitAudCapitalFormControl.invalid && valUnitAudCapitalFormControl.hasError('required')">Campo obrigatório </span>
+            </ng-template>
+        </div>
+        <div style="width: 13rem">
+            <label for="tipoContrato"> <b>P. Unit. Audiências Interior:</b> </label>
+            <input type="text" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }" [maxLength]="'19'" class="form-control mr-2" style="text-transform: uppercase; width: 8rem" [formControl]="valUnitAudInteriorFormControl" (blur)="validator()" [disableTooltip]="valUnitAudInteriorFormControl.valid || valUnitAudInteriorFormControl.untouched"
+                [ngbTooltip]="valUnitAudInterior" />
+            <ng-template #valUnitAudInterior>
+                <span *ngIf="valUnitAudInteriorFormControl.invalid && valUnitAudInteriorFormControl.hasError('required')">Campo obrigatório </span>
+            </ng-template>
+        </div>
+
+    </div>
+
+    <div class="d-flex mt-3" style="align-items: flex-end; justify-content: space-between;">
+        <div style="width: 19rem">
+            <label for="tipoContrato"> <b>CNPJ:</b> </label>
+            <input type="text" mask="00.000.000/0000-00" class="form-control mr-2" style="text-transform: uppercase" maxlength="18" [formControl]="cnpjFormControl" (blur)="validator()" [disableTooltip]="cnpjFormControl.valid || cnpjFormControl.untouched" [ngbTooltip]="cnpj"
+            />
+            <ng-template #cnpj>
+                <span *ngIf="cnpjFormControl.invalid && cnpjFormControl.hasError('required')">Campo obrigatório </span>
+                <span *ngIf="cnpjFormControl.invalid && (cnpjFormControl.hasError('minlength') || cnpjFormControl.hasError('maxlength'))"> Campo deve conter 14 caracteres </span>
+            </ng-template>
+        </div>
+
+        <div style="width: 9rem">
+            <label for="tipoContrato"> <b>VEP:</b> </label>
+            <input type="text" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }" [maxLength]="'19'" class="form-control mr-2" [formControl]="valVepFormControl" (blur)="validator()" [disableTooltip]="valVepFormControl.valid || valVepFormControl.untouched"
+                [ngbTooltip]="valVep" style="text-transform: uppercase" />
+            <ng-template #valVep>
+                <span *ngIf="valVepFormControl.invalid && valVepFormControl.hasError('min')">
+                Valor deve ser maior que 0.
+              </span>
+            </ng-template>
+        </div>
+
+        <div style="width: 26rem">
+            <span class="mr-2 card-label"><b>Início da Vigência:</b><b style="margin-left: 68px;">Fim da Vigência:</b></span>
+            <app-data-range (blur)="validator()" [dataInicio]="datInicioVigenciaFormControl.value" [dataFim]="datFimVigenciaFormControl.value" (retDataFim)="datFimVigenciaFormControl.setValue($event)" (retDataInicio)="datInicioVigenciaFormControl.setValue($event)">
+            </app-data-range>
+        </div>
+    </div>
+
+    <h4 class="d-flex roxo-padrao mt-4">Situação do Contrato</h4>
+    <div class="d-flex" style="align-items: flex-end;">
+        <div class="d-flex mb-2">
+            <input type="checkbox" name="indPermanenciaLegado" id="indPermanenciaLegado" (click)="validatorIndPermanecia()" [formControl]="indPermanenciaLegadoFormControl">
+            <label class="mb-0 mt-1 ml-1" for="indPermanenciaLegado"><b>Permanência Legado</b></label>
+        </div>
+
+        <div class="ml-5" style="width: 180px">
+            <label for="tipoContrato"> <b>Meses Permanência:</b> </label>
+            <input type="text" mask="00" class="form-control mr-2" style="text-transform: uppercase; width: 4rem" maxlength="2" [formControl]="numMesesPermanenciaFormControl" [disabled]="numMesesPermanenciaFormControl.disabled" [class.disabled]="numMesesPermanenciaFormControl.disabled"
+                (blur)="validator()" [disableTooltip]="numMesesPermanenciaFormControl.valid || numMesesPermanenciaFormControl.untouched" [ngbTooltip]="numMesesPermanencia" />
+            <ng-template #numMesesPermanencia>
+                <span *ngIf="numMesesPermanenciaFormControl.invalid && numMesesPermanenciaFormControl.hasError('required')">Campo obrigatório </span>
+            </ng-template>
+        </div>
+
+        <div class="ml-5" style="width: 180px">
+            <label for="tipoContrato"> <b>% Desconto Permanência:</b> </label>
+            <input type="text" mask="00" class="form-control mr-2" style="text-transform: uppercase; width: 4rem" maxlength="2" [formControl]="valDescontoPermanenciaFormControl" [disabled]="valDescontoPermanenciaFormControl.disabled" [class.disabled]="valDescontoPermanenciaFormControl.disabled"
+                (blur)="validator()" [disableTooltip]="valDescontoPermanenciaFormControl.valid || valDescontoPermanenciaFormControl.untouched" [ngbTooltip]="valDescontoPermanencia" />
+            <ng-template #valDescontoPermanencia>
+                <span *ngIf="valDescontoPermanenciaFormControl.invalid && valDescontoPermanenciaFormControl.hasError('required')">Campo obrigatório </span>
+            </ng-template>
+        </div>
+
+    </div>
+
+    <h4 class="d-flex roxo-padrao mt-4">Escritório Sisjur e Estados de Atuação</h4>
+    <div class="d-flex" style="align-items: flex-end;">
+        <div style="width: -webkit-fill-available">
+            <label for="tipoContrato"> <b>Escritório:</b> </label>
+            <ng-select [items]="escritoriosList" bindLabel="descricao" bindValue="codigo" appearance="outline" class="escritorios" [closeOnSelect]="false" multiple="true" [(ngModel)]="escritoriosSelecionados" [ngModelOptions]="{ standalone: true }">
+            </ng-select>
+        </div>
+    </div>
+
+    <div class="d-flex mt-3" style="align-items: flex-end;">
+        <div style="width: -webkit-fill-available; display: flex; align-items: center;">
+            <label for="tipoContrato"> <b>Estados:</b> </label>
+            <button type="button" class="btn btn-link ml-auto p-0" aria-label="Close" (click)="marcarTodas()" id="marcarTodas">Marcar/Desmarcar Todos</button>
+        </div>
+    </div>
+
+    <div class="d-flex" style="align-items: flex-end; flex-wrap: wrap;">
+        <div *ngFor="let item of estadosList; let i = index">
+            <div class="d-flex mb-2" style="width: 44px;">
+                <input type="checkbox" name="ufs" id="{{item.codigo}}" (click)="checkEstado(item.codigo)">
+                <label class="mb-0 mt-1 ml-1" for="{{item.codigo}}">{{item.codigo}}</label>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+<div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="save()">Confirmar</button>
+</div>

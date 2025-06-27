@@ -1,0 +1,1032 @@
+<app-container-pagina
+  [titulo]="'Acompanhamento de envio para eSocial'"
+  [caminho]="breadcrumb"
+  [hasAdicionar]="false"
+>
+  <div class="quadro-busca border mt-5">
+    <form [formGroup]="this.cardFormGroup">
+      <div>
+        <div class="title roxo-padrao ml-4">
+          <h5 style="font-weight: bold">Critérios de Pesquisa</h5>
+        </div>
+        <div class="card-busca">
+          <!-- coluna da esquerda -->
+          <div class="coluna-busca">
+            <div class="card-row">
+              <span class="mr-2 card-label"><b>Processo:</b></span>
+              <ng-select
+                style="width: 9rem; margin-right: 0.5rem"
+                id="processoCodigoInterno"
+                [items]="processoCodigoInternoList"
+                bindValue="id"
+                bindLabel="name"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [multiple]="false"
+                [formControl]="processoCodigoInternoFormControl"
+                placeholder="Selecione"
+                [title]="placeholderProcesso()"
+                (change)="exibicaoCriterios(); changeProcessoCodigoInterno()"
+              >
+              </ng-select>
+
+              <ng-select
+                style="width: 7rem; margin-right: 0.5rem"
+                id="criterios"
+                [items]="criteriosList"
+                bindValue="id"
+                bindLabel="name"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [multiple]="false"
+                [formControl]="criteriosFormControl"
+                placeholder="Selecione"
+                [title]="titleCriterios()"
+              >
+              </ng-select>
+
+              <input
+                style="width: 14rem"
+                type="text"
+                name="nrProcesso"
+                id="nrProcesso"
+                [maxLength]="maxLengthCodInterno()"
+                class="form-control input-number"
+                [formControl]="processoFormControl"
+                [placeholder]="placeholderProcesso()"
+                numbersOnly
+                (input)="removerNaoNumericos()"
+              />
+            </div>
+
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>Sentença:</b></span>
+              <app-data-range
+                [dataInicio]="periodoSentencaDeFormControl.value"
+                [dataFim]="periodoSentencaAteFormControl.value"
+                (retDataFim)="periodoSentencaAteFormControl.setValue($event)"
+                (retDataInicio)="periodoSentencaDeFormControl.setValue($event)"
+              >
+              </app-data-range>
+            </div>
+
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>Reclamante:</b></span>
+              <input
+                style="width: 18rem"
+                type="text"
+                name="reclamante"
+                id="reclamante"
+                class="form-control input-number"
+                [formControl]="reclamanteFormControl"
+                placeholder="Nome ou parte do nome"
+              />
+
+              <span class="mr-2 card-label" style="width: 24px">ou:</span>
+              <input
+                style="width: 10rem"
+                class="form-control"
+                name="cpf"
+                id="cpf"
+                type="text"
+                [formControl]="cpfFormControl"
+                [textMask]="{ mask: mascaraCpf }"
+                placeholder="CPF"
+              />
+            </div>
+
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>Tipo Formulário:</b></span>
+              <div class="col-2 d-flex align-items-center">
+                <input
+                  class="radio"
+                  type="radio"
+                  [formControl]="tipoFormularioFormControl"
+                  value="1"
+                  id="2500"
+                  name="tipoFormulario"
+                  (click)="verificaFormularioApuracao(1)"
+                />
+                <label for="2500" class="m-0 pl-1">2500</label>
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <input
+                  class="radio"
+                  type="radio"
+                  [formControl]="tipoFormularioFormControl"
+                  value="2"
+                  id="2501"
+                  name="tipoFormulario"
+                  (click)="verificaFormularioApuracao(2)"
+                />
+                <label for="2501" class="m-0 pl-1">2501</label>
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <input
+                  class="radio"
+                  type="radio"
+                  [formControl]="tipoFormularioFormControl"
+                  value="3"
+                  id="ambos"
+                  name="tipoFormulario"
+                  (click)="verificaFormularioApuracao(3)"
+                />
+                <label for="ambos" class="m-0 pl-1">Ambos</label>
+              </div>
+            </div>
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"></span>
+              <div class="col-2 d-flex align-items-center">
+                <input
+                  class="radio"
+                  type="radio"
+                  [formControl]="tipoFormularioTipoFormControl"
+                  value="1"
+                  id="Original"
+                  name="tipoFormularioTipo"
+                />
+                <label for="Original" class="m-0 pl-1">Original</label>
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <input
+                  class="radio"
+                  type="radio"
+                  [formControl]="tipoFormularioTipoFormControl"
+                  value="2"
+                  id="Retificacao"
+                  name="tipoFormularioTipo"
+                />
+                <label for="Retificacao" class="m-0 pl-1">Retificação</label>
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <input
+                  class="radio"
+                  type="radio"
+                  [formControl]="tipoFormularioTipoFormControl"
+                  value="3"
+                  id="ambosTipo"
+                  name="tipoFormularioTipo"
+                />
+                <label for="ambosTipo" class="m-0 pl-1">Ambos</label>
+              </div>
+            </div>
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>ID Fomulário:</b></span>
+              <input
+                style="width: 10rem"
+                type="text"
+                name="idFormulario"
+                id="idFormulario"
+                maxlength="10"
+                class="form-control input-number"
+                [formControl]="IdFormlarioFormControl"
+                placeholder="ID 2500 ou 2501"
+                numbersOnly
+                (input)="removerNaoNumericos()"
+              />
+            </div>
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>Escritório:</b></span>
+              <ng-select
+                style="width: 30.5rem"
+                id="uf"
+                [items]="escritorioList"
+                bindValue="id"
+                bindLabel="descricao"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [multiple]="false"
+                [formControl]="escritorioFormControl"
+                placeholder="Selecione um Escritório"
+              >
+              </ng-select>
+            </div>
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>Status Preenchimento:</b></span>
+              <div class="col-2 d-flex align-items-left m-0 p-0 ml-1">
+                <input
+                  class="checkbox"
+                  type="checkbox"
+                  [formControl]="StatusNaoIniciadoEscritorioFormControl"
+                  value="1"
+                  id="naoIniciadoEscritorio"
+                  name="naoIniciadoEscritorio"
+                />
+                <label for="naoIniciadoEscritorio" class="m-0 pl-1"
+                  >Não Iniciado</label
+                >
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <input
+                  class="checkbox"
+                  type="checkbox"
+                  [formControl]="StatusPendenteEscritorioFormControl"
+                  value="2"
+                  id="pendenteEscritorio"
+                  name="statusEscritorio"
+                />
+                <label for="pendenteEscritorio" class="m-0 pl-1"
+                  >Pendente</label
+                >
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <input
+                  class="checkbox"
+                  type="checkbox"
+                  [formControl]="StatusFinalizadoEscritorioFormControl"
+                  value="3"
+                  id="finalizadoEscritorio"
+                  name="statusEscritorio"
+                />
+                <label for="finalizadoEscritorio" class="m-0 pl-1"
+                  >Finalizado</label
+                >
+              </div>
+            </div>
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>Contador:</b></span>
+              <ng-select
+                style="width: 30.5rem"
+                id="uf"
+                [items]="contadorList"
+                bindValue="id"
+                bindLabel="descricao"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [multiple]="false"
+                [formControl]="contadorFormControl"
+                placeholder="Selecione um Contador"
+              >
+              </ng-select>
+            </div>
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>Status Preenchimento:</b></span>
+              <div class="col-2 d-flex align-items-left m-0 p-0 ml-1">
+                <input
+                  class="checkbox"
+                  type="checkbox"
+                  [formControl]="StatusNaoIniciadoContadorFormControl"
+                  value="1"
+                  id="naoIniciadoContador"
+                  name="statusContador"
+                />
+                <label for="naoIniciadoContador" class="m-0 pl-1"
+                  >Não Iniciado</label
+                >
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <input
+                  class="checkbox"
+                  type="checkbox"
+                  [formControl]="StatusPendenteContadorFormControl"
+                  value="2"
+                  id="pendenteContador"
+                  name="statusContador"
+                />
+                <label for="pendenteContador" class="m-0 pl-1">Pendente</label>
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <input
+                  class="checkbox"
+                  type="checkbox"
+                  [formControl]="StatusFinalizadoContadorFormControl"
+                  value="3"
+                  id="finalizadoContador"
+                  name="statusContador"
+                />
+                <label for="finalizadoContador" class="m-0 pl-1"
+                  >Finalizado</label
+                >
+              </div>
+            </div>
+
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>Período de apuração:</b></span>
+              <div class="d-flex align-items-center">
+                <mes-ano-new
+                  [control]="periodoApuracaoDeFormControl"
+                  [maxDate]="periodoApuracaoAteFormControl.value"
+                  [msgMaxDate]="mensagemPeriodoApuracao"
+                  [required]="
+                    periodoApuracaoAteFormControl.value != null ||
+                    periodoApuracaoAteFormControl.value != undefined
+                  "
+                >
+                </mes-ano-new>
+
+                <span class="mr-2">até</span>
+                <mes-ano-new
+                  [control]="periodoApuracaoAteFormControl"
+                  [minDate]="periodoApuracaoDeFormControl.value"
+                  [msgMinDate]="mensagemPeriodoApuracao"
+                  [required]="
+                    periodoApuracaoDeFormControl.value != null ||
+                    periodoApuracaoDeFormControl.value != undefined
+                  "
+                >
+                </mes-ano-new>
+              </div>
+            </div>
+          </div>
+
+          <!-- coluna da direita -->
+          <div class="coluna-busca">
+            <div class="card-row">
+              <span class="mr-2 card-label" style="width: 116px"
+                ><b>Atualização Status:</b></span
+              >
+              <app-data-range
+                [dataInicio]="periodoStatusDeFormControl.value"
+                [dataFim]="periodoStatusAteFormControl.value"
+                (retDataFim)="periodoStatusAteFormControl.setValue($event)"
+                (retDataInicio)="periodoStatusDeFormControl.setValue($event)"
+              >
+              </app-data-range>
+            </div>
+
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>Status do Formulário:</b></span>
+              <ng-select
+                style="width: 90%"
+                id="situacaoProcesso"
+                [items]="statusFormularioList"
+                bindLabel="descricao"
+                bindValue="id"
+                notFoundText="Nenhuma opção disponível"
+                [multiple]="true"
+                [searchable]="true"
+                [clearable]="true"
+                [formControl]="statusExecucaoFormControl"
+                placeholder="Selecione o(s) status do formulário"
+              >
+              </ng-select>
+            </div>
+
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>UF:</b></span>
+              <ng-select
+                style="width: 90%"
+                id="uf"
+                [items]="ufList"
+                bindValue="id"
+                bindLabel="descricao"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [multiple]="true"
+                [formControl]="ufFormControl"
+                placeholder="UF da Comarca"
+              >
+              </ng-select>
+            </div>
+
+            <div class="card-row mt-3">
+              <span class="mr-2 card-label"><b>Empresa:</b></span>
+              <ng-select
+                style="width: 90%"
+                id="empresa"
+                [items]="empresaList"
+                bindValue="id"
+                bindLabel="descricao"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [multiple]="true"
+                [formControl]="empresaFormControl"
+                placeholder="Selecione a(s) empresa(s)"
+              >
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="coluna-footer mt-2 ml-auto">
+            <button
+              type="button"
+              class="btn btn-link"
+              style="cursor: pointer"
+              (click)="limparFiltro()"
+            >
+              Limpar Filtros
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              style="cursor: pointer"
+              (click)="buscarTabela()"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="quadro-formularios mt-5">
+    <div class="d-flex">
+      <h5 class="roxo-padrao mt-auto mb-0" style="font-weight: bold">
+        Formulários eSocial
+      </h5>
+      <button
+        *ngIf="comCritica"
+        class="btn btn-link ml-auto p-0 mr-4"
+        style="cursor: pointer; text-decoration: none"
+        (click)="exportarCriticasRetornadas()"
+      >
+        <i
+          class="fas fa-download pr-1"
+          style="font-size: 15px; cursor: pointer !important; font: roboto"
+        ></i>
+        Críticas Retornadas
+      </button>
+      <button
+        *ngIf="comCritica"
+        class="btn btn-link p-0 mr-4"
+        style="cursor: pointer; text-decoration: none"
+        (click)="exportar()"
+      >
+        <i
+          class="fas fa-download pr-1"
+          style="font-size: 15px; cursor: pointer !important; font: roboto"
+        ></i>
+        Exportar
+      </button>
+      <button
+        *ngIf="!comCritica"
+        class="btn btn-link ml-auto p-0 mr-4"
+        style="cursor: pointer; text-decoration: none"
+        (click)="exportar()"
+      >
+        <i
+          class="fas fa-download pr-1"
+          style="font-size: 15px; cursor: pointer !important; font: roboto"
+        ></i>
+        Exportar
+      </button>
+      <button
+        class="btn btn-link p-0"
+        style="cursor: pointer; text-decoration: none"
+        (click)="buscarTabela()"
+      >
+        <i
+          class="fas fa-redo pr-1"
+          style="font-size: 15px; cursor: pointer !important; font: roboto"
+        ></i>
+        Atualizar Lista
+      </button>
+    </div>
+
+    <div class="grid mt-2">
+      <ng-container *ngIf="!dataContentGrid || dataContentGrid.length == 0">
+        <div class="card-grid p-3" style="text-align: center">
+          <span><b>Nenhum dado encontrado!</b></span>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="dataContentGrid">
+        <ng-container *ngFor="let item of dataContentGrid">
+          <div class="card-grid p-3">
+            <div class="row-card-grid">
+              <b>{{ item.nomParte }}</b>
+              <b class="ml-3">{{ item.cpfParte | cpfCnpj }}</b>
+              <div class="ml-auto">
+                <span
+                  class="btn btn-link ml-auto p-0 mr-3"
+                  style="cursor: auto; text-decoration: none"
+                >
+                  {{
+                    item.tipoFormulario == 'F_2500'
+                      ? '2500'
+                      : item.periodoApuracao
+                      ? '2501 (' + item.periodoApuracao + ')'
+                      : '2501'
+                  }}</span
+                >
+                <!-- <button class="btn btn-link ml-auto p-0 mr-3"
+                    style="cursor: pointer; text-decoration: none;"
+                    (click)="exportarXml(item.idFormulario, item.tipoFormulario == 'F_2500', item.statusFormulario)">
+                    <i class="fas fa-download pr-1" style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+                    </button> -->
+                <span
+                  *ngIf="item.tipoFormularioTipo == 2"
+                  class="tag-retif p-1 mr-3"
+                  >R</span
+                >
+                <span
+                  class="tag-status p-1 pl-3 pr-3"
+                  [style.border]="
+                    item.statusFormulario == 0 ? '1px solid black' : 'none'
+                  "
+                  [style.color]="item.statusFormulario == 0 ? 'black' : '#fff'"
+                  [style.background-color]="
+                    defineCorTagStatusFormulario(item.statusFormulario)
+                  "
+                  >{{ convertEnumFormulario(item.statusFormulario) }}</span
+                >
+              </div>
+            </div>
+            <div class="row-card-grid mt-2">
+              <span
+                >Processo: {{ item.infoprocessoNrproctrab }} |
+                {{ item.codEstado }} - {{ item.nomComarca }} |
+                {{ item.codVara + 'ª VARA ' + item.nomTipoVara }}</span
+              >
+              <span
+                class="ml-auto color-solic"
+                *ngIf="item.statusFormulario > 0 && item.statusFormulario <= 2"
+                >{{
+                  descricaoRetorno(item.statusFormulario, item.nomeUsuario)
+                }}</span
+              >
+              <span
+                class="ml-auto color-solic"
+                *ngIf="item.statusFormulario > 2"
+              >
+                {{ descricaoRetorno(item.statusFormulario, '') }} em
+                {{ item.logDataOperacao | date : 'dd/MM/yyyy HH:mm:ss' }}</span
+              >
+            </div>
+            <div class="row-card-grid">
+              <span
+                >{{ item.indProcessoAtivo == 'S' ? 'ATIVO' : 'INATIVO' }} |
+                {{ item.nomParteEmpresa }} |
+                {{ item.indProprioTerceiro == 'T' ? 'TERCEIRO' : 'PRÓPRIO' }} |
+                Código interno: {{ item.codProcesso }}</span
+              >
+              <span
+                class="ml-auto color-solic"
+                *ngIf="item.statusFormulario > 0 && item.statusFormulario <= 2"
+                >em
+                {{ item.logDataOperacao | date : 'dd/MM/yyyy HH:mm:ss' }}</span
+              >
+            </div>
+            <div class="row-card-grid">
+              <span>
+                {{ item.nomEscritorio }} &nbsp;
+                <ng-template
+                  [ngTemplateOutlet]="iconeCheckEscritorio"
+                  [ngTemplateOutletContext]="{ item: item }"
+                ></ng-template>
+                |
+                {{ item.nomContador }} &nbsp;
+                <ng-template
+                  [ngTemplateOutlet]="iconeCheckContador"
+                  [ngTemplateOutletContext]="{ item: item }"
+                ></ng-template>
+              </span>
+              <span class="ml-auto color-solic"
+                >ID {{ item.idFormulario }}</span
+              >
+              <div class="alinhamento-botoes">
+                <button
+                  type="button"
+                  style="cursor: auto"
+                  class="btn alinhamento-texto-botoes"
+                  *ngIf="temPermissaoConsultarFormularioEsocial"
+                >
+                  <i
+                    class="roxo-padrao fas fa-magnifying-glass fa-sm cadastar"
+                    style="font-size: 13px; cursor: pointer"
+                    (click)="
+                      consultar(
+                        item.idFormulario,
+                        item.tipoFormulario,
+                        item.codProcesso,
+                        item.versaoEsocial
+                      )
+                    "
+                  ></i>
+                  <label
+                    for="cadastar"
+                    style="
+                      font-size: 12px;
+                      color: #6f62b2;
+                      margin-left: 5px;
+                      margin-bottom: 0;
+                      cursor: pointer;
+                    "
+                    (click)="
+                      consultar(
+                        item.idFormulario,
+                        item.tipoFormulario,
+                        item.codProcesso,
+                        item.versaoEsocial
+                      )
+                    "
+                    >Consultar</label
+                  >
+                </button>
+                <button
+                  type="button"
+                  style="cursor: auto"
+                  class="btn alinhamento-texto-botoes"
+                  *ngIf="
+                    ((item.tipoFormulario == 'F_2500' &&
+                      temPermissaoCadastrarFormulario2500Esocial) ||
+                      (item.tipoFormulario == 'F_2501' &&
+                        temPermissaoCadastrarFormulario2501Esocial)) &&
+                    podeExibirEditar(
+                      item.tipoFormulario,
+                      item.statusFormulario,
+                      item.finalizadoContador,
+                      item.finalizadoEscritorio,
+                      item.logDataOperacao
+                    ) &&
+                    item.statusFormulario != 7
+                  "
+                >
+                  <i
+                    class="roxo-padrao fas fa-edit fa-sm cadastar"
+                    style="font-size: 13px; cursor: pointer"
+                    (click)="
+                      editar(
+                        item.idFormulario,
+                        item.tipoFormulario,
+                        item.codProcesso,
+                        item.versaoEsocial,
+                        item.indProprioTerceiro,
+                        item.statusFormulario
+                      )
+                    "
+                  ></i>
+                  <label
+                    for="cadastar"
+                    style="
+                      font-size: 12px;
+                      color: #6f62b2;
+                      margin-left: 5px;
+                      margin-bottom: 0;
+                      cursor: pointer;
+                    "
+                    (click)="
+                      editar(
+                        item.idFormulario,
+                        item.tipoFormulario,
+                        item.codProcesso,
+                        item.versaoEsocial,
+                        item.indProprioTerceiro,
+                        item.statusFormulario
+                      )
+                    "
+                    >Editar</label
+                  >
+                </button>
+                <button
+                  type="button"
+                  style="cursor: auto"
+                  class="btn alinhamento-texto-botoes"
+                  *ngIf="
+                    ((item.tipoFormulario == 'F_2500' &&
+                      temPermissaoCadastrarFormulario2500Esocial) ||
+                      (item.tipoFormulario == 'F_2501' &&
+                        temPermissaoCadastrarFormulario2501Esocial)) &&
+                    podeExibirEditar(
+                      item.tipoFormulario,
+                      item.statusFormulario,
+                      item.finalizadoContador,
+                      item.finalizadoEscritorio,
+                      item.logDataOperacao
+                    ) &&
+                    item.statusFormulario == 7
+                  "
+                >
+                  <i
+                    class="roxo-padrao fas fa-edit fa-sm cadastar"
+                    style="font-size: 13px; cursor: pointer"
+                    (click)="
+                      editar(
+                        item.idFormulario,
+                        item.tipoFormulario,
+                        item.codProcesso,
+                        item.versaoEsocial,
+                        item.indProprioTerceiro,
+                        item.statusFormulario
+                      )
+                    "
+                  ></i>
+                  <label
+                    for="cadastar"
+                    style="
+                      font-size: 12px;
+                      color: #6f62b2;
+                      margin-left: 5px;
+                      margin-bottom: 0;
+                      cursor: pointer;
+                    "
+                    (click)="
+                      editar(
+                        item.idFormulario,
+                        item.tipoFormulario,
+                        item.codProcesso,
+                        item.versaoEsocial,
+                        item.indProprioTerceiro,
+                        item.statusFormulario
+                      )
+                    "
+                    >Retornar para Rascunho</label
+                  >
+                </button>
+              </div>
+            </div>
+            <!-- <div class="status-finalizacoes" id="status-finalizacoes">
+              <div id="status-finalizado-contador" class="status-finalizacoes">
+                <span>Contador: </span>
+                
+              </div>
+              <span class="mr-1 ml-1">|</span>
+              <div id="status-finalizado-escritorio" class="status-finalizacoes">
+                <span>Escritório: </span>
+                
+              </div>
+            </div> -->
+            <div class="row-card-grid" *ngIf="item.statusFormulario == 16">
+              <span style="width: 43rem">
+                <br />Ocorreu um erro ao enviar a solicitação de exclusão 3500
+                desse formulário.<br />
+                Aguarde, ele será reprocessado na próxima execução da rotina de
+                envio dos formulários 3500.
+              </span>
+            </div>
+            <div class="row-card-grid mt-2">
+              <span
+                *ngIf="item.nrRecibo && item.statusFormulario == 4"
+                class="btn-link"
+                style="cursor: auto; text-decoration: none"
+              >
+                <span style="font-weight: bold">Nº Recibo: </span
+                >{{ item.nrRecibo }}</span
+              >
+              <br />
+              <span
+                *ngIf="item.exclusaoNrrecibo && item.statusFormulario == 12"
+                class="btn-link"
+                style="cursor: auto; text-decoration: none"
+              >
+                <span style="font-weight: bold">Nº Recibo Exclusão 3500: </span
+                >{{ item.exclusaoNrrecibo }}</span
+              >
+            </div>
+            <div class="row-card-grid mt-2">
+              <span *ngIf="item.statusFormulario != 11 && item.exibirRetorno"
+                ><button
+                  class="btn btn-link ml-auto p-0 mr-3"
+                  style="cursor: pointer; text-decoration: none"
+                  (click)="
+                    exportarRetorno(
+                      item.idFormulario,
+                      item.tipoFormulario == 'F_2500'
+                    )
+                  "
+                >
+                  <i
+                    class="fas fa-download pr-1"
+                    style="
+                      font-size: 15px;
+                      cursor: pointer !important;
+                      font: roboto;
+                    "
+                    (click)="
+                      exportarRetorno(
+                        item.idFormulario,
+                        item.tipoFormulario == 'F_2500'
+                      )
+                    "
+                  ></i>
+                  Retorno eSocial
+                </button></span
+              >
+              <span *ngIf="item.statusFormulario == 11 && item.exibirRetorno"
+                ><button
+                  class="btn btn-link ml-auto p-0 mr-3"
+                  style="cursor: pointer; text-decoration: none"
+                  (click)="
+                    exportarRetorno(
+                      item.idFormulario,
+                      item.tipoFormulario == 'F_2500'
+                    )
+                  "
+                >
+                  <i
+                    class="fas fa-download pr-1"
+                    style="
+                      font-size: 15px;
+                      cursor: pointer !important;
+                      font: roboto;
+                    "
+                    (click)="
+                      exportarRetorno(
+                        item.idFormulario,
+                        item.tipoFormulario == 'F_2500'
+                      )
+                    "
+                  ></i>
+                  Retorno FPW
+                </button></span
+              >
+              <span *ngIf="item.exibirHistorico"
+                ><button
+                  class="btn btn-link ml-auto p-0 mr-3"
+                  style="cursor: pointer; text-decoration: none"
+                  (click)="
+                    exportarHistoricoRetorno(
+                      item.idFormulario,
+                      item.tipoFormulario == 'F_2500'
+                    )
+                  "
+                >
+                  <i
+                    class="fas fa-download pr-1"
+                    style="
+                      font-size: 15px;
+                      cursor: pointer !important;
+                      font: roboto;
+                    "
+                    (click)="
+                      exportarHistoricoRetorno(
+                        item.idFormulario,
+                        item.tipoFormulario == 'F_2500'
+                      )
+                    "
+                  ></i>
+                  Histórico de Retornos
+                </button></span
+              >
+            </div>
+            <div class="row-card-grid mt-2" *ngIf="item.statusFormulario == 6">
+              <span class="color-solic"
+                >Ocorreu um erro ao enviar esse formulário</span
+              >
+            </div>
+            <div class="row-card-grid" *ngIf="item.statusFormulario == 6">
+              <span class="color-solic"
+                >Aguarde, ele será reprocessado na próxima execução da rotina de
+                envio dos formulários eSocial.</span
+              >
+            </div>
+            <div class="row-card-grid mt-2" *ngIf="item.statusFormulario == 7">
+              <span class="color-solic"
+                >Esse formulário foi recebido pelo eSocial, porém não gerou
+                nenhum retorno. Por favor, entre em contato com a sua equipe
+                de</span
+              >
+            </div>
+            <div class="row-card-grid" *ngIf="item.statusFormulario == 7">
+              <span class="color-solic"
+                >RH e solicite a reconsulta do status atualizado no FPW. Após 30
+                dias sem retorno, ficará disponível a opção de retornar para
+                Rascunho.</span
+              >
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="paginator-acompanhamento mt-3">
+    <!-- <sisjur-paginator [length]="totalGrid" [pageSize]="8" (page)="cardFormGroup ? buscarTabela() : null">
+    </sisjur-paginator> -->
+    <div class="paginator-quantidade">
+      <span *ngIf="totalGrid > 0" class="total"
+        >Total de registros: {{ totalGrid }} - Itens por página
+      </span>
+      <ng-select
+        class="ml-2"
+        *ngIf="totalGrid > 0"
+        #select
+        appearance="outline"
+        [searchable]="false"
+        [clearable]="false"
+        [(ngModel)]="pageSize"
+        (change)="buscarTabela()"
+      >
+        <ng-option *ngFor="let size of pageSizeOptions" [value]="size">{{
+          size
+        }}</ng-option>
+      </ng-select>
+    </div>
+
+    <ngb-pagination
+      style="float: right"
+      [(page)]="pageIndex"
+      [pageSize]="pageSize"
+      [collectionSize]="totalGrid"
+      [ellipses]="false"
+      [boundaryLinks]="true"
+      [maxSize]="4"
+      [rotate]="true"
+      (pageChange)="buscarTabela()"
+      *ngIf="totalGrid > 0"
+    >
+      <ng-template ngbPaginationFirst>Primeiro</ng-template>
+      <ng-template ngbPaginationLast>Último</ng-template>
+      <ng-template ngbPaginationPrevious>Anterior</ng-template>
+      <ng-template ngbPaginationNext>Próximo</ng-template>
+      <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+    </ngb-pagination>
+  </div>
+  <!-- #region icones checagem -->
+  <ng-template #iconeCheckEscritorio let-item="item">
+    <svg
+      xmlns="src\assets\icons\check-circle-fill.svg"
+      width="15"
+      height="15"
+      fill="white"
+      class="svg-check"
+      viewBox="0 0 16 16"
+      *ngIf="item.finalizadoEscritorio == null"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+      />
+    </svg>
+    <svg
+      xmlns="src\assets\icons\check-circle-fill.svg"
+      width="15"
+      height="15"
+      fill="#a1dea7"
+      class="svg-check"
+      viewBox="0 0 16 16"
+      *ngIf="item.finalizadoEscritorio == 'S'"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+      />
+    </svg>
+    <svg
+      xmlns="src\assets\icons\check-circle-fill.svg"
+      width="15"
+      height="15"
+      fill="#fefe0a"
+      class="svg-check"
+      viewBox="0 0 16 16"
+      *ngIf="item.finalizadoEscritorio == 'N'"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+      />
+    </svg>
+  </ng-template>
+
+  <ng-template #iconeCheckContador let-item="item">
+    <svg
+      xmlns="src\assets\icons\check-circle-fill.svg"
+      width="15"
+      height="15"
+      fill="white"
+      class="svg-check"
+      viewBox="0 0 16 16"
+      *ngIf="item.finalizadoContador == null"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+      />
+    </svg>
+
+    <svg
+      xmlns="src\assets\icons\check-circle-fill.svg"
+      width="13"
+      height="13"
+      fill="#a1dea7"
+      class="svg-check"
+      viewBox="0 0 16 16"
+      *ngIf="item.finalizadoContador == 'S' && !item.ehDataFutura"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+      />
+    </svg>
+
+    <svg
+      xmlns="src\assets\icons\check-circle-fill.svg"
+      width="13"
+      height="13"
+      fill="#ff7f27"
+      class="svg-check"
+      viewBox="0 0 16 16"
+      *ngIf="item.finalizadoContador == 'S' && item.ehDataFutura"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+      />
+    </svg>
+
+    <svg
+      xmlns="src\assets\icons\check-circle-fill.svg"
+      width="15"
+      height="15"
+      fill="#fefe0a"
+      class="svg-check"
+      viewBox="0 0 16 16"
+      *ngIf="item.finalizadoContador == 'N'"
+    >
+      <path
+        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+      />
+    </svg>
+  </ng-template>
+  <!-- #endregion -->
+</app-container-pagina>

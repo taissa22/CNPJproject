@@ -1,0 +1,18 @@
+.modal-title{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.inputs { 
+    margin-top: 20px;
+}
+::ng-deep {
+    .modal-dialog {
+        min-width: 500px!important;
+        max-width: 600px!important;
+    }
+    .modal-sm {
+        min-width: 370px!important;
+        max-width: 371px!important;
+    }
+}

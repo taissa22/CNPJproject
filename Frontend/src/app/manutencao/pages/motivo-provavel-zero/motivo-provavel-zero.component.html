@@ -1,0 +1,46 @@
+<app-manutencao-generica  titulo="Motivo Provável Zero" (aoClicarNovoRegistro)="incluir()"  [exibirAdicionar]="true"  breadcrump="Manutenção > Trabalhista > Judicial > Motivo Provável Zero" >
+
+  <div class="mt-4 row" >
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" >Motivos para Possuir Provável Zero</b>
+    </div>
+
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <div>
+
+    <sisjur-table (sort)="buscar()"> 
+      <sisjur-table-header>
+        <sisjur-table-header-cell sort="id" width="8"> Código </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="descricao"> Descrição Motivo Provável Zero </sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+      </sisjur-table-header>
+        <ng-container *ngFor="let item of dataSource; let i = index">
+            <sisjur-table-row  >
+                <sisjur-table-row-cell> {{item.id}} </sisjur-table-row-cell>
+                <sisjur-table-row-cell> {{item.descricao}} </sisjur-table-row-cell> 
+                <sisjur-table-row-cell>
+                  <button type="button" class="btn"  (click)="alterar(item)">
+                      <i class="fas fa-edit fa-sm btn-acao"></i>
+                  </button>
+                </sisjur-table-row-cell>
+                <sisjur-table-row-cell >
+                  <button type="button" class="btn" (click)="excluir(item)">
+                      <i class="fas fa-trash fa-sm btn-acao"></i>
+                  </button>
+                </sisjur-table-row-cell>  
+            </sisjur-table-row>
+        </ng-container>
+    </sisjur-table>
+
+    <br>
+    <sisjur-paginator [length]="total" (page)="buscar()"></sisjur-paginator>    
+</div>
+</app-manutencao-generica>

@@ -1,0 +1,99 @@
+<div class="modal-header">  
+    <span class="modal-title pl-0">{{titulo}}</span>
+    <button type="button" class="btn btn-icon" (click)="close()"> <i class="fa fa-times"></i> </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+  <div class="row">
+    <div class="col-9">
+      <label class="col-form-label-sm" for="nome-input"> <b>Nome:</b> </label>
+      <input 
+        type="text" 
+        id="nome-input" 
+        [formControl]="nomeFormControl" 
+        class="form-control"
+        [disableTooltip]="nomeFormControl.valid || nomeFormControl.untouched" 
+        [ngbTooltip]="nomeError"
+        maxlength="100" />
+      <ng-template #nomeError>
+        <span *ngIf="nomeFormControl.hasError('required')"> Campo obrigatório</span>
+        <span *ngIf="nomeFormControl.hasError('maxlength')"> O Limite é de 100 caracteres </span>
+      </ng-template>
+    </div>
+
+  </div>
+  <div class="row inputs">
+    <div class="col-9 pr-1">
+      <label class="col-form-label-sm" for="codigo"> <b>Tipo Orientação:</b> </label>
+      <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        id="codigo"
+        [items]="tiposOrientacoesJuridicas"
+        [formControl]="tipoDeOrientacaoFormControl"
+        bindLabel="descricao"
+        bindValue="codigo"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true" 
+        [ngbTooltip]="tipoError" 
+        [disableTooltip]="tipoDeOrientacaoFormControl.valid || tipoDeOrientacaoFormControl.untouched"        
+        [clearable]="true"        
+        [placeholder]="'Selecione o tipo de orientação'">    
+      </ng-select>     
+      <ng-template #tipoError>
+        <span *ngIf="tipoDeOrientacaoFormControl.hasError('required')">
+            Campo obrigatório
+        </span>
+     </ng-template> 
+    </div>
+    
+    <div class="col-2 d-flex align-items-end">
+      <input type="checkbox" [formControl]="ativoFormControl" class="mb-2"> 
+      <label class="m-0 p-0 pl-1 mb-1">Ativo</label>
+    </div>
+  </div>
+
+  <div class="row inputs">
+    <div class="col-12">
+      <label class="col-form-label-sm" for="descricao"> <b>Descrição:</b> </label>
+      <textarea
+        id = "descricao"
+        style="resize: none; height: 55px;"
+        [formControl]="descricaoFormControl"
+        class="form-control"
+        maxlength="100"
+        [disableTooltip]="descricaoFormControl.valid || descricaoFormControl.untouched" 
+        [ngbTooltip]="descricaoError"
+      ></textarea>
+      <ng-template #descricaoError>
+        <span *ngIf="descricaoFormControl.hasError('required')"> Campo obrigatório </span>
+        <span *ngIf="descricaoFormControl.hasError('maxlength')"> O Limite é de 100 caracteres </span>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="row inputs">
+    <div class="col-12">
+      <label class="col-form-label-sm" for="palavrachave"> <b>Palavras Chave:</b> </label>
+      <textarea
+        id = "palavrachave"
+        style="resize: none; height: 55px;"
+        [formControl]="palavrasChaveFormControl"
+        class="form-control"
+        maxlength="100"
+        [disableTooltip]="palavrasChaveFormControl.valid || palavrasChaveFormControl.untouched" 
+        [ngbTooltip]="palavrasChaveError"
+      ></textarea>
+      <ng-template #palavrasChaveError>
+        <span *ngIf="palavrasChaveFormControl.hasError('required')"> Campo obrigatório </span>
+        <span *ngIf="palavrasChaveFormControl.hasError('maxlength')"> O Limite é de 100 caracteres </span>
+      </ng-template>
+    </div>
+
+  </div>
+</form>
+  
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid " (click)="save()">Confirmar</button>
+</div>

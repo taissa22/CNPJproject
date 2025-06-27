@@ -1,0 +1,19 @@
+.modal-title{
+    padding-left: 0px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.modal-header{
+    padding-bottom: 0px;
+}
+::ng-deep {
+    .modal-content {
+        min-width: 370px!important;
+        max-width: 371px!important;
+    }
+    .modal-sm {
+        min-width: 370px!important;
+        max-width: 371px!important;
+    }
+}

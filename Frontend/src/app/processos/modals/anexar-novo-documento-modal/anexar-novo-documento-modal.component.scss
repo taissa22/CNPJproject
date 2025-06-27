@@ -1,0 +1,34 @@
+.pagina {
+    padding: 10px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+}
+
+.header_row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+}
+
+#comentario{
+    width: -webkit-fill-available;
+    resize: none;
+    padding: 5px;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    width: -webkit-fill-available;
+    justify-content: flex-end;
+}

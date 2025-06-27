@@ -1,0 +1,69 @@
+<app-manutencao-generica titulo="Manutenção - Fato Gerador" breadcrump="Manutenção > Cadastros Específicos > Cível Estratégico > Fato Gerador" (aoClicarNovoRegistro)="incluir()" [exibirAdicionar]="true">    
+    <div class="row pt-3" (keydown.enter)="buscarTabela()" style="margin-left: auto;">
+        <div class="d-flex pr-1 " >     
+          <div  style="width: 25rem;">
+            <input 
+              type="search" 
+              (search)="onClearInputPesquisar()" 
+              onkeyup="this.value = this.value.toUpperCase();"          
+              class="form-control mr-2"              
+              [formControl] = "buscarDescricaoFormControl"
+              placeholder="Entre com o texto do nome ou parte dele"
+              maxlength="100">
+          </div>
+    
+          <div class="ml-3" style="align-self: flex-end">
+            <button type="button" class="btn btn-primary"  (click)="buscarTabela()">Buscar</button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="mt-4 row">
+        <div class="col-sm-6" style="align-self: flex-end;">
+          <b class="roxo-padrao" style="font-size: 15px;" >Fatos Geradores</b>
+        </div>
+    
+        <div class="col-sm-6" style="text-align: right;">
+          <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+            <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+            Exportar
+          </button>
+        </div>
+      </div>
+    
+
+    <div class="row mb-4">
+        <div class="col-md-12" >
+            <sisjur-table (sort)="buscarTabela()">
+                <sisjur-table-header>
+                    <sisjur-table-header-cell sort="id" width="5">Código</sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="nome" >Nome</sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="ativo" width="10">Ativo</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                </sisjur-table-header>
+                <ng-container *ngFor="let item of dataSource">
+                    <sisjur-table-row >                       
+                        <sisjur-table-row-cell>{{item.id}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell ellipsis="true">{{item.nome}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.ativo ? "Sim" : "Não"}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>
+                            <button type="button" class="btn btn-icon" (click)="alterar(item)">
+                                <i class="fas fa-edit fa-sm"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+                        <sisjur-table-row-cell >
+                            <button type="button" class="btn btn-icon" (click)="remover(item)">
+                                <i class="fas fa-trash fa-sm"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+
+                    </sisjur-table-row>                   
+                </ng-container>
+            </sisjur-table>
+        </div>
+    </div>
+
+
+    <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>
+</app-manutencao-generica>

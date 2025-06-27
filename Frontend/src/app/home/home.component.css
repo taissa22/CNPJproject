@@ -1,0 +1,23 @@
+.home-page {
+  background: url('../../assets/img/bg_home.jpg') no-repeat;
+
+  /* Full height */
+  height: 100%;
+  min-height: 488px;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home-page h1 {
+  text-align: right;
+  font: 24px Roboto, Arial;
+  color: #535380;
+}
+
+.home-page p {
+  color: #535380;
+  border-bottom:  #d1d2e7 1px solid;
+}

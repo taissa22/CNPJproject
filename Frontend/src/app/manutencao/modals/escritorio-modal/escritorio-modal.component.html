@@ -1,0 +1,364 @@
+<div class="modal-header">
+  <span *ngIf="!escritorio" class="modal-title pl-0"> Inclusão de Escritório</span>
+  <span *ngIf="escritorio" class="modal-title pl-0">Alteração de Escritório</span>
+
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+
+  <ng-template #tlEscritorio>
+    <div  style="margin-left: 18rem;">
+      <div class="container" >
+      <div class="row" >
+        <br>
+        <label style="margin-top: 14px; color: #6f62b2;"><b>Geral</b></label>
+
+      </div>
+      <hr width="68%" />
+      <div class="row" style="padding-top: 8px;" >
+        <div col-sm-12 >
+          <label>Status:</label>
+          <input class="form-check-input" (change)="changeStatus(true)" [checked]="this.ativo" style="margin-left:10px; " type="radio" name="status" id="ativo">
+          <label class="form-check-label" style="margin-left: 26px;" for="ativo">  Ativo   </label>
+
+          <input class="form-check-input"  (change)="changeStatus(false)" [checked]="!this.ativo" type="radio" style="margin-left: 5px;" name="status" id="inativo" checked>
+          <label class="form-check-label" for="inativo" style="margin-left: 20px;"> Inativo</label>
+        </div>
+      </div>
+
+      <div class="row" style="padding-top: 8px;">
+
+        <div col-sm-6>
+          <label style="padding-right: 20px;">Tipo Pessoa:</label>
+          <input class="form-check-input" (change)="changepessoa('F')" [checked]="this.tipoPessoaFormControl.value == 'F' ? true : false " type="radio" name="pessoa" id="fisica">
+          <label class="form-check-label  " style="padding-right: 20px;" for="fisica">  Física   </label>
+
+          <input class="form-check-input"  (change)="changepessoa('J')" [checked]="this.tipoPessoaFormControl?.value == 'J' ? true: false " type="radio" name="pessoa" id="juridica" checked>
+          <label class="form-check-label" for="juridica  " style="padding-right: 35px;"> Jurídica</label>
+
+        </div>
+
+        <div col-sm-6 style="display: flex;">
+          <label for="cpfcnpj" style="padding-right: 5px;"> <b>{{this.tipoPessoaFormControl.value == 'F' ? "CPF:" : "CNPJ:"}} </b>  </label>
+          <input *ngIf="this.tipoPessoaFormControl.value == 'F'  "
+            type="text"
+            class="form-control mr-2 ls-mask-cpf"
+            id="cpfcnpj"
+            mask="000.000.000-00"
+            placeholder="000.000.000-00"
+            [formControl] = "CPFFormControl"
+            [disableTooltip]="CPFFormControl.valid || CPFFormControl.untouched"
+            [ngbTooltip]="cpfError">
+            <ng-template #cpfError>
+              <span *ngIf="CPFFormControl.errors.required">
+                Campo obrigatório
+              </span>
+              <span *ngIf="CPFFormControl.hasError('maxlength') || CPFFormControl.hasError('minlength')">
+                CPF Inválido
+              </span>
+            </ng-template>
+
+            <input *ngIf="this.tipoPessoaFormControl.value == 'J' "
+            type="text"
+            class="form-control mr-2 ls-mask-cnpj"
+            id="cpfcnpj"
+            mask="00.000.000/0000-00"
+            placeholder="00.000.000/0000-00"
+            [formControl] = "CNPJFormControl"
+            [disableTooltip]="CNPJFormControl.valid || CNPJFormControl.untouched"
+            [ngbTooltip]="cpfError">
+            <ng-template #cpfError>
+              <span *ngIf="CNPJFormControl.errors.required">
+                Campo obrigatório
+              </span>
+              <span *ngIf="CNPJFormControl.hasError('maxlength') || CNPJFormControl.hasError('minlength')">
+                CNPJ Inválido
+              </span>
+            </ng-template>
+
+        </div>
+
+
+
+      </div>
+
+      <div class="row" style="padding-top: 8px;">
+        <label for="nome" style="padding-right: 13px;"> <b>Nome:</b>  </label>
+        <input type="text" class="form-control mr-2" id="nome" style="text-transform:uppercase; width: 50rem;" [formControl] = "nomeFormControl">
+      </div>
+
+      <div class="row" style="padding-top: 8px;">
+        <label for="lblendereco" style="padding-right: 13px; color: #6f62b2;" > <b>Endereço</b>  </label>
+      </div>
+      <hr width="68%" />
+      <div class="row" style="padding-top: 8px;">
+        <label for="lbendereco" style="padding-right: 13px;"> <b> Endereço: </b>   </label>
+        <input type="text" class="form-control mr-2" id="endereco" style="text-transform:uppercase; width: 25rem;" [formControl] = "enderecoFormControl"
+        [disableTooltip]="enderecoFormControl.valid || enderecoFormControl.untouched" [ngbTooltip]="endError">
+        <ng-template #endError>
+          <span *ngIf="enderecoFormControl.invalid || enderecoFormControl.errors.required">
+            Campo obrigatório
+          </span>
+        </ng-template>
+
+        <label for="bairro" style="padding-right: 13px;"> <b> Bairro: </b>   </label>
+        <input type="text" class="form-control mr-2" id="bairro" style="text-transform:uppercase; width: 19rem;" [formControl] = "bairroFormControl">
+
+
+      </div>
+
+      <div class="row" style="padding-top: 8px; display: -webkit-box;">
+        <label for="lblcidade" style="padding-right: 13px;"> <b> Cidade: </b>   </label>
+        <input type="text" class="form-control mr-2" id="cidade" style="text-transform:uppercase; width: 25rem; margin-left: 13px" [formControl] = "cidadeFormControl">
+
+        <label for="estado"> <b>Estado:</b> </label>
+        <ng-select
+        [ngStyle]="{'margin-left': '8px','width': '75px', 'min-height': '10px'}"
+        [items]="estados"
+        bindLabel="id"
+        bindValue="id"
+        [formControl] = "estadoFormControl"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+
+        [placeholder]="'Selecione um Estado'"></ng-select>
+
+        <label for="cep" style="margin-left: 20px; padding-right: 8px" > <b>CEP:</b>  </label>
+        <input type="text" class="form-control mr-2" id="cep" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="width: 100px;" [formControl] = "cepFormControl">
+
+
+      </div>
+
+      <div class="row" style="padding-top: 8px;">
+        <label for="contatoCabecalho" style="padding-right: 13px; color: #6f62b2;" > <b>Contato</b>  </label>
+      </div>
+      <hr width="68%" />
+
+      <div class="row" style="padding-top: 8px;">
+        <label for="lblemail" style="padding-right: 13px;"> <b> Email: </b>   </label>
+        <input type="text" class="form-control mr-2" id="emal" style="text-transform:uppercase; margin-left: 20px; width: 25rem;" [formControl] = "emailFormControl">
+
+        <label for="lblsite" style="padding-right: 13px;"> <b> Site: </b>   </label>
+        <input type="text" class="form-control mr-2" id="site" style="text-transform:uppercase; width: 20rem;" [formControl] = "siteFormControl">
+
+      </div>
+
+      <div class="row" style="padding-top: 8px;">
+
+
+        <label for="lbltelefone" style="padding-right: 13px;"> <b> Telefone: </b>   </label>
+        <input type="text" class="form-control mr-2" id="telefoneDDD" maxlength="3" style="margin-left: 3px; width: 4rem;" pattern="[0-9]+$" [formControl] = "telefoneDDDFormControl"
+        [disableTooltip]="telefoneDDDFormControl.valid || telefoneDDDFormControl.untouched" [ngbTooltip]="telefoneDDDError">
+        <ng-template #telefoneDDDError>
+          <span *ngIf="telefoneDDDFormControl.invalid && telefoneDDDFormControl.errors.required">
+            Campo obrigatório
+          </span>
+          <span *ngIf="telefoneDDDFormControl.invalid && telefoneDDDFormControl.errors.pattern">
+            Somente número
+          </span>
+        </ng-template>
+
+        <input type="text" class="form-control mr-2" id="telefone" maxlength="9" style="width: 8rem;" pattern="[0-9]+$" [formControl] = "telefoneFormControl"
+        [disableTooltip]="telefoneFormControl.valid || telefoneFormControl.untouched" [ngbTooltip]="telefoneError">
+        <ng-template #telefoneError>
+          <span *ngIf="telefoneFormControl.invalid && telefoneFormControl.errors.required">
+            Campo obrigatório
+          </span>
+          <span *ngIf="telefoneFormControl.invalid && telefoneFormControl.errors.pattern">
+            Somente número
+          </span>
+        </ng-template>
+
+        <label for="lblFax" style="padding-right: 13px; margin-left: 17px;"> <b> Fax: </b>   </label>
+        <input type="text" pattern="[0-9]+$" class="form-control mr-2" id="FaxDDD" maxlength="3" style="text-transform:uppercase; width: 4rem;" [formControl] = "FaxDDDFormControl"
+        [disableTooltip]="FaxDDDFormControl.valid || FaxDDDFormControl.untouched" [ngbTooltip]="FaxDDDError"
+        >
+        <ng-template #FaxDDDError>
+          <span *ngIf="FaxDDDFormControl.invalid && FaxDDDFormControl.errors.pattern">
+            Somente número
+          </span>
+        </ng-template>
+
+        <input type="text" pattern="[0-9]+$" class="form-control mr-2" id="Fax" maxlength="9" style="text-transform:uppercase; width: 8rem;" [formControl] = "FaxFormControl"
+        [disableTooltip]="FaxFormControl.valid || FaxFormControl.untouched" [ngbTooltip]="FaxError"
+        >
+        <ng-template #FaxError>
+          <span *ngIf="FaxFormControl.invalid && FaxFormControl.errors.pattern">
+            Somente número
+          </span>
+        </ng-template>
+
+        <label for="lblCelular" style="margin-left: 15px; padding-right: 13px;"> <b> Celular: </b>   </label>
+        <input type="text" pattern="[0-9]+$" class="form-control mr-2" maxlength="3" id="CelularDDD" style="text-transform:uppercase; width: 4rem;" [formControl] = "CelularDDDFormControl"
+        [disableTooltip]="CelularDDDFormControl.valid || CelularDDDFormControl.untouched" [ngbTooltip]="CelularDDDError"
+        >
+        <ng-template #CelularDDDError>
+          <span *ngIf="CelularDDDFormControl.invalid && CelularDDDFormControl.errors.pattern">
+            Somente número
+          </span>
+        </ng-template>
+
+        <input type="text" pattern="[0-9]+$" class="form-control mr-2" maxlength="9" id="Celular" style="text-transform:uppercase; width: 8rem;" [formControl] = "CelularFormControl"
+        [disableTooltip]="CelularFormControl.valid || CelularFormControl.untouched" [ngbTooltip]="CelularError"
+        >
+        <ng-template #CelularError>
+          <span *ngIf="CelularFormControl.invalid && CelularFormControl.errors.pattern">
+            Somente número
+          </span>
+        </ng-template>
+      </div>
+
+
+
+
+      <div class="row" style="padding-top: 8px;">
+        <label for="areaatuacaoCabecalho" style="padding-right: 13px; color: #6f62b2;" > <b>Áreas de Atuação</b>  </label>
+      </div>
+      <hr width="68%" />
+      <div class="row" style="padding-top: 8px;">
+        <div class="col-sm-6" style="    max-width: 375px;">
+          <div>
+
+            <input type="checkbox" class=" mr-2" id="areaadm" [formControl] = "areaRegulatoriaFormControl">
+            <label for="areaadministrativo" class="m-0 p-0 pl-1 mb-1">Administrativo</label>
+          </div>
+
+          <div>
+
+            <input type="checkbox" class=" mr-2" id="areaciveladm" [formControl] = "areaCivelAdministrativoFormControl">
+            <label for="areaciveladm" class="m-0 p-0 pl-1 mb-1">Cível Administrativo</label>
+          </div>
+
+          <div>
+            <input type="checkbox" class=" mr-2" id="areacivelconsumidor" [formControl] = "areaCivelConsumidorFormControl" (click)="changeAreaAtuacao('areacivelconsumidor', 1)" (change)="changeProcesso()">
+            <label for="areacivelConsumidor" class="m-0 p-0 pl-1 mb-1">Cível Consumidor</label>
+            <label (click)="ExibirEstadosSelecionado(1)" *ngIf="this.areaCivelConsumidorFormControl.value == true" style="margin-left:10px; color: #6f62b2;" > <u>Estados de Atuação </u></label>
+          </div>
+
+          <div>
+            <input type="checkbox" class=" mr-2" id="areacivelestrategico" [formControl] = "areaCivelEstrategicoFormControl">
+            <label for="areacivelestrategico" class="m-0 p-0 pl-1 mb-1">Cível Estratégico</label>
+          </div>
+
+          <div>
+            <input type="checkbox" class=" mr-2" id="areacriminaladm" [formControl] = "areaCriminalAdministrativoFormControl">
+            <label for="areacriminaladm" class="m-0 p-0 pl-1 mb-1">Criminal Administrativo</label>
+
+          </div>
+
+          <div>
+            <input type="checkbox" class=" mr-2" id="areacriminaljudicial" [formControl] = "areaCriminalJudicialFormControl">
+            <label for="areacriminaljudicial" class="m-0 p-0 pl-1 mb-1">Criminal Judicial</label>
+          </div>
+
+        </div>
+
+        <div class="col-sm-6">
+          <div>
+            <input type="checkbox" class=" mr-2" id="areaJuizadoEspecial" [formControl] = "areaJuizadoEspecialFormControl" (click)="changeAreaAtuacao('areaJuizadoEspecial', 7)"  (change)="changeProcesso()" >
+            <label for="areaJuizadoEspecial" class="m-0 p-0 pl-1 mb-1">Juizado Especial Cível</label>
+            <label (click)="ExibirEstadosSelecionado(7)" *ngIf="this.areaJuizadoEspecialFormControl.value == true"style="margin-left:10px; color: #6f62b2;" > <u>Estados de Atuação </u></label>
+
+          </div>
+
+          <div>
+            <input type="checkbox" class=" mr-2" id="areapex" [formControl] = "areaPexFormControl">
+            <label for="areapex" class="m-0 p-0 pl-1 mb-1">Pex</label>
+          </div>
+
+          <div>
+            <input type="checkbox" class=" mr-2" id="areaprocon" [formControl] = "areaProconFormControl" (click)="changeAreaAtuacao('areaprocon', 17)"  (change)="changeProcesso()">
+            <label for="areaprocon" class="m-0 p-0 pl-1 mb-1">Procon</label>
+          </div>
+
+          <div>
+            <input type="checkbox" class=" mr-2" id="areatrabalhista"  [formControl] = "areaTrabalhistaFormControl">
+            <label for="areatrabalhista" class="m-0 p-0 pl-1 mb-1">Trabalhista</label>
+          </div>
+
+          <div>
+            <input type="checkbox" class=" mr-2" id="areatributaria" [formControl] = "areaTributariaFormControl">
+            <label for="areatributaria" class="m-0 p-0 pl-1 mb-1">Tributária</label>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row" style="padding-top: 8px;">
+        <label for="contatoCabecalho" style="padding-right: 13px; color: #6f62b2;" > <b>Configuração da Agenda</b>  </label>
+      </div>
+
+      <div class="row">
+        <label for="lblconfgiagenda" style="padding-right: 13px;"> <b> Alerta em: </b>   </label>
+        <input type="text" class="form-control mr-2" id="alertaem" style="width: 19rem;" [formControl] = "alertaemFormControl">
+      </div>
+
+
+      <div class="row" style="padding-top: 8px;">
+        <label for="contatoCabecalho" style="padding-right: 13px; color: #6f62b2;" > <b>Configuração SAP</b>  </label>
+
+        <label for="contatoCabecalho" style="padding-right: 13px; color: #6f62b2; margin-left: 278px;" > <b>APP Preposto: </b>  </label>
+      </div>
+
+      <div class="row">
+        <label for="lblcodsap" style="padding-right: 13px;"> <b> Código SAP: </b>   </label>
+        <input type="text" class="form-control mr-2" id="codProfissionalSap" style="width: 19rem;" [formControl] = "codProfissionalSAPFormControl">
+
+
+        <div style="margin-left: 75px;        margin-top: 8px;">
+          <input type="checkbox" (change)="changeAppPreposto()" class=" mr-2" id="enviarAppPreposto" [formControl] = "enviarAppPrepostoFormControl">
+          <label for="areatributaria" class="m-0 p-0 pl-1 mb-1">Enviar processos desse Escritório para o APP Preposto</label>
+        </div>
+
+      </div>
+
+
+      </div>
+    </div>
+  </ng-template>
+
+
+  <ng-container [ngSwitch]="exibirAdvogados">
+      <ng-container *ngSwitchCase="true">
+        <ngb-tabset [destroyOnHide]="false" [activeId]="abaSelecionada" >
+          <ngb-tab id="escritorio"   class="escritorio-modal" >
+            <ng-template ngbTabTitle>
+              <span  class="ngb-tab-title">Dados Escritório</span>
+            </ng-template>
+            <ng-template ngbTabContent>
+                 <ng-container *ngTemplateOutlet="tlEscritorio" >     </ng-container>
+            </ng-template>
+
+          </ngb-tab>
+
+          <ngb-tab id="advogado"   class="advogado-modal" >
+            <ng-template ngbTabTitle>
+              <span  class="ngb-tab-title">Advogado</span>
+            </ng-template>
+            <ng-template ngbTabContent>
+              <app-advogado [escritorio]="escritorio"></app-advogado>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="false">
+        <ng-container *ngTemplateOutlet="tlEscritorio"></ng-container>
+      </ng-container>
+
+  </ng-container>
+
+
+
+
+</form>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>
+

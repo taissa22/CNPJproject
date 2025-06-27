@@ -1,0 +1,39 @@
+<div class="row my-4" (keydown.enter)="buscar()">
+  <div class="col-auto pr-2 mt-2">
+      <span style=" font-weight: bold;">Índice de Correção da Esfera</span>
+  </div>
+  <div class="col"></div>
+  <div class="col-2"></div>
+  <div class="col-auto">
+      <button class="roxo-padrao adicionar" (click)="incluir()">
+          <i class="fas fa-plus-circle fa-lg "></i>
+        Incluir Índice
+      </button>
+  </div>
+</div>
+<div class="mb-4">
+  <sisjur-table (sort)="buscar()">
+      <sisjur-table-header>
+          <sisjur-table-header-cell width="15" sort="DataVigencia">Data de Vigência</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="IndiceId" width="82">Índice de Correção</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+      </sisjur-table-header>
+      <sisjur-table-row *ngFor="let indice of datasource">
+          <sisjur-table-row-cell>{{ indice.dataVigencia | date:'dd/MM/yyyy'}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell ellipsis="true">{{ indice.indice.descricao}}</sisjur-table-row-cell>          
+
+          <sisjur-table-row-cell>
+              <button type="button" class="btn" (click)="excluir(indice)">
+                  <i class="fas fa-trash fa-sm"></i>
+              </button>
+          </sisjur-table-row-cell>
+      </sisjur-table-row>
+
+  </sisjur-table>
+</div>
+<div class="mb-4" style="height: 30px;" >
+  <span *ngIf="total <= 8" class="total">Total de registros: {{ total }} - Itens por página </span>
+  <div style="position: absolute ; width: 95.5%; z-index: 999 !important;" [hidden]="total <= 8">
+      <sisjur-paginator [length]="total" (page)="buscar()"></sisjur-paginator>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="modal-header">
+  <span *ngIf="!observacao" class="modal-title pl-0"> Incluir Observação</span>
+  <span *ngIf="observacao && temPermissaoEsocialBlocoABCDEFHI" class="modal-title pl-0">Alterar Observação</span>
+  <span *ngIf="observacao && !temPermissaoEsocialBlocoABCDEFHI" class="modal-title pl-0">Consultar Observação</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+  <div class="col-sm-12 p-0">
+    <label class="col-form-label-sm pb-0 mb-1"> <b>Observação:</b> </label>
+    <textarea
+      class="form-control"
+      id="obsProcessoDemanda"
+      #obj
+      (keyup)="calculaTamanho(obj.value)"
+      maxlength="255"
+      rows="4"
+      cols="50"
+      tabindex="26"
+      [formControl]="observacaoFormControl"
+      [disableTooltip]="desabilitaTooltip(observacaoFormControl)"
+      [ngbTooltip]="validaObservacao"></ng-select>
+    ></textarea>
+    <span class="ml-auto">{{ totalCaracterObs }}/255</span>
+  </div>
+  <ng-template #validaObservacao>
+    <span *ngIf="observacaoFormControl.invalid && observacaoFormControl.hasError('required')">
+      Campo obrigatório.
+    </span>
+  </ng-template>
+</form>
+
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-link"
+    aria-label="Close"
+    (click)="close()"
+    *ngIf = "temPermissaoEsocialBlocoABCDEFHI"
+  >
+    Cancelar
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary"
+    [disabled]="formGroup.invalid"
+    (click)="salvar()"
+    *ngIf = "temPermissaoEsocialBlocoABCDEFHI"
+  >
+    Confirmar
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    [disabled]="formGroup.invalid"
+    (click)="close()"
+    *ngIf = "!temPermissaoEsocialBlocoABCDEFHI"
+  >
+    Fechar
+  </button>
+</div>

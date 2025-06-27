@@ -1,0 +1,43 @@
+<div class="container pg-interna">
+  <br>
+  <app-container-pagina [titulo]="titulo" [caminho]="breadcrumb" [hasAdicionar]="false">
+    <div class="row py-3">
+      <div class="col-12">
+        <p class="font-purple">
+          Para que sua carga seja realizada com sucesso, siga o passo a passo descrito nas instruções para a carga.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <span class="font-purple w700 font-size-16">
+          Agendar carga em bloco
+        </span>
+      </div>
+    </div>
+    <painel-carga-de-documentos (recarregarLista)="redefinirListagem()"></painel-carga-de-documentos>
+    <div class="row pt-5">
+      <div class="col-6">
+        <span class="font-purple w700 font-size-16">
+          Cargas agendadas / executadas
+        </span>
+      </div>
+      <div class="col-6">
+        <span (click)="redefinirListagem()" class="float-right" [ngStyle]="{ cursor: 'pointer' }">
+          <i class="fas fa-sync-alt font-purple pr-1"></i>
+          <span class="font-purple font-size-12">
+            Atualizar lista
+          </span>
+        </span>
+      </div>
+      <div class="col-12">
+        <listagem-carga-de-documentos
+          [documentos]="documentos"
+          [totalAgendamentos]="totalDocumentos"
+          (obterAgendamentos)="obterMaisComprovantes()"
+          (excluir)="excluir($event)">
+        </listagem-carga-de-documentos>
+      </div>
+    </div>
+  </app-container-pagina>
+</div>

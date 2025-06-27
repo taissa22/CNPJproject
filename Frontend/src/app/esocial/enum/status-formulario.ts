@@ -1,0 +1,17 @@
+export enum StatusFormularioEsocial {
+    "Não iniciado" = 0,
+    "Rascunho" = 1,
+    "Pronto para envio" = 2,
+    "Enviado para o FPW" = 3,
+    "Retorno eSocial Ok" = 4,
+    "Retorno eSocial com Críticas" = 5,
+    "Erro Processamento" = 6,
+    "Reconsultar no FPW" = 7,
+    "Processando" = 10,
+    "Pendente Ação FPW" = 11,
+    "Excluído 3500" = 12,
+    "Exclusão 3500 Solicitada" = 13,
+    "Exclusão 3500 Enviada" = 14,
+    "Exclusão 3500 não Ok" = 15,
+    "Exclusão 3500 Erro Processamento" = 16,
+  }

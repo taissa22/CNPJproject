@@ -1,0 +1,62 @@
+.modal-header button {
+    color: gray;
+}
+
+.modal-title {
+    margin: auto;
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.container-modal {
+    padding: 1.2rem 0.5rem;
+}
+
+.modal-footer {
+    padding-bottom: 0;
+}
+
+.title {
+    padding: 0 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.periodoRef {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control-select {
+    padding: 0;
+    border: none;
+}
+
+.descricao {
+    width: 80%;
+    padding: 6px;
+    resize: none;
+    max-height: 80px;
+}
+
+::ng-deep {
+    bs-datepicker-container,
+    bs-daterangepicker-container {
+        z-index: 20000;
+    }
+}
+
+::ng-deep .modal-dep-processos {
+    background: #56565652;
+    .modal-content {
+        min-width: 710px !important;
+        max-width: 710px !important;
+    }
+    .modal-sm {
+        min-width: 710px !important;
+        max-width: 710px !important;
+    }
+}

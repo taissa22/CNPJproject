@@ -1,0 +1,78 @@
+<app-manutencao-generica [exibirAdicionar]="false" titulo="Permissões" breadcrump="Controle de Acesso > Permissões">
+  <br>
+  <div class="row" style="margin-left: auto;margin-bottom: 5px;">
+    <div class="d-flex pr-1 " (keydown.enter)="buscarTabela()">
+      <div style="width: 25rem;">
+        <label for="descricao"> <b>Descrição:</b> </label>
+        <input type="search" class="form-control mr-2" [formControl]="buscarDescricaoFormControl"
+          placeholder="Entre com o texto da descrição ou parte dele" maxlength="100">
+      </div>
+
+      <div style="width: 25rem; margin-left: 20px;">
+        <label for="descricao"> <b>Módulo:</b> </label>
+        <ng-select [items]="modulos" bindLabel="descricao" placeholder="Selecione o módulo"
+          [(ngModel)]="moduloSelecionado">
+        </ng-select>
+      </div>
+
+      <div class="ml-4" [ngStyle]="{ marginTop: '0.3rem' }" style="align-self: flex-end">
+        <button type="button" class="btn btn-primary" (click)="buscarTabela()">Buscar</button>
+      </div>
+
+      <div style="align-self: flex-end; margin-left: 338px;">
+        <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()">
+          <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+          Exportar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div>
+    <sisjur-table (sort)="buscarTabela()">
+      <ng-container>
+        <sisjur-table-header>
+          <sisjur-table-header-cell sort="nome" width="45">Nome</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="caminho" width="45">Caminho do Menu</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+        </sisjur-table-header>
+        <sisjur-table-row *ngFor="let item of datasource;let i = index">
+          <sisjur-table-row-cell>{{item?.descricao}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item?.caminho}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <span><i class="fas fa-info-circle mr-1" style="font-size:18px; color: #9597a6; cursor: pointer"
+                [ngbTooltip]="sampleModal" triggers="click:blur" placement="left"
+                (click)="openTootltip(item.modulos, item.permissaoId)"></i></span>
+            <button type="button" class="btn btn-icon" (click)="alterar(item, item.modulos)"> <i class="fa fa-edit"></i>
+            </button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </sisjur-table>
+    <div class="mt-2">
+      <sisjur-paginator [length]="totalDeRegistros" (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+  </div>
+
+</app-manutencao-generica>
+
+<ng-template #sampleModal>
+  <div class="containerTooltip d-flex">
+    <div>
+      <span style="color: #7f7f7f;"><b>Código:</b></span>
+      <span style="text-align: initial; color: #7f7f7f; font-weight: 400; margin-left: 20px;">{{permissao}}</span>
+    </div>
+    <div class="d-flex" style="margin-top: 3px;">
+      <span style="color: #7f7f7f;"><b>Módulos:</b></span>
+      <span style="text-align: initial; color: #7f7f7f; font-weight: 400">
+        <p class="ml-3" *ngIf="modulosTootip == null">Nenhum Módulo Atribuído</p>
+        <span class="ml-3 d-flex">
+          <ng-container *ngFor="let item of modulosTootip">
+            {{item}} <br>
+          </ng-container>
+        </span>
+      </span>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,89 @@
+<div class="container pg-interna">
+  <br>
+  <app-container-pagina [titulo]="titulo" [caminho]="breadcrump" [hasAdicionar]="true" (adicionarClicked)="novo()">
+
+    <ng-content></ng-content>
+    <ng-container *ngIf="hasInfo">
+      <!-- <ng-template> -->
+      <div class="col">
+        <!-- <div class="col-md-12 text-right pb-1">
+          <ng-template *ngIf="urlParaExportacao; then exportarPorLink else exportarPorRequisicao">
+          </ng-template>
+          <ng-template #exportarPorLink>
+            <a [href]="urlParaExportacao" target="_blank">
+              <i class="fas fa-download"></i>
+              Exportar
+            </a>
+          </ng-template>
+          <ng-template #exportarPorRequisicao>
+            <a href="javascript:;" (click)="aoExportar()">
+              <i class="fas fa-download"></i>
+              Exportar
+            </a>
+          </ng-template>
+        </div> -->
+      </div>
+      <!-- </ng-template> -->
+      <div class="row">
+        <div class="col-md-12">
+          <table id="tabela-relatorio-generica" class="table table-bordered table-striped table-sm mb-0">
+            <thead>
+              <tr>
+                <th scope="col" class="font-weight-bold" *ngFor="let col of colunas"
+                  [ngStyle]="{'width': col.largura, 'cursor': (col.ordernar ? 'pointer' : 'initial')}"
+                  [sortable]="col.data" (sort)="onSort($event)">
+                  <span>{{ col.titulo }}&nbsp;</span>
+                  <span *ngIf="col.ordernar">
+                    <i class="fas fa-arrows-alt-v" *ngIf="exibirDirecao('','')"></i>
+                    <i class="fas fa-long-arrow-alt-up" *ngIf="exibirDirecao(col.data,'asc')"></i>
+                    <i class="fas fa-long-arrow-alt-down" *ngIf="exibirDirecao(col.data,'desc')"></i>
+                  </span>
+                </th>
+                <th scope="col" class="font-weight-bold" style="width: 8%;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let registro of registros">
+                <td *ngFor="let coluna of colunas" class="pl-2" style="word-wrap: break-word;">
+                  <span [title]="registro[coluna.dataTitle]"
+                    [ngClass]="{'d-inline-block text-truncate':  registro[coluna.data].length > 40}"
+                    style="max-width: 480px;">{{ registro[coluna.data] }}</span>
+                </td>
+                <td style="display: flex; align-items: center; justify-content: flex-end; ">
+                  <a href="javascript:;" (click)="aoEditar(registro)" class="p-1">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a href="javascript:;" (click)="aoRemover(registro)" class="p-1">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 pt-2 mb-2">
+          <b>Total de Registros:</b> {{ totalDeRegistros }}
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          <b>Itens por página:</b>&nbsp;
+          <select id="itensPorPagina" [(ngModel)]="totalDeRegistrosPorPagina" (change)="alterarTotalDeRegistros()">
+            <option *ngFor="let i of listaQuantidadeDeRegistrosPorPagina" [ngValue]="i">{{ i }}</option>
+          </select>
+        </div>
+        <div class="col-md-6 pt-2 text-right">
+          <ngb-pagination style="float:right;" [(page)]="pagina" [pageSize]="totalDeRegistrosPorPagina"
+            [collectionSize]="totalDeRegistros" [ellipses]="true" [boundaryLinks]="true" [maxSize]="6" [rotate]="true"
+            (pageChange)="onPageChange()" *ngIf="exibirPaginacao()">
+            <ng-template ngbPaginationFirst>Primeiro</ng-template>
+            <ng-template ngbPaginationLast>Último</ng-template>
+            <ng-template ngbPaginationPrevious>Anterior</ng-template>
+            <ng-template ngbPaginationNext>Próximo</ng-template>
+            <ng-template ngbPaginationEllipsis>...</ng-template>
+            <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+          </ngb-pagination>
+        </div>
+      </div>
+    </ng-container>
+  </app-container-pagina>
+</div>

@@ -1,0 +1,103 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Manutenção - Preposto"
+  breadcrump="{{breadcrumb}}" [exibirAdicionar]=true>
+  
+  <div class="row pt-3" (keydown.enter)="buscarTabela()" style="margin-left: auto;">
+    <div class="d-flex pr-1 " >
+      <div  style="width: 25rem;">
+        <label for="descricao"> <b>Nome:</b>  </label>
+        <input
+          type="search"
+          (search)="onClearInputPesquisar()"
+          onkeyup="this.value = this.value.toUpperCase();"
+          class="form-control mr-2"
+          [formControl] = "buscarDescricaoFormControl"
+          placeholder="Entre com o texto do nome ou parte dele"
+          maxlength="100"
+          (change)="TratarCampoPesquisa()">
+      </div>
+
+      <div class="ml-3" [ngStyle]="{ marginTop: '0.3rem' }" style="align-self: flex-end">
+        <button type="button" class="btn btn-primary"  (click)="buscarTabela()">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 row">
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" >Prepostos</b>
+    </div>
+
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <sisjur-table (sort)="buscarTabela()">
+      <ng-container>
+        <sisjur-table-header>
+          <sisjur-table-header-cell sort="id" width="5">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="nome" width="38">Nome</sisjur-table-header-cell>
+          <!--<sisjur-table-header-cell sort="estado" width="7">Estado</sisjur-table-header-cell>-->
+          <sisjur-table-header-cell sort="ativo" width="7">Ativo</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="escritorio" width="10">É de Escritorio</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="usuario" width="33">Usuário</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3" ></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3" ></sisjur-table-header-cell>
+
+        </sisjur-table-header>
+        <sisjur-table-row *ngFor="let item of preposto;let i = index" >
+          <sisjur-table-row-cell> {{item.id}}  </sisjur-table-row-cell>
+
+          <sisjur-table-row-cell>
+            <ng-template #cadastradoPara>
+              <span> <b>Cadastrada para:</b></span>
+              <span *ngIf="item.ehCivel">Cível Consumidor<br></span>
+              <span *ngIf="item.ehCivelEstrategico">Cível Estratégico<br></span>
+              <span *ngIf="item.ehJuizado">Juizado Especial<br></span>
+              <span *ngIf="item.ehTrabalhista">Trabalhista<br></span>
+              <span *ngIf="item.ehProcon">Procon<br></span>
+              <span *ngIf="item.ehPex">Pex<br></span>
+              <span *ngIf="nenhumTipoProcesso(item)">O Preposto não está vinculado a nenhum tipo de processo.<br></span>
+            </ng-template>
+            <span style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;" fxFlex>
+              <span
+              style="cursor: pointer; display:inline-block;"
+              [ngbTooltip]="cadastradoPara"
+              container="body"
+              [autoClose]="'outside'"
+              triggers="manual"
+              #t="ngbTooltip"
+              (click)="t.open()"
+              tooltipClass="preposto-tooltip"
+              placement="right"
+              [title]="item.nome" class="text_ellipsis">{{item.nome}}
+              </span>
+            </span>
+          </sisjur-table-row-cell>
+
+          <!--<sisjur-table-row-cell>{{item.estadoId}}</sisjur-table-row-cell>-->
+          <sisjur-table-row-cell>{{item.ativo? "Sim" : "Não"}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item.ehEscritorio? "Sim" : "Não"}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{(item.usuarioAtivo == false) ? (item.nomeUsuario != null ? item.nomeUsuario + " [Inativo]" : "") : item.nomeUsuario }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="alterar(item)"> <i class="fa fa-edit"></i>  </button>
+          </sisjur-table-row-cell>
+
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="excluir(item)"> <i class="fa fa-trash"></i> </button>
+          </sisjur-table-row-cell>
+
+        </sisjur-table-row>
+      </ng-container>
+    </sisjur-table>
+
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+</div>
+
+</app-manutencao-generica>

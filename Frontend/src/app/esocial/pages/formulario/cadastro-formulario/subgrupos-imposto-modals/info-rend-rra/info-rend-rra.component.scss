@@ -1,0 +1,96 @@
+.modal-header button {
+    color: gray;
+}
+
+.modal-title {
+    margin: auto;
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.container-modal {
+    padding: 1.2rem 0.5rem;
+}
+
+.modal-footer {
+    padding-bottom: 0;
+}
+
+.descricao {
+    resize: none;
+}
+
+.title {
+    padding: 0 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.periodoRef {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control-select {
+    padding: 0;
+    border: none;
+}
+
+.cols-rra {
+    width: 45%;
+}
+
+.main {
+    justify-content: space-between;
+    padding: 0 1rem 1rem;
+}
+
+.titulo-adv {
+    margin-top: -12px;
+    background-color: white;
+    width: 100px;
+}
+
+s::ng-deep {
+    bs-datepicker-container,
+    bs-daterangepicker-container {
+        z-index: 20000;
+    }
+}
+
+::ng-deep .modal-rra {
+    .modal-dialog {
+        justify-content: center;
+    }
+    .modal-content {
+        min-width: 85rem !important;
+        max-width: 85rem !important;
+    }
+    .modal-lg {
+        min-width: 85rem !important;
+        max-width: 85rem !important;
+    }
+}
+
+.cardInfo {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    width: 100%;
+    margin-left: 0px;
+    margin-bottom: 10px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

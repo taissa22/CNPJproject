@@ -1,0 +1,21 @@
+export class DetalheProvisaoTrabalhistaPedidoPo{
+    id : number;
+    ifptrIdItemFechProvTrab : number;
+    pedCodPedido : number;
+    nomePedido : number;
+    valorMedioDesemPrincPr : number;
+    valorMedioDesemJurosPr : number;
+    qtePedidosProvavel : number;
+    qtePedidosPossivelP : number;
+    qtePedidosRemoto : number;
+    percPerdaPossivel : number;
+    percPerdaProvavel : number;
+    valProvContPrincipalP : number;
+    valProvContJurosP : number;
+    qtePedidosPossivelH : number;
+    perResponsOi : number;
+    valProvContPrincipalH : number;
+    valProvContJurosH : number;
+    valProvContPrincipal : number;
+    valProvContJuros : number;
+}

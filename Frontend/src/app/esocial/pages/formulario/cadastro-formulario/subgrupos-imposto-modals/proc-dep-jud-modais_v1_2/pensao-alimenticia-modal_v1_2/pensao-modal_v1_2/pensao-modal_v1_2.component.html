@@ -1,0 +1,59 @@
+<div class="container-modal">
+    <div class="title">
+        <h4 class="roxo-padrao mb-0">{{titulo}} de Dependentes/Beneficiários da Pensão Alimentícia</h4>
+        <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
+        </div>
+    </div>
+
+    <form [formGroup]="formGroup" class="modal-body pt-0">
+
+        <div class="row mt-2">
+            <div class="col-sm-6">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>CPF:</b>
+                </label>
+                <input style="width: 30rem" type="text" id="nrProcesso" class="form-control" [textMask]="{ mask: mascaraCpf }" [formControl]="benefpenCpfdepFormControl" [disableTooltip]="desabilitaTooltip(benefpenCpfdepFormControl)" [ngbTooltip]="validacaoCpf" [disabled]="!temPermissaoBlocoCeDeE"
+                    [class.disabled]="!temPermissaoBlocoCeDeE">
+
+                <ng-template #validacaoCpf>
+                    <span *ngIf="benefpenCpfdepFormControl.invalid && benefpenCpfdepFormControl.hasError('required') ">
+                      CPF Obrigatório.
+                    </span>
+                    <span *ngIf="benefpenCpfdepFormControl.invalid && benefpenCpfdepFormControl.hasError('cpfNotValid') ">
+                      CPF inválido.
+                    </span>
+                </ng-template>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Valor da Dedução:</b>
+                </label>
+                <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left' }" maxlength="21" class="form-control" [formControl]="benefpenVlrdepensuspFormControl" [disableTooltip]="desabilitaTooltip(benefpenVlrdepensuspFormControl)"
+                    [ngbTooltip]="validacaoVlrDed" [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE" />
+
+                <ng-template #validacaoVlrDed>
+                    <span *ngIf="benefpenVlrdepensuspFormControl.invalid && benefpenVlrdepensuspFormControl.hasError('required') ">
+                        Campo Obrigatório.
+                    </span>
+                    <span *ngIf="benefpenVlrdepensuspFormControl.invalid && benefpenVlrdepensuspFormControl.hasError('min') ">
+                        Deve ser maior que 0 (zero).
+                    </span>
+                </ng-template>
+
+            </div>
+        </div>
+
+        <div class="modal-footer pr-0">
+            <button type="button" class="btn btn-link" aria-label="Close" (click)="close()" *ngIf="temPermissaoBlocoCeDeE">
+                Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()" *ngIf="temPermissaoBlocoCeDeE">
+                Confirmar
+            </button>
+            <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="close()" *ngIf="!temPermissaoBlocoCeDeE">
+                Fechar
+            </button>
+        </div>
+    </form>
+</div>

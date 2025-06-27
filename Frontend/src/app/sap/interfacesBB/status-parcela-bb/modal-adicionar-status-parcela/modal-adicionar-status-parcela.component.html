@@ -1,0 +1,56 @@
+
+
+<div bsModal #template="bs-modal" style="height: 1500;" tabindex="-1" role="dialog"
+aria-labelledby="dialog-sizes-name1" [config]="{backdrop: 'static'}">
+<div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">{{titulo}} Status da Parcela BB</h4>
+      <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body height-fix">
+      <form [formGroup]="registerForm">
+        <div class="form-row mb-3">
+          <div class="col-3">
+            <label class="fonte-padrao-negrito" for="codigoBB">Status Parcela BB:</label> <br>
+            <input id="codigoBB" type="search" class="width form-control" maxlength="4"
+            formControlName="codigoBB"
+            [ngClass]="{'is-invalid': registerForm.get('codigoBB').errors && registerForm.get('codigoBB').touched}"
+            [ngbTooltip]="validacaoTextos('codigoBB', 'Status Parcela BB', false)"
+            tooltipClass="erroTooltip" OnlyNumberNoStartWith0>
+          </div>
+
+      </div>
+        <div class="form-row">
+          <div class="col-10">
+            <label class="fonte-padrao-negrito" for="descricao">Descrição:</label> <br>
+            <input id="descricao"  type="search" class="width form-control" maxlength="100"
+            formControlName="descricao"
+            [ngClass]="{'is-invalid': registerForm.get('descricao').errors && registerForm.get('descricao').touched}"
+            [ngbTooltip]="validacaoTextos('descricao', 'Descrição', true)"
+            tooltipClass="erroTooltip" oninput="this.value = this.value.toUpperCase()"
+            StartWithSpace>
+          </div>
+      </div>
+
+
+      </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="bsModalRef.hide()"><span class="texto-btn-oi cancelar">
+          Cancelar </span></button>
+
+      <button type="button" class="btn btn-primary" (click)="salvarAlteracao()" [ngClass]="!registerForm.valid ? 'btn-primary-disabled' : '' "
+      [disabled]="!registerForm.valid" ><span
+          class="texto-btn-oi confirmar"> Confirmar </span></button>
+    </div>
+  </div>
+  <div>
+  </div>
+
+
+</div>
+</div>

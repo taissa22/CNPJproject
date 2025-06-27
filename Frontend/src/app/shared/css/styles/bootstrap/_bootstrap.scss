@@ -1,0 +1,104 @@
+@import './_variables';
+@import '../_tabs';
+@import '../_ajustesdecomponents';
+@import '../_combobox';
+@import '../../../../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../../../../../node_modules/bootstrap/scss/_variables.scss';
+@import '../../../../../../node_modules/ngx-bootstrap/datepicker/bs-datepicker.scss';
+
+
+
+// Datepicker configuração de estilo
+.theme-green .bs-datepicker-head, .theme-green .bs-datepicker-body table td span.selected {
+  background-color: #6151ac;
+}
+.theme-green .bs-datepicker-body table td.week span {
+  color: #6151ac;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 5px 12px;
+  font-size: .8rem;
+  line-height: 1.5;
+  border-radius: 0;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: $primary;
+  border-color: $primary;
+
+  &:hover {
+    color: #fff;
+    background-color: #6151ac;
+    border-color: #5c4da4;
+  }
+}
+
+.link-primary {
+  box-shadow: none !important;
+
+  &:hover {
+    background-color: #fff;
+    color: #6151ac;
+  }
+
+  span {
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2.25;
+    letter-spacing: 0.1px;
+    text-align: left;
+    color: $primary;
+    padding-left: 5px;
+  }
+}
+
+.ngx-select__item {
+  font-size: 10px;
+}
+// .ngx-select__choices {
+//   width: auto !important;
+// }
+
+// TODO: NECESSITA DE REFATORAMENTO PARA NÃO PREJUDICAR TODO O CSS DA APLICAÇÃO
+// input[type='text'], a.ngx-select__item, textarea, select, .ngx-select__placeholder {
+//   text-transform: uppercase !important;
+// }
+
+
+.ngx-select__placeholder {
+  padding-top: 4px;
+}
+
+// CSS painel de busca
+// #tipo-selecao > .ngx-select {
+//   padding-top: 28px !important;
+// }
+
+#tabela-alt-bloco .table-bordered thead th {
+  cursor: pointer !important;
+}
+
+ul.pagination {
+  li.page-item.active {
+    a.page-link:hover { color: #FFF!important; }
+  }
+}

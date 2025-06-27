@@ -1,0 +1,132 @@
+.containerTopo {
+  display: grid;
+  column-gap: 0.3vw;
+  grid-template-columns: 4vw 6vw 28vw auto auto 5vw;
+  height: 74px;
+  min-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.containerInfo {
+  display: grid;
+  column-gap: 0.5vw;
+  grid-template-columns: auto auto auto auto auto;
+  justify-content: start;
+  align-items: end;
+  margin-top: 10px;
+}
+
+.boxInfo{
+  // z-index: 999;
+}
+
+.alinhamento1x
+{
+padding-top: 7px;
+}
+.alinhamento2x
+{
+  padding-top: 15px;
+}
+.alinhamento3x
+{
+  padding-top: 24px;
+}
+.bancoMenu {
+  font-family: Tahoma;
+  font-weight: bold;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 10px;
+}
+
+.versaoMenu {
+  color: #fbc935 !important;
+  font-size: 10px !important;
+  text-decoration: underline !important;
+  font-weight: normal;
+  margin-left: 10px;
+  cursor: pointer!important;
+}
+
+.versaoMenu:hover {
+  text-decoration: underline;
+}
+.sairMenu {
+  color: #ffffff !important;
+  text-decoration: underline !important;
+  cursor: pointer!important;
+  font-size: 10px!important;
+}
+
+h1 {
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: normal;
+  text-align: left;
+  color: #554d80;
+  margin-bottom: 0px;
+}
+
+h2 {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 300;
+  font-style: normal;
+  text-align: left;
+  color: #555555;
+  float: left;
+}
+
+h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 5px;
+  border-radius: 3px;
+  background-color: #c8c2e5;
+  color: #554d80;
+  margin-top: 13px;
+  margin-left: 3px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.imagem {
+  padding-right: 98px;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.nomeUser {
+  font-family: Tahoma;
+  font-weight: bold;
+  font-size: 80%;
+  color: #ffffff !important;
+  white-space: nowrap;
+}
+
+.spanUser {
+  font-family: Tahoma;
+  font-weight: bold;
+  color: #ffcc33 !important;
+  font-size: 80%;
+  padding-right: 6px;
+  // margin-left: 200px;
+}
+
+@media screen and (min-width: 600px) and (max-width: 1000px) {
+  #sair {
+    margin-left: 10%;
+  }
+}
+
+@media (min-width: 1001px) {
+  #sair {
+    margin-left: 17%;
+  }
+}
+
+.fix-barra {
+  height: 0vh !important;
+}

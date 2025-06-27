@@ -1,0 +1,16 @@
+<div [ngClass]="{ 'content-xl': tamanhoConteudo == 'xl', 'content-sm': tamanhoConteudo == 'sm' }">
+    <label for="progress" [ngClass]="{ 'label-xl': tamanhoConteudo == 'xl', 'label-sm': tamanhoConteudo == 'sm' }">{{titulo}}</label>
+
+    <div id="progress" [ngClass]="{'progress': tamanhoConteudo != '', 'progress-xl': tamanhoConteudo == 'xl', 'progress-sm': tamanhoConteudo == 'sm' }">
+        <div [ngClass]="{ 'progress-bar-xl': tamanhoConteudo == 'xl', 'progress-bar-sm': tamanhoConteudo == 'sm' }" role="progressbar" [ngStyle]="{'width': percentual + '%', 'background-color': corPercentual}" [attr.aria-valuenow]="percentual" aria-valuemin="0"
+            [attr.aria-valuemax]="quantidadeTotalRegistros"></div>
+    </div>
+
+    <label for="progress" style="width: 30px;" class="pl-2" *ngIf="exibeQuantidade">{{quantidadeRegistros}}</label>
+    <label for="progress" class="pl-2" *ngIf="exibePercentual">{{percentual | number:'1.2-2'}}%</label>
+    <label for="progress" class="pl-3" *ngIf="exibePercentual">
+    <button class="btn btn-link ml-auto p-0" (click)="download()">
+      <i class="fas fa-download"></i>
+    </button>
+  </label>
+</div>

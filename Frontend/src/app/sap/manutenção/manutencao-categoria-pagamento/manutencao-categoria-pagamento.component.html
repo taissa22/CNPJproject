@@ -1,0 +1,120 @@
+<app-container-pagina [titulo]="'Categorias de Pagamento'" [caminho]="breadcrumb"
+
+  [hasAdicionar]="!isDesabilitadoInluir()" (adicionarClicked)='onClickAdicionar(false)'>
+<p frases class="texto mt-4 mb-4" > Selecione o tipo de processo e o tipo de lançamento para localizar as categorias de pagamento.
+  <br>  Você também poderá utilizar o filtro <b>'Código'</b>
+  para encontrar uma categoria de pagamento específica.</p>
+  <div class="row">
+    <div class="col-3">
+      <label class="col-form-label-sm" for="tipoProcesso"  style=" color:#555555">
+        <b>Tipo de Processo:</b>
+      </label>
+      <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        id="tipoProcesso"
+        [items]="comboTipoProcesso"
+        bindLabel="descricao"
+        bindValue="id"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="false"
+        [clearable]="false"
+        [ngModel]="tipoProcesso"   
+        (change)="onChangeComboTipoProcesso($event['id'])"
+        [placeholder]="'Selecione o tipo de processo'">        
+      </ng-select>
+    </div>
+    <div class="col-3">
+      <label class="col-form-label-sm" for="tipoLancamento"  style=" color:#555555">
+        <b>Tipo de Lançamento:</b>
+      </label>
+      <ng-select
+        [ngClass]="{'custom': desabilitarComboLancamento}"
+        [ngStyle]="{'fontSize': '11px'}"
+        id="tipoLancamento"
+        [items]="comboTipoLancamento"
+        bindLabel="descricao"
+        bindValue="id"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="false"
+        [clearable]="false"
+        [ngModel]="tipoLancamento"   
+        (change)="onChangeComboLancamento($event['id'])"
+        [placeholder]="'Selecione o tipo de lançamento'"
+        [disabled]="desabilitarComboLancamento">        
+      </ng-select>
+    </div>
+    <div class="col-1">
+      <div style=" height: 20px;">
+      <label for="codigo" style=" color:#555555"><b>Código:</b></label>
+    </div>
+    <input [(ngModel)]="codigo" id="codigo" type="search"
+            class="input-filtro fonte-padrao form-control" numbersOnly style="margin-top: 2px;">
+    </div>
+    <div class="col-2 align-self-end">
+      <button class="btn btn-primary" (click)="onClickBuscar()" [disabled]="isDesabilitado()">
+        Buscar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="exibirTable">
+    <div *ngIf="exibir && isNotFound && categoria.length == 0" class="mt-3">
+      <b>Nenhum resultado foi encontrado na busca.</b>
+    </div>
+    <ng-container *ngIf="exibir && categoria.length > 0">
+      <div class="row pl-3 pb-3 pt-4" *ngIf="exibir">
+        <div class="col-md-12 divWarn">
+          <span class="warning-lancamento"><span class="fas fa-exclamation-circle"></span>
+            Para alterar ou excluir uma categoria de pagamento, basta dar um click sobre uma delas para
+            selecioná-la e
+            depois escolher a
+            operação desejada.
+          </span>
+        </div>
+      </div>
+
+      <div class="row margin pr-3">
+        <div class="col-6">
+          <label>Categorias de Pagamento</label>
+        </div>
+        <div class="col-6 d-flex justify-content-end p-0 roxo-padrao">
+          <div class="pr-4" (click)="onClickAdicionar(true)" [ngClass]="!categoriaObj ? 'desabilitado' : ''">
+            <i class="fas fa-edit pr-1" style="font-size:15px"></i>
+            <span style="font-size:12px">Editar</span>
+          </div>
+          <div class="pr-4" [ngClass]="!categoriaObj ? 'desabilitado' : ''" (click)="onclickExcluir()">
+            <i class="fas fa-trash pr-1" style="font-size:15px"></i>
+            <span style="font-size:12px">Excluir</span>
+          </div>
+          <div (click)="onClickExportar()">
+            <i class="fas fa-download pr-1" style="font-size:15px"></i>
+            <span style="font-size:12px">Exportar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container overflow-scroll ">
+        <table class='table table-striped fonte-padrao' style="border: 1px solid #dee2e6">
+          <th col nowrap *ngFor="let header of categoriaKeys">
+            {{ header | categoriaPagamentoAlias : tipoProcessoSelecionado }}
+            <app-botao-ordenacao [isActive]="isButtonActive(header)" (stateChange)="onChangeOrdenacao(header, $event)">
+            </app-botao-ordenacao>
+          </th>
+          <tr row nowrap class="table-item" *ngFor="let categoria of categoria; index as i" (click)="onRowClick(i)"
+            [ngClass]="(categoria.selected) && 'selected'">
+            <td nowrap *ngFor="let header of categoriaKeys">
+
+              <div class="text-limit"
+                [ngbTooltip]="(categoria[header] && categoria[header].length > 40) && categoria[header]">
+                {{ categoria[header] | boolToPT }}
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </ng-container>
+  </div>
+
+</app-container-pagina>

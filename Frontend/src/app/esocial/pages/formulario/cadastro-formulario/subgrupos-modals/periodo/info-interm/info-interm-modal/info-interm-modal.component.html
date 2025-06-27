@@ -1,0 +1,88 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">{{ titulo }} Trabalho Intermitente</h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row">
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo"> <b>Dia do Mês Trabalhado:</b> <i title="{{tooltipDia}}" class=" roxo-padrao fa fa-info-circle"></i> </label>
+        <input type="text" class="form-control input-number" [tabIndex]="49" [formControl]="infointermDiaFormControl"
+          [disableTooltip]="desabilitaTooltip(infointermDiaFormControl)" (blur)="adicionaValidators()"
+          [ngbTooltip]="validacaoDia" (input)="removerNaoNumericos(infointermDiaFormControl)" numbersOnly maxLength='2' min="0" max="31" [disabled]="consulta" [class.disabled]="consulta" [required]="true"   />
+        <ng-template #validacaoDia>
+          <span
+            *ngIf="infointermDiaFormControl.invalid && infointermDiaFormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+          <span *ngIf="infointermDiaFormControl.invalid && infointermDiaFormControl.hasError('min')">
+            Valor mínimo deve ser 0.
+          </span>
+          <span *ngIf="infointermDiaFormControl.invalid && infointermDiaFormControl.hasError('max')">
+            Dia inválido para o mês informado!
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-sm-12">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Quantidade de Horas Trabalhadas no Dia:</b>
+          <i title="{{tooltipHoraTrab}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input type="time" class="form-control input-number" [tabIndex]="49" [formControl]="infointermHrstrabFormControl"
+          [disableTooltip]="desabilitaTooltip(infointermHrstrabFormControl)" (blur)="adicionaValidators()"
+          [ngbTooltip]="validacaoHorasTrab" min="00:00" max="23:59"
+          maxLength='5' [disabled]="consulta" [class.disabled]="consulta" />
+
+        <ng-template #validacaoHorasTrab>
+          <span *ngIf="infointermHrstrabFormControl.invalid && infointermHrstrabFormControl.hasError('min')">
+            A quantidade de horas trabalhadas, no dia, deve estar no intervalo de 00:00 a 23:59 hs.
+          </span>
+          <span *ngIf="infointermHrstrabFormControl.invalid && infointermHrstrabFormControl.hasError('max')">
+            A quantidade de horas trabalhadas, no dia, deve estar no intervalo de 00:00 a 23:59 hs.
+          </span>
+          <span
+            *ngIf="infointermHrstrabFormControl.invalid && infointermHrstrabFormControl.hasError('required')">
+            Preencha este campo com a quantidade de horas trabalhadas para o dia informado.
+          </span>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-link"
+      aria-label="Close"
+      (click)="close()"
+      *ngIf="!consulta"
+    >
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="formGroup.invalid"
+      (click)="salvar()"
+      *ngIf="!consulta"
+    >
+      Confirmar
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="formGroup.invalid"
+      (click)="close()"
+      *ngIf="consulta"
+    >
+      Fechar
+    </button>
+  </div>
+</div>

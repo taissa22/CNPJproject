@@ -1,0 +1,141 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "DistribuicaoProcessoEscritorioContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "DistribuicaoProcessoEscritorioContext\\Data",
+   "OutputPath": "DistribuicaoProcessoEscritorioContext\\Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Oi.Juridico.Contextos.V2",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "ExcludedColumns": [
+        "SENHA",
+        "PERFIL",
+        "IND_CIVEL",
+        "IND_TRABALHISTA",
+        "IND_REGULATORIO",
+        "IND_USUARIO_INTERNET",
+        "IND_TRIBUTARIO",
+        "IND_ATIVO",
+        "IND_CONTROLADORIA",
+        "IND_BLOQUEADO",
+        "IND_MUDAR_SENHA",
+        "IND_JUIZADO",
+        "IND_PERFIL_WEB",
+        "IND_PREPOSTO",
+        "IND_AUTORIZA_SERVICO",
+        "IND_CIVEL_ESTRATEGICO",
+        "DATA_DESATIVACAO",
+        "IND_RESTRITO",
+        "COD_PRIORIDADE_EXEC_REL",
+        "IND_CRIMINAL_ADM",
+        "IND_CRIMINAL_JUDICIAL",
+        "IND_CIVEL_ADM",
+        "IND_PROCON",
+        "IND_AUTORIZA_SERV_PROCON",
+        "OBS_USUARIO",
+        "IND_PEX",
+        "IND_ADM_APROVADOR_ACESSOS",
+        "IND_GESTOR_APROVADOR_ACESSOS",
+        "COD_TIPO_USUARIO_PERFIL",
+        "NUM_CPF",
+        "IND_OPERADOR_CADASTRO",
+        "COD_GESTOR_DEFAULT",
+        "IND_OPERADOR_VALIDACAO_JEC",
+        "IND_OPERADOR_VALIDACAO_CCONS",
+        "IND_INATIVACAO_MANUAL",
+        "IND_INATIVACAO_AUTOMATICA",
+        "IND_USUARIO_ESTRANGEIRO",
+        "COD_USUARIO_RESPONSAVEL"
+      ],
+      "Name": "JUR.ACA_USUARIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ANEXOS_DIST_ESCRITORIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.COMARCA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.EMPRESAS_CENTRALIZADORAS",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ESTADO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PARAM_DISTRIB_ESCRITORIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.DISTRIB_ESCRIT_CONTADOR",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PARAM_DISTRIBUICAO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PARAM_DISTRIBUICAO_ANEXOS",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PROFISSIONAL",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.SOLICITANTE",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.TIPO_PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.TIPO_VARA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.VARA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.V_LOG_PARAM_DISTRIB_ESCRITORIO",
+      "ObjectType": 3
+    },
+    {
+      "Name": "JUR.V_LOG_PARAM_DISTRIBUICAO",
+      "ObjectType": 3
+    }
+  ],
+   "UiHint": "SISJUR_DEV",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": true,
+   "UseNoDefaultConstructor": true,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

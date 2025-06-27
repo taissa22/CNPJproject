@@ -1,0 +1,26 @@
+.align-bottom {
+  margin-top: auto;
+}
+
+.ellipsis-overflow {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 40em;
+}
+
+.informacao {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host ::ng-deep .card-container {
+  padding: 12px 0;
+  display: flex;
+}
+
+:host ::ng-deep .arrowClass {
+ color: #7D70BC;
+ font-size: 16px;
+ font-weight: bold;
+}

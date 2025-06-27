@@ -1,0 +1,64 @@
+<style>
+    .modal-header button {
+      color: gray;
+    }
+
+    .modal-title {
+      margin: auto;
+      padding-left:0px;
+    }
+
+    .btn-icon {
+      font-size: 18px;
+    }
+  </style>
+
+
+  <div id="corpo-modal">
+  <div class="modal-header">
+    <span *ngIf="!cotacao" class="modal-title">Incluir Cotação</span>
+    <span *ngIf="cotacao" class="modal-title">Alterar Cotação</span>
+    <button type="button" class="btn btn-icon mr-0" (click)="close()">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+
+  <div [formGroup]="formGroup" class="modal-body pt-0">
+
+    <div class="pb-2">
+      <label class="col-form-label-sm font-weight-bold">
+       Mês/Ano:
+      </label>
+      <br>
+        <mes-ano-new id="dataSelecionada" [control]="dataSelecionadaFormControl" [disabled]="dataSelecionadaFormControl.disabled" ></mes-ano-new>
+    </div>
+    <div>
+      <label class="col-form-label-sm font-weight-bold"> {{indiceColuna}}:  </label>
+      <input
+        type="text"
+        maxlength="14"
+        class="form-control campo-fator"
+        [formControl]="valorCotacaoFormControl"
+        oninput="this.value = this.value.replace(/[^-0-9,]/g, '').replace(/(\..*)\./g, '$1');"
+        placement="top-left"
+        [disableTooltip]="desabilitaTooltip(valorCotacaoFormControl)"
+        [ngbTooltip]=""
+      >
+      <ng-template #validacaoValor>
+        <span *ngIf="valorCotacaoFormControl.invalid && valorCotacaoFormControl.errors.required">
+          Campo obrigatório
+        </span>
+         <span *ngIf="valorCotacaoFormControl.invalid && valorCotacaoFormControl.errors.pattern">
+          O valor deve ser numérico com no máximo 13 caracteres antes da vírgula.
+        </span> 
+      </ng-template>
+    </div>
+  </div>
+
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid"
+      (click)="save()">Confirmar</button>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+section{
+    min-width: 85%;
+    max-width: 98%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+  }
+
+.header{
+   margin-top: 10px;
+ 
+   h3{
+     color: #554D80;
+     font-weight: normal;
+   }
+}
+
+.cabecalhoGrid{
+    text-align: left;
+    padding-top: 2px;
+    padding-bottom: 1px;
+    width: 100%;
+    padding-bottom: solid black 5px;
+    border: 1px solid #D2D2DA;
+    border-bottom: 0;
+}
+
+.dadosGrid{
+    text-align: right;
+    padding-top: 2px;
+    padding-bottom: 1px;
+    padding-right: 5px;
+    font-size: 11px;
+    border: 1px solid #D2D2DA;
+    color: rgb(80,81,81);
+}
+
+.valorTotal{
+    text-align: right;
+    padding-top: 2px;
+    padding-bottom: 1px;
+    padding-right: 5px;
+    font-weight: bold;
+    border: 1px solid #D2D2DA;
+    background-color: rgb(242,242,242);
+}
+
+.gridPrincipal {
+    max-width: 100%;
+    text-align: center;
+    padding-bottom: solid black 5px;
+    border: 1px solid #D2D2DA;
+
+}
+
+.tituloGrid{
+    line-height: 1.2;
+    padding-top: 2px;
+    padding-bottom: 1px;
+    color: black;
+    vertical-align: middle !important;
+    font-size: 11px;
+    border: 1px solid #D2D2DA;
+    
+}
+
+.linkGrid{
+    font-size: 11px;
+    color: blue;
+    text-decoration: underline;
+    background-color: transparent;
+    border: none;
+}
+
+.table-responsive-xl{
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.tituloDadosHeader{
+    font-size: 11px;
+    color: #4a3f7b;
+    font-weight: bold;    
+}
+
+.botao{
+    background-color: #fff;
+    color: #786bb9;
+    box-shadow: none !important;
+    cursor: pointer; 
+    float:right; 
+    font-size: 14px; 
+    border: none;
+}
+
+.novoLink{
+    color: black;
+    font-size: 11px;
+    text-decoration: underline;    
+}

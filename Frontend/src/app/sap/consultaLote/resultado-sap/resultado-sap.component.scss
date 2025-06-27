@@ -1,0 +1,210 @@
+.cursorPointer {
+  cursor: pointer;
+}
+.verMais {
+  display: table;
+  margin: 0 auto;
+}
+//verificar
+.borda-modal {
+  box-shadow: 5px 5px 5px #c3bee0;
+  border: 1px solid #e0daff; /*#cdc8ea*/
+}
+
+.scroll-parametros{
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 210px;
+}
+
+// .button-tooltip{
+//   position: fixed;
+//   z-index: 99999;
+//   bottom: -260px;
+//   left: -167px;
+//   background: white;
+//   width: 446px;
+//   border: 1px solid #786BB9;
+//   transform: translateZ(0);
+//         -webkit-transform: translateZ(0);
+// }
+
+// sobre escrita
+
+// .bs-tooltip-bottom .arrow::before{
+//   border-bottom-color: #fff;
+//   border-left-color: #d2d2da;
+// }
+
+.font-parametros{
+  font-family: Roboto;
+  font-size: 12px;
+  font-stretch: normal;
+  font-style: normal;
+}
+
+.bs-tooltip-left .arrow::before{
+  border-left-color: #d2d2da;
+}
+.btn-voltar {
+  color: #786bb9;
+  font-size: 14px;
+}
+
+
+.btn-roxo {
+  display: inline-block;
+  font-size: 12px;
+  color: #786bb9;
+  font-family: Roboto;
+
+}
+
+/*** PADRÃO DE PÁGINAS ***/
+
+#inline-form {
+  width: 90%;
+}
+
+.verMaisContainer {
+  width: 100%;
+  border: 1px solid #dbdbdb;
+}
+// modelos-lista
+
+.lista-fechamento li {
+  border-bottom: 1px solid #dbdbdb;
+  padding-top: 1rem;
+}
+.lista-fechamento li h6 {
+  font-weight: bold;
+  font-size: 14px;
+}
+.lista-fechamento li p {
+  font-size: 13px;
+  color: rgb(12, 12, 12);
+  margin-bottom: 0;
+}
+
+.padding-bottom {
+  padding-bottom: 1rem;
+}
+
+//vermais
+
+.vermais {
+  text-align: center;
+  // color: $corRoxa;
+  border: 1px solid #e0daff;
+  border-top: none;
+}
+.vermais a {
+  display: block;
+}
+
+// cores dos status
+
+.azul {
+  padding: 3px 10px;
+  background: #6dafe9;
+}
+.laranja {
+  padding: 3px 10px;
+  background: #e68723;
+}
+.verde {
+  padding: 3px 10px;
+  background: #090;
+}
+
+.verdeClaro {
+  padding: 3px 10px;
+  background: rgb(3, 209, 3);
+}
+
+.vermelho {
+  padding: 3px 10px;
+  background: #c00;
+}
+
+// icon size
+
+.iconsSize {
+  font-size: 15px;
+  width: 30px;
+  // color: $corRoxa;
+}
+
+// empresa abaixo da consulta
+.empresa {
+  // color: $corRoxa;
+}
+
+// numero do sap
+.numSap {
+  font-weight: bold;
+}
+
+//seta
+span.seta {
+  border: solid #554d80;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  width: 10px;
+  height: 10px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+// background
+
+.bg-selecionado {
+  background: #f0f1f7;
+}
+
+.bg-relatarios {
+  background: #fff;
+}
+
+.sm-parametros {
+  padding: 1rem 0 0;
+}
+
+.lista-fechamento li .sm-parametros h6 {
+  font-size: 15px;
+  color: #554d80;
+  padding: 15px 0;
+}
+
+.sm-parametros p {
+  text-align: center;
+  color: #9597a6;
+  font-size: 14px;
+}
+.sm-parametros p span {
+  font-size: 11px;
+}
+
+.verMais {
+  cursor: pointer;
+  text-align: center;
+  color: #877cc1;
+  padding: 10px;
+}
+
+.verMais b {
+  color: #877cc1;
+}
+
+.letrasTooltip{
+
+  font-family: Roboto;
+  font-size: 12px;
+  color: #555555;
+  white-space: nowrap;
+}
+
+.toolTitulo{
+  //width: 10rem;
+}

@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <span class="modal-title modal-custom-font-size w700 font-12" id="modal-instrucoes">
+    {{titulo}}
+  </span>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="cancelar()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body font-grey">
+  <div class="row">
+    <div class="col-1 pr-1">1º</div>
+    <div class="col-11 pl-0">
+      <span [ngStyle]="{ fontSize: '12px' }">
+        Clique em "<strong>Baixar arquivos padrão</strong>" para baixar os
+        modelos de arquivos corretos que devem ser utilizados na carga dos
+        comprovantes. Você não precisa utilizá-los, mas serão úteis para
+        conferir se os seus arquivos estão de acordo com o esperado pelo
+        sistema;
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1 pr-1">2º</div>
+    <div class="col-11 pl-0">
+      <span [ngStyle]="{ fontSize: '12px' }">
+        Antes de importar o arquivo, o sistema irá realizar algumas verificações
+        para garantir que a carga dos comprovantes ocorra com sucesso:
+        <blockquote class="pt-3 pl-3">
+          <strong>* Extensão dos arquivos:</strong> O sistema só aceitará a
+          importação de arquivos <strong>pdf</strong> e <strong>xlsx</strong>;
+        </blockquote>
+        <blockquote class="pl-3">
+          <strong>* Tamanho dos arquivos:</strong> Será permitida a importação
+          de arquivos com até {{tamanhoMaximoArquivosAnexos}}MB (soma do tamanho dos dois arquivos
+          importados);
+        </blockquote>
+        <blockquote class="pl-3">
+          <strong>* Arquivo vazio:</strong> Se o arquivo xlsx estiver vazio, o
+          sistema irá alertá-lo para que verifique antes de realizar o
+          agendamento da carga dos comprovantes.
+        </blockquote>
+        <blockquote class="pl-3">
+          <strong>* Layout da base SAP:</strong> Será verificado se a base SAP importada
+          possui a quantidade de colunas esperadas pelo sistema, conforme
+          disponibilizado nos arquivos padrão.
+        </blockquote>
+      </span>
+    </div>
+  </div>
+</div>

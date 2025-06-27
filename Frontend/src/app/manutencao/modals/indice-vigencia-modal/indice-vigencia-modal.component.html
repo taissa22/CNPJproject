@@ -1,0 +1,87 @@
+<style>
+  .modal-header button {
+    color: gray;
+  }
+
+  .modal-title {
+    margin: auto;
+  }
+
+  .btn-icon {
+    font-size: 18px;
+  }
+</style>
+
+<div class="modal-header">
+  <span class="modal-title pl-0">{{titulo}}</span>
+  <button type="button" id="close-button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+  <div class="mt-2">
+    <div class="form-inline input-group">
+      <label class="col-form-label-sm fonte-padrao" for="descricao-input">
+        <b>Início Vigência:</b>
+      </label>
+      <input
+          type="text"
+          class="form-control form-control-sm"
+          placeholder="DD/MM/AAAA"
+          rInputMask="99/99/9999"
+          [bsConfig]="{showWeekNumbers: false }"
+          name="data"
+          id="data"
+          [formControl]="dataFormControl"
+          bsDatepicker
+          #data="bsDatepicker"
+          style="width: 10px;margin-left: 30px;;"
+          placement="top-left top-right bottom-left bottom-right"
+          [disableTooltip]="desabilitaTooltip(dataFormControl)"
+          [ngbTooltip]="validacaoData" />
+      <div class="input-group-append">
+          <button
+          type="button"
+          class="btn btn btn-outline-secondary calendar"
+          (click)="data.toggle()"
+          [attr.aria-expanded]="data.isOpen"
+          [disabled]="dataFormControl.disabled">
+          <i class="fa-solid fa-calendar-days"></i>
+          </button>
+      </div>
+      <ng-template #validacaoData>
+        <span *ngIf="dataFormControl.errors.required">
+        Campo obrigatório
+        </span>
+        
+    </ng-template>
+      </div>
+  </div>
+  <div class="mt-2">
+    <div class="form-inline input-group">
+      <label for="tipoDeProcesso">
+        <b>Índice de Correção:</b>
+      </label>
+      <ng-select
+          [ngStyle]="{'fontSize': '11px', 'padding-top':'6px', 'width':'140px', 'margin-left':'10px'}"
+          id="tipoDeProcesso"
+          [items]="tiposindice"        
+          bindLabel="descricao"
+          bindValue="id"
+          appearance="outline"
+          notFoundText="Nenhuma opção disponível"
+          [formControl]="tipoIndiceFormControl"
+          [searchable]="true"
+          [clearable]="false"      
+          [placeholder]="'Selecione o Índice'">
+      </ng-select>  
+    
+      </div>
+  </div>
+</form>
+
+<div class="modal-footer">
+  <button type="button" id="cancelar-button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" id="confirmar-button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>

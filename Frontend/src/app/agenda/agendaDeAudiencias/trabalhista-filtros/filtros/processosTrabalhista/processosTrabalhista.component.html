@@ -1,0 +1,33 @@
+<app-vertical-dual-list [headers]="service.listaHeaderTabela" nomeContexto="Processos" [itens]="dadosEncontrados" (itensAdicionados)="onAdicionar($event)">
+
+    <ng-container busca *ngTemplateOutlet="valorComboSelecionado == 1? numeroProcesso : codigoInterno">
+
+    </ng-container>
+
+</app-vertical-dual-list>
+
+<ng-template #numeroProcesso>
+
+    <form busca [formGroup]="form">
+        <div class="busca">
+            Busca:
+            <combo-box [opcoes]="valoresCombo" class="boxProc" (selectionChange)="onTypeSelect($event)" [currentIndex]="valorComboSelecionado" [icone]="false">
+
+            </combo-box>
+            <input type="text" maxlength="25" class="mt-1 impProc" formControlName="numeroProcesso" placeholder="N° Processo" numbersPontoHifenBarraOnly />
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #codigoInterno>
+
+    <form busca [formGroup]="form">
+        <div class="busca">
+            Busca:
+            <combo-box [opcoes]="valoresCombo" class="boxProc" (selectionChange)="onTypeSelect($event)" [currentIndex]="valorComboSelecionado" [icone]="false">
+
+            </combo-box>
+            <input type="text" maxlength="8" class="mt-1 impProc" formControlName="numeroProcesso" placeholder="Código Interno" numbersOnly />
+        </div>
+    </form>
+</ng-template>

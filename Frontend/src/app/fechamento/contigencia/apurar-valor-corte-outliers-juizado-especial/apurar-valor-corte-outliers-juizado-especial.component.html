@@ -1,0 +1,122 @@
+<!-- topo da pagina -->
+<section class="container-breadcrumb">
+    <h3>Apurar Valor de Corte de Outiliers Juizado Especial</h3>
+    <p>Fechamento > Contingência > Apurar Valor de Corte de Outiliers Juizado Especial</p>     
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" (click)="abrirPopupAgendamento()">Novo Agendamento</button>
+    </div>
+</section>
+<br>
+
+<!-- Popup Agendamento dos tipos de processos -->
+<div [ngClass]="this.popupAgendamento ? 'dialog_container visible' : 'dialog_container'">
+    <div class="dialog">
+        <form [formGroup]="form">
+            <div class="dlg_titulo">Novo Agendamento </div>
+            <div>
+                <div class="mt-3">
+                    <label>Base de fechamento:</label>
+                </div>
+                <select id="baseF" class="form-control" aria-label="Default select example" formControlName="baseFechamentoForm"  [(ngModel)]="valorSelect">
+                    <option *ngFor="let item of listaBaseFechamento" value="{{item.dataFechamento}}"> {{item.descricao}}</option>
+                </select>
+            </div>
+            <div class="d-flex align-items-center mt-3">
+                <label class="mr-1">Fator de desvio padrão:</label>
+                <input id="fator" #fator
+                    (focusout)="validarCampoObservacao()" 
+                    maxlength='5' class="form-control campo-desvio p-0 text-center" 
+                    formControlName="desvioPadraoForm"  
+                    [(ngModel)]="valorFatorDesvioPadrao">
+            </div>
+            <div class="mt-3">
+                <div>
+                    <label>Observação:</label>
+                </div>
+                <textarea class="form-control campo-obs mh-25" (change)="validarCampoObservacao()"
+                        [ngClass]="{'bordaVermelhaInicial': required,
+                                    'semBorda': !required
+                                   }"  
+                        id="obs" #obs
+                        maxlength="2000"
+                        formControlName="observacaoForm" [required]="this.required">
+                </textarea>
+            </div>
+
+            <div class="botoes_grupo">
+                <button class="btn" (click)="fecharPopupAgendamento()">Cancelar</button>
+                <button [disabled]="!form.valid" class="btn btn-primary" (click)="fazerAgendamento()">Agendar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Lista de agendados -->
+<section class="lower">
+    <div class="quad">
+        <div class="secao_titulo">Apurações agendadas / executadas</div>
+        <div class="botoes_topodireita">
+            <button  (click)="atualizarLista()"><i class="pl-2 fas fa-redo"></i>ATUALIZAR LISTA</button>
+        </div>
+
+        <!--célula a ser replicada-->
+        <div class="celula_processos" *ngFor="let agendamento of listaAgendamentos index as i">
+            <div class="celula_esquerda">
+                <div *ngIf="agendamento.status != 2" class="descricao_processos">
+                    <span> Base de fechamento: </span> {{agendamento.descricao}} / 
+                    <span> Fator de desvio padrão: </span> {{agendamento.fatorDesvioPadrao}}
+                  
+                    <i class="fas fa-info-circle ml-2"  
+                        *ngIf="agendamento.observacao != null" 
+                        placement="left"
+                        [ngbTooltip]="agendamento.observacao">
+                    </i>
+                </div>
+
+                <div *ngIf="agendamento.status == 2" class="descricao_processos">
+                    <span> Base de fechamento: </span> {{agendamento.descricao}} / 
+                    <span> Fator de desvio padrão: </span> {{agendamento.fatorDesvioPadrao}}
+                   
+                    <i class="fas fa-info-circle ml-2"  
+                        *ngIf="agendamento.observacao != null" 
+                        placement="left"
+                        [ngbTooltip]="agendamento.observacao">
+                    </i>
+                    <div class="statusFinalizado">
+                        Finalizado em {{agendamento.dataFinalizacao | date:"dd/MM/yyyy HH:mm"}}
+                    </div>
+                </div>            
+                <div class="botoes_processos">
+                    <button *ngIf="agendamento.status == 2" (click)="download(agendamento.arquivoBaseFechamento)">
+                        <i class="fa fa-download"></i>Base Fechamento
+                    </button>
+                    <button *ngIf="agendamento.status == 0 || agendamento.status == 3 " (click)="deletarApuracoesAgendadas(agendamento.id)">
+                        <i class="fa fa-trash"></i>Excluir Agendamento
+                    </button>
+                    <button *ngIf="agendamento.status == 2" (click)="download(agendamento.arquivoResultado)">
+                        <i class="fa fa-download"></i>Resultado
+                    </button>
+                </div>
+            </div>
+
+            <div class="celula_direita">
+                <i class="fas fa-info-circle mr-2"  
+                    *ngIf="agendamento.status == 3" 
+                    ngbTooltip="{{ agendamento.mgsStatusErro }}">
+                </i>
+                <div class="status_processo"
+                    [ngStyle]="{'background': verificarCorStatusAgendamento(agendamento.status)}">
+                    <div *ngIf="agendamento.status == 0"> Agendado </div>
+                    <div *ngIf="agendamento.status == 1"> Processando </div>
+                    <div *ngIf="agendamento.status == 2"> Finalizado </div>
+                    <div *ngIf="agendamento.status == 3"> Erro </div>
+                </div>
+                <div class="data_agendamento_processo">Solicitado por {{agendamento.nomeUsuario}} <br>
+                    em {{agendamento.dataSolicitacao | date:"dd/MM/yyyy HH:mm"}}
+                </div>
+            </div>
+        </div>
+
+        <div class="vermais" *ngIf="this.vermais"><button (click)="verMais()">VER MAIS</button></div>
+    </div>
+</section>

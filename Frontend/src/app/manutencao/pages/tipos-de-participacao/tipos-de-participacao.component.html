@@ -1,0 +1,46 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Tipo de Participação"
+  [breadcrump]="breadcrumb" [exibirAdicionar]="true">
+  <br>
+  <div class="row">
+    <div class="col-md-6 pr-1 mb-1">
+      <!-- <input #searchField (keyup.enter)="search = searchField.value" type="text" id="nome" maxlength="400"
+        placeholder="Entre com a Descrição" class="form-control"> -->
+        <app-filtro-busca-padrao (nomeBusca)="search = $event" [placeholder]="'Entre com a Descrição'"
+        class="pb-2" [posTop]="'10px'" [posLeft]="'21px'">
+      </app-filtro-busca-padrao>
+    </div>
+
+    <div class="col-md-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click) = "exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <jur-table [dataSource]="dataSource">
+
+    <jur-column-template flex="15" headerName="Código" sortColumn="codigo" *jurRowData="let row">
+      {{ row.codigo }}
+    </jur-column-template>
+
+    <jur-column-template flex="50" headerName="Descrição" sortColumn="descricao" *jurRowData="let row">
+      <span style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;" title="{{row.descricao}}" fxFlex>{{ row.descricao }}</span>
+    </jur-column-template>
+
+    <jur-column-template *jurRowData="let row">
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button type="button" class="btn btn-icon" (click)="alterar(row)">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button type="button" class="btn btn-icon" (click)="excluir(row)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+    </jur-column-template>
+
+  </jur-table>
+
+  <jur-paginator [length]="total"></jur-paginator>
+
+</app-manutencao-generica>

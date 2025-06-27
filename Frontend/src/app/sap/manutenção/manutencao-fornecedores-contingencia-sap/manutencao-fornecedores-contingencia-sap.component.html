@@ -1,0 +1,78 @@
+<app-container-pagina titulo="Fornecedores da Contingência SAP"
+  [caminho]="breadcrumb" texto="Os filtros abaixo podem ser utilizados para localizar fornecedores
+  da contingência SAP específicos.">
+  <filtro-fornecedores-contingencia-sap></filtro-fornecedores-contingencia-sap>
+  <div *ngIf="isNotFound">
+    <p>Nenhum Fornecedor da Contingência SAP encontrado</p>
+  </div>
+
+  <ng-container *ngIf="data && data.length > 0 ">
+    <div class="row pl-3 pb-4 pt-4">
+      <div class="col-md-12 divWarn">
+        <span class="warning-lancamento"><span class="fas fa-exclamation-circle"></span>
+          Para alterar um fornecedor da coningência SAP, basta dar um click sobre ele
+          para selecioná-lo e depois dar um clique no botão de editar.
+        </span>
+      </div>
+    </div>
+
+    <div class="roxo-padrao  d-flex  justify-content-between" style="text-align:right">
+      <label class="title"><b>Fornecedores da contingência SAP cadastrados</b></label>
+      <div class="roxo-padrao  d-flex">
+        <div class="mr-3" [ngClass]="!dataObj? 'desabilitar' : ''">
+          <i class="fas fa-edit roxo-padrao mr-1" (click)="editarFornecedores(dataObj)"
+            style="font-size:15px;cursor: pointer;"></i>
+          <span style="font-size:12px;cursor: pointer;" (click)="editarFornecedores(dataObj)">Editar</span>
+        </div>
+        <div>
+          <i class="fas fa-download pr-1" style="font-size:15px;cursor: pointer;"
+            (click)="onClickExportarPorFiltro('Fornecedores_Contingencia', filtroService.valoresFiltro)"></i>
+          <span style="font-size:12px;cursor: pointer;"
+            (click)="onClickExportarPorFiltro('Fornecedores_Contingencia', filtroService.valoresFiltro)">Exportar</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class='overflow-scroll'>
+
+      <table class='table table-striped fonte-padrao m-0'>
+        <thead>
+          <th col nowrap *ngFor="let header of listaHeaders">
+            {{ header['campo'] | fornecedoresContingenciaSapAlias }}
+            <app-botao-ordenacao [isActive]="header.isActive" (stateChange)="onChangeOrdenacao(header)">
+            </app-botao-ordenacao>
+          </th>
+        </thead>
+        <tbody>
+          <tr row nowrap class="table-item" *ngFor="let item of data; index as i" (click)="onRowClick(i)"
+            [ngClass]="(item.selected) && 'selected'">
+            <td class="text-limit selecionado" nowrap *ngFor="let header of listaHeaders"
+              [ngClass]="header['campo'] == 'valorCartaFianca' ? 'alinharDireita' : ''">
+              <span [ngbTooltip]='(item[header.campo] && item[header.campo].length > 40) && item[header.campo]'>
+                {{ header['campo'] == 'valorCartaFianca' ?
+         ( item[header.campo] | currency: "BRL":'':"1.2-2":"pt") :
+         header['campo'] == 'statusFornecedor' ?
+         (item[header.campo] | statusAtivoInativoAmbos)
+          : (item[header.campo] | cpfCnpj )    }} </span>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row pt-3 d-flex align-items-center" *ngIf="listaHeaders.length > 0 ">
+      <div class="col-sm-6"> <span class="title pr-2">
+          Total de registros: {{ service.totalSubject.value }} - Itens por página</span>
+        <app-table-options *ngIf="listaHeaders.length > 0" (valueChange)="onChangeQuantidade($event)">
+        </app-table-options>
+      </div>
+      <div class="col-sm-6">
+        <app-paginacao-buttons [pageMax]="service.quantidadePorPagina" [totalRegistro]="service.totalSubject.value"
+          [currentPage]="service.paginaAtual" (onPageSelect)="onChangePagina($event)"
+          (onClickNextPage)="onChangePagina($event)">
+        </app-paginacao-buttons>
+      </div>
+    </div>
+  </ng-container>
+</app-container-pagina>

@@ -1,0 +1,66 @@
+<div class="modal-header">
+    <span class="modal-title pl-0">Alterar Estado</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row mb-3">
+        <div class="col">
+            <label class="col-form-label-sm pb-0 mb-1">
+                <b>Sigla:</b>
+            </label>
+            <input type="text" [ngbTooltip]="siglaError" [disableTooltip]="desabilitaTooltip(IdFormControl)"
+                [formControl]="IdFormControl" class="form-control" maxlength="3" />
+            <ng-template #siglaError>
+                <span *ngIf="IdFormControl.hasError('required')">
+                    Campo obrigatório
+                </span>
+                <span *ngIf="IdFormControl.hasError('maxlength')">
+                    O Limite é de 3 caracteres
+                </span>
+            </ng-template>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <label class="col-form-label-sm pb-0 mb-1">
+                <b>Nome:</b>
+            </label>
+            <input type="text" [ngbTooltip]="nomeError" [disableTooltip]="desabilitaTooltip(nomeFormControl)"
+                [formControl]="nomeFormControl" class="form-control" maxlength="30" />
+            <ng-template #nomeError>
+                <span *ngIf="nomeFormControl.hasError('required')">
+                    Campo obrigatório
+                </span>
+                <span *ngIf="nomeFormControl.hasError('maxlength')">
+                    O Limite é de 30 caracteres
+                </span>
+            </ng-template>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col pr-0">
+            <label>
+                <b>Taxa de Juros ao Mês:</b>
+            </label>
+        </div>
+        <div class="col-6 pl-0">
+             <input type="text"  [ngbTooltip]="taxaError"  placeholder="000,00000"
+                [textMask]="{ mask: mascara }"
+                [disableTooltip]="desabilitaTooltip(valorJurosFormControl)" [formControl]="valorJurosFormControl"
+                class="form-control w-60" style="float:left"  />
+            <ng-template #taxaError>
+                <span *ngIf="valorJurosFormControl.hasError('required')">
+                    Campo obrigatório
+                </span>
+            </ng-template>
+        </div>
+    </div>
+</form>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()">Confirmar</button>
+</div>

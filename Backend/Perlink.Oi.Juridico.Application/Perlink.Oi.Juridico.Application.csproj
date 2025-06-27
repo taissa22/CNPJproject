@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RuntimeFrameworkVersion>2.2.0</RuntimeFrameworkVersion>
+	<LangVersion>8.0</LangVersion>  
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ControleDeAcesso\ViewModel\Log\**" />
+    <EmbeddedResource Remove="ControleDeAcesso\ViewModel\Log\**" />
+    <None Remove="ControleDeAcesso\ViewModel\Log\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="27.1.0" />
+    <PackageReference Include="Experimental.System.Messaging" Version="1.1.0" />
+    <PackageReference Include="Flunt" Version="1.0.5" />
+    <PackageReference Include="Humanizer.Core" Version="2.8.26" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Oi.Juridico.AddOn.Configuracoes" Version="1.0.4" />
+    <PackageReference Include="System.Text.Json" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Perlink.Oi.Juridico.Data\Perlink.Oi.Juridico.Data.csproj" />
+    <ProjectReference Include="..\Perlink.Oi.Juridico.Domain\Perlink.Oi.Juridico.Domain.csproj" />
+    <ProjectReference Include="..\Perlink.Oi.Juridico.Infra\Perlink.Oi.Juridico.Infra.csproj" />
+    <ProjectReference Include="..\Shared\Shared.Domain\Shared.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SAP\Repositories\NovaPasta\" />
+    <Folder Include="SAP\ViewModel\Resultados\" />
+  </ItemGroup>
+
+</Project>

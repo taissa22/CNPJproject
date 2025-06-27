@@ -1,0 +1,216 @@
+<div class="filters-box-container " [class.container-full]="!tipoSelecionado ">
+    <div class="filters-box-mensagem-centro " *ngIf="!tipoSelecionado ">
+        Selecione o tipo de processo<br />
+        para configurar os critérios de <br />
+        busca
+    </div>
+    <div *ngIf="tipoSelecionado" style=" width: 100%;">
+
+        <div class="container" style=" width: 100%;">
+
+            <form *ngIf="campoExibir.statusProcesso" [formGroup]="form">
+                <div class="row mt-2">
+                    <div class="col-3 pl-0">
+                        <span style="height: 100%;" class="filters-box-label">Status do Processo:</span>
+                    </div>
+                    <div class="col-9 pl-4">
+                        <div class="col-7 p-0">
+                            <div class="row radio">
+                                <div class="col-4 d-flex align-items-center">
+                                  <input type="radio" formControlName="processo" value="1" id="ativo">
+                                  <label for="ativo" class="m-0 pl-1">Ativo</label>
+                                </div>
+                                <div class="col-4 d-flex align-items-center">
+                                  <input type="radio" formControlName="processo" value="2" id="inativo">
+                                  <label for="inativo" class="m-0 pl-1">Inativo</label>
+                                </div>
+                                <div class="col-4 d-flex align-items-center">
+                                  <input type="radio" formControlName="processo" value="3" id="ambos">
+                                  <label for="ambos" class="m-0 pl-1">Ambos</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+
+            <div class="row mt-2" *ngIf="campoExibir.finalizacaoContabil">
+                <div class="col-3 pl-0">
+                    <span style="height: 100%;" class="filters-box-label">Finalização Contábil:</span>
+                </div>
+                <div class="col-9 pl-4">
+                    <app-data-range [label]="'finalContabil'"
+                        (retDataInicio)="changeData('finalContabil', true, $event)"
+                        (retDataFim)="changeData('finalContabil', false, $event)"
+                        (rangeValido)="onRangeValido('finalContabil',$event)"
+                        [dataInicio]="recuperarData('finalContabil', true)"
+                        [dataFim]="recuperarData('finalContabil', false)">
+                    </app-data-range>
+                </div>
+            </div>
+
+
+            <div class="row mt-2" *ngIf="campoExibir.valorDeposito">
+                <div class="col-3 pl-0">
+                    <span style="height: 100%;" class="filters-box-label">Valor de Depósito:</span>
+                </div>
+                <div class="col-9 pl-4">
+                    <app-number-range (rangeValido)="onRangeValido('numeroDeposito',$event)"
+                        [texto1]="recuperarNumero('numeroDeposito',true)"
+                        [texto2]="recuperarNumero('numeroDeposito',false)"
+                        (retNumeroInicio)="salvarNumero('numeroDeposito',true,$event)"
+                        (retNumeroFim)="salvarNumero('numeroDeposito',false, $event)"
+                        [maxlengthNumber] = "14">
+                    </app-number-range>
+                </div>
+            </div>
+
+            <div class="row mt-2" *ngIf="campoExibir.valorBloqueio">
+                <div class="col-3 pl-0">
+                    <span style="height: 100%;" class="filters-box-label">Valor de Bloqueio:</span>
+                </div>
+                <div class="col-9 pl-4">
+                    <app-number-range (rangeValido)="onRangeValido('numeroBloqueio',$event)"
+                        [texto1]="recuperarNumero('numeroBloqueio',true)"
+                        [texto2]="recuperarNumero('numeroBloqueio',false)"
+                        (retNumeroInicio)="salvarNumero('numeroBloqueio',true,$event)"
+                        (retNumeroFim)="salvarNumero('numeroBloqueio',false, $event)"
+                        [maxlengthNumber] = "14">
+                    </app-number-range>
+                </div>
+            </div>
+
+            <form [formGroup]="form" *ngIf="campoExibir.apenasUm">
+                <div class="row mt-2">
+                    <div class="col-3 pl-0">
+                        <label style="height: 100%;" class="filters-box-label" for="umBloqueio">
+                          Processos com Apenas 1 Bloqueio:</label>
+                    </div>
+                    <div class="col-9 pt-2 pl-4">
+                        <div class="col-7 p-0">
+                            <div class="row radio">
+                                <div class="col-4">
+                                    <input type="checkbox" formControlName="umBloqueio" id="umBlqueio">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form [formGroup]="form" *ngIf="campoExibir.tipoGarantia">
+                <div class="row mt-2">
+                    <div class="col-3 pl-0">
+                        <span style="height: 100%;" class="filters-box-label">Tipo Garantia:</span>
+                    </div>
+                    <div class="col-9 pt-2 pl-4">
+                        <div class="col-7 p-0">
+                            <div class="row radio">
+                                <div class="col-4 d-flex align-items-center">
+                                    <input type="checkbox" formControlName="garantiaDeposito" id="deposito">
+                                    <label for="deposito" class="m-0 pl-1">Depósito</label>
+                                </div>
+                                <div class="col-4 d-flex align-items-center">
+                                    <input type="checkbox" formControlName="garantiaBloqueio" id="bloqueio">
+                                    <label for="bloqueio" class="m-0 pl-1">Bloqueio</label>
+                                </div>
+                                <div class="col-4 d-flex align-items-center">
+                                    <input type="checkbox" formControlName="garantioOutros" id="outros">
+                                    <label for="outros" class="m-0 pl-1">Outros</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form [formGroup]="form" *ngIf="campoExibir.riscoPerda">
+                <div class="row mt-2">
+                    <div class="col-3 pl-0">
+                        <span style="height: 100%;" class="filters-box-label">Risco Perda:</span>
+                    </div>
+                    <div class="col-9 pt-2 pl-4">
+                        <div class="col-7 p-0">
+                            <div class="row radio">
+                                <div class="col-4 d-flex align-items-center">
+                                    <input type="checkbox" formControlName="riscoProvavel" id="provavel">
+                                    <label for="provavel" class="m-0 pl-1">Provável</label>
+                                </div>
+                                <div class="col-4 d-flex align-items-center">
+                                    <input type="checkbox" formControlName="riscoPossivel" id="possivel">
+                                    <label for="possivel" class="m-0 pl-1">Possível</label>
+                                </div>
+                                <div class="col-4 d-flex align-items-center">
+                                    <input type="checkbox" formControlName="riscoRemoto" id="remoto">
+                                    <label for="remoto" class="m-0 pl-1">Remoto</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form [formGroup]="form"  *ngIf="campoExibir.agenciaConta">
+                <div [formGroup]="form" class="row mt-2">
+                    <div class="col-3 pl-0">
+                        <span style="height: 100%;" class="filters-box-label">Agência:</span>
+                    </div>
+                    <div class="col-9 pt-2 pl-4">
+                        <div class="col-7 p-0">
+                            <div class="row radio">
+                                <div class="col-md-4 pr-1">
+                                    <input type="text" class="form-control" maxlength="9" formControlName="agencia"
+                                    [ngClass]="{'is-invalid': erroAgencia}"
+                                    (blur)= 'verificarConta()'
+                                    [ngbTooltip] ='txtAgencia'
+                                    tooltipClass="erroTooltip" >
+                                </div>
+                                <div class="col-md-2 pt-1 pl-0 pr-1" style="text-align: -webkit-center;">
+                                    <span>Conta:</span>
+                                </div>
+                                <div class="col-md-5 pl-0">
+                                    <input type="text" class="form-control" maxlength="16" formControlName="conta"
+                                    [ngClass]="{'is-invalid': erroConta}"
+                                    [ngbTooltip]="txtConta"
+                                    (blur)="verificarAgencia()"
+                                    tooltipClass="erroTooltip">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+            <form [formGroup]="form" *ngIf="campoExibir.migrado">
+                <div class="row mt-2">
+                    <div class="col-3 pl-0">
+                        <span style="height: 100%;" class="filters-box-label">Considerar somente <br> processos
+                            migrados:</span>
+                    </div>
+                    <div class="col-9 pt-2 pl-4">
+                        <div class="col-7 p-0">
+                            <div class="row radio">
+                                <div class="col-4 d-flex align-items-center">
+                                  <input type="radio" formControlName="migrados" value="1" id="sim">
+                                  <label for="sim" class="m-0 pl-1">Sim</label>
+                                </div>
+                                <div class="col-4 d-flex align-items-center">
+                                  <input type="radio" formControlName="migrados" value="2" id="nao">
+                                  <label for="nao" class="m-0 pl-1">Não</label>
+                                </div>
+                                <div class="col-4 d-flex align-items-center">
+                                  <input type="radio" formControlName="migrados" value="3" id="indiferente">
+                                  <label for="indiferente" class="m-0 pl-1">Indiferente</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

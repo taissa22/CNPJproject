@@ -1,0 +1,97 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "ManutencaoEscritorioContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "ManutencaoEscritorioContext\\Data",
+   "OutputPath": "ManutencaoEscritorioContext\\Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Oi.Juridico.Contextos.V2",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "Name": "JUR.ACA_USUARIO_ESCRITORIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ADVOGADO_AUTOR_PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ADVOGADO_ESCRITORIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AUDIENCIA_PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.DESPESA_PROFISSIONAL",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ESCRITORIO_ESTADO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.FORNECEDOR",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.LOG_ESCRITORIO_ESTADO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.LOG_PROFISSIONAIS",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PAGAMENTO_PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PARAM_DISTRIBUICAO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PARAM_DISTRIB_ESCRITORIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PROTOCOLOS",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PROFISSIONAL",
+      "ObjectType": 0
+    }
+  ],
+   "UiHint": "SISJUR_DEV",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

@@ -1,0 +1,14 @@
+.tabela-interna {
+  border: none!important;
+  th { border: none!important; border-bottom: 1px solid #555!important; }
+  tr {
+    td {
+      color: #555; font-size: 12px; border: none!important;
+      border-bottom: 1px solid #D2D2DA!important;
+
+      a {
+        font-size: 16px;
+      }
+    }
+  }
+}

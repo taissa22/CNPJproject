@@ -1,0 +1,7 @@
+{
+    "/TipoProcesso/obterTodosTiposProcessoSAP": "/TipoProcesso",
+    "/LancamentoProcesso/RecuperarLancamentoProcesso\\?NumeroGuia=:guia&CodigoTipoProcesso=1": "/NumeroGuia?data=:guia",
+    "/Lotes/RecuperarPorNumeroSAPCodigoTipoProcesso\\?NumeroSap=:sap&CodigoTipoProcesso=1": "/NumeroSap?data=:sap",
+    "/Lotes/RecuperarPorFiltroPaginado": "/Resultado",
+    "/Lotes/RecuperarLancamentosLote": "/LancamentoLote"
+}

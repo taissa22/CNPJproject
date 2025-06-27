@@ -1,0 +1,61 @@
+.linha{
+    width: 100%;
+    border-bottom:1px #786bb9 solid;
+}
+.titulo{
+    color: #786bb9;
+    font-size: 16px;
+    font-weight: normal !important;
+    margin-bottom: 5px;
+}
+
+.input-data{
+    width: 77% !important;
+}
+.ate{
+    width: 3% ;
+    p{
+        margin-top:  5px;
+    }
+}
+.titulo-data{
+    font-size: 14px;
+    margin-top: 3px;
+}
+.butoes-superiores {
+    cursor: pointer;
+    width: 12%;
+    margin-top: 5px;
+    p {
+        color: #786bb9;
+        font-size: 9px;
+    }
+}
+.subtitulo{
+    margin-top: -8px;
+    font-weight: bold;
+    color: #bbb;
+}
+.btn-limpar-filtros{
+    color: #786bb9;
+    cursor: pointer;
+    float: right;
+}
+
+#salvarModelo:disabled {
+    opacity: 0.7 !important;
+}
+
+::ng-deep{
+
+  ngb-datepicker-navigation .ngb-dp-arrow {
+    background-color: RGBA(120,107,185,0.1) !important;
+  }
+}
+::ng-deep{
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    ngb-datepicker-navigation .ngb-dp-arrow {
+      background-color: RGBA(120,107,185,0.4) !important;
+    }
+  }
+}

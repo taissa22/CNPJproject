@@ -1,0 +1,55 @@
+<div class="container-modal">
+    <div class="title">
+        <h4 class="roxo-padrao mb-0">{{titulo}} do Detalhamento das Deduções</h4>
+        <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
+        </div>
+    </div>
+
+    <form [formGroup]="formGroup" class="modal-body pt-0">
+
+        <div class="row mt-2">
+            <div class="col-sm-6">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Tipo de Dedução:</b>
+                </label>
+                <ng-select class="form-control form-control-select" [items]="listaTipoDeducao" bindLabel="descricao" bindValue="id" placeholder="Selecione um item" [formControl]="dedsuspIndtpdeducaoFormControl" [disableTooltip]="
+                desabilitaTooltip(dedsuspIndtpdeducaoFormControl)" [ngbTooltip]="validacaoTpDeducao" [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE">
+                </ng-select>
+                <ng-template #validacaoTpDeducao>
+                    <span *ngIf="
+                       dedsuspIndtpdeducaoFormControl.invalid &&
+                       dedsuspIndtpdeducaoFormControl.hasError('required')
+                     ">
+                        Campo obrigatório.
+                    </span>
+                </ng-template>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Valor da Dedução:</b>
+                </label>
+                <input type="text" class="form-control" [formControl]="dedsuspVlrdedsuspFormControl" [disableTooltip]="desabilitaTooltip(dedsuspVlrdedsuspFormControl)" [ngbTooltip]="validacaoVlrDeducao" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left'  }"
+                    maxLength='21' [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE" />
+
+                <ng-template #validacaoVlrDeducao>
+                    <span *ngIf="dedsuspVlrdedsuspFormControl.invalid && dedsuspVlrdedsuspFormControl.hasError('min')">
+                        Deve ser maior do que 0 (zero)
+                    </span>
+                </ng-template>
+            </div>
+        </div>
+
+        <div class="modal-footer pr-0">
+            <button type="button" class="btn btn-link" aria-label="Close" (click)="close()" *ngIf="temPermissaoBlocoCeDeE">
+                Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()" *ngIf="temPermissaoBlocoCeDeE">
+                Confirmar
+            </button>
+            <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="close()" *ngIf="!temPermissaoBlocoCeDeE">
+                Fechar
+            </button>
+        </div>
+    </form>
+</div>

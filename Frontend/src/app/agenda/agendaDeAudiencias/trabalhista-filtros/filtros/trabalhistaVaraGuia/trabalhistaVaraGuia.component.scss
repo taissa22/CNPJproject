@@ -1,0 +1,50 @@
+.box {
+    height: 9rem;
+}
+.box2 {
+    height: 55%;
+}
+.geralBox{
+    height: 80% !important;
+}
+
+.btnAdd{
+    text-align: right;
+}
+
+.abaTitle{
+    color: #6f62b2;
+    font-weight: bold;
+}
+
+.nomeCampo{
+    text-align: right;
+    font-size: 12px;
+
+}
+
+div .container{
+  position: absolute;
+  width: 46rem;
+}
+
+/* Acessar valores em outros componentes :host ::ng-deep + a classe/atributo/id */
+:host ::ng-deep h1{
+ margin: 0;
+}
+
+combo-box{
+  width: 60%;
+}
+
+.overTable{
+overflow: auto;
+}
+
+.table{
+  color: #555
+}
+.table th, .table td{
+  padding: 0.35rem;
+}
+

@@ -1,0 +1,84 @@
+<ul [class]="isOpen ? 'bg-roxo lista-fechamento' : 'lista-fechamento ' " >
+  <li>
+    <div class="container padding-bottom " >
+      <div class="row">
+        <div class="col-1 text-center clicker" (click)="open(id)">
+          <span
+            [class]="(isOpen ? 'setaAberto' : 'setaFechado') + ' seta'"
+            style="margin-top: 23px; cursor: pointer;"
+
+          ></span>
+        </div>
+        <div class="col-7">
+          <h6 class="roxo-claro titulo" *ngIf="titulo ">
+            {{ titulo }}
+          </h6>
+          <p *ngIf="subtitulo">
+            <span style="vertical-align: top;" class="subtitulo roxo-claro">
+              {{ subtitulo }}
+            </span>
+          </p>
+          <p *ngIf="descricao">
+            <span style="margin-top: 3px;"></span>
+            <span class="roxo-claro descricao transparencia" style="vertical-align: top;">
+              {{ descricao }}
+            </span>
+          </p>
+          <button class="btn btn-cancelar mt-2" (click)="onClickCancelar()" *ngIf="tituloBotaoCancelar && temPermissao">
+              <i class=" icone-cancelar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17.5" height="19.357" viewBox="0 0 17.5 19.357">
+                <defs>
+                    <style>
+                        .cls-1{fill:#786bb9}
+                    </style>
+                </defs>
+                <path id="Forma_1" d="M17.018.779v9.484a.825.825 0 0 1-1.647 0v-8.7H1.647V17.8H7.96a.781.781 0 1 1 0 1.559H.823A.8.8 0 0 1 0 18.577V.779A.8.8 0 0 1 .823 0h15.371a.8.8 0 0 1 .824.779zM4.941 6.106h7.411a.781.781 0 1 0 0-1.559H4.941a.781.781 0 1 0 0 1.559zm8.235 3.508a.8.8 0 0 0-.823-.779H4.941a.781.781 0 1 0 0 1.559h7.411a.8.8 0 0 0 .823-.78zm-8.235 3.377a.781.781 0 1 0 0 1.559h2.2a.781.781 0 1 0 0-1.559zm12.311.039a.871.871 0 0 0-1.167 0l-1.949 1.845-1.963-1.858a.871.871 0 0 0-1.167 0 .762.762 0 0 0 0 1.1l1.963 1.858-1.963 1.858a.762.762 0 0 0 0 1.1.836.836 0 0 0 .576.234.812.812 0 0 0 .576-.234l1.963-1.858 1.963 1.858a.836.836 0 0 0 .576.234.812.812 0 0 0 .576-.234.762.762 0 0 0 0-1.1L15.3 15.979l1.963-1.858a.736.736 0 0 0-.012-1.091z" class="cls-1" data-name="Forma 1"/>
+              </svg>
+            </i>
+            <span class="cancelar-txt">{{ tituloBotaoCancelar }}</span>
+          </button>
+
+          <button [ngClass]="tituloBotaoCancelar? 'ml-2': ''"class="btn btn-regerar mt-2"
+           (click)="onClickRegerar()" *ngIf="hasNumeroLoteBB" style="z-index: 9;">
+            <i class=" icone-regerar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17.5" height="19.357" viewBox="0 0 384 512">
+                <defs>
+                  <style>
+                      .cls-1{fill:#786bb9}
+                  </style>
+                </defs>
+                <path id="Forma_2" d="M288 248v28c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm-12 72H108c-6.6 0-12 5.4-12 12v28c0 6.6 5.4 12 12 12h168c6.6 0 12-5.4 12-12v-28c0-6.6-5.4-12-12-12zm108-188.1V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48C0 21.5 21.5 0 48 0h204.1C264.8 0 277 5.1 286 14.1L369.9 98c9 8.9 14.1 21.2 14.1 33.9zm-128-80V128h76.1L256 51.9zM336 464V176H232c-13.3 0-24-10.7-24-24V48H48v416h288z"  class="cls-1" data-name="Forma 2"/>
+              </svg>
+            </i>
+            <span class="regerar-txt">Regerar Arquivo BB</span>
+          </button>
+        </div>
+        <div
+          class="col-4 text-right"
+          *ngIf="estado || estadoDetalhado || helperLabel"
+        >
+          <span
+            class="badge badge-primary colorized"
+            [ngStyle]="{ background: estado.cor }"
+            *ngIf="estado"
+          >
+            {{ estado.mensagem }}
+          </span>
+          <p  *ngIf="estadoDetalhado" class="helperLabel transparencia">
+            {{ estadoDetalhado }}
+          </p>
+          <p *ngIf="helperLabel" class="helperLabel">
+            {{ helperLabel }}
+          </p>
+        </div>
+      </div>
+      <p class="center-text" *ngIf="observacao">
+        <span class="observacao">
+          <i *ngIf="iconeObservacao" [class]="'fa ' + iconeObservacao"></i>
+          {{ observacao }}
+        </span>
+      </p>
+    </div>
+    <ng-content class="bg-relatarios" *ngIf="isOpen"></ng-content>
+  </li>
+</ul>

@@ -1,0 +1,12 @@
+label{
+  font-size: 12px;
+  font-family: roboto;
+
+}
+
+
+:host ::ng-deep .prlnk-datepicker div.input-group input.form-control.erro + span.guarda-erro:before,
+.prlnk-datepicker div.input-group input.form-control.erro + span.guarda-erro:before {
+  bottom: -20px;
+
+}

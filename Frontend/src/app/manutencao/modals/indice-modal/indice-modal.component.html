@@ -1,0 +1,94 @@
+<style>
+  .modal-header button {
+    color: gray;
+  }
+
+  .modal-title {
+    margin: auto;
+  }
+
+  .btn-icon {
+    font-size: 18px;
+  }
+</style>
+
+<div class="modal-header">
+  <span class="modal-title pl-0">{{titulo}}</span>
+  <button type="button" id="close-button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+
+  <div>
+    <label class="col-form-label-sm fonte-padrao" for="descricao-input">
+      <b>Nome do índice:</b>
+    </label>
+    <input type="text" id="descricao-input" [formControl]="descricaoFormControl" class="form-control"
+      [disableTooltip]="descricaoFormControl.valid || descricaoFormControl.untouched" [ngbTooltip]="descricaoError"
+      maxlength="20" />
+    <ng-template #descricaoError>
+      <span *ngIf="descricaoFormControl.hasError('required')">
+        Campo obrigatório
+      </span>
+      <span *ngIf="descricaoFormControl.hasError('maxlength')">
+        O Limite é de 20 caracteres
+      </span>
+    </ng-template>
+
+  </div>
+
+  <div class="mt-2">
+    <label class="col-form-label-sm fonte-padrao" for="descricao-input">
+      <b>Tipo de Valor:</b>
+    </label>
+    <select class="form-control" id="tipoValor-select" [formControl]="tipoValorFormControl" #mySelect
+      (change)='onOptionsSelected(mySelect.value)'>
+      <option value="F">Fator</option>
+      <option value="P">Percentual</option>
+      <option value="V">Valor</option>
+    </select>
+  </div>
+
+  <div class="row d-flex mt-2 align-items-center">
+    <div class="col-2">
+      <label class="col-form-label-sm fonte-padrao" for="descricao-input">
+        Mensal:
+      </label>
+    </div>
+    <div class="col-2">
+      <input type="checkbox" id="mensal-checkbox" [formControl]="mensalFormControl" disabled>
+    </div>
+  </div>
+
+  <div class="row d-flex mt-2 align-items-center">
+    <div class="col-2">
+      <label class="col-form-label-sm fonte-padrao" for="descricao-input">
+        Acumulado:
+      </label>
+    </div>
+    <div class="col-2 ml-4">
+      <input type="checkbox" id="acumulado-input" [formControl]="acumuladoFormControl" (change)="eventCheck($event)">
+    </div>
+  </div>
+
+  <div *ngIf="indiceColuna === 'P'  && acumulado">
+    <div class="row d-flex mt-2 align-items-center">
+      <div class="col-1 ml-6" style="padding-left: 30px;">
+        <input type="checkbox" id="acumuladoAutomatico-checkbox" [formControl]="calculoAutmaticoFormControl">
+      </div>
+      <div class="col-10" style="padding-left: 5px;">
+        <label class="col-form-label-sm fonte-padrao" for="descricao-input">
+          Calcular o acumulado automaticamente
+        </label>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+<div class="modal-footer">
+  <button type="button" id="cancelar-button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" id="confirmar-button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>

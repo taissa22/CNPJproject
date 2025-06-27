@@ -1,0 +1,74 @@
+<div class="seletorComBusca">
+  <div class="titulo_listaselecao">
+    <div class="titulo">Números da Guia Adicionados</div>
+  </div>
+
+  <div class="tabelaSeletorComBusca">
+    <table>
+      <thead>
+        <tr>
+          <th>Número da Guia</th>
+          <th style="width: 30px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let guiaSelecionada of guiasSelecionados">
+          <td>{{ guiaSelecionada }}</td>
+          <td  (click)="removeGuia(guiaSelecionada)"
+          style="text-align: center;">
+            <i class="fas fa-trash fa-2x roxo-padrao"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="mensagem-tabela" *ngIf="guiasSelecionados.length <= 0">
+      Nenhum item adicionado ainda
+    </p>
+  </div>
+
+  <div class="titulo_listaselecaoComBusca">
+    <div class="titulo">
+      Números da Guia Encontrados
+    </div>
+    <form [formGroup]="guiaForm">
+      <div class="busca">
+        Busca:
+        <input
+          type="text"
+          maxlength="15"
+          class="mt-1"
+          formControlName="guiaId"
+          placeholder="N° Guia"
+          numbersOnly
+        />
+      </div>
+    </form>
+  </div>
+  <div class="tabelaSeletorComBusca">
+    <table>
+      <thead>
+        <tr>
+          <th>Número da Guia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="preAdicionarGuia(guia.toString())">
+          <td [class.preselecionado]="preSelecionado(guia.toString())" *ngIf="guia">
+            {{ guia }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="mensagem-tabela" *ngIf="!guia">
+      {{ info }}
+    </p>
+  </div>
+  <div class="buttons-filtros">
+    <button
+      class="btn btn-primary btn-sm btn-sap"
+      (click)="adicionarGuiasSelecionados()"
+    >
+      Adicionar Selecionados
+    </button>
+  </div>
+</div>

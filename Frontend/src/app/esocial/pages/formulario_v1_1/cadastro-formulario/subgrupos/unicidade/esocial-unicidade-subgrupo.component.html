@@ -1,0 +1,48 @@
+<div>
+  <div class="roxo-padrao btn-novo mt-1" *ngIf="temPermissaoEsocialBlocoABCDEFHI">
+    <i class="fas fa-plus-circle ml-auto mr-1 fs-2" (click)="incluir()"></i>
+    <span class="fs-1" (click)="incluir()">Incluir</span>
+  </div>
+  <div style="margin-top: 25px">
+    <sisjur-table (sort)="buscarTabela()">
+      <ng-container>
+        <sisjur-table-header>
+          <sisjur-table-header-cell sort="matricula" width="30">
+            Matrícula Incorporada</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="30">Código da Categoria</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="30">Data de Início</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="5" *ngIf="temPermissaoEsocialBlocoABCDEFHI"></sisjur-table-header-cell>
+        </sisjur-table-header>
+        <sisjur-table-row *ngFor="let item of dataSource; let i = index">
+          <sisjur-table-row-cell>{{
+            item.uniccontrMatunic
+            }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{
+            item.uniccontrDesccateg
+            }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{
+            item.uniccontrDtinicioFormatada
+            }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(item)" *ngIf="!temPermissaoEsocialBlocoABCDEFHI">
+              <i class="fa fa-magnifying-glass"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="alterar(item)" *ngIf="temPermissaoEsocialBlocoABCDEFHI">
+              <i class="fa fa-edit"></i>
+            </button>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell *ngIf="temPermissaoEsocialBlocoABCDEFHI">
+            <button type="button" class="btn btn-icon" (click)="excluir(item)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </sisjur-table>
+    <div class="mt-4">
+      <sisjur-paginator [MostrarQtdPorPagina]="false" [QtdFixaPorPagina]="10" [length]="total"
+        (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<section class="container-breadcrumb">
+    <h3>{{ tituloPagina }}</h3>
+    <p>{{ caminhoPaginaSap }}</p>
+    <p class="filtroSapSelecao"></p>
+    <combo-box [opcoes]="tiposProcesso" (selectionChange)="onTypeSelect($event)" [titulo]="'Selecione o tipo de processo'" [currentIndex]="tipoSelecionado.value" [icone]="true" [classe]="'flutuante-direita'" [label]="'Tipos de Processo'"></combo-box>
+</section>
+<div class="container-margin roxo-padrao" style="display: flex; justify-content: flex-end">
+    <div [routerLink]="['agendamentos']" class="btn-busca">
+        <i class="fas fa-2x fa-file-download"></i>
+        <div style="padding-left: 7px">BUSCAR E BAIXAR<br />AGENDAMENTOS</div>
+    </div>
+</div>
+<app-cpn-filtro [listaFiltro]="listaFiltro" [button]="'Agendar'" (funcBtn)="onClickbtn($event)" [textNomeFiltro]="'Critérios de seleção de processos'" [enabled]="isDisabled"></app-cpn-filtro>

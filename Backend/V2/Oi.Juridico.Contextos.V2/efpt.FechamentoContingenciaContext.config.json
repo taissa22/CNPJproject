@@ -1,0 +1,98 @@
+﻿{
+  "CodeGenerationMode": 2,
+  "ContextClassName": "FechamentoContingenciaContext",
+  "ContextNamespace": null,
+  "DefaultDacpacSchema": null,
+  "FilterSchemas": false,
+  "IncludeConnectionString": false,
+  "ModelNamespace": null,
+  "OutputContextPath": "FechamentoContingenciaContext\\Data",
+  "OutputPath": "FechamentoContingenciaContext\\Entities",
+  "ProjectRootNamespace": "Oi.Juridico.Contextos.V2",
+  "Schemas": null,
+  "SelectedHandlebarsLanguage": 0,
+  "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "ExcludedColumns": [
+        "SENHA",
+        "PERFIL",
+        "IND_CIVEL",
+        "IND_TRABALHISTA",
+        "IND_REGULATORIO",
+        "IND_USUARIO_INTERNET",
+        "IND_TRIBUTARIO",
+        "IND_ATIVO",
+        "IND_CONTROLADORIA",
+        "IND_BLOQUEADO",
+        "IND_MUDAR_SENHA",
+        "IND_JUIZADO",
+        "IND_PERFIL_WEB",
+        "IND_PREPOSTO",
+        "IND_AUTORIZA_SERVICO",
+        "IND_CIVEL_ESTRATEGICO",
+        "DATA_DESATIVACAO",
+        "IND_RESTRITO",
+        "COD_PRIORIDADE_EXEC_REL",
+        "IND_CRIMINAL_ADM",
+        "IND_CRIMINAL_JUDICIAL",
+        "IND_CIVEL_ADM",
+        "IND_PROCON",
+        "IND_AUTORIZA_SERV_PROCON",
+        "OBS_USUARIO",
+        "IND_PEX",
+        "IND_ADM_APROVADOR_ACESSOS",
+        "IND_GESTOR_APROVADOR_ACESSOS",
+        "COD_TIPO_USUARIO_PERFIL",
+        "NUM_CPF",
+        "IND_OPERADOR_CADASTRO",
+        "COD_GESTOR_DEFAULT",
+        "IND_OPERADOR_VALIDACAO_JEC",
+        "IND_OPERADOR_VALIDACAO_CCONS",
+        "IND_INATIVACAO_MANUAL",
+        "IND_INATIVACAO_AUTOMATICA",
+        "IND_USUARIO_ESTRANGEIRO",
+        "COD_USUARIO_RESPONSAVEL"
+      ],
+      "Name": "JUR.ACA_USUARIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.SOLIC_FECHAMENTO_CONT",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.SOLIC_FECH_CONT_EMP_CENT",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.EMPRESAS_CENTRALIZADORAS",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.EMP_CENT_AGENDAM_FECH_AUTO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.V_GRUPAMENTO_EMPRESAS_GRUPO",
+      "ObjectType": 3
+    }
+  ],
+  "UiHint": "SISJUR_DEV",
+  "UseBoolPropertiesWithoutDefaultSql": false,
+  "UseDatabaseNames": false,
+  "UseDbContextSplitting": true,
+  "UseFluentApiOnly": true,
+  "UseHandleBars": false,
+  "UseInflector": false,
+  "UseLegacyPluralizer": false,
+  "UseManyToManyEntity": false,
+  "UseNoConstructor": false,
+  "UseNoDefaultConstructor": true,
+  "UseNoNavigations": false,
+  "UseNoObjectFilter": false,
+  "UseNodaTime": false,
+  "UseNullableReferences": false,
+  "UseSchemaFolders": false,
+  "UseSpatial": false
+}

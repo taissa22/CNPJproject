@@ -1,0 +1,89 @@
+
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Partes do Processo</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body py-0">
+  <div class="row py-0">
+    <div class="col-md-12">
+      <span class="text-primary" style="font-size: 12px;">
+        Consulta dos dados dos Partes vinculados ao processo.
+      </span>
+    </div>
+    <div class="col-md-12 py-2">
+      <span class="table-label">
+        Autores
+      </span>
+      <table class="table table-stripped table-sm table-box">
+        <thead>
+          <tr>
+            <th scope="col"
+              class="small font-weight-bold"
+              style="width: 65%">
+              Nome
+            </th>
+            <th scope="col"
+              class="small font-weight-bold"
+              style="width: 35%">
+              CPF / CNPJ
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let l of listaAutores; let j = index">
+            <td>
+              {{ l.nome }}
+            </td>
+            <td>
+              {{ mascara(l.documento) }}
+            </td>
+          </tr>
+          <tr *ngIf="listaAutores && listaAutores.length == 0">
+            <td colspan="2">
+              Nenhum Autor
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-12 py-2">
+      <span class="table-label">
+        Réus
+      </span>
+      <table class="table table-stripped table-sm table-box">
+        <thead>
+          <tr>
+            <th scope="col"
+              class="small font-weight-bold"
+              style="width: 65%">
+              Nome
+            </th>
+            <th scope="col"
+              class="small font-weight-bold"
+              style="width: 35%">
+              CPF / CNPJ
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let l of listaReus; let j = index">
+            <td>
+              {{ l.nome }}
+            </td>
+            <td>
+              {{ mascara(l.documento) }}
+            </td>
+          </tr>
+          <tr *ngIf="listaReus && listaReus.length == 0">
+            <td colspan="2">
+              Nenhum Réu
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,19 @@
+<div class="wrapper" [style.diplay]="display">
+  <div id="search-input" [class]="classSearchInput" style="width: 100%;">
+    <a href="" target="_blank" hidden></a>
+
+    <input id="input-box" type="text" autocomplete="off" placeholder="Pesquise um menu..."  (keyup)="buscarMenu($event)"
+      (focus)="focus()" (blur)="blur()" />
+
+    <div [innerHTML]="innerHTML | safeHtml" [style.height.px]="height" id="autocom-box" class="autocom-box"></div>
+
+    <div class="icon">
+      <i id="icon-simbol" [style.opacity]="opacity" class="fa fa-search" style="font-size: medium !important"></i>
+    </div>
+
+    <div class="icon-limpar">
+      <i id="id-limpar" [style.display]="displayLimpar" (click)="limpar()" class="fas fa-times-circle"
+        style="font-size: medium !important; margin-left: 20%"></i>
+    </div>
+  </div>
+</div>

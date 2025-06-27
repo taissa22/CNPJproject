@@ -1,0 +1,122 @@
+<!-- Titulo da pagina e o breadcrumb -->
+<section class="container-breadcrumb">
+  <h3>{{ tituloPagina }}</h3>
+  <p>{{ caminhoPagina }}</p>
+</section>
+
+<!-- Datepickers -->
+<section class="topo">
+  <label>Fechamentos de</label>
+  <div class="form-inline prlnk-datepicker">
+    <div class="form-group">
+      <div class="input-group">
+        <input
+          class="form-control form-control-sm"
+          rInputMask="99/99/9999"
+          maxlength="10"
+          type="search"
+          placeholder="dd/mm/aaaa"
+          [bsConfig]="{ showWeekNumbers: false }"
+          bsDatepicker
+          #dtInicial="bsDatepicker"
+          id="dtInicial"
+          [formControl]="dataInicialFormControl" />
+        <div class="input-group-append">
+          <button class="btn calendar" type="button" (click)="dtInicial.toggle()">
+            <i class="fa-solid fa-calendar-days fa-lg"></i>
+          </button>
+        </div>
+      </div>
+  </div>
+  <label class="pl-3 pr-3">a</label>
+  <div class="form-inline prlnk-datepicker">
+    <div class="form-group">
+      <div class="input-group">
+        <input
+          class="form-control form-control-sm"
+          rInputMask="99/99/9999"
+          maxlength="10"
+          type="search"
+          placeholder="dd/mm/aaaa"
+          [bsConfig]="{ showWeekNumbers: false }"
+          bsDatepicker
+          #dtFinal="bsDatepicker"
+          id="dtFinal"
+          [formControl]="dataFinalFormControl"/>
+        <div class="input-group-append">
+          <button class="btn calendar" type="button" (click)="dtFinal.toggle()">
+            <i class="fa-solid fa-calendar-days fa-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <span class="pl-4">
+    <button class="btn btn-primary" style="width: 100px" (click)="obter(false)">Carregar</button>
+  </span>
+</section>
+
+<!-- Listar Fechamentos -->
+<section class="lower">
+  <div *ngIf="totalDeRegistros != 0">
+  <div class="quad">
+      <div class="celula_exportacao" *ngFor="let fechamento of fechamentos">
+          <div class="celula_esquerda">
+              <div class="dados_exportacao">
+                  <div id="dataFechamento" class="row">
+                    <div class="col-1 pr-0" style="min-width: 95px;">
+                      <strong>
+                        {{fechamento.dataFechamento | date: 'dd/MM/yyyy' }}
+                      </strong>
+                      <span class="pl-1">
+                        -
+                      </span>
+                    </div>
+                    <div class="col-10 pl-0 pr-0">
+                      <i *ngIf="(fechamento.dataFechamento | date: 'dd/MM/yyyy') == (fechamento.dataGeracao | date: 'dd/MM/yyyy')" class="fa fa-exclamation-circle fa-lg" style="color: #ffd100;"  aria-hidden="true" title="Empresa com fechamento parcial de contingência"></i>
+                      {{fechamento.empresasParticipantes}}
+                    </div>
+                  </div>
+              </div>
+              <div class="dados_exportacao">
+                  <span class="info">
+                      {{fechamento.numeroMesesMediaHistorica}} meses
+                 </span>
+              </div>
+              <div class="dados_exportacao">
+                <span class="info">
+                    Fechamento Mensal: {{fechamento.indMensal ? "Sim" : "Não"}}
+               </span>
+            </div>
+             <div class="dados_exportacao">
+                <span >
+                      Haircut de {{fechamento.percentualHairCut.toFixed(2).toString().replace(".", ",") }} % aplicado
+                 </span>
+              </div>
+              <div class="botao_download margin-top">
+                  <button (click)="download(fechamento.id)" *ngIf="fechamento.fechamentoGerado">
+                    <div>
+                      <i class="fa fa-download"></i><span>Relatórios de Fechamento</span>
+                    </div>
+                  </button>
+                  <div *ngIf="!(fechamento.fechamentoGerado)">
+                    <i class="fa fa-spinner"></i><span class="ml-2">Em processamento...</span>
+                  </div>
+              </div>
+          </div>
+          <div class="celula_direita">
+              <span>
+                  Solicitado por {{fechamento.usuario.nome}} <br>
+                  Executado em  {{fechamento.dataGeracao | date: 'dd/MM/yyyy'}} às {{fechamento.dataGeracao | date: 'HH:mm'}}
+             </span>
+          </div>
+      </div>
+      <div class="vermais" *ngIf="totalDeRegistros != fechamentos.length"><button (click)="obter(true)">VER MAIS</button></div>
+    </div>
+  </div>
+
+  <div *ngIf="totalDeRegistros == 0" class="pt-5">
+      <p class="texto_fechamento">Nenhum fechamento encontrado para o período indicado</p>
+  </div>
+</section>

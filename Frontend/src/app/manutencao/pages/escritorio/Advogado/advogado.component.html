@@ -1,0 +1,95 @@
+<app-manutencao-generica [exibirAdicionar]="false">
+
+  <div class="row" style="margin-left: 0px;">
+    <label style="margin-right: 10px;"><b>Escritório: </b> </label>
+    <label style="color: #6f62b2;"><b>{{escritorioNome ? escritorioNome : "" }}</b></label>
+  </div>
+
+  <div class="row">
+    <div class="col-12 py-3">
+    </div>
+  </div>
+  <div class="row" (keydown.enter)="buscarTabela()" style="margin-left: auto;">
+      <div style="width :74px">
+        <label for="estado"> <b>Estado:</b> </label>
+        <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        [items]="estados"
+        bindLabel="id"
+        bindValue="id"
+        [formControl] = "estadoFormControl"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        [placeholder]="'Selecione um Estado'"></ng-select>
+      </div>
+
+      <div style="margin-left: 10px; width: 240px;">
+        <label for="descricao"> <b>Nome:</b>  </label>
+        <input type="search"
+          (search)="onClearInputPesquisar()"
+          class="form-control mr-2"
+          style="text-transform:uppercase"
+          [formControl] = "NomeFormControl"
+          placeholder="Entre com o texto ou parte dele"
+          maxlength="100">
+
+
+      </div>
+    <div style="margin-top: 20px; margin-left: 10px; margin-bottom: 14px;">
+      <button type="button" class="btn btn-primary"  (click)="buscarTabela()">Buscar</button>
+    </div>
+
+    <button class="botaoIncluir roxo-padrao" style="padding-left: 7rem; margin-left: 34rem; font-size: 12px;" (click)="incluirAdvogado(true)">
+        <i style="font-size: 31px;" class="fas fa-plus-circle fa-lg "></i>      Incluir </button>
+
+  </div>
+
+
+
+  <div >
+    <sisjur-table (sort)="buscarTabela()"  >
+      <ng-container  >
+
+        <sisjur-table-header>
+            <sisjur-table-header-cell sort="estado" width="5">Estado OAB</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="OAB" width="10">Nº OAB</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="nome" width="25">Nome</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="telefone" width="15">Telefone</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="contato" width="15">Contato do Escritório</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="email" >Email</sisjur-table-header-cell>
+            <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+            <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+
+        <sisjur-table-row *ngFor="let item of advogados let i = index" >
+          <sisjur-table-row-cell>{{item.estadoOAB}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item.numeroOAB}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item.nome}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item.telefone}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item.ehContato ? "Sim" : "Não"}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item.email}} </sisjur-table-row-cell>
+
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="alterar(item)"> <i class="fa fa-edit"></i>  </button>
+          </sisjur-table-row-cell>
+
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="excluir(item)"> <i class="fa fa-trash"></i> </button>
+          </sisjur-table-row-cell>
+
+
+
+
+        </sisjur-table-row>
+      </ng-container>
+
+
+    </sisjur-table>
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+</div>
+
+</app-manutencao-generica>

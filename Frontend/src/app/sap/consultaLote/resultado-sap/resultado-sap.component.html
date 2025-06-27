@@ -1,0 +1,214 @@
+<app-container-pagina [titulo]="titulo"
+  caminho="SAP > Lotes > Consulta, Controle e Acompanhamento de Lotes > Resultado" (voltou) = "manterDados()" textoRota="Voltar"
+  rota="/sap/lote/consulta/">
+
+  <div class="button-parent pt-4">
+    <div class="container">
+      <div class="row">
+
+
+        <div class="col p-0">
+          <ng-template #parametrosTemplate>
+            <div class="pl-3 pr-3 font-parametros container-fluid"  style=" text-align: left; padding: 0!important;">
+
+                <div class=" row m-0">
+                  <div class="col-5 pb-1 " >
+                    <b>
+                      <span style="white-space: nowrap;"> Critério de Pesquisa</span>
+                    </b>
+                  </div>
+                  <div class="col-6 pb-1 pl-1" style="margin-left: 10px;">
+                    <b>
+                      <span>Valor</span>
+                    </b>
+                  </div>
+                </div>
+                <div class="scroll-parametros row m-0 toolip-w-ajuste" style="padding-right: 5rem;">
+                <div *ngFor="let key of keysParametros " class="col-12 d-flex" >
+                  <div class="col-6 pb-1 p-0" ><span style="white-space: nowrap;"
+                        *ngIf="parametros[key] ">{{ key | filtroAlias }}</span>
+                  </div>
+
+                  <div class="col-7 p-0">
+                    <div *ngIf="parametros[key] && !isArray(parametros[key])">
+                        {{
+                         (key == 'statusContabil' || key == 'statusProcesso') ?
+                        (  parametros[key] | statusAtivoInativoAmbos ) :
+                        (  parametros[key]  )
+                      }}
+                    </div>
+                    <div *ngIf="isArray(parametros[key])">
+                      <ng-container *ngFor="let keys of parametros[key]">
+                        <div class="pb-1"> {{keys}}
+                        </div>
+
+                      </ng-container>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+
+            <div class="button-tooltip  d-flex justify-content-center">
+              <button class="btn btn-roxo pr-1" (click)="exportarFiltros()">
+                Exportar
+              </button>
+              <button class="btn btn-roxo pl-1" (click)="t.close()">
+                Fechar
+              </button>
+            </div>
+
+
+          </ng-template>
+
+
+          <button class="btn btn-roxo" [autoClose]="false" triggers="manual" #t="ngbTooltip" (click)="t.open()"
+            [ngbTooltip]="parametrosTemplate" placement="bottom" tooltipClass="branco" style="text-align: left;">
+
+
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20"
+              height="22.581" viewBox="0 0 20 22.581">
+              <defs>
+                <pattern id="pattern" preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 31 35">
+                  <image width="31" height="35"
+                    xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAjCAYAAABsFtHvAAAABHNCSVQICAgIfAhkiAAAAzhJREFUWIXtlVtoXFUUQNe+985kgnk0EZKUxjbkYbCRJOqPSquJHVDoR0f0o76goSI4KVRB7fghiqJUakEREhSEQXwipYGCzvSnUROV0JqkmpDYGFM7YGwT85gQMpOZ2X6klkruDZPMjAp2/d1z9tlrH84+58I1/m+I3WDAH6rF0Eq7uWTKM3Kko3UyJ/KAP/QyIi/YBSsaE5Up1LzrcKd3PFO5YTP2kFOwqLyCEMFIfvPck1/U50AudgX9xaJH3V5gQkR6Mi1gLZEtL3W0LnjU7RWRn0Wk51B7qCFrchX7JnQsQPn66f2h0o3IrfUEq2h7wB/eA7BEHEVdIlJi5lMM/JFTuSA1CDVXfa/X9zfWfebZZJVcVDPbTibyf5KM5J58i90P1PPq0V0f6Qr9qnpcVX3prF/dcGl20fbGMh587GbmZ5Y49uHQ7dG5GCI0V2wpbN7Rus2nql1Am4jMpi9Pg+q6Eva2NXLisxFOfxvBtAzKNxewMB9n/NwMfb0R2vy3+qrrSgHuz5rck2/x6BO3cOyDHxk8M0lDUxl79zViuVZOMPLrPB+/N0iws5+Dz9/hU9V9IhK0y7X6zFWia8kbGsuIzsYYPDNJbX0pjzzefEUMULm1iIf3N7EcT9J98heAg065VslTpF5UNOK0YHNlIcM/XATAu7sWsemQLVuLuKGqmOGzFwGa19rMulDV7q5PhzXQHtbofEyd+CR4VgPtYU0kUqqqVXa5NnLVBoqK8wCYvrToGDR9aRG328Q0BRGZyJq8oakcgO++umAbMDYyzYWJOepuuh7gS6dEG5F3lVVcd77ptgoGTv/GyRNjJBN6ZXJ0aIr33+nHsgzu23MjwJtOiTb0jqtqy3I8eSrY+T3j52awXAblFQUsROPMzS5RUOimaFMeLpc5eX4svv1w586ZrMkvF+BLpTTY1xspHh2aIraUwDCEqpoSdu7axufHf+rp643sUHQosZzXcvTd1qmsyS8XsAl4Cmhh5UoNABNAUES6A/7Q24gcUNVR02Xd/dpb3t+zJk+HQ/7wERGeQRk3XOadVxeQ81/q6x33PqvKGwjVqXjC8Z3PKYED4Xv+FfE1/lP8CUX7RYQkE2bsAAAAAElFTkSuQmCC" />
+                </pattern>
+              </defs>
+              <rect id="buscar" width="20" height="22.581" rx="10" fill="url(#pattern)" />
+            </svg>
+
+            Critérios de Pesquisa
+          </button>
+        </div>
+
+
+        <div class="col p-0" style="text-align: right;">
+          <ng-template #verTotais>
+            <div class="d-flex " style="padding: 0 8px;">
+              <div style="text-align: right;">
+                <label for="totalLot" class="pb-2"> <b>Total de Lotes:</b> </label> <br>
+                <label for="valotTotal" class="pb-2"> <b>Valor Total: </b></label> <br>
+                <label for="qtdLanc" class="p-0 m-0"> <b>Qtd. Lançamentos:</b> </label>
+              </div>
+              <div class="pl-2" style="text-align: left;">
+
+                <!-- o currency coloca o &nbsp; na frente caso não tenha o R$, por isso coloquei em todos os outros,
+            assim ficarão alinhados. -->
+                <label id="totalLot" class="pb-2"> &nbsp;{{infoTooltip.totalLotes | number:'1.0'}} </label> <br>
+                <label id="valotTotal" class="pb-2"> {{infoTooltip.totalValorLotes | currency: "BRL":'':"1.2-2":"pt" }}
+                </label><br>
+                <label id="qtdLanc" class="p-0 m-0">&nbsp; {{infoTooltip.quantidadesLancamentos | number:'1.0'}}
+                </label>
+              </div>
+            </div>
+          </ng-template>
+
+          <button class="btn btn-roxo" triggers="click" [autoClose]="'outside'" [ngbTooltip]="verTotais"
+            placement="left" tooltipClass="cinza">
+            <div style="display: inline-block;
+                        color: #FFFFFF;
+                        font-family: arial;
+                        line-height: 17px;
+                        text-align: center;
+                        vertical-align: top;
+                        font-size: 9px;">
+              <div style="display: inline-block;
+                          border-radius: 50%;
+                          height: 15px;
+                          width: 15px;
+                          background-color: #786BB9;">
+                T</div>
+            </div>
+            Ver Totais
+          </button>
+
+          <button class="btn btn-roxo" (click)="exportar()" *ngIf="temPermissao">
+            <i class="fa fa-download"></i> Exportar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <ng-container>
+    <ng-container *ngFor="let resultado of listaResultados" [ngSwitch]="resultado.estado.id">
+      <!-- “Lote Gerado – Aguardando Envio para o SAP” -->
+      <ng-container *ngSwitchCase="2">
+        <app-container-expansivel
+          [titulo]="resultado.titulo"
+          [subtitulo]="resultado.subtitulo"
+          [descricao]="resultado.descricao"
+          [estado]="resultado.estado"
+          [estadoDetalhado]="resultado.estadoDetalhado"
+          [helperLabel]="resultado.helperLabel"
+          [observacao]="resultado.observacao"
+          [iconeObservacao]="resultado.iconeObservacao"
+          [id]="resultado.id"
+          [isOpen]="resultado.isOpen"
+          tituloBotaoCancelar="Cancelar Lote"
+          (clicked)="signalChange(resultado)"
+          (openSignal)="openchange($event)"
+          (cancelarClicked)="cancelarLote(resultado)"
+          [hasNumeroLoteBB]="resultado.numeroLoteBB && temPermissaoRegerarArquivoBB"
+          (regerarClicked)="onClickRegerarArquivo(resultado)">
+          <detalhamento-resultado *ngIf="resultado.isOpen" [borderoOn]="resultado.observacao">
+          </detalhamento-resultado>
+        </app-container-expansivel>
+      </ng-container>
+
+      <!-- “Pedido SAP Recebido Fiscal – Aguardando Confirmação de Pagamento -->
+      <ng-container *ngSwitchCase="6">
+        <app-container-expansivel [titulo]="resultado.titulo" [subtitulo]="resultado.subtitulo"
+          [descricao]="resultado.descricao" [estado]="resultado.estado" [estadoDetalhado]="resultado.estadoDetalhado"
+          [helperLabel]="resultado.helperLabel" [observacao]="resultado.observacao"
+          [iconeObservacao]="resultado.iconeObservacao" [id]="resultado.id" [isOpen]="resultado.isOpen"
+          tituloBotaoCancelar="Solicitar Cancelamento do Pedido SAP" (clicked)="signalChange(resultado)"
+          (openSignal)="openchange($event)" (cancelarClicked)="cancelarLote(resultado)"
+          (regerarClicked)="onClickRegerarArquivo(resultado)"
+          [hasNumeroLoteBB]="resultado.numeroLoteBB && temPermissaoRegerarArquivoBB">
+          <detalhamento-resultado *ngIf="resultado.isOpen" [borderoOn]="resultado.observacao">
+          </detalhamento-resultado>
+        </app-container-expansivel>
+      </ng-container>
+
+      <!-- “Pedido SAP Recebido Fiscal – Aguardando Confirmação de Pagamento -->
+      <ng-container *ngSwitchCase="15">
+        <app-container-expansivel [titulo]="resultado.titulo" [subtitulo]="resultado.subtitulo"
+          [descricao]="resultado.descricao" [estado]="resultado.estado" [estadoDetalhado]="resultado.estadoDetalhado"
+          [helperLabel]="resultado.helperLabel" [observacao]="resultado.observacao"
+          [iconeObservacao]="resultado.iconeObservacao" [id]="resultado.id" [isOpen]="resultado.isOpen"
+          tituloBotaoCancelar="Cancelar Manualmente Pedido SAP" (clicked)="signalChange(resultado)"
+          (openSignal)="openchange($event)" (cancelarClicked)="cancelarLote(resultado)"
+          (regerarClicked)="onClickRegerarArquivo(resultado)"
+          [hasNumeroLoteBB]="resultado.numeroLoteBB && temPermissaoRegerarArquivoBB">
+          <detalhamento-resultado *ngIf="resultado.isOpen" [borderoOn]="resultado.observacao">
+          </detalhamento-resultado>
+        </app-container-expansivel>
+      </ng-container>
+
+      <!-- "Indefinido" -->
+      <ng-container *ngSwitchDefault>
+        <app-container-expansivel [titulo]="resultado.titulo" [subtitulo]="resultado.subtitulo"
+          [descricao]="resultado.descricao" [estado]="resultado.estado" [estadoDetalhado]="resultado.estadoDetalhado"
+          [helperLabel]="resultado.helperLabel" [observacao]="resultado.observacao"
+          [iconeObservacao]="resultado.iconeObservacao" [id]="resultado.id" [isOpen]="resultado.isOpen"
+          (clicked)="signalChange(resultado)" (openSignal)="openchange($event)"
+          (cancelarClicked)="cancelarLote(resultado)"
+          (regerarClicked)="onClickRegerarArquivo(resultado)"
+          [hasNumeroLoteBB]="resultado.numeroLoteBB && temPermissaoRegerarArquivoBB">
+          <detalhamento-resultado *ngIf="resultado.isOpen" [borderoOn]="resultado.observacao">
+          </detalhamento-resultado>
+        </app-container-expansivel>
+      </ng-container>
+    </ng-container>
+    <div class="verMaisContainer">
+      <a (click)="carregarMais()" class="verMais" *ngIf="verMais">
+        <b>VER MAIS</b>
+      </a>
+    </div>
+  </ng-container>
+</app-container-pagina>

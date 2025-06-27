@@ -1,0 +1,103 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Vigência de índice" 
+  breadcrump="Manutenção > Cadastros Compartilhados > Valores > Índices - Vigências Cíveis " [exibirAdicionar]="!esconderFiltros">
+  <div class="row">
+    <div class="col-12 py-3"> 
+      <!-- <p class="font-purple">
+        Marque o Cálculo Inicial para definir a base de cálculo a ser utilizada.
+      </p> -->
+    </div>
+  </div>
+  <div class="row" style="margin-left: auto;">
+    <div class="d-flex pr-1" (keydown.enter)="buscar()">
+      <div style="width: 25rem;">
+        <label for="tipoDeProcesso">
+          <b>Tipo de Processo:</b>
+        </label>
+        <ng-select
+            [ngStyle]="{'fontSize': '11px', 'padding-top':'6px'}"
+            id="tipoDeProcesso"
+            [items]="tiposProcesso"        
+            bindLabel="descricao"
+            bindValue="id"
+            appearance="outline"
+            notFoundText="Nenhuma opção disponível"
+            [formControl]="tipoProcessoFormControl"
+            [searchable]="true"
+            [clearable]="false"      
+            (change)="aoSelecionarTipoProcesso()"  
+            [placeholder]="'Selecione o tipo de processo'">
+        </ng-select>
+      </div>
+
+      <div class="ml-3" style="width: 12rem;" [hidden]="esconderFiltros" >
+        <label for="tipoDeProcesso">
+          <b>Índice:</b>
+        </label>
+        <ng-select
+            [ngStyle]="{'fontSize': '11px', 'padding-top':'6px'}"
+            id="tipoDeItens"
+            [items]="tiposindice"        
+            bindLabel="descricao"
+            bindValue="id"
+            appearance="outline"
+            notFoundText="Nenhuma opção disponível"
+            [formControl]="tipoIndiceFormControl"
+            [searchable]="true"
+            [clearable]="true"
+            [placeholder]="'Selecione o índice'">
+        </ng-select>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top:10px;" [hidden]="esconderFiltros">
+    <div style="width:3rem;margin-left:20px;margin-right: 10px;margin-top: 5px;">
+      <b>Período:</b>
+    </div>
+      <div style="width: 28rem;">
+        <div class="col-9 pl-4">
+          <app-data-range 
+          (rangeValido) = "validarData($event)"
+          (retDataFim) = "datepickerDataFim($event)"
+          (retDataInicio) =  "datepickerDataInicio($event)"
+          >
+          </app-data-range>
+        </div>
+      </div>
+      <div class="ml-2" [ngStyle]="{ marginTop: '0.3rem' }" style="align-self: flex-end">
+        <button type="button" class="btn btn-primary" [disabled]="!dataValida" (click)="buscar()">Buscar</button>
+      </div>
+    
+  </div>
+  <div class="mt-4 row">
+ 
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" ></b>
+    </div>
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" id="btnExportar" (click)="exportar()"  [disabled]="dataSource.length === 0">
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+  <jur-table [sortDirection]="'asc'" [sortColumn]="'dataVigencia'" [dataSource]="dataSource" ng-show="true">
+
+    <jur-column-template flex="30" headerName="Início Vigência" sortColumn="dataVigencia" *jurRowData="let row">
+      {{ row.dataVigencia | date : 'dd/MM/yyyy' }}
+    </jur-column-template>
+    <jur-column-template flex="30" headerName="Índice de Correção" sortColumn="descricao" *jurRowData="let row">
+      {{ row.descricao }}
+    </jur-column-template>
+    <jur-column-template *jurRowData="let row">
+      <span fxFlex></span>
+     
+      <button type="button" class="btn btn-icon" id="btnExcluir" (click)="excluir(row)">
+        <i class="fa fa-trash"></i>
+      </button>
+    </jur-column-template>
+
+  </jur-table>
+
+  <jur-paginator [length]="total"></jur-paginator>
+
+</app-manutencao-generica>

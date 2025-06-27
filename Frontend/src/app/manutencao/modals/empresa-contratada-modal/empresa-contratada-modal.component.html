@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <span class="modal-title pl-0">{{operacao}} de Empresa Contratada</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+<form [formGroup]="formGroup" class="modal-body">
+    <div class="col p-0">
+        <label for="nome"> <b>Razão Social:</b>  </label>
+        <input type="text" class="form-control mr-2" id="nome" maxlength="100" [formControl]="nomeFormControl" [disableTooltip]="desabilitaTooltip(nomeFormControl)" [ngbTooltip]="validacaoNome">
+        <ng-template #validacaoNome>
+            <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.required">
+            Campo obrigatório
+          </span>
+        </ng-template>
+    </div>
+
+    <div class="d-flex roxo-padrao mt-3 mb-1"><b style="font-size: 16px;">Prepostos</b></div>
+
+    <div class="col p-0">
+        <label for="matricula"> <b>Login Terceiro:</b>  </label>
+        <span style="display: flex; align-items: center; margin-bottom: 1.3rem">
+          <input type="text" (keydown.space)="onSpaceKeyDown($event)" (keydown.enter)="adicionarMatricula()" class="form-control mr-2" id="matricula" maxlength="8" style="text-transform:uppercase; width: 8rem;" [formControl]="matriculaBuscaFormControl" (ngModelChange)="filtrarMatriculas()">
+          <span style="font-size: 14px; display: flex; align-items: center; cursor: pointer;" class="roxo-padrao" (click)="adicionarMatricula()"><i class="fas fa-plus-circle fa-lg" style="font-size: 24px; margin-right: 5px;"></i> Incluir Login</span>
+        </span>
+    </div>
+
+    <div id="box-matriculas" class="p-0">
+        <ng-container *ngFor="let terceiro of matriculasFiltradas">
+            <span class="badge badge-light box-matricula">
+          <a class="badge badge-light btn-matricula" (click)="removerMatricula(terceiro.loginTerceiro)"><i class="fa fa-times"></i></a>
+          {{terceiro.loginTerceiro}}
+        </span>
+        </ng-container>
+    </div>
+
+</form>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>

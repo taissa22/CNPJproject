@@ -1,0 +1,52 @@
+<form [formGroup]="fornecedorForm">
+  <div class="container-fluid pb-3 p-0">
+    <div class="row pb-3">
+      <div class="col-4">
+        <label for="nomeFornecedor">
+          Nome Fornecedor:
+        </label>
+        <br>
+        <input id="nomeFornecedor" type="search" formControlName="nomeFornecedor"
+        class="form-control" />
+      </div>
+      <div class="col-4">
+        <label for="fornecedorSap">
+          Fornecedor SAP:
+        </label>
+        <br>
+        <input id="fornecedorSap"  type="search" formControlName="codigoFornecedorSAP" class="form-control"/>
+      </div>
+
+      <div class="col-4">
+        <combo-box [label]="'Escritório:'" [classe]="'fornecedor'" [opcoes]="escritorios" [isWhite]="true"
+          (selectionChange)="fornecedorForm.get('codigoEscritorio').setValue($event);"> </combo-box>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-4">
+        <combo-box [label]="'Tipo Fornecedor:'" [classe]="'fornecedor'" [opcoes]="tipoFornecedor" [isWhite]="true"
+          (selectionChange)="fornecedorForm.get('codigoTipoFornecedor').setValue($event);"> </combo-box>
+
+      </div>
+
+      <div class="col-4">
+        <combo-box [label]="'Banco:'" [classe]="'fornecedor'" [opcoes]="bancos" [isWhite]="true"
+          (selectionChange)="fornecedorForm.get('codigoBanco').setValue($event);"> </combo-box>
+      </div>
+
+      <div class="col-4">
+        <combo-box [label]="'Profissional:'" [classe]="'fornecedor'" [opcoes]="profissionais" [isWhite]="true"
+          (selectionChange)="fornecedorForm.get('codigoProfissional').setValue($event);"> </combo-box>
+      </div>
+
+    </div>
+    <div class="row pt-3 ">
+      <div class="col-12 d-flex justify-content-end">
+        <button class="btn btn-primary" (click)="onClickBuscar()">Buscar</button>
+      </div>
+    </div>
+
+  </div>
+</form>

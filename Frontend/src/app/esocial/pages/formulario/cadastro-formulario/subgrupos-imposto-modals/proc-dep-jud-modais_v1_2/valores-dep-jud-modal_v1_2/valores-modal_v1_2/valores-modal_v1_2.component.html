@@ -1,0 +1,110 @@
+<div class="container-modal">
+    <div class="title">
+        <h4 class="roxo-padrao mb-0">{{titulo}} de Valores</h4>
+        <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
+        </div>
+    </div>
+
+    <form [formGroup]="formGroup" class="modal-body pt-0">
+
+        <div class="row mt-2">
+            <div class="col-sm-6">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Período Apuração:</b>
+                </label>
+                <ng-select class="form-control form-control-select" [items]="listaIndApuracao" bindLabel="descricao" bindValue="id" placeholder="Selecione um item" [formControl]="infovaloresIndapuracaoFormControl" [disableTooltip]="
+                 desabilitaTooltip(infovaloresIndapuracaoFormControl)" [ngbTooltip]="validacaoPeriodoApuracao" [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE">
+                </ng-select>
+                <ng-template #validacaoPeriodoApuracao>
+                    <span *ngIf="
+                        infovaloresIndapuracaoFormControl.invalid &&
+                        infovaloresIndapuracaoFormControl.hasError('required')
+                      ">
+                        Campo obrigatório.
+                    </span>
+                </ng-template>
+
+            </div>
+            <div class="col-sm-6">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Valor Retenção não Efetuada:</b>
+                </label>
+                <input class="form-control input-number" type="text" [formControl]="infovaloresVlrnretidoFormControl" [disableTooltip]="desabilitaTooltip(infovaloresVlrnretidoFormControl)" [ngbTooltip]="validacaoVlrRetNaoEfetuada" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left'  }"
+                    maxLength='21' [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE" />
+
+                <ng-template #validacaoVlrRetNaoEfetuada>
+                    <span *ngIf="infovaloresVlrnretidoFormControl.invalid && infovaloresVlrnretidoFormControl.hasError('min')">
+                        Deve ser maior que 0 (zero)
+                    </span>
+                </ng-template>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-sm-6">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Valor Depósito Judicial:</b>
+                </label>
+                <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left' }" maxlength="21" class="form-control" [formControl]="infovaloresVlrdepjudFormControl" [disableTooltip]="desabilitaTooltip(infovaloresVlrdepjudFormControl)"
+                    [ngbTooltip]="validacaoVlrRetEfetuada" [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE" />
+                <ng-template #validacaoVlrRetEfetuada>
+                    <span *ngIf="infovaloresVlrdepjudFormControl.invalid && infovaloresVlrdepjudFormControl.hasError('min')">
+                        Deve ser maior que 0 (zero)
+                    </span>
+                </ng-template>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Valor Compensação Ano Calendário:</b>
+                </label>
+                <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left' }" maxlength="21" class="form-control" [formControl]="infovaloresVlrcmpanocalFormControl" [disableTooltip]="desabilitaTooltip(infovaloresVlrcmpanocalFormControl)"
+                    [ngbTooltip]="validacaoCompAnoCal" [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE" />
+                <ng-template #validacaoCompAnoCal>
+                    <span *ngIf="infovaloresVlrcmpanocalFormControl.invalid && infovaloresVlrcmpanocalFormControl.hasError('min')">
+                        Deve ser maior que 0 (zero)
+                    </span>
+                </ng-template>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-sm-6">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Valor Compensação Anos Anteriores:</b>
+                </label>
+                <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left' }" maxlength="21" class="form-control" [formControl]="infovaloresVlrcmpanoantFormControl" [disableTooltip]="desabilitaTooltip(infovaloresVlrcmpanoantFormControl)"
+                    [ngbTooltip]="validacaoCompAnoAnterior" [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE" />
+                <ng-template #validacaoCompAnoAnterior>
+                    <span *ngIf="infovaloresVlrcmpanoantFormControl.invalid && infovaloresVlrcmpanoantFormControl.hasError('min')">
+                        Deve ser maior que 0 (zero)
+                    </span>
+                </ng-template>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Valor Rendimento Exigibilidade Suspensa:</b>
+                </label>
+                <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left' }" maxlength="21" class="form-control" [formControl]="infovaloresVlrrendsuspFormControl" [disableTooltip]="desabilitaTooltip(infovaloresVlrrendsuspFormControl)"
+                    [ngbTooltip]="validacaoVlrRedExiSusp" [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE" />
+                <ng-template #validacaoVlrRedExiSusp>
+                    <span *ngIf="infovaloresVlrrendsuspFormControl.invalid && infovaloresVlrrendsuspFormControl.hasError('min')">
+                        Deve ser maior que 0 (zero)
+                    </span>
+                </ng-template>
+            </div>
+        </div>
+
+        <div class="modal-footer pr-0">
+            <button type="button" class="btn btn-link" aria-label="Close" (click)="close()" *ngIf="temPermissaoBlocoCeDeE">
+                Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()" *ngIf="temPermissaoBlocoCeDeE">
+                Confirmar
+            </button>
+            <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="close()" *ngIf="!temPermissaoBlocoCeDeE">
+                Fechar
+            </button>
+        </div>
+    </form>
+</div>

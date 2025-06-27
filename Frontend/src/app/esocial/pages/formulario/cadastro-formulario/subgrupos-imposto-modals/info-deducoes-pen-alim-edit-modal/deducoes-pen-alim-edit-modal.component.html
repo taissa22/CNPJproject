@@ -1,0 +1,164 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">{{ titulo }} Pensão Alimentícia</h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+  <form [formGroup]="formGroup" class="modal-body pt-0 ">
+    <div style="display: contents">
+      <div class="row">
+        <div class="col-sm-12">
+          <span> <b>Tipo de Rendimento:</b> </span>
+          <ng-select
+            class="form-control form-control-select"
+            [items]="listaTipoRendimento"
+            bindLabel="descricaoConcatenada"
+            bindValue="id"
+            placeholder="Selecione um item"
+            [formControl]="tipoRendimentoFormControl"
+            [ngbTooltip]="tipoDependenteCPF"
+            [disableTooltip]="
+            desabilitaTooltip(tipoRendimentoFormControl)"
+            [disabled]="!temPermissaoBlocoCeDeE"
+            [class.disabled]="!temPermissaoBlocoCeDeE"
+          >
+            <ng-template ng-option-tmp let-item="item">
+              <div title="{{ item.descricaoConcatenada }}">
+                {{ item.descricaoConcatenada }}
+              </div>
+            </ng-template>
+          </ng-select>
+          <ng-template #tipoDependenteCPF>
+            <span
+              *ngIf="
+                tipoRendimentoFormControl.touched &&
+                tipoRendimentoFormControl.invalid &&
+                tipoRendimentoFormControl.hasError('required')
+              "
+            >
+              Campo obrigatório.
+            </span>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 10px; ">        
+        <div class="col-sm-6">
+          <span> <b>CPF do Beneficiário:</b> </span>
+          <input
+            class="form-control"
+            type="text"
+            [formControl]="cpfFormControl"
+            [textMask]="{ mask: mascaraCpf }"
+            [ngbTooltip]="validacaoCPF"
+            (change)="cpfChange()"
+            [disableTooltip]="desabilitaTooltip(cpfFormControl)"
+            [disabled]="!temPermissaoBlocoCeDeE"
+            [class.disabled]="!temPermissaoBlocoCeDeE"
+          />
+          <ng-template #validacaoCPF>
+            <span
+              *ngIf="
+                cpfFormControl.touched &&
+                cpfFormControl.invalid &&
+                cpfFormControl.hasError('cpfDuplicado')
+              "
+            >
+              O CPF do dependente deve ser diferente do CPF do trabalhador.
+            </span>
+            <span
+              *ngIf="
+                cpfFormControl.touched &&
+                cpfFormControl.invalid &&
+                cpfFormControl.hasError('cpfNotValid')
+              "
+            >
+              CPF inválido.
+            </span>
+
+            <span
+              *ngIf="
+                cpfFormControl.touched &&
+                cpfFormControl.invalid &&
+                cpfFormControl.hasError('required')
+              "
+            >
+              Campo obrigatório.
+            </span>
+          </ng-template>
+        </div>
+        <div class="col-sm-6">
+          <span>
+            <b>Valor Pensão:</b>
+          </span>
+          <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0.01"
+          maxlength="21"
+            class="form-control"
+            type="text"
+            [formControl]="penalimVlrpensaoFormControl"
+            [ngbTooltip]="validacaoVlrPem"
+            [disableTooltip]="
+            desabilitaTooltip(penalimVlrpensaoFormControl)"
+            [disabled]="!temPermissaoBlocoCeDeE"
+            [class.disabled]="!temPermissaoBlocoCeDeE"
+          />
+          <ng-template #validacaoVlrPem>
+            <span *ngIf="penalimVlrpensaoFormControl.invalid &&
+                          penalimVlrpensaoFormControl.hasError('required')">
+              Campo obrigatório.
+            </span>
+            <span
+          *ngIf="
+            penalimVlrpensaoFormControl.invalid &&
+            penalimVlrpensaoFormControl.hasError('min')
+          "
+        >
+          Valor deve ser maior que 0 (zero).
+        </span>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-link"
+      aria-label="Close"
+      (click)="close()"
+      *ngIf="temPermissaoBlocoCeDeE"
+    >
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="formGroup.invalid"
+      (click)="salvar()"
+      *ngIf="temPermissaoBlocoCeDeE"
+    >
+      Confirmar
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="formGroup.invalid"
+      (click)="close()"
+      *ngIf="!temPermissaoBlocoCeDeE"
+    >
+      Fechar
+    </button>
+  </div>
+</div>

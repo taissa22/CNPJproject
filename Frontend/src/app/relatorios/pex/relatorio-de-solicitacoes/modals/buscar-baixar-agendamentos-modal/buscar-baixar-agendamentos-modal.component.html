@@ -1,0 +1,142 @@
+<div class="modal-header">
+    <span class="modal-title">Relatórios agendados</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+
+<div class="modal-body pt-2 pb-4 pl-4 pr-5">
+    <div class="row mb-2">
+        <div class="col">
+            <div class="input-group md-form form-sm form-2  ">
+                <input class="form-control my-0 py-1 amber-border" placeholder="Pesquisar agendamento por nome e data "
+                    [(ngModel)]="pesquisa" type="text" aria-label="Search">
+                <div class="input-group-append" (click)="listarAgendamentos()">
+                    <span class="input-group-text amber lighten-3" id="basic-text1"><i class="fas fa-search text-grey"
+                            aria-hidden="true"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col">
+            <label for="">Filtrar por &nbsp;
+                <div style="cursor:pointer" class="btn  mr-2" (click)="filtrarPor = 'JaExecutados';listarAgendamentos()"
+                    [ngClass]="filtrarPor == 'JaExecutados' ?   {'btn-primary': true } : {'btn-outline-primary': true }">Já
+                    Executados</div>
+                <div style="cursor:pointer" class="btn  mr-2" (click)="filtrarPor = 'ExecucoesFuturas';listarAgendamentos()"
+                    [ngClass]="filtrarPor == 'ExecucoesFuturas' ?   {'btn-primary': true } : {'btn-outline-primary': true }">Execuções
+                    Futuras</div>
+                <div style="cursor:pointer" class="btn  mr-2"
+                    (click)="filtrarPor = 'MostarApenasNoPeriodo';abrirModalDatas()"
+                    [ngClass]="filtrarPor == 'MostarApenasNoPeriodo' ?   {'btn-primary': true } : {'btn-outline-primary': true }">Mostrar
+                    apenas no período...</div>
+            </label>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col">
+            <label for="">Ordenar por &nbsp;
+                <div style="cursor:pointer" class="btn  mr-2" (click)="tipoDePesquisaToggle = 'DataExecucao';listarAgendamentos()"
+                    [ngClass]="tipoDePesquisaToggle == 'DataExecucao' ?{'btn-primary': true } :  {'btn-outline-primary': true }">
+                    Data de
+                    Execução <i class="fa fa-caret-up" aria-hidden="true"></i> </div>
+                <div style="cursor:pointer" class="btn  mr-2" (click)="tipoDePesquisaToggle = 'Relatorio';listarAgendamentos()"
+                    [ngClass]="tipoDePesquisaToggle == 'Relatorio' ? {'btn-primary': true } : {'btn-outline-primary': true }">
+                    Relatório
+                </div>
+            </label>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col ">
+            <div class="w-100 border-top  " style="height: 250px;overflow: auto ;overflow-x: hidden;">
+                <div class="row">
+                    <div class="col-3 ">
+                        <h6 class="titulo-table pl-2">Últimas execuções</h6>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="titulo-table">Relatório</h6>
+                    </div>
+
+                    <div class="col-3">
+                        <h6 class="titulo-table" style="cursor:pointer;font-weight:400;" (click)="exportarLista()">Baixar lista de agendamentos</h6>
+                    </div>
+                </div>
+                <ng-container *ngFor="let agendamento of agendamentos">
+                    <div class="row py-2"
+                        [ngStyle]="agendamento.openEdit || agendamento.openDetalhes || agendamento.openHistorico  ? {'background':'#786bb9'}: {'background':'#fff'}">
+                        <div class="col-3 text-center">
+                            <p class="texto-linha-table p-0 m-0"
+                                [ngStyle]="agendamento.openEdit || agendamento.openDetalhes || agendamento.openHistorico ? {'color':'#fff'}: {'color':'#000'}">
+                                {{agendamento.tempoDecorrido}}</p>
+                            <p class="descricao-linha-table p-0 m-0"
+                                [ngStyle]="agendamento.openEdit || agendamento.openDetalhes || agendamento.openHistorico ? {'color':'#fff'}: {'color':'#999'}">
+                                ({{agendamento.datUltExecucao | date : "dd/MM/yyyy hh:mm"}})</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="texto-linha-table p-0 m-0"
+                                [ngStyle]="agendamento.openEdit || agendamento.openDetalhes || agendamento.openHistorico  ? {'color':'#fff'}: {'color':'#000'}">
+                                {{agendamento.nomeDoRelatorio}}</p>
+                            <p class="descricao-linha-table p-0 m-0"
+                                [ngStyle]="agendamento.openEdit || agendamento.openDetalhes || agendamento.openHistorico  ? {'color':'#fff'}: {'color':'#999'}">
+                                Duração da última
+                                execução: {{agendamento.duracaoExecucao}} | Execução
+                                {{agendamento.tipoExecucao}}</p>
+                        </div>
+                        <div class="col-1 pr-0 text-right">
+                            <i class="fa fa-download mb-2" style=" cursor: pointer; margin-top: 7px;"
+                                (click)="exportar(agendamento)"
+                                [ngStyle]="agendamento.openEdit || agendamento.openDetalhes || agendamento.openHistorico ? {'color':'#fff'}: {'color':'#786bb9'}"
+                                aria-hidden="true"></i>
+                        </div>
+                        <div class="col-2">
+                            <div ngbDropdown>
+                                <button class="btn btn-link" style="font-weight: bold;" id="drop1" ngbDropdownToggle
+                                    [ngStyle]="agendamento.openEdit || agendamento.openDetalhes || agendamento.openHistorico  ? {'color':'#fff'}: {'color':'#786bb9'}">OPÇÕES
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                                <div ngbDropdownMenu="drop1" style="margin-left: -200px;">
+                                    <div class="w-100" style="z-index: 999;background-color: #fff;">
+                                        <button ngbDropdownItem style="color: #786bb9;" (click)="exportar(agendamento)">
+                                            <i class="fa fa-download mb-2" aria-hidden="true"></i> &nbsp; Baixar
+                                            resultado mais recente
+                                            (.csv)</button>
+                                        <button ngbDropdownItem style="color: #786bb9;"
+                                            (click)="swallEditarAgendamento(agendamento)"> <i
+                                                class="fa fa-pencil-alt"></i> &nbsp; Editar agendamento</button>
+                                        <button ngbDropdownItem style="color: #786bb9;"
+                                            (click)="abrirDetalhesAgendamento(agendamento)"> <i
+                                                class="fa fa-info-circle" aria-hidden="true"></i> &nbsp; Ver detalhes do
+                                            agendamento</button>
+                                        <button ngbDropdownItem style="color: #786bb9;"
+                                            (click)="abrirHistorico(agendamento)"> <i class="fa fa-clock"
+                                                aria-hidden="true"></i> &nbsp; Histórico deste agendamento</button>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <editar-agendamento-relatorio 
+                        [agendamentoModel]="agendamento"
+                        (atualizarAgendamentos)="listarAgendamentos($event)" 
+                        *ngIf="agendamento.openEdit">
+                    </editar-agendamento-relatorio> 
+                    
+                    <detalhes-agendamento [agendamento]="agendamento"  
+                    *ngIf="agendamento.openDetalhes"></detalhes-agendamento>
+                   
+                    <historico-agendamento [agendamento]="agendamento" 
+                    *ngIf="agendamento.openHistorico"></historico-agendamento>
+
+                </ng-container>
+ 
+                <div class="row  my-2" *ngIf="agendamentos.length >= 10" > 
+                    <div class="col text-center"><a style="color:#786bb9;font-size: 12px;cursor: pointer;" (click)="listarAgendamentosSkip()">VER MAIS</a></div>
+                </div> 
+            </div>
+
+        </div>
+    </div>
+</div>

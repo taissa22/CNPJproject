@@ -1,0 +1,47 @@
+/*
+.btn{
+  margin-top: 59px
+} */
+
+h1{
+  font-size: 13px !important;
+    font-weight: bold;
+    color: #786BB9;
+}
+
+.flex{
+display: flex;
+}
+
+.ver-totais {border-radius: 50%;
+display: inline-block;
+height: 100px;
+width: 100px;
+border: 1px solid #000000;
+background-color: #FFFF00;}
+
+.padd{
+  padding: 6px;
+}
+
+.form-control{
+  width: 120px;
+}
+
+.but{
+  float: right;
+
+}
+.divBtn{
+  margin-right: 5vw;
+}
+
+.botao{
+  padding: 4px 12px !important;
+
+}
+
+.title{
+  display: flex;
+  margin-right: 5px;
+}

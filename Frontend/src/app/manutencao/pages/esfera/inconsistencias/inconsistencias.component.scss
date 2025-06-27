@@ -1,0 +1,16 @@
+::ng-deep {
+    .inconsistencia-modal{
+        .modal-dialog {
+            min-width: 1250px!important;
+            max-width: 1250px!important;
+        }
+
+        .pagina {
+            min-width: 97%;
+        }
+
+        .container-breadcrumb {
+            min-width: 97%;
+        }
+    }
+}

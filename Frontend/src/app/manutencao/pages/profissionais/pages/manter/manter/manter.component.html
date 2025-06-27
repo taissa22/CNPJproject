@@ -1,0 +1,351 @@
+<style>
+  form {
+    border: solid 1px #dee2e6;
+    padding-bottom: 16px;
+    border-top: none;
+    padding: 16px;
+  }
+</style>
+
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">{{ titulo }}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body pt-0" style="padding-bottom: 0;">
+  <ngb-tabset [destroyOnHide]="false" justify="justified" #tabset="ngbTabset">
+    <ngb-tab id="tab-dados-pessoas">
+      <ng-template ngbTabTitle><span class="ngb-tab-title">Dados Pessoais</span></ng-template>
+      <ng-template ngbTabContent>
+        <form [formGroup]="formulario">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="col-form-label-sm" for="cpf">&nbsp;</label>
+              <table>
+                <tbody>
+                  <tr>
+                    <td style="width: 100px;">
+                      <label class="col-form-label-sm" for="tipoPessoa">
+                        <b>Tipo de Pessoa:</b>
+                      </label>
+                    </td>
+                    <td style="width: 60px;">
+                      <div class="form-check form-check-inline">
+                        <input type="radio" name="tipoPessoa" id="tipoPessoaF" value="F"
+                          [formControl]="tipoPessoaFormControl" (change)="aoSelecionarTipoPessoa()" />
+                        <label for="tipoPessoa-fisica" class="form-check-label col-form-label-sm pl-1"
+                          style="font-size: 12px;">
+                          Física
+                        </label>
+                      </div>
+                    </td>
+                    <td style="width: 60px;">
+                      <div class="form-check form-check-inline">
+                        <input type="radio" name="tipoPessoa" id="tipoPessoaJ" value="J"
+                          [formControl]="tipoPessoaFormControl" (change)="aoSelecionarTipoPessoa()" />
+                        <label for="tipoPessoa-juridica" class="form-check-label col-form-label-sm pl-1"
+                          style="font-size: 12px;">
+                          Jurídica
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6" *ngIf="tipoPessoaFormControl.value === 'F'">
+              <label class="col-form-label-sm" for="cpf">
+                <b>CPF:</b>
+              </label>
+              <input type="text" class="form-control form-control-sm" id="cpf" name="cpf" [formControl]="cpfFormControl"
+                placement="top-left" [disableTooltip]="desabilitaTooltip(cpfFormControl)"
+                [textMask]="{ mask: mascaraCpf }" [ngbTooltip]="validacaoCpf" />
+              <ng-template #validacaoCpf>
+                <span *ngIf="cpfFormControl.invalid && cpfFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+                <span *ngIf="formulario.get('cpf').getError('cpfNotValid')">
+                  CPF incorreto. Favor informá-lo novamente
+                </span>
+              </ng-template>
+            </div>
+            <div class="col-md-6" *ngIf="tipoPessoaFormControl.value === 'J'">
+              <label class="col-form-label-sm" for="cnpj">
+                <b>CNPJ:</b>
+              </label>
+              <input type="text" class="form-control form-control-sm" id="cnpj" name="cnpj"
+                [formControl]="cnpjFormControl" placement="top-left" [disableTooltip]="desabilitaTooltip(cnpjFormControl)"
+                [textMask]="{ mask: mascaraCnpj }" [ngbTooltip]="validacaoCnpj" />
+              <ng-template #validacaoCnpj>
+                <span *ngIf="cnpjFormControl.invalid && cnpjFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+                <span *ngIf="formulario.get('cnpj').getError('cnpjNotValid')">
+                  CNPJ incorreto. Favor informá-lo novamente
+                </span>
+              </ng-template>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="col-form-label-sm" for="nome">
+                <b>Nome:</b>
+              </label>
+              <input type="text" class="form-control form-control-sm" id="nome" name="nome" maxlength="400"
+                [formControl]="nomeFormControl" placement="top-left" [disableTooltip]="desabilitaTooltip(nomeFormControl)"
+                [ngbTooltip]="validacaoNome" />
+              <ng-template #validacaoNome>
+                <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+                <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.maxlength">
+                  O nome não pode ter mais de 400 caracteres
+                </span>
+              </ng-template>
+            </div>
+            <div class="col-md-6">
+              <label class="col-form-label-sm" for="email">
+                <b>Email:</b>
+              </label>
+              <input type="text" class="form-control form-control-sm" id="email" name="email" maxlength="60"
+                [formControl]="emailFormControl" placement="top-left"
+                [disableTooltip]="desabilitaTooltip(emailFormControl)" [ngbTooltip]="validacaoEmail" />
+              <ng-template #validacaoEmail>
+                <span *ngIf="emailFormControl.invalid && emailFormControl.errors.maxlength">
+                  O e-mail não pode ter mais de 60 caracteres
+                </span>
+              </ng-template>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-inline pl-0">
+              <div class="col-md-2">
+                <label class="col-form-label-sm">&nbsp;</label>
+                <div class="input-group" style="width: 100%;">
+                  <input type="checkbox" name="contador" id="contador" [formControl]="contadorFormControl" />
+                  <label for="contador" class="form-check-label col-form-label-sm pl-1" style="font-size: 12px;">
+                    Contador
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label class="col-form-label-sm">&nbsp;</label>
+                <div class="input-group" style="width: 100%;">
+                  <input type="checkbox" name="contadorPex" id="contadorPex" [formControl]="contadorPexFormControl" />
+                  <label for="contadorPex" class="form-check-label col-form-label-sm pl-1" style="font-size: 12px;">
+                    Contador Pex
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label class="col-form-label-sm" for="telefone">
+                <b>Telefone:</b>
+              </label>
+              <input type="text" class="form-control form-control-sm" id="telefone" name="telefone"
+                [formControl]="telefoneFormControl" [textMask]="{ mask: mascaraTelefone }" />
+            </div>
+            <div class="col-md-4">
+              <label class="col-form-label-sm" for="celular">
+                <b>Celular:</b>
+              </label>
+              <input type="text" class="form-control form-control-sm" id="celular" name="celular"
+                [formControl]="celularFormControl" [textMask]="{ mask: mascaraCelular }" />
+            </div>
+            <div class="col-md-4">
+              <label class="col-form-label-sm" for="celular">
+                <b>Fax:</b>
+              </label>
+              <input type="text" class="form-control form-control-sm" id="fax" name="fax" [formControl]="faxFormControl"
+                [textMask]="{ mask: mascaraFax }" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-4 form-inline pl-0">
+                <label class="col-form-label-sm">&nbsp;</label>
+                <div class="input-group" style="width: 100%;">
+                  <input type="checkbox" name="advogadoAutor" id="advogadoAutor" [formControl]="advogadoAutorFormControl"
+                    (change)="aoMarcarAdvogadoDoAutor()" />
+                  <label for="advogadoAutor" class="form-check-label col-form-label-sm pl-1" style="font-size: 12px;">
+                    Advogado do Autor
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label class="col-form-label-sm" for="nome">
+                <b>Registro OAB:</b>
+              </label>
+              <input type="text" class="form-control form-control-sm" id="registroOAB" name="registroOAB" maxlength="7"
+                [formControl]="registroOABFormControl" placement="top-left"
+                [disableTooltip]="desabilitaTooltip(registroOABFormControl)" [ngbTooltip]="validacaoRegistroOAB" />
+              <ng-template #validacaoRegistroOAB>
+                <span *ngIf="registroOABFormControl.invalid && registroOABFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+                <span *ngIf="registroOABFormControl.invalid && registroOABFormControl.errors.maxlength">
+                  O Registro OAB não pode ter mais de 7 caracteres
+                </span>
+              </ng-template>
+            </div>
+            <div class="col-md-4">
+              <label class="col-form-label-sm" for="estado">
+                <b>Estado OAB:</b>
+              </label>
+              <ng-select
+                id="estadoOAB"
+                [items]="estados"
+                bindLabel="nome"
+                bindValue="id"
+                notFoundText="Nenhuma opção disponível"
+                dropdownPosition="top"
+                [ngStyle]="{ fontSize: '11px' }"
+                [searchable]="true"
+                [clearable]="false"
+                [placeholder]="'Escolha uma opção'"
+                placement="top-left"
+                [formControl]="estadoOABFormControl"
+                [disableTooltip]="desabilitaTooltip(estadoOABFormControl)"
+                [ngbTooltip]="validacaoEstadoOAB">
+              </ng-select>
+              <!-- <ngx-select
+                optionValueField="id"
+                optionTextField="descricao"
+                id="estadoOAB" [allowClear]="true" [items]="estados" [formControl]="estadoOABFormControl"
+                placeholder="Escolha uma opção" [disableTooltip]="desabilitaTooltip(estadoOABFormControl)"
+                placement="top-left" [ngbTooltip]="validacaoEstadoOAB">
+              </ngx-select> -->
+              <ng-template #validacaoEstadoOAB>
+                <span *ngIf="estadoOABFormControl.invalid && estadoOABFormControl.errors.required">
+                  Campo obrigatório
+                </span>
+              </ng-template>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab id="tab-enderecos">
+      <ng-template ngbTabTitle><span class="ngb-tab-title">Endereço</span></ng-template>
+      <ng-template ngbTabContent>
+       <form [formGroup]="formulario">
+        <div class="row pt-3">
+          <div class="col-md-6">
+            <label class="col-form-label-sm" for="endereco">
+              <b>Endereço:</b>
+            </label>
+            <textarea rows="5" class="form-control form-control-sm" id="endereco" name="endereco" maxlength="60"
+              [formControl]="enderecoFormControl" placement="top-left"
+              [disableTooltip]="desabilitaTooltip(enderecoFormControl)" [ngbTooltip]="validacaoEnderecos">
+              </textarea>
+            <ng-template #validacaoEnderecos>
+              <span *ngIf="enderecoFormControl.invalid && enderecoFormControl.errors.maxlength">
+                O endereço não pode ter mais de 60 caracteres
+              </span>
+            </ng-template>
+            <span style="font-size:11px;"
+              class="float-right">{{ enderecoFormControl.value ? (60 - enderecoFormControl.value.length) : 60 }}/60
+              caracteres restantes</span>
+          </div>
+          <div class="col-md-6">
+            <label class="col-form-label-sm" for="enderecosAdicionais">
+              <b>Endereços Adicionais:</b>
+            </label>
+            <textarea rows="5" class="form-control form-control-sm" id="enderecosAdicionais" name="enderecosAdicionais"
+              maxlength="4000" [formControl]="enderecosAdicionaisFormControl" placement="top-left"
+              [disableTooltip]="desabilitaTooltip(enderecosAdicionaisFormControl)"
+              [ngbTooltip]="validacaoEnderecosAdicionais">
+              </textarea>
+            <ng-template #validacaoEnderecosAdicionais>
+              <span *ngIf="enderecosAdicionaisFormControl.invalid && enderecosAdicionaisFormControl.errors.maxlength">
+                Os endereços adicionais não podem ter mais de 4000 caracteres
+              </span>
+            </ng-template>
+            <span style="font-size:11px;"
+              class="float-right">{{ enderecosAdicionaisFormControl.value ? (4000 - enderecosAdicionaisFormControl.value.length) : 4000 }}/4000
+              caracteres restantes</span>
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col-md-4">
+            <label class="col-form-label-sm" for="telefonesAdicionais">
+              <b>Telefones Adicionais:</b>
+            </label>
+            <input type="text" class="form-control form-control-sm" id="telefonesAdicionais" name="telefonesAdicionais"
+              maxlength="4000" [formControl]="telefonesAdicionaisFormControl" placement="top-left"
+              [disableTooltip]="desabilitaTooltip(telefonesAdicionaisFormControl)"
+              [ngbTooltip]="validacaoTelefonesAdicionais" />
+            <ng-template #validacaoTelefonesAdicionais>
+              <span *ngIf="telefonesAdicionaisFormControl.invalid && telefonesAdicionaisFormControl.errors.maxlength">
+                Os telefones adicionais não podem ter mais de 4000 caracteres
+              </span>
+            </ng-template>
+          </div>
+          <div class="col-md-4">
+            <label class="col-form-label-sm" for="cidade">
+              <b>Cidade:</b>
+            </label>
+            <input type="text" class="form-control form-control-sm" id="cidade" name="cidade" maxlength="30"
+              [formControl]="cidadeFormControl" placement="top-left"
+              [disableTooltip]="desabilitaTooltip(cidadeFormControl)" [ngbTooltip]="validacaoCidade" />
+            <ng-template #validacaoCidade>
+              <span *ngIf="cidadeFormControl.invalid && cidadeFormControl.errors.maxlength">
+                A cidade não pode ter mais de 30 caracteres
+              </span>
+            </ng-template>
+          </div>
+          <div class="col-md-4">
+            <label class="col-form-label-sm" for="estado">
+              <b>Estado:</b>
+            </label>
+            <ngx-select
+              optionValueField="id"
+              optionTextField="descricao"
+              id="estado" [allowClear]="true" [items]="estados" [formControl]="estadoFormControl"
+              placeholder="Escolha uma opção">
+            </ngx-select>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col-md-4">
+            <label class="col-form-label-sm" for="bairro">
+              <b>Bairro:</b>
+            </label>
+            <input type="text" class="form-control form-control-sm" id="bairro" name="bairro" maxlength="30"
+              [formControl]="bairroFormControl" placement="top-left"
+              [disableTooltip]="desabilitaTooltip(bairroFormControl)" [ngbTooltip]="validacaoBairro" />
+            <ng-template #validacaoBairro>
+              <span *ngIf="bairroFormControl.invalid && bairroFormControl.errors.maxlength">
+                O bairro não pode ter mais de 30 caracteres
+              </span>
+            </ng-template>
+          </div>
+          <div class="col-md-4">
+            <label class="col-form-label-sm" for="cep">
+              <b>CEP:</b>
+            </label>
+            <input type="text" class="form-control form-control-sm" id="cep" name="cep" [formControl]="cepFormControl"
+              [textMask]="{ mask: mascaraCep }" />
+          </div>
+        </div>
+       </form>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="activeModal.dismiss()">
+    Cancelar
+  </button>
+  <button type="button" class="btn btn-primary" (click)="confirmar(tabset)">
+    Confirmar
+  </button>
+</div>

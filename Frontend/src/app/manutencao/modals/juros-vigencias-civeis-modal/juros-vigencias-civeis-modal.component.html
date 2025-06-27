@@ -1,0 +1,133 @@
+<style>
+    .modal-header button {
+        color: gray;
+    }
+
+    .modal-title {
+        margin: auto;
+    }
+
+    .btn-icon {
+        font-size: 18px;
+    }
+
+</style>
+
+<div class="modal-header">
+    <span class="modal-title">{{titulo}}</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0 ">
+
+    <div class="col-md-12 pl-0 pr-0">
+        <div class="d-flex flex-column bd-highlight  mb-4">
+            <label for="tipos-processo">
+                <b>Tipo de Processo:</b>
+            </label>
+
+            <ng-select
+            [ngStyle]="{'fontSize': '11px'}"
+            id="tipoProcesso"
+            [items]="tiposDeProcesso"
+            bindLabel="descricao"
+            bindValue="id"
+            appearance="outline"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="false"
+            [clearable]="tiposDeProcesso.length > 1"
+            [placeholder]="'Selecione uma opção'"
+            [formControl]="tipoProcessoFormControl"
+            >
+          </ng-select>
+        </div>
+
+        <div class="row mt-2 bd-highlight">
+            <div class="col-6 d-flex flex-column">
+                <label class="col-form-label-sm" for="descricao-input">
+                    <b>Início de Vigência:</b>
+                </label>
+                <form class="form-inline">
+
+                    <div class="form-group" [class.disabled]="dataFormControl.disabled">
+                        <div class="form-inline input-group">
+                        <input
+                            type="text"
+                            class="form-control form-control-sm"
+                            placeholder="DD/MM/AAAA"
+                            rInputMask="99/99/9999"
+                            [bsConfig]="{showWeekNumbers: false }"
+                            name="data"
+                            id="data"
+                            [formControl]="dataFormControl"
+                            bsDatepicker
+                            #data="bsDatepicker"
+                            style="width: 120px;"
+                            placement="top-left top-right bottom-left bottom-right"
+                            [disableTooltip]="desabilitaTooltip(dataFormControl)"
+                            [ngbTooltip]="validacaoData" />
+                        <div class="input-group-append">
+                            <button
+                            type="button"
+                            class="btn btn btn-outline-secondary calendar"
+                            (click)="data.toggle()"
+                            [attr.aria-expanded]="data.isOpen"
+                            [disabled]="dataFormControl.disabled">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            </button>
+                        </div>
+                        <ng-template #validacaoData>
+                            <span *ngIf="dataFormControl.invalid && dataFormControl.errors.required">
+                            Campo obrigatório
+                            </span>
+                            <span *ngIf="dataFormControl.invalid && dataFormControl.errors.validDate">
+                            Data inválida
+                            </span>
+                            <span
+                            *ngIf="dataFormControl.invalid && dataFormControl.errors.bsDate && dataFormControl.errors.bsDate.invalid">
+                            Data inválida
+                            </span>
+                        </ng-template>
+                        </div>
+                    </div>
+
+                    </form>
+            </div>
+            <div class="col-6 d-flex flex-column pl-2">
+                <label class="col-form-label-sm" for="descricao-input">
+                    <b>Valor da Taxa de Juros (%):</b>
+                </label>
+                <div class="d-flex bd-highlight">
+                    <input
+                    class="form-control form-control-sm"
+                    id="valorJuros" name="valorJuros"
+                    placeholder="0,00"
+                    maxlength="6"
+                    [formControl]="valorFormControl"
+                    oninput="this.value = this.value.replace(/[^0-9,]/g, '').replace(/(\..*)\./g, '$1');"
+                    placement="top-left"
+                    [disableTooltip]="desabilitaTooltip(valorFormControl)"
+                    [ngbTooltip]="validacaoValor"/>
+                    <ng-template #validacaoValor>
+                        <span *ngIf="valorFormControl.invalid && valorFormControl.errors.required">
+                          Campo obrigatório
+                        </span>
+                        <span *ngIf="valorFormControl.invalid && valorFormControl.errors.pattern">
+                            O valor informado pode conter no máximo 5 dígitos sendo 3 digitos inteiros e 2 dígitos decimais.
+                        </span>
+                      </ng-template>
+                    <div class="flex-shrink-1 bd-highlight ml-1" style="align-self: center;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()">Confirmar</button>
+</div>

@@ -1,0 +1,167 @@
+<div class="modal-container">
+    <div class="d-flex">
+        <h3 class="roxo-padrao">Agendar Relatório de Negociações</h3>
+        <div type="button" class="roxo-padrao ml-auto btn-close" (click)="close()" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
+        </div>
+    </div>
+
+    <p class="roxo-padrao mt-2">Selecione os tipos de processos, a periodicidade de execução, informe o período de cadastro das negociações e clique em "Agendar".</p>
+
+    <div class="tipo-processo">
+        <b>Tipo de Processo:</b>
+        <div class="opts-processo mt-2">
+            <!-- CC -->
+            <input [formControl]="indProcessoCcFormControl" class="mr-1 form-control chk-processo" type="checkbox" name="civel-consumidor" id="civel-consumidor" [ngbTooltip]="validacaoChkCc" [disableTooltip]="desabilitaTooltip(indProcessoCcFormControl)" (click)="validarTipoProcesso()">            Cível Consumidor
+            <ng-template #validacaoChkCc>
+                <span *ngIf="indProcessoCcFormControl.invalid && indProcessoCcFormControl.touched">
+          Tipo de processo obrigatório.
+        </span>
+            </ng-template>
+
+            <!-- JEC -->
+            <input [formControl]="indProcessoJecFormControl" class="ml-3 mr-1 form-control chk-processo " type="checkbox" name="jec" id="jec" [ngbTooltip]="validacaoChkJec" [disableTooltip]="desabilitaTooltip(indProcessoJecFormControl)" (click)="validarTipoProcesso()">Juizado
+            Especial Cível
+            <ng-template #validacaoChkJec>
+                <span *ngIf="indProcessoJecFormControl.invalid && indProcessoJecFormControl.touched">
+          Tipo de processo obrigatório.
+        </span>
+            </ng-template>
+
+            <!-- PROCON -->
+            <input [formControl]="indProcessoProconFormControl" class="ml-3 mr-1 form-control chk-processo" type="checkbox" name="procon" id="procon" [ngbTooltip]="validacaoChkProcon" [disableTooltip]="desabilitaTooltip(indProcessoProconFormControl)" (click)="validarTipoProcesso()">            Procon
+            <ng-template #validacaoChkProcon>
+                <span *ngIf="indProcessoProconFormControl.invalid && indProcessoProconFormControl.touched">
+          Tipo de processo obrigatório.
+        </span>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="configs mt-3">
+        <div class="config-exec">
+            <b class="mb-2">Configuração da Execução:</b>
+
+            <!-- EXECUÇÃO IMEDIATA ############################################################################################### -->
+            <span class="d-flex mt-2">
+        <input class="mr-1" type="radio" [formControl]="periodicidadeExecucaoFormControl"
+          (click)="limparValoresPeriodicidade($event.target.value)"
+          [checked]="periodicidadeExecucaoFormControl.value == 1" value="1" name="periodicidade" id="imediata"> Execução
+        Imediata
+      </span>
+
+            <!-- Execução Especifica ############################################################################################### -->
+            <span class="d-flex mt-1">
+        <input class="mr-1" type="radio" [formControl]="periodicidadeExecucaoFormControl"
+          (click)="limparValoresPeriodicidade($event.target.value)"
+          [checked]="periodicidadeExecucaoFormControl.value == 2" value="2" name="periodicidade" id="especifica">
+        Execução Específica
+      </span>
+            <span class="d-flex mt-1 ml-4 mb-1" *ngIf="periodicidadeExecucaoFormControl.value == 2">
+        <app-datas [dataInicio]="datProxExecFormControl.value"
+          (retDataInicio)="datProxExecFormControl.setValue($event)" [minDate]="execucaoImediataDataAtual"></app-datas>
+      </span>
+
+            <!-- SEMANAL ############################################################################################################ -->
+            <span class="d-flex mt-1">
+        <input class="mr-1" type="radio" [formControl]="periodicidadeExecucaoFormControl"
+          (click)="limparValoresPeriodicidade($event.target.value)"
+          [checked]="periodicidadeExecucaoFormControl.value == 3" value="3" name="periodicidade" id="semanal"> Semanal
+      </span>
+            <span class="d-flex mt-1 ml-4 mb-1" *ngIf="periodicidadeExecucaoFormControl.value == 3" style="flex-direction: column;">
+        Dia:
+        <ng-select style="width: 11rem;" id="dia-semana" class="" [items]="diaSemanaList" bindValue="id"
+          bindLabel="descricao" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="true"
+          [multiple]="false" [formControl]="diaDaSemanaFormControl" [ngbTooltip]="validacaoDiaSemana"
+          [disableTooltip]="desabilitaTooltip(diaDaSemanaFormControl)">
+        </ng-select>
+        <ng-template #validacaoDiaSemana>
+          <span *ngIf="diaDaSemanaFormControl.invalid && diaDaSemanaFormControl.hasError('required')">
+            Campo Obrigatório.
+          </span>
+            </ng-template>
+            </span>
+
+            <!-- MENSAL ############################################################################################################## -->
+            <span class="d-flex mt-1">
+        <input class="mr-1" type="radio" [formControl]="periodicidadeExecucaoFormControl"
+          (click)="limparValoresPeriodicidade($event.target.value)"
+          [checked]="periodicidadeExecucaoFormControl.value == 4" value="4" name="periodicidade" id="mensal"> Mensal
+      </span>
+            <span class="d-flex mt-1 ml-4 mb-1" *ngIf="periodicidadeExecucaoFormControl.value == 4" style="flex-direction: column;">
+        <span class="d-flex">
+          <input class="mr-1" type="checkbox" name="ultimo-dia-mes" id="ultimo-dia-mes"
+            [formControl]="indUltimoDiaMesFormControl" (click)="ultimoDiaMes()"> Último dia do mês
+        </span>
+            <span class="mt-1">
+          Dia da Execução:
+          <ng-select style="width: 7rem;" id="dia-mes" [items]="diaMesList" bindValue="id" bindLabel="descricao"
+            notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="true" [multiple]="false"
+            [formControl]="diaDoMesFormControl" [disabled]="indUltimoDiaMesFormControl.value"
+            [class.disabled]="indUltimoDiaMesFormControl.value" [ngbTooltip]="validacaoDiaMes"
+            [disableTooltip]="desabilitaTooltip(diaDoMesFormControl)">
+          </ng-select>
+          <ng-template #validacaoDiaMes>
+            <span *ngIf="diaDoMesFormControl.invalid && diaDoMesFormControl.hasError('required')">
+              Campo Obrigatório.
+            </span>
+            </ng-template>
+            </span>
+            </span>
+
+        </div>
+
+        <div class="periodo-negociacoes">
+            <b>Período de cadastro das negociações:</b>
+
+            <div class="mt-1 mb-2">
+                <div *ngIf="periodicidadeExecucaoFormControl.value == 1 || periodicidadeExecucaoFormControl.value == 2">
+                    <app-data-range [dataInicio]="datInicioNegociacaoFormControl.value" [dataFim]="datFimNegociacaoFormControl.value" (retDataFim)="datFimNegociacaoFormControl.setValue($event)" (retDataInicio)="datInicioNegociacaoFormControl.setValue($event)">
+                    </app-data-range>
+                </div>
+
+                <div *ngIf="periodicidadeExecucaoFormControl.value == 3">
+                    <ng-select style="width: 11rem;" id="periodo-semanal" [items]="periodoSemanalList" bindValue="id" bindLabel="descricao" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="false" [multiple]="false" [formControl]="periodoSemanalFormControl"
+                        [ngbTooltip]="validacaoPeriodoSemanal" [disableTooltip]="desabilitaTooltip(periodoSemanalFormControl)">
+                    </ng-select>
+                    <ng-template #validacaoPeriodoSemanal>
+                        <span *ngIf="periodoSemanalFormControl.invalid && periodoSemanalFormControl.hasError('required')">
+              Campo Obrigatório.
+            </span>
+                    </ng-template>
+                </div>
+
+                <div *ngIf="periodicidadeExecucaoFormControl.value == 4">
+                    <ng-select style="width: 11rem;" id="periodo-mensal" [items]="periodoMensalList" bindValue="id" bindLabel="descricao" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="false" [multiple]="false" [formControl]="periodoMensalFormControl"
+                        [ngbTooltip]="validacaoPeriodoMensal" [disableTooltip]="desabilitaTooltip(periodoMensalFormControl)">
+                    </ng-select>
+                    <ng-template #validacaoPeriodoMensal>
+                        <span *ngIf="periodoMensalFormControl.invalid && periodoMensalFormControl.hasError('required')">
+              Campo Obrigatório.
+            </span>
+                    </ng-template>
+                </div>
+            </div>
+
+            <span class="d-flex">
+        <input class="mr-1" [formControl]="indNegociacoesAtivasFormControl" type="checkbox"
+          name="somente-processo-ativo" id="somente-processo-ativo"> Somente
+        negociações de processos ativos
+      </span>
+
+        </div>
+    </div>
+
+    <div class="modal-footer pr-0">
+        <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">
+      Cancelar
+    </button>
+        <button type="button" class="btn btn-primary" (click)="agendar()">
+      Agendar
+    </button>
+        <!-- <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()">
+      Confirmar
+    </button> -->
+    </div>
+
+</div>

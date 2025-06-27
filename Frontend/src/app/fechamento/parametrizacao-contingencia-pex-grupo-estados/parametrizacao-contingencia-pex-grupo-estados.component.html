@@ -1,0 +1,166 @@
+<div id="GlobalSite" class="container">
+  <div class="mb-3" style="overflow: hidden;">
+      <div class="pull-left">
+          <h1>Parametrização Contingência PEX - Grupos de Estados</h1>
+          <h6 style="font-size: 12px; color: #555555;">{{breadcrumb}}</h6>
+      </div>
+  </div>
+  <div class="container pl-0 pr-0">
+      <div class="row">
+          <div class="col-6">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-7 pl-1">
+                          <h3>Grupos de Estados</h3>
+                      </div>
+                  </div>
+              </div>
+              <div class="box-componente">
+                <div class="card" style="width: auto; height: 178px;">
+                  <div class="card-header" id="crudRow">
+                    <span class="iconsHover mr-2" (click)="adicionarNovoGrupo(null);">
+                      <i class="fas fa-plus-circle roxo-padrao" id="adicionar-icon"></i>
+                      <span style="color:  #222; font-size: 12px;">
+                        Adicionar
+                      </span>
+                    </span>
+                    <span class="iconsHover mr-2" [class.disabled]="selectedIndex === null" (click)="editarNomeGrupo(null);">
+                      <i class="fas fa-edit roxo-padrao"></i>
+                        Editar
+                      </span>
+                    <span class="iconsHover" [class.disabled]="selectedIndex === null" (mousedown)="removerGrupo()">
+                    <i class="fas fa-trash roxo-padrao"></i>
+                      Remover
+                    </span>
+                  </div>
+                  <div class="card-header" id="nomeColuna">
+                    <div class="row">
+                      <div class="col-12">Nome</div>
+                    </div>
+                  </div>
+                  <div style="overflow-y: auto; height: 110px;" id="gridGrupos">
+                    <ul class="list-group list-group-flush" >
+                      <li *ngFor="let grupo of grupos; let i = index">
+                        <div class="destaque-editado" *ngIf="!grupo.persistido || (grupo && (grupo.nome !== grupo.nomeAnterior))">
+                          <svg height="10" width="10">
+                            <polygon points="0,0 10,0 0,10" style="fill:red;stroke:none;stroke-width:0" />
+                          </svg>
+                        </div>
+                        <input type="text"  [readonly]="!editandoGrupo" href="#" class="list-group-item list-group-item-action" data-toggle="list"  [class.editando]="editandoGrupo"   [ngClass]="{'selected':selectedIndex === i && editandoGrupo}"n (click)="carregarEstadosGrupo(grupo.id, grupo.nome); linhaSelecionada(i, grupo)"
+                          (keydown.enter)="editarNomeGrupo($event.target.value)"   (blur)="editarNomeGrupo($event.target.value)" value="{{ grupo.nome }}">
+                      </li>
+                    </ul>
+                    <span class="box-adicionando pr-1 pl-1 pb-1" *ngIf="novoGrupo"><input style="height: 36px;" #inputNovoGrupo class="border-1 mt-1"  (blur)="adicionarNovoGrupo($event.target.value)" (keydown.enter)="adicionarNovoGrupo($event.target.value)" input type="text"></span>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-6">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-6 pl-1">
+                          <h3>Estados</h3>
+                      </div>
+                  </div>
+              </div>
+              <div [class.borda-selecao]="removendoEstados" class="box-componente">
+                <div class="card" style="width: auto;  height: 178px;">
+                  <div class="card-header" id="crudRow">
+                    <div class="iconsHover"  [class.disabled]="selectedIndex === null" (click)="habilitaAdicionarEstados()">
+                      <i class="fas fa-plus-circle roxo-padrao" id="adicionar-icon"></i>
+                        Adicionar
+                    </div>
+                    <span class="iconsHover" [class.disabled]="selectedIndex === null" (click)="habilitaRemoverEstados()">
+                      <i class="fas fa-trash roxo-padrao pl-2"></i>
+                      Remover
+                    </span>
+                    <!-- <span class="iconsHover" style="float:right;"  data-toggle="modal" data-target="#modalBuscaGrupos">
+                      <i class="fas fa-search roxo-padrao" (click)="limparBuscaGrupoPorEstados()"></i>
+                    </span> -->
+                  </div>
+                <div class="card-header" id="nomeColuna">
+                  Nome
+                </div>
+                <div style="overflow-y: auto; height: 110px; padding-top: 0;" id="gridEmpresas">
+                  <ul class="list-group list-group-flush" >
+                    <li *ngFor="let estadoGrupo of listaEstados;">
+                      <div class="destaque-editado" *ngIf="!estadoGrupo.persistido">
+                        <svg height="10" width="10">
+                          <polygon points="0,0 10,0 0,10" style="fill:red;stroke:none;stroke-width:0" />
+                        </svg>
+                      </div>
+                      <button type="button" class="list-group-item list-group-item-action" [disabled]="!removendoEstados" (click)="removerEstado(estadoGrupo)">{{ estadoGrupo.id }} - {{ estadoGrupo.descricao }}</button>
+                    </li>
+                  </ul>
+                </div>
+                </div>
+              </div>
+          </div>
+      </div>
+      <br />
+      <div class="row">
+          <div class="col-12">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-6 pl-1">
+                          <h3>Estados ainda não agrupados</h3>
+                      </div>
+                  </div>
+              </div>
+              <div [class.borda-selecao]="adicionandoEstados" class="box-componente" style="height: 250px;">
+                <div class="card" style="width: auto; height: 247px;">
+                <span class="card-header" id="nomeColuna">
+                  Nome
+                </span>
+                <!-- <span id="nomeColuna" style="padding-left: 0px; padding-bottom: 30px;">
+                  <input class="form-control" style="border-top: 0px; border-left: 0px; border-right: 0px;" type="text" [(ngModel)]="nomeEstadoFiltro" placeholder="Pesquisar estado por nome..">
+                </span> -->
+                <div style="overflow-y: auto; height: 180px;">
+                  <ul>
+                    <li class="list-group list-group-flush"  *ngFor="let estados of estadosDisponiveis">
+                      <button type="button" (click)="adicionarNovoEstado(estados)"  [disabled]="!adicionandoEstados" class="list-group-item list-group-item-action">{{ estados.id }} - {{ estados.descricao }}</button>
+                    </li>
+                  </ul>
+                </div>
+                </div>
+              </div>
+          </div>
+      </div>
+      <br />
+      <div class="mb-3" style="overflow: hidden;">
+          <div data-toggle="modal" data-target="#modalAgendamentosSalvos" class="pull-right btns-acoes ml-3">
+            <!-- <button type="button" class="btn btn-primary ml-3 pull-left" (click)="exportar()">Exportar</button> -->
+              <button type="button" id="cancelar" class="btn btn-primary ml-3 pull-left" (mousedown)="desfazerAlteracoes()">Cancelar</button>
+              <button type="button" class="btn btn-primary ml-3 pull-left" (click)="salvar()">Salvar</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal de Busca de Grupos por empresa -->
+<!-- <div class="modal fade" id="modalBuscaGrupos" tabindex="-1" data-keyboard="true" role="dialog" aria-labelledby="descricaoModalBusca" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="descricaoModalBusca">Localizar estados associadas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span id="nomeColuna" style="padding-left: 0px; padding-right: 30px; padding-bottom: 30px;">
+          <input class="form-control" style="border: none;" type="text" [(ngModel)]="nomeEstadoFiltroBusca" placeholder="Pesquisar grupo por estado..">
+        </span>
+        <div style="overflow-y: auto; height: 180px;">
+          <ul>
+            <li class="list-group list-group-flush"  *ngFor="let grupo of grupos | appFiltroBusca: nomeEstadoFiltroBusca">
+              <button type="text"  disabled class="list-group-item list-group-item-action">{{ grupo.nome }}</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+

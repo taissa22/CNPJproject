@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <span *ngIf="!fato" class="modal-title pl-0"> Inclusão Fato Gerador</span>
+  <span *ngIf="fato" class="modal-title pl-0">Alteração Fato Gerador</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+  <div class="row">
+    <div class="col">
+      <label class="col-form-label-sm" for="descricao-input"> <b>Descrição:</b> </label>
+      <input type="text" id="nome-input" 
+        [formControl]="descricaoFormControl" class="form-control"
+        [disableTooltip]="descricaoFormControl.valid || descricaoFormControl.untouched" 
+        [ngbTooltip]="descricaoError"
+        maxlength="50" />
+      <ng-template #descricaoError>
+        <span *ngIf="descricaoFormControl.hasError('required')"> Campo obrigatório </span>
+        <span *ngIf="descricaoFormControl.hasError('maxlength')"> O Limite é de 50 caracteres </span>
+      </ng-template>
+    </div>    
+  </div>  
+
+  <div class="row">
+    <div class="col pt-2" >
+      <input type="checkbox" [formControl]="ativoFormControl" class="mb-2"> <label class="m-0 p-0 pl-1 mb-1">Ativo</label>   
+    </div>
+  </div>
+
+</form>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid"
+    (click)="save()">Confirmar</button>
+</div>

@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <span class="modal-title pl-0">{{operacao}} de Status de Contato</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+<i class="fa fa-times"></i>
+</button>
+</div>
+<form [formGroup]="formGroup" class="modal-body">
+
+    <div class="col p-0">
+        <label for="nome"> <b>Descrição do Status de Contato:</b>  </label>
+        <div class="d-flex" style="align-items: center">
+            <input type="text" class="form-control mr-2" id="nome" maxlength="100" [formControl]="dscStatusContatoFormControl" [disableTooltip]="desabilitaTooltip(dscStatusContatoFormControl)" [ngbTooltip]="validacaoNome">
+            <input type="checkbox" name="indAtivo" class="ml-1 mr-2" id="indAtivo" [checked]="indAtivoFormControl.value" [formControl]="indAtivoFormControl">Ativo
+            <ng-template #validacaoNome>
+                <span *ngIf="dscStatusContatoFormControl.invalid && dscStatusContatoFormControl.errors.required">
+            Campo obrigatório
+          </span>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="col p-0 mt-3 d-flex" style="align-items: center">
+        <input type="checkbox" class="mr-1" name="indStatusContato" id="indStatusContato" [formControl]="indContatoRealizadoFormControl">Indica que o contato foi realizado
+    </div>
+
+    <div class="col p-0 mt-3 col" style="align-items: center">
+        <label for="tpResultado" style="width:125px"> <b>Indicação de Acordo:</b>  </label>
+        <div class="mt-1 d-flex"><input type="radio" class="mr-1" name="tpResultado" id="tpResultado" value="true" [checked]="indAcordoRealizadoFormControl.value == true" [formControl]="indAcordoRealizadoFormControl">Indica que o acordo foi realizado</div>
+        <div class="mt-1 d-flex"><input type="radio" class="mr-1" name="tpResultado" id="tpResultado" value="false" [checked]="indAcordoRealizadoFormControl.value == false" [formControl]="indAcordoRealizadoFormControl">Indica que o acordo não foi realizado</div>
+    </div>
+
+</form>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="save()">Confirmar</button>
+</div>

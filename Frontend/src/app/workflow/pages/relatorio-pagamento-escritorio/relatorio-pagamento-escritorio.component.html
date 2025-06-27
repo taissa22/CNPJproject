@@ -1,0 +1,103 @@
+<header fxLayout="row" fxLayoutAlign="start center">
+    <span fxFlex>
+    <h3 class="m-0" style="color: #786bb9; font-size: 20px; font-weight: 500;">Calcular Relatório de Pagamentos aos Escritórios</h3>
+    <p class="m-0" style="font-size: 12px;">{{ breadcrumb }}</p>
+  </span>
+    <button class="btn btn-primary" (click)="novoAgendamento()">
+    Novo Agendamento
+  </button>
+</header>
+
+<main fxLayout="column">
+    <span class="mr-auto" style="display: flex; align-items: center; padding-bottom: 10px">
+    <b style="width: 160px">Agendamento no Período: </b>
+    <app-data-range
+      [dataInicio]="dataExecucaoIni"
+      [dataFim]="dataExecucaoFim"
+      (retDataFim)="dataExecucaoFim = $event"
+      (retDataInicio)="dataExecucaoIni = $event">
+    </app-data-range>
+    <button
+      style="margin-left: 10px"
+      type="button"
+      class="btn btn-primary"
+      (click)="obterAgendamentos(1, dataExecucaoIni, dataExecucaoFim)">
+      Buscar
+    </button>
+  </span>
+
+    <span fxLayout="row" fxLayoutAlign="start center" class="title">
+    <h4 fxFlex>Relatórios agendados / executados</h4>
+    <button class="btn btn-small" (click)="refresh()">
+      <i class="fas fa-redo-alt"></i>
+      <span>ATUALIZAR LISTA</span>
+    </button>
+    </span>
+
+    <section class="panel-container" fxLayout="column">
+        <section class="panel" fxLayout="column" *ngFor="let agend of agendamentos">
+            <div fxLayout="row">
+                <section fxFlex="50" class="title-exec">
+                    <h5>
+                        Execução {{ agend.periodicidadeExecucao == 4 ? 'mensal' : agend.periodicidadeExecucao == 1 ? 'data específica' : 'imediata' }} - Mês Referência: {{ agend.mesReferencia | date : 'MM/yyyy' }}
+                    </h5>
+                    <span [ngSwitch]="agend.status">
+            <h6 *ngSwitchCase="0">
+              <span *ngIf="agend.periodicidadeExecucao == 0">
+                Este agendamento será processado em breve. Por favor, aguarde.
+              </span>
+                    <span *ngIf="agend.periodicidadeExecucao == 1">
+                Próxima execução agendada manualmente para {{ agend.datProximaExecucao | date : 'dd/MM/yyyy' }} 
+              </span>
+                    <span *ngIf="agend.periodicidadeExecucao == 4">
+                Próxima execução mensal agendada automaticamente para {{ agend.datProximaExecucao | date : 'dd/MM/yyyy' }} 
+              </span>
+                    </h6>
+                    <h6 *ngSwitchCase="1">
+                        Este agendamento está sendo processado. Por favor, aguarde.
+                    </h6>
+                    <h6 *ngSwitchCase="2">Execução finalizada em {{ agend.datFimExecucao == null ? 'xx/xx/xxxx' : agend.datFimExecucao | date : 'dd/MM/yyyy HH:mm' }} </h6>
+                    <h6 *ngSwitchCase="3">
+                        Ocorreu um erro técnico na rotina ao tentar processar o agendamento.
+                    </h6>
+                    </span>
+
+                </section>
+
+                <section class="status" [ngSwitch]="agend.status" fxFlex="50">
+                    <span *ngSwitchCase="0" [style.background-color]="'#3270A7'">Agendado</span>
+                    <span *ngSwitchCase="1" [style.background-color]="'#FF8C00'">Processando</span>
+                    <span *ngSwitchCase="2" [style.background-color]="'#19A519'">Finalizado</span>
+                    <span *ngSwitchCase="3" [style.background-color]="'#F80000'">Erro</span>
+
+                    <p>Agendamento {{agend.periodicidadeExecucao == 4 ? 'recorrente' : ''}} solicitado por {{ agend.usrCodUsuario }}</p>
+                    <p>em {{ agend.datAgendamento | date : 'dd/MM/yyyy HH:mm' }}</p>
+                    <p>(ID: {{ agend.cod }})</p>
+                </section>
+            </div>
+            <div>
+                <div [ngSwitch]="agend.status">
+                    <section class="excluir" fxLayout="row" *ngSwitchCase="0">
+                        <button class="btn btn-small p-0" (click)="removerAgendamento(agend.cod)">
+              <i class="fas fa-trash ml-0"></i>
+              <span>Excluir</span>
+            </button>
+                    </section>
+                    <section class="download" fxLayout="row" *ngSwitchCase="2 || 3">
+                        <button class="btn btn-small p-0" (click)="downloadRelatorio(agend.cod)">
+              <i class="fas fa-download ml-0"></i>
+              <span>Baixar Relatório de Pagamentos</span>
+            </button>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <div style="display: flex;justify-content: space-between;align-items: center;padding: 15px 0;">
+        <span style="font-weight: 600">Total de registros: {{ totalRegistro }} - Itens por página 5
+    </span>
+        <app-paginacao-buttons class="ml-auto" [pageMax]="5" [totalRegistro]="totalRegistro" [currentPage]="pagina" (onPageSelect)="atualizarPaginaInicial($event)" (onClickNextPage)="atualizarPaginaInicial($event)">
+        </app-paginacao-buttons>
+    </div>
+</main>

@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Geral_Mensagem_Carga_Pagaemnto_Status_Agendado" xml:space="preserve">
+    <value>Este agendamento será enviado ao SAP em breve. Por favor, aguarde.</value>
+  </data>
+  <data name="Geral_Mensagem_Carga_Pagaemnto_Status_EnviadoSap" xml:space="preserve">
+    <value>Este agendamento está aguardando o retorno da criação dos pedidos!</value>
+  </data>
+  <data name="Geral_Mensagem_Carga_Pagaemnto_Status_Erro" xml:space="preserve">
+    <value>Ocorreu um erro ao tentar processar o arquivo de pagamentos. Por favor, faça uma nova carga.</value>
+  </data>
+  <data name="Geral_Mensagem_Carga_Pagaemnto_Status_Processando" xml:space="preserve">
+    <value>Este agendamento está sendo processado.</value>
+  </data>
+  <data name="Geral_Mensagem_Email_Invalido" xml:space="preserve">
+    <value>{PropertyValue} não é um E-mail válido.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Campo_null" xml:space="preserve">
+    <value>O preenchimento do campo {PropertyName} é obrigatório.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Campo_Status_Inserir" xml:space="preserve">
+    <value>Marque a flag “Ativo” para incluir o recebedor.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_DataInvalida" xml:space="preserve">
+    <value>{PropertyName} não é um data válida.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_DecimalInvalido" xml:space="preserve">
+    <value>{PropertyName} não contém um valor válida.</value>
+  </data>
+  <data name="Geral_Mensagem_erro_Extensao_Arquivo_Invalida" xml:space="preserve">
+    <value>Somente Arquivos XLSM podem ser enviados.</value>
+  </data>
+  <data name="Geral_Mensagem_erro_Formato_Arquivo" xml:space="preserve">
+    <value>Existem dados obrigatórios não preenchidos ou no formato incorreto na planilha de pagamentos. Por favor, verifique a planilha e importe novamente.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Fornecedor_Recebedor_Inativo" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Fornecedor_Sap_Nome_Diferente" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_NomeDuplicado" xml:space="preserve">
+    <value>Já existe um registro com o nome informado.</value>
+  </data>
+  <data name="Geral_mensagem_Erro_Nome_Curto_Existente" xml:space="preserve">
+    <value>Já existe um recebedor cadastrado com esse nome curto.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_NumeroInvalido" xml:space="preserve">
+    <value>{PropertyName} não é um número válida.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Quantidade_Coluna_Arquivo" xml:space="preserve">
+    <value>A planilha carregada não contém o número de colunas esperadas pelo sistema. Verifique-a e tente novamente.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Registro_Existente" xml:space="preserve">
+    <value>Já existe um registro com o nome informado '{PropertyValue}'.</value>
+  </data>
+  <data name="Geral_Mensagem_erro_Tamanho_Arquivo" xml:space="preserve">
+    <value>Arquivo maior que o permitido.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Tamanho_Campo" xml:space="preserve">
+    <value>Tamanho do campo {PropertyName} está fora do permitido.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Tamanho_Campo_Arquivo" xml:space="preserve">
+    <value>Existem campos com tamanho fora do permitido.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Tipo_Data" xml:space="preserve">
+    <value>Existem campos data com valor inválido.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Tipo_Numero" xml:space="preserve">
+    <value>Existem campos número com valor inválido.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Tipo_Texto" xml:space="preserve">
+    <value>Existem campos texto com valor inválido.</value>
+  </data>
+  <data name="Geral_Mensagem_Login_Invalido" xml:space="preserve">
+    <value>Login e/ou senha informados são inválidos</value>
+  </data>
+  <data name="Geral_Mensagem_Sucesso" xml:space="preserve">
+    <value>Operação concluída com sucesso.</value>
+  </data>
+  <data name="Geral_Mensagem_Sucesso_Alteracao" xml:space="preserve">
+    <value>Registro atualizado com sucesso.</value>
+  </data>
+  <data name="Geral_Mensagem_Sucesso_Exclusao" xml:space="preserve">
+    <value>Registro removido com sucesso.</value>
+  </data>
+  <data name="Geral_Mensagem_Sucesso_Inclusao" xml:space="preserve">
+    <value>Registro incluído com sucesso.</value>
+  </data>
+  <data name="Mensagem_Arquivo_XLSM_Enviado_Status_Agendado" xml:space="preserve">
+    <value>Este agendamento será enviado ao SAP em breve. Por favor, aguarde.</value>
+  </data>
+  <data name="Mensagem_Erro_Agendamento_Nao_Encontrado" xml:space="preserve">
+    <value>Não existe um agendamento cadastro com o código informado.</value>
+  </data>
+  <data name="Mensagem_Erro_Ao_Excluir_Agendamento_Status_Diferente_Agendado" xml:space="preserve">
+    <value>Somente agendamentos com status agendado podem ser removidos.</value>
+  </data>
+  <data name="Mensagem_Erro_Arquivo_Extensao_invalida" xml:space="preserve">
+    <value>Arquivo com extensão inválida.</value>
+  </data>
+  <data name="Mensagem_Erro_Gravar_Arquivo" xml:space="preserve">
+    <value>Erro ao gravar arquivo.</value>
+  </data>
+  <data name="Mensagem_Erro_Validar_Regra_Nova_Senha" xml:space="preserve">
+    <value>Por favor, use caracteres de pelo menos dois desses grupos: minúsculas, maiúsculas, dígitos, especial</value>
+  </data>
+  <data name="Mensagem_Erro_Validar_Tamanho_Senha" xml:space="preserve">
+    <value>A senha deve ter pelo menos 6 caracteres.</value>
+  </data>
+  <data name="Shared_Mensagem_Erro_String_To_Boolean" xml:space="preserve">
+    <value>Erro na validação. Campo Booleano Inválido.</value>
+  </data>
+  <data name="Shared_Mensagem_Erro_String_To_DateTime" xml:space="preserve">
+    <value>Erro na validação. Campo Data Inválida.</value>
+  </data>
+  <data name="Shared_Mensagem_Erro_String_To_Decimal" xml:space="preserve">
+    <value>Erro na validação. Campo Decimal Inválido.</value>
+  </data>
+  <data name="Shared_Mensagem_Erro_String_To_Double" xml:space="preserve">
+    <value>Erro na validação. Campo Double Inválido.</value>
+  </data>
+  <data name="Shared_Mensagem_Erro_String_To_Int" xml:space="preserve">
+    <value>Erro na validação. Campo inteiro Inválido. </value>
+  </data>
+  <data name="Shared_Mensagem_Erro_String_To_Int64" xml:space="preserve">
+    <value>Erro na validação. Campo Inteiro de 64Bits Inválido.</value>
+  </data>
+  <data name="Recebedor_Mensagem_Cadastro_Ativo_Obrigatorio" xml:space="preserve">
+    <value>Marque a flag “Ativo” para incluir o recebedor.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Fornecedor_Recebedor_Nao_Cadastrado" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="Geral_Mensagem_erro_SemFilial_Faturamento" xml:space="preserve">
+    <value>O preenchimento de Filial é obrigatório.</value>
+  </data>
+  <data name="Geral_mensagem_Erro_Empresa_Filial_Existente" xml:space="preserve">
+    <value>Já existe uma configuração para essa Empresa Centralizadora e Filiais.</value>
+  </data>
+  <data name="Geral_Mensagem_Email_Invalido_Customizada" xml:space="preserve">
+    <value>O campo e-mail é obrigatório. Por favor, preencha com um formato válido.</value>
+  </data>
+  <data name="Shared_Mensagem_Erro_Data_Maior_Que_Atual" xml:space="preserve">
+    <value>A data informada não pode ser maior que a data atual.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Checkbox_Obrigatorio" xml:space="preserve">
+    <value>O checkbox {PropertyName} é obrigatório.</value>
+  </data>
+  <data name="Mensagem_Arquivo_CSV_Enviado_Status_Agendado" xml:space="preserve">
+    <value>A carga para alteração em bloco foi agendada, mas a rotina ainda não foi iniciada.</value>
+  </data>
+  <data name="ZipFileToZippedNotExistsMessage" xml:space="preserve">
+    <value>Um ou mais arquivos não existem!</value>
+  </data>
+  <data name="ZipFolderNotExistsMessage" xml:space="preserve">
+    <value>O diretório especificado não existe!</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Extensao_CSV_Arquivo_Invalida" xml:space="preserve">
+    <value>Somente arquivos .csv podem ser enviados.</value>
+  </data>
+  <data name="Geral_Mensagem_Erro_Tamanho_Arquivo_10mb" xml:space="preserve">
+    <value>O arquivo importado ultrapassa o limite permitido de 10MB.</value>
+  </data>
+  <data name="Mensagem_Erro_Quantidade_Colunas" xml:space="preserve">
+    <value>O arquivo importado não possui a quantidade de colunas esperadas pelo sistema.</value>
+  </data>
+  <data name="Mensagem_Erro_Arquivo_Vazio" xml:space="preserve">
+    <value>O arquivo importado não possui registros para alteração.</value>
+  </data>
+  <data name="Datas_Invalidas" xml:space="preserve">
+    <value>Datas inválidas.</value>
+  </data>
+  <data name="DuasCasasDecimaisValidas" xml:space="preserve">
+    <value>Só é permitido duas casas decimais neste valor.</value>
+  </data>
+  <data name="Geral_Mensagem_Dado_Invalido" xml:space="preserve">
+    <value>Dados requeridos estam inválidos.</value>
+  </data>
+  <data name="ViewModel_Invalido" xml:space="preserve">
+    <value>O viewmodel recebido é inválido</value>
+  </data>
+  <data name="Mensagem_Erro_Tamanho_Nome_Arquivo" xml:space="preserve">
+    <value>Nome do arquivo é maior que o permitido</value>
+  </data>
+</root>

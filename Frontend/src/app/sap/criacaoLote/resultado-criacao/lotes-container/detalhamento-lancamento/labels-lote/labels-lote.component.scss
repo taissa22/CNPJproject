@@ -1,0 +1,31 @@
+*{
+  width: 100%;
+
+}
+.qtd-lote{
+  text-align: left;
+}
+.valor-lote{
+  text-align: right;
+
+}
+#valorLote{
+
+  width: auto;
+  display: inline-block;
+  text-align: right;
+}
+
+
+label{
+  font-size: 12px;
+  color: #555555;
+}
+
+.qtd-lote div{
+  padding-left: 7px;
+}
+
+.qtd-lote div#qtdLote{
+  padding-top: 2px;
+}

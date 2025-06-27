@@ -1,0 +1,116 @@
+<div class="modal-header">
+  <span *ngIf="!Acao" class="modal-title pl-0"> Inclusão de Ação</span>
+  <span *ngIf="Acao" class="modal-title pl-0">Edição de Ação</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+<form [formGroup]="formGroup" class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <label class="col-form-label-sm" for="descricao-input"> <b>Descrição:</b> </label>
+      <input
+        type="text"
+        id="nome-input"
+        #input [value]="input.value.toUpperCase()"
+        [formControl]="descricaoFormControl" class="form-control"
+        [disableTooltip]="descricaoFormControl.valid || descricaoFormControl.untouched"
+        [ngbTooltip]="descricaoError"
+        maxlength="50" />
+      <ng-template #descricaoError>
+        <span *ngIf="descricaoFormControl.hasError('required')"> Campo obrigatório </span>
+        <span *ngIf="descricaoFormControl.hasError('maxlength')"> O Limite é de 50 caracteres </span>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="row pt-4" *ngIf="TiposProcesso.id == 7 || TiposProcesso.id == 1 || TiposProcesso.id == 18">
+    <div class="col-md-12">
+      <label class="col-form-label-sm" > <b>Natureza da Ação BB:</b> </label>
+      <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        [items]="naturezaAcaoBB"
+        bindLabel="descricao"
+        bindValue="id"
+        [formControl] = "naturezaAcaoBBFormControl"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        clearAllText="Limpar"
+        [placeholder]="'Selecione a natureza da ação BB'">
+        <ng-template ng-option-tmp let-item="item">
+          <div title="{{item.descricao}}">{{item.descricao}}</div>
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+
+  <div class="row pt-4" *ngIf="TiposProcesso.id == 17">
+    <div class="col-md-12">
+      <input type="checkbox" [formControl]="requerEscritorioFormControl" class="mb-2"> <label class="m-0 p-0 pl-1 mb-1">Requer preenchimento de escritório</label>
+    </div>
+  </div>
+
+  <div class="row pt-4" *ngIf="TiposProcesso.id == 1">
+    <div class="col-md-12">
+      <label class="col-form-label-sm" > <b>Ação Correspondente Cível Estratégico (DExPARA Migração de Processo):</b> </label>
+      <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        [items]="acoesCivelEstrategico"
+        bindLabel="descricao"
+        bindValue="id"
+        [formControl] = "acoesCivelEstrategicoFormControl"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        clearAllText="Limpar"
+        [placeholder]="'Selecione a ação cível estratégico'">
+        <ng-template ng-option-tmp let-item="item">
+          <div title="{{item.descricao}}">{{item.descricao}}</div>
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+
+  <div class="row pt-4" *ngIf="TiposProcesso.id == 9">
+    <div class="col-md-12">
+      <label class="col-form-label-sm" > <b>Ação Correspondente Cível Consumidor (DExPARA Migração de Processo):</b> </label>
+      <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        [items]="acoesCivelConsumidor"
+        bindLabel="descricao"
+        bindValue="id"
+        [formControl] = "acoesCivelConsumidorFormControl"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        clearAllText="Limpar"
+        [placeholder]="'Selecione a ação cível consumidor'">
+        <ng-template ng-option-tmp let-item="item">
+          <div title="{{item.descricao}}">{{item.descricao}}</div>
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+
+  <div class="row pt-4" *ngIf="TiposProcesso.id == 9 || TiposProcesso.id == 15 || TiposProcesso.id == 18">
+    <div class="col-md-12">
+      <input type="checkbox" [formControl]="ativoFormControl" class="mb-2"> <label class="m-0 p-0 pl-1 mb-1">Ativo</label>
+    </div>
+  </div>
+
+  <div class="row pt-4">
+    <div class="col-md-12">
+      <input type="checkbox" [formControl]="enviarAppPrepostoFormControl" class="mb-2"> <label class="m-0 p-0 pl-1 mb-1">Enviar processos dessa ação para o APP Preposto</label>
+    </div>
+  </div>
+
+</form>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>

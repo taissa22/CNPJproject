@@ -1,0 +1,29 @@
+tbody {
+  tr {
+    border-bottom: 1px solid #dee2e6;
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    line-height: 36px;
+  }
+  td {
+    border: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    display: inline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &:only-child {
+      text-align: center;
+    }
+    > span {
+      //verificar no futuro esses margins
+      margin-left: 5px;
+      margin-right: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

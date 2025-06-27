@@ -1,0 +1,79 @@
+<div bsModal #template="bs-modal" style=" width: 500pxpx;" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-sizes-name1" [config]="{backdrop: 'static'}">
+    <div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">{{titulo}}</h4>
+                <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="registerForm">
+                    <div class="form-row">
+                        <div class="col-6">
+                            <!-- <label for="tipoFornecedor">Tipo Fornecedor:</label> <br> -->
+                            <combo-box [label]="'Tipo Fornecedor:'" (selectionChange)="pegarTipoProcesso($event);"
+                                [classe]="'fornecedor'" [opcoes]="tipoFornecedor" [currentIndex]="editCodFornecedor">
+                            </combo-box>
+                        </div>
+
+                        <div class="w-100"></div>
+                        <div *ngIf="campoSelecionado == 1 " class="col-10 pt-2">
+                            <combo-box [label]="'Banco:'" [classe]="'fornecedor'" [opcoes]="bancos"
+                                (selectionChange)="converterCodigoEmNomeProcesso(1,$event)"
+                                [currentIndex]="editBanco">
+                            </combo-box>
+                        </div>
+                        <div *ngIf="campoSelecionado == 3" class="col-10 pt-2">
+                            <combo-box [label]="'Escritório:'" [classe]="'fornecedor'" [opcoes]="escritorios"
+                                (selectionChange)="converterCodigoEmNomeProcesso(3,$event)"
+                                [currentIndex]="editEscritorio">
+                            </combo-box>
+                        </div>
+                        <div *ngIf="campoSelecionado == 2" class="col-10 pt-2">
+                            <combo-box [label]="'Profissional:'" [classe]="'fornecedor'" [opcoes]="profissionais"
+                                (selectionChange)="converterCodigoEmNomeProcesso(2,$event)"
+                                [currentIndex]="editProfissional">
+                            </combo-box>
+                        </div>
+
+                        <div class="w-100"></div>
+                        <div class="col-10 pt-2">
+                            <label class="fonte-padrao" for="nomeFornecedor"><b>Nome do Fornecedor:</b></label> <br>
+                            <input id="nomeFornecedor" maxlength="100" type="search"
+                                class="width form-control" formControlName="nomeFornecedor"
+                                [ngClass]="{'is-invalid': registerForm.get('nomeFornecedor').errors && registerForm.get('nomeFornecedor').touched}"
+                                [ngbTooltip]="validacaoTextos('nomeFornecedor', 'Nome do Fornecedor')"
+                                [value]="campoNomeFornecedor"  tooltipClass="erroTooltip" StartWithSpace>
+                        </div>
+                        <div class="w-100 "></div>
+                        <div class="col-6 pt-2">
+                            <label class="fonte-padrao" for="codigoSap"><b>Código Fornecedor SAP:</b></label> <br>
+                            <input id="codigoSap" maxlength="10" type="search" class="width form-control"
+                                formControlName="codigoSap" tooltipClass="erroTooltip"
+                                [ngClass]="{'is-invalid': registerForm.get('codigoSap').errors && registerForm.get('codigoSap').touched}"
+                                [ngbTooltip]="validacaoTextos('codigoSap', 'Código Fornecedor Sap')" [value]="campoFornecedorSap"
+                                StartWithSpace>
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="bsModalRef.hide()"><span
+                        class="texto-btn-oi cancelar">
+                        Cancelar </span></button>
+
+                <button type="button" class="btn btn-primary" (click)="salvarAlteracao()"
+                    [ngClass]="!registerForm.valid ? 'btn-primary-disabled' : '' "
+                    [disabled]="!registerForm.valid"><span class="texto-btn-oi confirmar"> Confirmar </span></button>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+</div>

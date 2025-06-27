@@ -1,0 +1,207 @@
+<style>
+    .modal-header button {
+      color: gray;
+    }
+  
+    .modal-title {
+      margin: auto;
+    }
+  
+    .btn-icon {
+      font-size: 18px;
+    }
+  </style>
+  
+  <div class="modal-header">
+    <span class="modal-title pl-0">{{titulo}}</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+  
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+  
+    <div class="d-flex mb-3 pl-2">
+        <div class="col-8 pr-0 pl-0">
+            <label class="col-form-label-sm" for="descricao-input">
+                <b>Descrição:</b>
+            </label>
+            <input type="text" id="descricao-input" 
+              [formControl]="descricaoFormControl"
+              class="form-control"
+              [disableTooltip]="desabilitaTooltip(descricaoFormControl)" 
+              [ngbTooltip]="descricaoError"
+              placeholder="Insira a descrição" 
+              maxlength="50" />
+            <ng-template #descricaoError>
+                <span *ngIf="descricaoFormControl.hasError('required')">
+                Campo obrigatório
+                </span>
+                <span *ngIf="descricaoFormControl.hasError('maxlength')">
+                O Limite é de 50 caracteres
+                </span>
+            </ng-template>
+    
+        </div>
+
+        <div class="d-flex align-items-end pb-1 col-4 pl-4">
+            <input 
+              id="ehAtivo-input" 
+              type="checkbox" 
+              class="mr-2 mb-2"
+              [formControl]="ativoFormControl"
+            >
+            <label class="fonte-padrao" for="ehAtivo-input">Ativo</label>
+            
+        </div>
+    </div>
+
+    <div *ngIf="codTipoDeProcesso === 3" class="d-flex align-items-end pl-2 pr-0 pb-1 col-12">
+        <input id="ehProvisionado-input" type="checkbox" class="mr-2 mb-2" [formControl]="indProvisionadoFormControl">
+        <label class="fonte-padrao" for="ehProvisionado-input">É Provisionado?</label>
+    </div>
+
+    <div *ngIf="codTipoDeProcesso !== 12 && codTipoDeProcesso !== 14" class="d-flex mb-3 pl-2">
+      <div class="col-8 pr-0 pl-0">
+          <label class="col-form-label-sm" for="descricao-input">
+              <b>1° Tipo de Participação:</b>
+          </label>
+            <ng-select
+              [ngStyle]="{'fontSize': '11px'}"
+              id="nome"
+              [items]="listaTipoParticipacao"
+              bindLabel="descricao"
+              bindValue="codigo"
+              appearance="outline"
+              notFoundText="Nenhuma opção disponível"
+              [searchable]="false"
+              [clearable]="false"
+              [formControl]="tipoParticipacao1FormControl"
+              [placeholder]="'Selecione o tipo de participação'"
+              [disableTooltip]="desabilitaTooltip(tipoParticipacao1FormControl)" 
+              [ngbTooltip]="tipoParticipacao1Error"></ng-select>
+            <ng-template #tipoParticipacao1Error>
+              <span *ngIf="tipoParticipacao1FormControl.hasError('required')">
+              Campo obrigatório
+              </span>           
+          </ng-template>
+  
+      </div>
+
+      <div *ngIf="codTipoDeProcesso === 3" class="d-flex align-items-end pb-1 col-4 pl-4" style="position: relative;">
+        <div class="mensagensEhOrgao" *ngIf="exibirMensagemOrgao1">
+          Não pode ser selecionada a coluna 
+          órgão para o tipo de participação 1 e a 
+          coluna órgão para o tipo de participação 2 simultaneamente.
+        </div>
+        <div 
+      (mouseenter)="exibirMensagem('orgao1');" 
+      (mouseleave)="exibirMensagem('desligar');"
+      >
+        <input 
+            id="ehOrgao1-input" 
+            type="checkbox" 
+            class="mr-2 mb-2 campoEhOrgao"
+            [formControl]="indOrgao1FormControl"
+            [attr.disabled]="indOrgao2FormControl.value? 'disabled' : null"
+          >
+          <label 
+            class="fonte-padrao campoEhOrgao"
+            for="ehOrgao1-input"
+          >É Órgão?</label> 
+      </div>
+      </div>
+  </div>
+
+  <div *ngIf="codTipoDeProcesso !== 12 && codTipoDeProcesso !== 14" class="d-flex mb-3 pl-2">
+    <div class="col-8 pr-0 pl-0">
+        <label class="col-form-label-sm" for="descricao-input">
+            <b>2° Tipo de Participação:</b>
+        </label>
+        <ng-select
+          [ngStyle]="{'fontSize': '11px'}"
+          id="nome"
+          [items]="listaTipoParticipacao"
+          bindLabel="descricao"
+          bindValue="codigo"
+          appearance="outline"
+          notFoundText="Nenhuma opção disponível"
+          [searchable]="false"
+          [clearable]="false"
+          [formControl]="tipoParticipacao2FormControl"
+          [placeholder]="'Selecione o tipo de participação'"
+          [disableTooltip]="desabilitaTooltip(tipoParticipacao2FormControl)" 
+          [ngbTooltip]="tipoParticipacao2Error"></ng-select>
+        <ng-template #tipoParticipacao2Error>
+            <span *ngIf="tipoParticipacao2FormControl.hasError('required')">
+            Campo obrigatório
+            </span>           
+        </ng-template>
+
+    </div>
+
+    <div *ngIf="codTipoDeProcesso === 3" class="d-flex align-items-end pb-1 col-4 pl-4">
+      <div class="mensagensEhOrgao" *ngIf="exibirMensagemOrgao2">
+        <span class="blocoMsgOrgao2" *ngIf="indOrgao1FormControl.value===true">
+          <span 
+          *ngIf="indOrgao1FormControl.value===true && indPoloPassivoUnicoFormControl.value===true"
+          >•</span>
+          {{ msgOrgao2a }}
+        </span>
+        <span class="blocoMsgOrgao2" *ngIf="indPoloPassivoUnicoFormControl.value===true">
+          <span 
+          *ngIf="indOrgao1FormControl.value===true && indPoloPassivoUnicoFormControl.value===true"
+          >•</span>
+          {{ msgOrgao2b }}
+        </span>
+      </div>
+      <div 
+      (mouseenter)="exibirMensagem('orgao2');" 
+      (mouseleave)="exibirMensagem('desligar');"
+      >
+        <input 
+          id="ehOrgao2-input" 
+          type="checkbox" 
+          class="mr-2 mb-2 campoEhOrgao"
+          [formControl]="indOrgao2FormControl"
+          [attr.disabled]="indOrgao1FormControl.value || indPoloPassivoUnicoFormControl.value? 'disabled' : null"
+        >
+        <label 
+          class="fonte-padrao campoEhOrgao" 
+          for="ehOrgao2-input"
+        >É Órgão?</label>
+      </div>        
+    </div>
+</div>
+
+<div *ngIf="codTipoDeProcesso === 3" class="d-flex align-items-end pl-2 pr-0 pb-1 col-12">
+  <div class="mensagensEhPoloPassivo" *ngIf="exibirMensagemPoloPassivo">
+    Não pode ser selecionada a coluna polo passivo único e a 
+    coluna órgão para o tipo de participação 2 simultaneamente.
+  </div>
+  <div 
+  (mouseenter)="exibirMensagem('poloPassivo');" 
+  (mouseleave)="exibirMensagem('desligar');"
+  >
+    <input 
+    id="ehPoloPassivoUnico-input" 
+    type="checkbox" 
+    class="mr-2 mb-2 campoPoloPassivoUnico" 
+    [formControl]="indPoloPassivoUnicoFormControl"
+    [attr.disabled]="indOrgao2FormControl.value===true? 'disabled' : null"
+    >
+    <label 
+      class="fonte-padrao campoPoloPassivoUnico" 
+      for="ehPoloPassivoUnico-input"
+    >É Polo Passivo Único?</label>
+  </div>
+</div>
+
+  
+  </form>
+  
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+  </div>

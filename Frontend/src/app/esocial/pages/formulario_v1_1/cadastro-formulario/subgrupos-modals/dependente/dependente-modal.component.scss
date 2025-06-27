@@ -1,0 +1,43 @@
+.modal-header button {
+    color: gray;
+}
+
+.modal-title {
+    margin: auto;
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.form-control-select {
+  padding: 0;
+  border: none;
+}
+
+::ng-deep .modal-dependente{
+    .modal-content {
+        min-width: 740px !important;
+        max-width: 741px !important;
+    }
+
+    .modal-sm {
+        min-width: 740px !important;
+        max-width: 741px !important;
+    }
+}
+
+.container-modal {
+    padding: 1.2rem 0.5rem;
+}
+
+.modal-footer {
+    padding-bottom: 0;
+}
+
+.title {
+    padding: 0 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -1,0 +1,24 @@
+<div class="borda-externa" style="margin-bottom: 12px;">
+    <app-container-pagina [titulo]="'Parâmetros Closing'"
+        [caminho]="breadcrumb"
+        [texto]="'Selecione o tipo de processo para parametrizar'">
+
+        <div class="modal-footer" style="width: 71%; padding-top: 0px; padding-bottom: 0px;">
+            <button class="btn pr-1 pb-0 pull-right" (click)="exportar()" [disabled]="desabilitado" style="color:#786bb9;" >
+                <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important;"></i>
+                Exportar
+            </button>
+        </div>
+
+        <div class="borda-externa" style="width: 70%; height: 215px;">
+            <tabset [justified]="true" #staticTabs>
+            <tab class="tab" id="tab1" (click)="monitoraAlteracao($event)" (change)="monitoraAlteracao($event)" (mouseover)="monitoraAlteracao($event)" heading="Cível Consumidor"><civel-consumidor *ngIf="exibir" [lista]="lista" ></civel-consumidor></tab>
+            <tab class="tab" id="tab2" (click)="monitoraAlteracao($event)" (change)="monitoraAlteracao($event)" (mouseover)="monitoraAlteracao($event)" heading="Cível Estratégico"><civel-estrategico *ngIf="exibir" [lista]="lista"  ></civel-estrategico></tab>
+            <tab class="tab" id="tab3" (click)="monitoraAlteracao($event)" (change)="monitoraAlteracao($event)" (mouseover)="monitoraAlteracao($event)" heading="Trabalhista ADM"><app-trabalhista-administrativo *ngIf="exibir" [lista]="lista"  ></app-trabalhista-administrativo></tab>
+            <tab class="tab" id="tab4" (click)="monitoraAlteracao($event)" (change)="monitoraAlteracao($event)" (mouseover)="monitoraAlteracao($event)" heading="Trabalhista Judicial"><app-trabalhista-judicial *ngIf="exibir" [lista]="lista"  ></app-trabalhista-judicial></tab>
+            <tab class="tab" id="tab5" (click)="monitoraAlteracao($event)" (change)="monitoraAlteracao($event)" (mouseover)="monitoraAlteracao($event)" heading="Juizado Especial"><app-juizado-especial *ngIf="exibir" [lista]="lista"  ></app-juizado-especial></tab>
+            </tabset>
+            <br/>
+        </div>
+    </app-container-pagina>
+</div>

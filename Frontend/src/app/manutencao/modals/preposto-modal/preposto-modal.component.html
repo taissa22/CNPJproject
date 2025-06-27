@@ -1,0 +1,124 @@
+<div class="modal-header">
+  <span *ngIf="!preposto" class="modal-title pl-0"> Incluir Preposto</span>
+  <span *ngIf="preposto" class="modal-title pl-0">Alterar Preposto</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+<form [formGroup]="formGroup" class="modal-body">
+  <div class="row">
+    <div class="col-md-9">
+      <label class="col-form-label-sm" for="nome-input"> <b>Nome:</b> </label>
+      <input type="text"
+        id="nome-input"
+        style='text-transform:uppercase'
+        [formControl]="nomeFormControl"
+        class="form-control"
+        [disableTooltip]="nomeFormControl.valid || nomeFormControl.untouched"
+        [ngbTooltip]="nomeRequired"
+        [placeholder]="'Informe o nome sem acento ou caracter especial'"
+        maxlength="50"
+        (change) = "validarCaracterEspecial()" />
+      <ng-template #nomeRequired>
+        <span *ngIf="nomeFormControl.errors?.required"> Campo obrigatório </span>
+        <span *ngIf="nomeFormControl.hasError('maxlength')"> O Limite é de 50 caracteres </span>
+      </ng-template>
+    </div>
+
+    <div class="col-md-3 checkbox-direita">
+      <input type="checkbox" [formControl]="ativoFormControl" class="mb-2"> <label class="m-0 p-0 pl-1 mb-1">Ativo</label>
+    </div>
+
+  </div>
+
+  <div class="row pt-4">
+    <div class="col-md-9">
+      <label class="col-form-label-sm" > <b>Usuário:</b> </label>
+      <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        [items]="usuarioLista"
+        bindLabel="nomeCompleto"
+        bindValue="id"
+        [formControl] = "usuarioIdFormControl"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        [placeholder]="'Selecione o Usuario'"
+        (change)="validaUsuarioSelecionado($event)"
+        >
+        <ng-template ng-option-tmp let-item="item">
+          <div title="{{item.nomeCompleto}}">{{item.nomeCompleto}}</div>
+        </ng-template>
+      </ng-select>
+
+    </div>
+
+    <div class="col-md-3 checkbox-direita">
+      <input type="checkbox" [formControl]="ehEscritorioFormControl" class="mb-2" (change)="verificaCheckbox()"> <label class="m-0 p-0 pl-1 mb-1">É de Escritório</label>
+    </div>
+
+  </div>
+
+  <!-- <div class="row pt-1">
+    <div class="col-md-12">
+      <span class="link-todos" (click)="carregarTodosPrepostos()">Carregar todos os usuário</span>
+    </div>
+  </div> -->
+
+  <div class="row pt-4">
+    <div class="col-md-4">
+      <input type="checkbox" [formControl]="ehCivelFormControl" class="mb-2" (change)="verificaCheckbox()"> <label class="m-0 p-0 pl-1 mb-1">Cível Consumidor</label>
+    </div>
+
+    <div class="col-md-5 pl-5">
+      <input type="checkbox" [formControl]="ehCivelEstrategicoFormControl" class="mb-2"> <label class="m-0 p-0 pl-1 mb-1">Cível Estratégico</label>
+    </div>
+
+    <div class="col-md-3 pl-0">
+      <input type="checkbox" [formControl]="ehJuizadoFormControl" class="mb-2" (change)="verificaCheckbox()"> <label class="m-0 p-0 pl-1 mb-1">Juizado</label>
+    </div>
+  </div>
+
+  <div class="row pt-4">
+    <div class="col-md-4">
+      <input type="checkbox" [formControl]="ehTrabalhistaFormControl" class="mb-2"> <label class="m-0 p-0 pl-1 mb-1">Trabalhista</label>
+    </div>
+
+    <div class="col-md-5 pl-5">
+      <input type="checkbox" [formControl]="ehProconFormControl" class="mb-2" (change)="verificaCheckbox()"> <label class="m-0 p-0 pl-1 mb-1">Procon</label>
+    </div>
+
+    <div class="col-md-3 pl-0">
+      <input type="checkbox" [formControl]="ehPexFormControl" class="mb-2"> <label class="m-0 p-0 pl-1 mb-1">Pex</label>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="(ehCivelFormControl.value || ehProconFormControl.value || ehJuizadoFormControl.value) && !ehEscritorioFormControl.value">
+    <div class="col-md-12">
+      <label class="col-form-label-sm" for="matricula-input" style="margin-top:10px"> <b>Matrícula:</b> </label>
+      <input type="text"
+        id="matricula-input"
+        style='text-transform:uppercase;width:100px'
+        [formControl]="matriculaFormControl"
+        class="form-control"
+        [disableTooltip]="matriculaFormControl.valid || matriculaFormControl.untouched"
+        [ngbTooltip]="matriculaRequired"
+        maxlength="10"
+        (change) = "validarCaracterEspecial()" />
+      <ng-template #matriculaRequired>
+        <span *ngIf="matriculaFormControl.errors?.required"> Campo obrigatório </span>
+        <span *ngIf="matriculaFormControl.hasError('maxlength')"> O Limite é de 10 caracteres </span>
+      </ng-template>
+    </div>
+  </div>
+
+
+</form>
+
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="!preposto ? '' : formGroup.invalid"
+    (click)="save()">Confirmar</button>
+</div>

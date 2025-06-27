@@ -1,0 +1,315 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Cotação de Índice"
+  [breadcrump]="breadcrumb" [exibirAdicionar]="indiceFormControl.value !== null">
+
+  <div class="row mt-3">
+    <div class="col-12 pb-0">
+      <p class="font-purple">
+        Selecione o índice para buscar a listagem de cotações.
+      </p>
+    </div>
+  </div>
+  
+  <div class="pb-3" [formGroup]="dadosDaBusca">
+    <label class="font-weight-bold">Índice:</label>
+    <div class="col-3 pl-0">
+      <ng-select style="font-size: 11px" id="indice-select" appearance="outline" notFoundText="Nenhuma opção disponível"
+        [searchable]="false" [clearable]="false" [formControl]="indiceFormControl" [placeholder]="'Selecione uma opção'"
+        [virtualScroll]="true">
+        <ng-option *ngFor="let indice of listaIndices" [value]="indice">{{indice.descricao}}</ng-option>
+      </ng-select>
+    </div>
+  </div>
+
+  <div *ngIf="indiceFormControl.value == null || indiceFormControl.value.id != -1">
+    <label class="font-weight-bold">Período:</label>
+    <div class="d-flex align-items-center">
+      <mes-ano-new [control]="mesAnoInicialFormControl" id="mesAnoInicial"></mes-ano-new>
+      <span class="mr-2">até</span>
+      <mes-ano-new [control]="mesAnoFinalFormControl" id="mesAnoFinal"></mes-ano-new>
+      <button class="btn btn-primary" (click)="pesquisarCotacao()">Buscar</button>
+    </div>
+  </div>
+  <div class="row" *ngIf="indiceFormControl.value && indiceFormControl.value.id == -1">
+    <div class="col-auto">
+      <label class="font-weight-bold">Data de Correção:</label>
+      <div class="d-flex align-items-center">
+        <mes-ano-new [control]="dataDeCorrecaoFormControl" id="mesAnoInicial"></mes-ano-new>
+      </div>
+    </div>
+    <div class="col">
+      <label class="font-weight-bold">Periodo de Data de Distribuição:</label>
+      <div class="d-flex align-items-center">
+        <mes-ano-new  [control]="mesAnoInicialDistribuicaoFormControl" id="mesAnoInicial"></mes-ano-new>
+        <span class="mr-2">até</span>
+        <mes-ano-new  [control]="mesAnoFinalDistribuicaoFormControl" id="mesAnoFinal"></mes-ano-new>
+        <button class="btn btn-primary" (click)="pesquisarCotacao()">Buscar</button>
+      </div>
+    </div>
+    
+  </div>
+
+
+  <ng-container *ngIf="houveBusca">
+
+    <div class="row mt-4">
+      <div class="col-md-6 pr-1 font-purple h5">
+        Lista das Cotações
+      </div>
+
+      <div *ngIf="indiceColuna != 'CotacaoIndiceTrabalhista'" class="col-md-6" style="text-align: right;">
+        <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" [disabled]="!dataSource.length">
+          <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important;"></i>
+          Exportar
+        </button>
+      </div>
+
+      <div *ngIf=" indiceColuna === 'CotacaoIndiceTrabalhista'" class="col-md-6" style="text-align: right;">
+        <button class="btn btn-roxo pr-1 pb-0" (click)="exportarCotacaoIndiceTrabalhista()" [disabled]="!listaCotacoesIndicesTrabalhistas.length">
+          <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important;"></i>
+          Exportar
+        </button>
+      </div>
+    </div>
+
+    <table class="table table-striped table-sm"
+      *ngIf="listaCotacoesIndicesTrabalhistas.length === 0 && dataSource.length === 0">
+      <tbody>
+        <tr>
+          <td>
+            <span style="
+                        width: 100%;
+                        text-align: center;
+                        display: flex;
+                        height: 70px;
+                        justify-content: center;
+                        align-items: center;
+                      ">
+              Nenhuma informação
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <ng-container *ngIf="listaCotacoesIndicesTrabalhistas.length > 0 || dataSource.length > 0">
+
+      <div *ngIf="indiceColuna === 'Fator' &&  !acumulado">
+
+        <jur-table [sortDirection]="'desc'" [sortColumn]="'dataCotacao'" [dataSource]="dataSource" (sort)="pesquisarCotacao()">
+          <jur-column-template flex="15" headerName="Mês/Ano" sortColumn="dataCotacao" *jurRowData="let row">
+            {{ row.dataCotacao | date: 'MM/yyyy' }}
+          </jur-column-template>
+
+          <jur-column-template flex="15" headerName="Fator" sortColumn="valor" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.valor | number : '1.9-9'}}</span>
+          </jur-column-template>
+
+          <jur-column-template flex="40" headerName="Índice" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.indice? row.indice.descricao: '' }}</span>
+          </jur-column-template>
+
+          <jur-column-template *jurRowData="let row">
+            <span fxFlex></span>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </jur-column-template>
+          </jur-table>
+          </div>
+
+      <div *ngIf="indiceColuna === 'Fator' &&  acumulado">
+
+        <jur-table [sortDirection]="'desc'" [sortColumn]="'dataCotacao'" [dataSource]="dataSource" (sort)="pesquisarCotacao()">
+          <jur-column-template flex="15" headerName="Mês/Ano" sortColumn="dataCotacao" *jurRowData="let row">
+            {{ row.dataCotacao | date: 'MM/yyyy' }}
+          </jur-column-template>
+
+          <jur-column-template flex="15" headerName="Fator" sortColumn="valor" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.valor }}</span>
+          </jur-column-template>
+
+          <jur-column-template flex="20" headerName="Valor Acumulado" sortColumn="valorAcumulado" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.valorAcumulado | number : '1.4-4' }}</span>
+          </jur-column-template>
+
+          <jur-column-template flex="40" headerName="Índice" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.indice? row.indice.descricao: '' }}</span>
+          </jur-column-template>
+
+          <jur-column-template *jurRowData="let row">
+            <span fxFlex></span>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </jur-column-template>
+          </jur-table>
+          </div>
+
+      <div *ngIf="indiceColuna === 'Percentual'  &&  !acumulado">
+
+        <jur-table [sortDirection]="'desc'" [sortColumn]="'dataCotacao'" [dataSource]="dataSource" (sort)="pesquisarCotacao()">
+
+          <jur-column-template flex="15" headerName="Mês/Ano" sortColumn="dataCotacao" *jurRowData="let row">
+            {{ row.dataCotacao | date: 'MM/yyyy' }}
+          </jur-column-template>
+
+          <jur-column-template flex="15" headerName="Percentual" sortColumn="valor" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.valor }}</span>
+          </jur-column-template>
+
+          <jur-column-template flex="40" headerName="Índice" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.indice? row.indice.descricao: '' }}</span>
+          </jur-column-template>
+
+          <jur-column-template *jurRowData="let row">
+            <span fxFlex></span>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </jur-column-template>
+          </jur-table>
+          </div>
+
+      <div *ngIf="indiceColuna === 'Percentual' && acumulado">
+      
+        <jur-table [sortDirection]="'desc'" [sortColumn]="'dataCotacao'" [dataSource]="dataSource"
+          (sort)="pesquisarCotacao()">
+
+          <jur-column-template flex="15" headerName="Mês/Ano" sortColumn="dataCotacao" *jurRowData="let row">
+            {{ row.dataCotacao | date: 'MM/yyyy' }}
+          </jur-column-template>
+
+          <jur-column-template flex="15" headerName="Percentual" sortColumn="valor" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.valor }}</span>
+          </jur-column-template>
+
+          <jur-column-template flex="20" headerName="Valor Acumulado" sortColumn="valorAcumulado" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.valorAcumulado | number : '1.4-4' }}</span>
+          </jur-column-template>
+
+
+          <jur-column-template flex="40" headerName="Índice" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.indice? row.indice.descricao: '' }}</span>
+          </jur-column-template>
+
+          <jur-column-template *jurRowData="let row">
+            <span fxFlex></span>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit fa-sm"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash fa-sm"></i>
+            </button>
+          </jur-column-template>
+          </jur-table>
+          </div>
+
+      <div *ngIf="indiceColuna === 'Valor' && acumulado">
+      
+        <jur-table [sortDirection]="'desc'" [sortColumn]="'dataCotacao'" [dataSource]="dataSource"
+          (sort)="pesquisarCotacao()">
+
+          <jur-column-template flex="15" headerName="Mês/Ano" sortColumn="dataCotacao" *jurRowData="let row">
+            {{ row.dataCotacao | date: 'MM/yyyy' }}
+          </jur-column-template>
+
+          <jur-column-template flex="15" headerName="Valor" sortColumn="valor" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.valor }}</span>
+          </jur-column-template>
+
+          <jur-column-template flex="20" headerName="Valor Acumulado" sortColumn="valorAcumulado" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.valorAcumulado | number : '1.4-4' }}</span>
+          </jur-column-template>
+
+          <jur-column-template flex="40" headerName="Índice" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.indice? row.indice.descricao: '' }}</span>
+          </jur-column-template>
+
+          <jur-column-template *jurRowData="let row">
+            <span fxFlex></span>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit fa-sm"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash fa-sm"></i>
+            </button>
+          </jur-column-template>
+
+        </jur-table>
+        </div>
+
+      <div *ngIf="indiceColuna === 'Valor' && !acumulado">
+      
+        <jur-table [sortDirection]="'desc'" [sortColumn]="'dataCotacao'" [dataSource]="dataSource"
+          (sort)="pesquisarCotacao()">
+
+          <jur-column-template flex="15" headerName="Mês/Ano" sortColumn="dataCotacao" *jurRowData="let row">
+            {{ row.dataCotacao | date: 'MM/yyyy' }}
+          </jur-column-template>
+
+          <jur-column-template flex="15" headerName="Valor" sortColumn="valor" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.valor }}</span>
+          </jur-column-template>
+
+          <jur-column-template flex="40" headerName="Índice" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.indice? row.indice.descricao: '' }}</span>
+          </jur-column-template>
+
+          <jur-column-template *jurRowData="let row">
+            <span fxFlex></span>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit fa-sm"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash fa-sm"></i>
+            </button>
+          </jur-column-template>
+
+        </jur-table>
+        </div>
+
+      <div *ngIf="indiceColuna == 'CotacaoIndiceTrabalhista'">
+        <jur-table [sortDirection]="'desc'" [sortColumn]="'dataCorrecao'" [dataSource]="listaCotacoesIndicesTrabalhistas"
+          (sort)="pesquisarCotacao()">
+      
+          <jur-column-template flex="20" headerName="Mês/Ano de Correção " *jurRowData="let row">
+            {{ row.dataBase | date: 'MM/yyyy' }}
+            </jur-column-template>
+
+          <jur-column-template flex="25" headerName="Mês/Ano de Distribuíção" sortColumn="dataCorrecao" *jurRowData="let row">
+            <span fxFlex="nogrow">{{row.dataCorrecao | date: 'MM/yyyy' }}</span>
+            </jur-column-template>
+
+          <jur-column-template flex="40" headerName="Valor" sortColumn="valorCotacao" *jurRowData="let row">
+            <span fxFlex="nogrow">{{ row.valorCotacao | number : '1.9-9' }}</span>
+          </jur-column-template>
+
+          <jur-column-template *jurRowData="let row">
+            <span fxFlex></span>
+            <button type="button" class="btn btn-icon" (click)="excluirCotacaoIndiceTrabalhista(row)">
+              <i class="fa fa-trash fa-sm"></i>
+            </button>
+          </jur-column-template>
+
+        </jur-table>
+        </div>
+    </ng-container>
+  </ng-container>
+
+
+  <div [style.display]="houveBusca ? 'inherit' : 'none'">
+    <jur-paginator   
+    [length]="total" (page)="pesquisarCotacao()"></jur-paginator>
+  </div>
+
+
+</app-manutencao-generica>

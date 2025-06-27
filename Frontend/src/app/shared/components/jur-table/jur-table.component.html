@@ -1,0 +1,29 @@
+<table class="table table-striped table-sm">
+
+  <jur-thead #head></jur-thead>
+
+  <tbody>
+    <tr *ngIf="dataSource.length === 0">
+      <td [colSpan]="head.columns.length">
+        <span style="
+          width: 100%;
+          text-align: center;
+          display: flex;
+          height: 70px;
+          justify-content: center;
+          align-items: center;
+        ">
+          {{ errorMessage }}
+        </span>
+      </td>
+    </tr>
+    <tr *ngFor="let dataRow of dataSource">
+      <td *ngFor="let column of head.columns; let i = index;" [fxFlex]="column.flex">
+        <span fxFlex>
+          <ng-template [ngTemplateOutlet]="getCellTemplateRef$(i)" [ngTemplateOutletContext]="{$implicit: dataRow}">
+          </ng-template>
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>

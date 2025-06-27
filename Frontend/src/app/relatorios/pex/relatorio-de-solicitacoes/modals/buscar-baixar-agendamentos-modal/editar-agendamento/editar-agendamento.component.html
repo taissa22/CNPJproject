@@ -1,0 +1,122 @@
+<div class="row ">
+    <div class="col-11 py-4" [formGroup]="formAgendamento">
+        <div class="row ">
+            <div class="col-3">
+
+            </div>
+            <div class="col">
+                <h6 class="titulo-table pl-2">Editando Agendamento</h6>
+            </div>
+        </div>
+
+        <div class="row  ">
+            <div class="col-3 pr-0">
+                <p class="texto-linha-table text-right pt-1">Nome do Relatório:</p>
+            </div>
+            <div class="col">
+                <input type="text" formControlName="nomeRelatorio" class="form-control w-100" style="height: 25px;">
+            </div>
+        </div>
+        <div class="row  mt-3">
+            <div class="col-3 pr-0">
+                <p class="texto-linha-table text-right pt-1">Descrição:</p>
+            </div>
+            <div class="col">
+                <input type="text" formControlName="descricao" class="form-control w-100" style="height: 25px;">
+            </div>
+        </div>
+        <div class="row mt-3 mb-3"> 
+            <div class="col-3 pr-0">
+                <p class="texto-linha-table text-right pt-1">Executar relatório:</p>
+            </div>
+            <div class="col" fxLayoutAlign="row">
+                <select class="form-control selectExecucao" formControlName="tipoExecucao"
+                    (change)="limparCamposDinamicos()" style="max-width: 50%;
+                    height: 25px;"  >
+                    <option *ngFor="let opcaoExecucao of opcoesExecucao" [value]="opcaoExecucao">
+                        {{opcaoExecucao}}
+                    </option>
+                </select>
+                <span *ngIf="tipoExecucao.value === 'Semanalmente'" class="mt-1 texto-linha-table" style="width: 41%;
+                text-align: center; ">dia da semana</span>
+
+                <select *ngIf="tipoExecucao.value === 'Semanalmente'" class=" form-control selectExecucao"
+                    formControlName="diaSemana" (change)="desabilitaCheckDiasUteis()" style="width: 50%;height: 25px;">
+                    <option *ngFor="let diaSemana of diasSemana" [value]="diaSemana">
+                        {{diaSemana}}
+                    </option>
+                </select>
+                <span *ngIf="tipoExecucao.value === 'Mensalmente'" class="mt-1 texto-linha-table" style="width: 41%;
+                text-align: center;">dia do mês</span>
+                <select *ngIf="tipoExecucao.value === 'Mensalmente'" class="form-control selectExecucao"
+                style="width: 50%;height: 25px;"   formControlName="diaMes">
+                    <option *ngFor="let diaMes of diasMes" [value]="diaMes">
+                        {{diaMes}}
+                    </option>
+                </select>
+                <span *ngIf="tipoExecucao.value === 'Na data'" class="mt-1 texto-linha-table" style="width: 41%;
+                text-align: center;">Executar na data</span>
+                <div *ngIf="tipoExecucao.value === 'Na data'" class="col-3 p-0">
+                    <input class="form-control float-left input-data" name="dp" rInputMask="99/99/9999"
+                        placeholder="dd/mm/yyyy" formControlName="dataExecucao" #d1="ngbDatepicker"
+                        [displayMonths]="'displayMonths'" [navigation]="'navigation-arrows'"
+                        [outsideDays]="'outsideDays'" (focusout)="resetarDatasInvalidas()" [showWeekNumbers]="true"
+                        ngbDatepicker id="inputDataFim" maxlength="10" style="width: 74%;height: 25px;">
+                    <button class="btn calendar  mt-2" (click)="d1.toggle()" tabindex="-1" type="button"><i
+                            class="fa-solid fa-calendar-days fa-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+       
+       
+        <div class="row  mb-3"  *ngIf="tipoExecucao.value === 'Diariamente' || tipoExecucao.value === 'Semanalmente' || tipoExecucao.value === 'Mensalmente'">
+            <div class="col-3 pr-0">
+                <p class="texto-linha-table text-right pt-1">Entre os dias:</p>
+            </div> 
+            <div class="col">
+                <div fxLayoutAlign="row">
+                    <div class="col-4 p-0">
+                        <input class="form-control  float-left input-data" name="dp" rInputMask="99/99/9999"
+                            placeholder="dd/mm/yyyy" formControlName="dataIni" #dI="ngbDatepicker"
+                            [displayMonths]="'displayMonths'" [navigation]="'navigation-arrows'"
+                            (focusout)="resetarDatasInvalidas()" [outsideDays]="'outsideDays'" [showWeekNumbers]="true"
+                            ngbDatepicker id="inputDataIni" maxlength="10" style="width: 78%;height: 25px;">
+                        <button class="btn calendar  mt-2" (click)="dI.toggle()" tabindex="-1" type="button"><i
+                                class="fa-solid fa-calendar-days fa-lg"></i>
+                        </button>
+                    </div>
+                    <span class="col-1 m-0 p-0 mt-2" style="max-width: 15px;">e</span>
+                    <div class="col-4 p-0">
+                        <input class="form-control float-left input-data" name="dp" rInputMask="99/99/9999"
+                            placeholder="dd/mm/yyyy" formControlName="dataFim" #dF="ngbDatepicker"
+                            [displayMonths]="'displayMonths'" [navigation]="'navigation-arrows'"
+                            (focusout)="resetarDatasInvalidas()" [outsideDays]="'outsideDays'" [showWeekNumbers]="true"
+                            ngbDatepicker id="inputDataFim" maxlength="10" style="width:78%;height: 25px;">
+                        <button class="btn calendar  mt-2" (click)="dF.toggle()" tabindex="-1" type="button"><i
+                                class="fa-solid fa-calendar-days fa-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="texto-linha-table text-info my-2">Agendamentos têm validade de um ano! Atualize seus agendamentos com frequência.</p>
+                <label >
+                    <span class="texto-linha-table"> <input type="checkbox" formControlName="somenteEmDiasUteis"
+                            (change)="desabilitaHabilitaFinaisSemana()" name="" id=""> Executar somente em dias
+                        úteis</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row mt-4 ">
+            <div class="col">
+                <button class="btn  btn-primary float-right" style="border-radius: 2.5px;  padding: 4px 7px;"
+                    (click)="salvar()">Salvar
+                    Edições</button>
+                <button class="btn  btn-link float-right mr-2" (click)="agendamentoModel.openEdit = false"
+                    style="border-radius: 2.5px; padding: 4px 7px;">
+                    Cancelar</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,90 @@
+.btn-novo {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+fs-1 {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.fs-2 {
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/* ------ */
+
+.modal-header button {
+    color: gray;
+}
+
+.modal-title {
+    margin: auto;
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.container-modal {
+    padding: 1.2rem 0.5rem;
+}
+
+.modal-footer {
+    padding-bottom: 0;
+}
+
+.title {
+    padding: 0 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.periodoRef {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control-select {
+    padding: 0;
+    border: none;
+}
+
+.descricao {
+    width: 80%;
+    padding: 6px;
+    resize: none;
+    max-height: 80px;
+}
+
+.cardInfo {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    width: 100%;
+    margin-left: 0px;
+}
+
+::ng-deep .modal-pen-alim {
+    .modal-dialog {
+        justify-content: center;
+    }
+    .modal-content {
+        min-width: 85rem !important;
+        max-width: 85rem !important;
+    }
+    .modal-sm {
+        min-width: 85rem!important;
+        max-width: 85rem !important;
+    }
+}
+
+.cardInfo {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    width: 100%;
+    margin-left: 0px;
+    margin-bottom: 10px;
+}

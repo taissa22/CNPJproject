@@ -1,0 +1,40 @@
+<div class="container-filtros">
+  <div class="container-filtros-header">
+    <b>{{ textNomeFiltro }}</b>
+    <label *ngIf="btnclear" (click)="limparBtn($event)">Limpar Filtros</label>
+  </div>
+
+  <div class="option-box-container">
+    <div class="option-box">
+      <div class="option-box-top"></div>
+      <div
+        class="option-box-line"
+        *ngFor="let item of listaFiltro"
+        [ngClass]="{
+          selected: item.selecionado,
+          active: item.ativo,
+          disabled: !enabled
+        }"
+        [routerLink]="item.linkMenu"
+        (click)="decisoesDeObjeto(item)"
+      >
+        <span>{{ item.titulo }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!--Caixa de exibição dos filtros (Filters Box)-->
+  <div class="filters-box">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<div class="buttons-filtros">
+  <button
+    class="btn btn-primary btn-sm"
+    [disabled]="!enabled"
+    (click)="enviarBtn('buttonChange')"
+  >
+    {{ button }}
+  </button>
+</div>

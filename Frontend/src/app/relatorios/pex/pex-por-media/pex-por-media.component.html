@@ -1,0 +1,118 @@
+<!-- Titulo da pagina e o breadcrumb -->
+<section class="container-breadcrumb">
+    <h3>{{ tituloPagina }}</h3>
+    <p>{{ caminhoPagina }}</p>
+    <p class="filtroSapSelecao"></p>
+</section>
+
+<!-- Datepicker -->
+<section class="topo">
+    <label>Fechamentos de</label>
+    <div class="form-inline grupo-data prlnk-datepicker">
+        <div class="form-group">
+            <div class="input-group">
+                <input class="form-control" name="dp" ngbDatepicker type="search" rInputMask="99/99/9999" placeholder="dd/mm/yyyy"
+                    #d1="ngbDatepicker" [formControl]="dataInicialFormControl" [displayMonths]="'displayMonths'"
+                    [navigation]="'navigation-arrows'" [outsideDays]="'outsideDays'" [showWeekNumbers]="true"
+                    id="inputDataInicio" maxlength="10" [ngClass]="{ 'erro': validandoDataInicio.erro,
+                                'certo' : !validandoDataInicio.erro }" (blur)="validaData(validandoDataInicio)"
+                    (focusout)="validaData(validandoDataInicio)">
+                <span *ngIf="validandoDataInicio.erro" class="guarda-erro" title="Data Inválida"></span>
+                <div class="input-group-append">
+                    <button class="btn calendar margin-left" (click)="d1.toggle()" tabindex="-1" type="button"><i
+                            class="fa-solid fa-calendar-days fa-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <label>a</label>
+    <div class="form-inline grupo-data prlnk-datepicker">
+        <div class="form-group">
+            <div class="input-group">
+                <input
+                class="form-control"
+                name="dp"
+                rInputMask="99/99/9999"
+                placeholder="dd/mm/yyyy"
+                type="search"
+                [formControl]="dataFinalFormControl"
+                #d2="ngbDatepicker" [displayMonths]="'displayMonths'"
+                [navigation]="'navigation-arrows'"
+                [outsideDays]="'outsideDays'"
+                [showWeekNumbers]="true"
+                ngbDatepicker id="inputDataFim"
+                maxlength="10"
+                [ngClass]="{ 'erro': validandoDataFim.erro,
+                                'certo' : !validandoDataFim.erro }"
+                (blur)="validaData(validandoDataFim)"
+                (focusout)="validaData(validandoDataFim)">
+                <span *ngIf="validandoDataFim.erro" class="guarda-erro" title="Data Inválida"></span>
+                <div class="input-group-append">
+                    <button class="btn calendar margin-left" (click)="d2.toggle()" tabindex="-1" type="button"><i
+                            class="fa-solid fa-calendar-days fa-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  <!-- {{dataInicialFormControl.invalid}} -->
+
+    <button [disabled]="dataInicialFormControl.invalid || dataFinalFormControl.invalid" class="btn btn-primary" (click)="buscarFechamentoPorData(d1, d2)">Carregar</button>
+</section>
+
+<!-- Listar Fechamentos -->
+<section class="lower">
+    <div class="quad">
+        <div class="celula_exportacao" *ngFor="let fechamento of listaFechamento">
+            <div class="celula_esquerda">
+                <div class="dados_exportacao">
+                    <div id="dataFechamento" class="row">
+                        <div class="col-1 pr-0" style="min-width: 95px;">
+                            <strong>
+                                {{fechamento.dataFechamento | date:'dd/MM/yyyy'}}
+                            </strong>
+                            <span class="pl-1">
+                                -
+                            </span>
+                        </div>
+                        <div class="col-10 pl-0 pr-0">
+                            {{fechamento.empresas}}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="dados_exportacao">
+                    <span class="info">
+                        {{fechamento.numeroMeses}} meses - {{fechamento.multDesvioPadrao}} Desvio Padrão
+                    </span>
+                </div>
+                <div class="dados_exportacao">
+                    <span class="info" *ngIf="fechamento.indAplicarHaircut === 'SIM'">
+                        Haircut de {{fechamento.percentualHaircut}}% aplicado também em processos com garantia
+                    </span>
+                    <span class="info" *ngIf="fechamento.indAplicarHaircut === 'NÃO'">
+                        Haircut de {{fechamento.percentualHaircut}}% aplicado apenas em processos sem garantia
+                    </span>
+                </div>
+
+                <div class="botao_download margin-top">
+                    <button (click)="download(fechamento.id, fechamento.dataFechamento, fechamento.dataExecucao)">
+                        <i class="fa fa-download"></i>Relatórios de Fechamento
+                    </button>
+                </div>
+            </div>
+            <div class="celula_direita">
+                <span>
+                    Solicitado por {{fechamento.nomeUsuario}} <br>
+                    Executado em {{fechamento.dataExecucao | date:'dd/MM/yyyy\' às \'HH:mm'}}
+                </span>
+            </div>
+        </div>
+        <div class="vermais" *ngIf="this.vermais"><button (click)="verMais(d1, d2)">VER MAIS</button></div>
+    </div>
+
+    <div *ngIf="listaFechamento == null || listaFechamento.length == 0">
+        <p class="texto_fechamento">Nenhum fechamento encontrado para o período indicado</p>
+    </div>
+</section>

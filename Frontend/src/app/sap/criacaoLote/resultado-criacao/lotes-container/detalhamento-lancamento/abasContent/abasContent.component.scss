@@ -1,0 +1,43 @@
+.tituloTab .col-6{
+    border:1px solid #ccc;
+    border-radius: 3px 3px ;
+    padding:10px;
+    text-align: center;
+    line-height: 40px;
+    background-color: #efefef;
+    cursor: pointer;
+}
+.tituloTab .col-6.ativo{
+    background-color: #fff;
+    border-bottom: #fff;
+}
+
+.tituloTab .col-6:nth-child(2){
+    border-left: 0px;
+}
+
+.conteudoTab {
+    border: 1px solid #ccc;
+    border-top: 0px;
+    padding: 20px;
+    border-radius: 3px 3px ;
+    overflow-x: scroll;
+    -ms-overflow-style: scrollbar;
+}
+
+.roxo-padrao{
+  color:#6f62b2;
+  cursor: pointer;
+}
+
+.desativado{
+    opacity: 0.5;
+    cursor: default !important;
+}
+
+.infoTabela{
+    font-weight: bold;
+    color: #555555;
+    font-family: Roboto;
+  font-size: 12px;
+}

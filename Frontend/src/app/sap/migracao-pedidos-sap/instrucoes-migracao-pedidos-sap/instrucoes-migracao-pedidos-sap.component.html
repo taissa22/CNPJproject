@@ -1,0 +1,72 @@
+<div class="modal-header">
+    <span class="modal-title modal-custom-font-size w700 font-12" id="modal-instrucoes">
+        Siga as instruções abaixo para a carga de documentos
+    </span>
+    <!-- <span class="modal-title modal-custom-font-size w700 font-12" id="modal-instrucoes">
+        {{ titulo }}
+      </span> -->
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="cancelar()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body font-grey">
+    <div class="row">
+      <div class="col-1 pr-1">
+        1º
+      </div>
+      <div class="col-11 pl-0">
+        <span>
+            Clique em <strong>"Baixar arquivos padrão"</strong> para baixar o modelo de arquivo correto 
+            que deve ser utilizado para migração dos pedidos. Você não precisa utilizá-lo, mas 
+            será útil para conferir se o seu arquivo está de acordo com o esperado pelo sistema;
+        </span>
+      </div>
+    </div>
+    <div class="row pt-3">
+      <div class="col-1 pr-1">2º</div>
+      <div class="col-11 pl-0">
+        <span [ngStyle]="{ fontSize: '12px' }">
+            Antes de importar o arquivo, o sistema irá realizar algumas 
+            verificações para garantir que a migração de pedidos ocorra 
+            com sucesso:
+          <blockquote class="pt-3 pl-3">
+            <strong>* Extensão do arquivo:</strong> O sistema só aceitará a
+            importação de arquivos CSV;
+          </blockquote>
+          <blockquote class="pl-3">
+            <strong>* Tamanho do arquivo:</strong> Será permitida a importação
+            de arquivos com até {{tamanhoMaximoArquivoAnexo}}MB;
+          </blockquote>
+          <blockquote class="pl-3">
+            <strong>* Arquivo vazio:</strong> Se o arquivo CSV estiver vazio, 
+            o sistema irá alertá-lo para que verifique antes de realizar o 
+            agendamento da migração de pedidos.
+          </blockquote>
+          <blockquote class="pl-3">
+            <strong>* Layout do arquivo:</strong> O sistema irá validar se a planilha 
+            importada possui mesma quantidade de colunas que a planilha padrão.
+          </blockquote>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-1 pr-1">3º</div>
+      <div class="col-11 pl-0">
+        <span [ngStyle]="{ fontSize: '12px' }">
+          A planilha deverá conter 2 colunas, sendo:
+          <blockquote class="pt-3 pl-3">
+            <strong>* Número do Pedido Anterior:</strong> Deverá conter o número do pedido que será alterado (campo obrigatório, numérico com até 10 dígitos);
+          </blockquote>
+          <blockquote class="pl-3">
+            <strong>* Número do Pedido Novo:</strong> Deverá conter o número do pedido para o qual o pedido anterior será migrado (campo obrigatório, numérico com até 10 dígitos).
+          </blockquote>
+        </span>
+      </div>
+    </div>
+  </div>
+  

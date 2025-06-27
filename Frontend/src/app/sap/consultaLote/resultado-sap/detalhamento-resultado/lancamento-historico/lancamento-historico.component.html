@@ -1,0 +1,223 @@
+<div [ngClass]="{ desabilitado: borderoExibir}">
+  <div class="row logContainer backgroundcinza">
+    <div class="col-11 titulo-resultado-detalhamento" style="font-weight: bold">
+      {{ tituloDetalhamento }}
+    </div>
+    <!---->
+    <div class="col-1 text-right plus">
+      <!---->
+      <!-- <fa-icon [icon]="faPlus" (click)="plusClick('+')"></fa-icon> -->
+      <i *ngIf="!open" class="fas fa-plus button-pointer" (click)="plusClick('+')"></i>
+      <i *ngIf="open" class="fas fa-minus button-pointer" (click)="plusClick('+')"></i>
+    </div>
+  </div>
+
+  <div class="tabela" *ngIf="detalhamentoSelecionado == '+'">
+    <div class="tabela-resultados">
+      <div class="tabela-resultados-inner">
+        <table>
+          <thead>
+            <tr>
+              <th *ngIf="isExcluido"></th>
+              <th *ngFor="let coluna of lancamentoColuna" [ngClass]="coluna == 'Data Envio Escritório' ? '': 'align'">
+                <span *ngIf="verificarEdicao(coluna)">{{ coluna }}</span>
+                <i class="fas fa-pen fa-lg roxo-padrao pl-2"
+                [ngClass]="isDisabled? 'desabilitado' : 'point'"
+                 *ngIf="coluna == 'Data Envio Escritório' && !isEditavel
+                 && isStatusPagamentoPago && temPermissaoEditar"
+                 (click)="openEditar(null)"></i>
+                <span class="icons-editar"
+                 *ngIf="isEditavel && coluna == 'Data Envio Escritório' && !isDisabled">
+                  <input placeholder="dd/mm/aaaa"
+                  class="dataInput mr-2 form-control"
+                  [ngClass]=" lancamento.erro? 'erros': ''"
+                  rInputMask="99/99/9999"
+                  [(ngModel)]="lancamento.data"
+                  (blur)="validaData(lancamento)"
+                  ngbDatepicker
+                  #f="ngbDatepicker"
+                  [ngbTooltip]="lancamento.msg"
+                  tooltipClass="erroTooltip"
+                  maxlength='10'
+                  tooltipClass="erroTooltip"
+                  >
+                  <i class="fas fa-check-circle fa-lg  sucess pr-1 " (click)="salvarDatas(null)"
+                  [ngClass]="lancamento.erro? 'desabilitado' : ''"></i>
+                  <i class="fas fa-times-circle fa-lg  cancel" (click)="cancelar(null)"
+                  ></i></span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let borderoCampos of borderoCampos">
+              <td>
+                <span>{{ borderoCampos.id }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.nomeBeneficiario }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.cpfBeneficiario }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.cnpjBeneficiario }}</span>
+              </td>
+
+              <td>
+                <span>{{ borderoCampos.numeroBancoBeneficiario }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.digitoBancoBeneficiario }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.numeroAgenciaBeneficiario }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.digitoAgenciaBeneficiario }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.numeroContaCorrenteBeneficiario }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.digitoContaCorrenteBeneficiario }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.valor |  currency: "BRL":"":"1.2-2":"pt" }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.cidadeBeneficiario }}</span>
+              </td>
+              <td>
+                <span>{{ borderoCampos.comentario }}</span>
+              </td>
+            </tr>
+            <tr *ngFor="let lancamentoCampos of lancamentoCampos">
+
+              <td *ngIf="isExcluido"
+              style="text-align: center;">
+                <i class="fas fa-info-circle"
+                style="color: red; "
+                ngbTooltip="Lançamento Estornado"
+                *ngIf="lancamentoCampos.lancamentoEstornado">
+                </i></td>
+              <td>
+                <span>{{ lancamentoCampos.numeroProcesso }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.comarca }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.vara  }}</span>
+              </td>
+              <td>
+                <span *ngIf="!lancamentoCampos.isEditavel">{{ lancamentoCampos.dataEnvioEscritorio | date: 'dd/MM/yyyy' }}</span>
+                <i class="fas fa-edit fa-lg roxo-padrao pl-2 float"
+                  *ngIf="!lancamentoCampos.isEditavel
+                  && isStatusPagamentoPago && temPermissaoEditar"
+                  [ngClass]="lancamentoCampos.isDisabled? 'desabilitado' : 'point'"
+                  (click)="openEditar(lancamentoCampos)"
+                  ></i>
+                <div class="icons-editar" *ngIf="lancamentoCampos.isEditavel && !lancamentoCampos.isDisabled">
+                  <input placeholder="dd/mm/aaaa"
+                    class="dataInput mr-2"
+                    [ngClass]=" lancamento.erro? 'erros': ''"
+                    rInputMask="99/99/9999"
+                    [(ngModel)]="lancamento.data"
+                    (blur)="validaData(lancamento)"
+                  ngbDatepicker
+                  maxlength='10'
+                  #f="ngbDatepicker"
+                  [ngbTooltip]="lancamento.msg"
+                  tooltipClass="erroTooltip">
+                  <i class="fas fa-check-circle fa-lg  sucess pr-1 " (click)="salvarDatas(lancamentoCampos)"
+                  [ngClass]="lancamento.erro? 'desabilitado' : ''"></i>
+                  <i class="fas fa-times-circle fa-lg  cancel" (click)="cancelar(lancamentoCampos)"
+                  ></i></div>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.escritorio  }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.tipoLancamento  }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.categoriaPagamento  }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.statusPagamento  }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.dataLancamento  }}</span>
+              </td>
+              <td *ngIf="!((tipoProcesso == 1) || (tipoProcesso == 9))">
+                <span>{{ lancamentoCampos.numeroGuia }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.numeroPedidoSAP }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.dataRecebimentoFiscal  }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.dataPagamentoPedido }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.valorLiquido  }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.textoSAP  }}</span>
+              </td>
+              <td>
+                <span>{{ lancamentoCampos.comentario  }}</span>
+              </td>
+              <td *ngIf="!(tipoProcesso == 2 || tipoProcesso == 9)">
+                <span>{{ lancamentoCampos.autor }}</span>
+              </td>
+              <td *ngIf="!(tipoProcesso == 2 || tipoProcesso == 9)">
+                <span>{{ lancamentoCampos.numeroContaJudicial }}</span>
+              </td>
+              <td *ngIf="!(tipoProcesso == 2 || tipoProcesso == 9)">
+                <span>{{ lancamentoCampos.numeroParcelaJudicial }}</span>
+              </td>
+              <td *ngIf="!(tipoProcesso == 2 || tipoProcesso == 9)">
+                <span>{{ lancamentoCampos.autenticacaoEletronica }}</span>
+              </td>
+              <td *ngIf="!(tipoProcesso == 2 || tipoProcesso == 9)">
+                <span>{{ lancamentoCampos.statusParcelaBancoDoBrasil }}</span>
+              </td>
+              <td *ngIf="!(tipoProcesso == 2 || tipoProcesso == 9)">
+                <span>{{ lancamentoCampos.dataEfetivacaoParcelaBancoDoBrasil }}</span>
+              </td>
+            </tr>
+
+            <tr *ngFor="let historicoCampos of historicoCampos">
+              <td>
+                <span>{{ historicoCampos.dataLog }}</span>
+              </td>
+              <td>
+                <span>{{ historicoCampos.descricaoStatusPagamento }}</span>
+              </td>
+              <td>
+                <span>{{ historicoCampos.nomeUsuario }}</span>
+              </td>
+
+            </tr>
+            <!--a linha selecionada recebe a classe "selected"-->
+            <tr class="selected"></tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div style="text-align: end;">
+      <button *ngIf="seletor == 1 && temPermissao" class="btn btn-roxo" (click)="exportar()">
+        <i class="fa fa-download"></i> Exportar
+      </button>
+    </div>
+    <div  style="text-align: end;">
+      <button *ngIf="seletor == 2 && temPermissao" class="btn btn-roxo" (click)="exportarBordero()">
+        <i class="fa fa-download"></i> Exportar
+      </button>
+    </div>
+    </div>
+  </div>
+</div>

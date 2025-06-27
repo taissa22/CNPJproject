@@ -1,0 +1,26 @@
+.descricao {
+    margin-top: 4px;
+}
+
+::ng-deep {
+  .botaoIncluir{
+    float: right;
+      margin-top: 8px;
+      border: none;
+      background: white;
+      display: flex;
+      align-items: center;
+      font-size: 29px;
+      padding-right: 4px;
+  }
+
+
+  .ng-select.ng-select-single .ng-select-container {
+    height: 10px;
+  }
+  button i {
+    font-size: 29px;
+    padding-right: 4px;
+  }
+
+}

@@ -1,0 +1,45 @@
+form {
+  border: solid 1px #dee2e6;
+  padding-bottom: 16px;
+  border-top: none;
+}
+.ngb-tab-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+}
+::ng-deep #ngb-tab {
+  border-top: solid 1px #dee2e6;
+  border-left: solid 1px #dee2e6;
+}
+::ng-deep #tab-dados-empresa {
+  border-top: solid 1px #dee2e6;
+  border-left: solid 1px #dee2e6;
+}
+::ng-deep #tab-sap {
+  border-top: solid 1px #dee2e6;
+  border-right: solid 1px #dee2e6;
+}
+::ng-deep #ngb-tab-0 {
+  border-top: solid 1px #dee2e6;
+  border-left: solid 1px #dee2e6;
+}
+::ng-deep #ngb-tab-1 {
+  border-top: solid 1px #dee2e6;
+  border-right: solid 1px #dee2e6;
+}
+::ng-deep #ngb-tab-2 {
+  border-top: solid 1px #dee2e6;
+  border-right: solid 1px #dee2e6;
+}
+/*
+::ng-deep .modal-open .modal {
+  overflow-y: hidden !important;
+}
+*/
+::ng-deep .invalid {
+  border: 1px solid red !important;
+  outline: none !important;
+  box-shadow: 0 0 3px red !important;
+  box-shadow: inset 0px 0px 2px 0.5px rgba(255,0,0,0.69) !important;
+}

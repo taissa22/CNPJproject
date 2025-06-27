@@ -1,0 +1,121 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">{{ titulo }}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body pt-0" [formGroup]="formulario">
+  <form >
+    <div class="row">
+      <div class="col-md-12">
+        <label class="col-form-label-sm" for="data">
+          <b>Descrição:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          maxlength="40"
+          placement="top-left top-right bottom-left bottom-right"
+          [formControl]="descricaoFormControl"
+          [disableTooltip]="desabilitaTooltip(descricaoFormControl)"
+          [ngbTooltip]="validacaoDescricao" />
+          <ng-template #validacaoDescricao>
+            <span *ngIf="descricaoFormControl.invalid && descricaoFormControl.errors.required">
+              Campo obrigatório
+            </span>
+            <span *ngIf="descricaoFormControl.invalid && descricaoFormControl.errors.validDate">
+              A descrição não pode ter mais de 40 caracteres
+            </span>
+          </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pt-2">
+        <label class="col-form-label-sm" for="data">
+          <b>Proposta:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          maxlength="2000"
+          placement="top-left top-right bottom-left bottom-right"
+          [formControl]="propostaFormControl"
+          [disableTooltip]="desabilitaTooltip(propostaFormControl)"
+          [ngbTooltip]="validacaoProposta" />
+          <ng-template #validacaoProposta>
+            <span *ngIf="propostaFormControl.invalid && propostaFormControl.errors.validDate">
+              A descrição não pode ter mais de 2000 caracteres
+            </span>
+          </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pt-2">
+        <label class="col-form-label-sm" for="data">
+          <b>Negociação:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          maxlength="4000"
+          placement="top-left top-right bottom-left bottom-right"
+          [formControl]="negociacaoFormControl"
+          [disableTooltip]="desabilitaTooltip(negociacaoFormControl)"
+          [ngbTooltip]="validacaoNegociacao" />
+          <ng-template #validacaoNegociacao>
+            <span *ngIf="negociacaoFormControl.invalid && negociacaoFormControl.errors.validDate">
+              A descrição não pode ter mais de 4000 caracteres
+            </span>
+          </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pt-2">
+        <label class="col-form-label-sm" for="data">
+          <b>Cálculo da Contingência:</b>
+        </label>
+        <select class="form-control"  class="form-control"
+            placement="top-left top-right bottom-left bottom-right"
+            [formControl]="codigoTipoContingenciaFormControl"
+            [disableTooltip]="desabilitaTooltip(codigoTipoContingenciaFormControl)"
+            [ngbTooltip]="validacaoTipoContingencia">
+            <option value="M">MÉDIA</option>
+            <option value="P">PROCESSO A PROCESSO</option>
+        </select>
+        <ng-template #validacaoTipoContingencia>
+          <span *ngIf="codigoTipoContingenciaFormControl.invalid && codigoTipoContingenciaFormControl.errors.required">
+            É obrigatório informar o tipo de cálculo
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pt-2">        
+          <label class="col-form-label-sm font-weight-bold" for="depara">
+            Assunto Correspondente Cível Estratégico (DExPARA Migração de Processo)
+          </label>
+          <ng-select
+            [ngStyle]="{ fontSize: '11px' }"
+            id="depara"
+            [items]="comboDeparaEstrategico"
+            bindLabel="nome"
+            bindValue="idEstrategico"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="true"
+            [clearable]="true"
+            clearAllText="Limpar"
+            [formControl]="comboDeparaEstrategicoFormControl"
+            placeholder="Selecione uma opção"
+            [virtualScroll]="true"
+          >
+          </ng-select>       
+
+    </div>
+  </div>
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="activeModal.dismiss()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="confirmar()">Confirmar</button>
+</div>

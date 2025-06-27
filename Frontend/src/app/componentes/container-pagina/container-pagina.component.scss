@@ -1,0 +1,50 @@
+.botao {
+  padding: 5px;
+  float: right;
+}
+
+.rota {
+  float: right;
+  font-size: 14px;
+}
+
+.rota, .rota:not(:disabled):not(.disabled):active
+, .rota.focus, .rota:focus
+ {
+
+  color: #786bb9;
+}
+
+.texto{
+  color: #786bb9;
+}
+
+button{
+  float: right;
+    margin-top: 8px;
+    border: none;
+    background: white;
+    display: flex;
+    align-items: center;
+}
+
+button i {
+  font-size: 29px;
+  padding-right: 4px;
+}
+
+
+.pagina {
+  justify-content: space-between;
+  min-width: 85%;
+  max-width: 600px;
+  min-height: 400px;
+  margin: 0 auto;
+  // margin-top: 40px;
+  // margin-bottom: 40px;
+  position: relative;
+}
+
+.rota {
+  cursor: pointer;
+}

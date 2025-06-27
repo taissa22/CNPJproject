@@ -1,0 +1,243 @@
+<div class="main d-flex justify-content-between">
+  <h3 class="title">Agendar Fechamento de Contingência</h3>
+  <span style="font-size: 23px;max-height: 14px; margin-right: 10px;cursor: pointer;" (click)="close()">&times;</span>
+</div>
+<div class="container">
+  <div class="options">
+    <b><h5>Tipo de Fechamento:</h5></b>
+    <select class="form-control col-12" id="allocation-algorithm" [(ngModel)]="tipoFechamentoSelecionado" style="width: 50%;">
+      <option value=""></option>
+      <option *ngIf="temPermissaoCivelConsumidor" title="Fechamento Cível Consumidor" value="Fechamento Cível Consumidor">Fechamento Cível Consumidor</option>
+      <option *ngIf="temPermissaoCivelConsumidor" title="Fechamento Cível Consumidor por Média" value="Fechamento Cível Consumidor por Média">Fechamento Cível Consumidor por Média</option>
+      <option *ngIf="temPermissaoCivelEstrategica" title="Fechamento Cível Estratégico" value="Fechamento Cível Estratégico">Fechamento Cível Estratégico</option>
+      <option *ngIf="temPermissaoJEC" title="Fechamento Juizado Especial" value="Fechamento Juizado Especial">Fechamento Juizado Especial</option>
+      <option *ngIf="temPermissaoTRAB" title="Fechamento Trabalhista por Média" value="Fechamento Trabalhista por Média">Fechamento Trabalhista por Média</option>
+      <option *ngIf="temPermissaoPex" title="Fechamento PEX por Média" value="Fechamento PEX por Média">Fechamento PEX por Média</option>
+    </select>
+  </div>
+
+  <div class="content" style="padding-top: 20px;">
+    <div *ngIf="tipoFechamentoSelecionado == ''">
+      <div class="valuenull col-12">
+        <div class="optionsEmpresas col-6">
+          <div style="display: flex;">
+            <span>Empresas Centralizadoras:</span>
+            <span class="ml-auto">
+              <label>
+                <input id="marcarTodas" type="checkbox" name="marcarTodas">
+                <span style="padding-left: 3px;">Marcar Todas</span></label>
+            </span>
+          </div>
+          <div class="empresas">
+          </div>
+        </div>
+        <div class="optionsData col-6">
+          <div style="border-bottom: 1px solid #dee2e6;">
+            <h5 style="padding-bottom: 2px">Configurações da Execução: <i class="fas fa-info-circle"
+                style="font-size: 14px;" [tooltip]="HtmlContent" contentType="template"></i></h5>
+            <ng-template #HtmlContent>
+              <div class="tooltipContent">
+                <p class="pt-0">
+                  <b>Execução imediata:</b>
+                  Fechamentos agendados com essa periodicidade
+                  serão executados na próxima execução da rotina de fechamento de
+                  contingência. A data da prévia será a data indicada no agendamento.
+                </p>
+                <p>
+                  <b>Data específica:</b>
+                  Essa periodicidade permite agendar a execução dos
+                  fechamentos para datas futuras, sendo a data da prévia obrigatoriamente
+                  igual ou menor à data da execução. Para os casos onde a data da prévia
+                  seja igual ao dia da execução do fechamento, esse será considerado como fechamento parcial.
+                </p>
+                <p>
+                  <b>Diária:</b>
+                  A periodicidade diária faz o fechamento das prévias entre o período indicado no agendamento.
+                </p>
+                <p>
+                  <b>Semanal:</b>
+                  Agendamentos configurados com periodicidade semanal fecham a prévia sempre no dia da semana informado
+                  no
+                  agendamento.
+                </p>
+                <p>
+                  <b>Mensal:</b>
+                  Para os agendamentos configurados com periodicidade mensal, o usuário indica o dia do mês que deseja
+                  fazer
+                  o fechamento da prévia.
+                </p>
+                <p>
+                  <b>Importante!</b>
+                  Lembrando que a execução dos fechamentos recursivos (diário, semanal e mensal) sempre serão feitos no
+                  dia
+                  seguinte (d+1), para garantir que sejam fechamentos completos (do dia inteiro).
+                </p>
+              </div>
+            </ng-template>
+          </div>
+
+          <div class="optinsCheck">
+            <!-- EXECUÇÃO IMEDIATA -->
+            <label><input class="radio" type="radio" id="execucaoImediata" name="my-group" checked
+                (click)="execucaoCheck('execucaoImediata')"><span style="padding-left: 3px;">Execução
+                Imediata</span></label>
+
+            <div class="execucaoImediata" style="padding: 20px;" *ngIf="execucaoImediata == true">
+              <span style="display: flex;">Mês / Ano Contábil</span>
+              <input type="text" disabled="disabled" style="margin-right: 5px;width: 50px;min-height: 30px;"> / <input
+                type="text" disabled="disabled" style="width: 65px;
+            margin-left: 5px;min-height: 30px;">
+              <span style="padding-top: 15px;display: flex;">Data da prévia</span>
+              <div class="form-inline prlnk-datepicker">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control form-control-sm" rInputMask="99/99/9999" maxlength="10"
+                      placeholder="DD/MM/AAAA" bsDatepicker id="dataDaVigencia" />
+                    <div class="input-group-append">
+                      <button class="btn calendar" type="button">
+                        <i class="fa-solid fa-calendar-days fa-lg"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span>
+                <label style="padding-top: 15px;"><input class="radio" type="checkbox" id="fechamentoMensal"><span
+                    style="padding-left: 3px;">Marcar como fechamento mensal</span></label>
+              </span>
+            </div>
+
+            <!-- DATA ESPECÍFICA -->
+            <label><input class="radio" type="radio" id="dataEspecifica" name="my-group"
+                (click)="execucaoCheck('dataEspecifica')"><span style="padding-left: 3px;">Data
+                Específica</span></label>
+
+            <div class="dataEspecifica" style="padding: 20px;" *ngIf="dataEspecifica == true">
+              <span style="display: flex;">Executar na Data:</span>
+              <div class="form-inline prlnk-datepicker">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control form-control-sm" rInputMask="99/99/9999" maxlength="10"
+                      placeholder="DD/MM/AAAA" bsDatepicker id="dataDaVigencia" />
+                    <div class="input-group-append">
+                      <button class="btn calendar" type="button">
+                        <i class="fa-solid fa-calendar-days fa-lg"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span style="display: flex; padding-top: 15px">Mês / Ano Contábil</span>
+              <input type="text" disabled="disabled" style="margin-right: 5px;width: 50px;min-height: 30px;"> / <input
+                type="text" disabled="disabled" style="width: 65px;
+          margin-left: 5px;min-height: 30px;">
+              <span style="padding-top: 15px;display: flex;">Data da prévia</span>
+              <div class="form-inline prlnk-datepicker">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control form-control-sm" rInputMask="99/99/9999" maxlength="10"
+                      placeholder="DD/MM/AAAA" bsDatepicker id="dataDaVigencia" />
+                    <div class="input-group-append">
+                      <button class="btn calendar" type="button">
+                        <i class="fa-solid fa-calendar-days fa-lg"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span>
+                <label style="padding-top: 15px;"><input class="radio" type="checkbox" id="fechamentoMensal"><span
+                    style="padding-left: 3px;">Marcar como fechamento mensal</span></label>
+              </span>
+            </div>
+
+            <!-- DIÁRIA -->
+            <label><input class="radio" type="radio" id="diaria" name="my-group"
+                (click)="execucaoCheck('diaria')"><span style="padding-left: 3px;">Diária</span></label>
+
+            <div class="diaria" style="padding: 20px;" *ngIf="diaria == true">
+
+              <span style="display: flex;">Prévias entre:</span>
+              <app-data-range [dataInicio]="diariaPreviaInicio" [dataFim]="diariaPreviaFim"
+                (retDataFim)="diariaPreviaFim = $event" (retDataInicio)="diariaPreviaInicio = $event">
+              </app-data-range>
+              <span style="font-size: 15px;display: flex;padding-top: 5px; color: #6f62b2">A execução do fechamento será
+                no dia seguinte às prévias configuradas.</span>
+              <span>
+                <label style="padding-top: 15px;"><input class="radio" type="checkbox" id="fechamentoMensal"><span
+                    style="padding-left: 3px;">Marcar como fechamento mensal</span></label>
+              </span>
+            </div>
+
+            <!-- SEMANAL -->
+            <label><input class="radio" type="radio" id="semanal" name="my-group"
+                (click)="execucaoCheck('semanal')"><span style="padding-left: 3px;">Semanal</span></label>
+
+            <div class="semanal" style="padding: 20px;" *ngIf="semanal == true">
+              <div>
+                <span>Dia da Prévia</span>
+                <select class="form-control col-12" id="allocation-algorithm" [(ngModel)]="opcaoSemanalSelecionada" style="max-width: 140px;">
+                  <option value=""></option>
+                  <option value="Domingo">Domingo</option>
+                  <option value="Segunda-Feira">Segunda-Feira</option>
+                  <option value="Terça-Feira">Terça-Feira</option>
+                  <option value="Quarta-Feira">Quarta-Feira</option>
+                  <option value="Quinta-Feira">Quinta-Feira</option>
+                  <option value="Sexta-Feira">Sexta-Feira</option>
+                  <option value="Sábado">Sábado</option>
+                </select>
+              </div>
+
+              <span style="font-size: 15px;display: flex;padding-top: 5px; color: #6f62b2">A execução do fechamento será
+                no dia seguinte à prévia configurada.</span>
+            </div>
+
+            <!-- MENSAL -->
+            <label><input class="radio" type="radio" id="mensal" name="my-group"
+                (click)="execucaoCheck('mensal')"><span style="padding-left: 3px;">Mensal</span></label>
+
+            <div class="mensal" style="padding: 20px;" *ngIf="mensal == true">
+              <span>
+                <label><input class="radio" type="checkbox" id="ultimoDiaMes"><span style="padding-left: 3px;">Último
+                    dia
+                    do mês</span></label>
+              </span>
+              <div style="padding-top: 15px;">
+                <span>Dia da Prévia</span>
+                <select class="form-control col-12" id="allocation-algorithm" [(ngModel)]="opcaoMensalSelecionada" style="max-width: 140px;">
+                  <option value=""></option>
+                  <ng-container *ngFor="let dia of dias;">
+                    <option value="{{dia}}">{{dia}}</option>
+                  </ng-container>
+                </select>
+              </div>
+
+              <span style="font-size: 15px;display: flex;padding-top: 5px; color: #6f62b2">A execução do fechamento será
+                no dia seguinte à prévia configurada.</span>
+
+              <span>
+                <label style="padding-top: 15px;"><input class="radio" type="checkbox" id="fechamentoMensal"><span
+                    style="padding-left: 3px;">Marcar como fechamento mensal</span></label>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="buttons">
+        <div class="btn btn-primary cancelar" (click)="close()">Cancelar</div>
+        <button class="btn btn-primary" style="cursor: pointer;" (click)="salvar()" >Confirmar</button>
+      </div>
+    </div>
+
+    <app-fechamento-cc *ngIf="tipoFechamentoSelecionado == 'Fechamento Cível Consumidor'" (onCancel)="close()" (onConfirm)="confirm(1)"></app-fechamento-cc>
+    <app-fechamento-cc-media *ngIf="tipoFechamentoSelecionado == 'Fechamento Cível Consumidor por Média'" (onCancel)="close()" (onConfirm)="confirm(50)">
+    </app-fechamento-cc-media>
+    <app-fechamento-civel-estrategico *ngIf="tipoFechamentoSelecionado == 'Fechamento Cível Estratégico'" (onCancel)="close()" (onConfirm)="confirm(6)">
+    </app-fechamento-civel-estrategico>
+    <app-fechamento-jec *ngIf="tipoFechamentoSelecionado == 'Fechamento Juizado Especial'" (onCancel)="close()" (onConfirm)="confirm(49)"></app-fechamento-jec>
+    <app-fechamento-trab-media *ngIf="tipoFechamentoSelecionado == 'Fechamento Trabalhista por Média'" (onCancel)="close()" (onConfirm)="confirm(7)">
+    </app-fechamento-trab-media>
+    <app-fechamento-pex-media *ngIf="tipoFechamentoSelecionado == 'Fechamento PEX por Média'" (onCancel)="close()" (onConfirm)="confirm(51)"></app-fechamento-pex-media>
+  </div>
+</div>

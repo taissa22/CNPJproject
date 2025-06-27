@@ -1,0 +1,161 @@
+
+<div bsModal #template="bs-modal" style="height: 1500;"  tabindex="-1" role="dialog"
+aria-labelledby="dialog-sizes-name1" [config]="{backdrop: 'static'}">
+<div >
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left">{{titulo}}</h4>
+      <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="registerForm">
+        <h6 class="titulo">Dados Beneficiário</h6>
+        <div class="form-row mb-2">
+          <div class="col-md-12">
+            <label for="nome" class="labels">Beneficiário</label>
+            <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': registerForm.get('nomeBeneficiario').errors && registerForm.get('nomeBeneficiario').touched}"
+              formControlName="nomeBeneficiario" placement="top-left" maxlength="30"
+              [ngbTooltip]="validacaoTextos('nomeBeneficiario', 'Beneficiário')">
+          </div>
+        </div>
+        <div class="form-row mb-2">
+          <div class="col-md-12">
+            <div class="form-check form-check-inline">
+              <label class="form-check-label mr-2">CPF</label>
+              <input class="form-check-input" type="radio" name="cpfcnpj" formControlName="cpfcnpj" value="cpf"
+                (click)="valorCPFCNPJ('cpf')" checked />
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label mr-2" for="rdCNPJ">CNPJ</label>
+              <input class="form-check-input" type="radio" name="cpfcnpj" formControlName="cpfcnpj" value="cnpj"
+                (click)="valorCPFCNPJ('cnpj')" />
+            </div>
+
+            <input type="text" id="cpf" class="mb-2 form-control cpfCnpj" *ngIf="isCPF"
+              formControlName="cpfBeneficiario" minlength="11" maxlength="11" numbersOnly
+              [ngClass]="{'is-invalid': registerForm.get('cpfBeneficiario').errors && registerForm.get('cpfBeneficiario').touched}"
+              formControlName="cpfBeneficiario" placement="top-left"
+              [ngbTooltip]="validacaoTextos('cpfBeneficiario', 'CPF')" />
+            <input type="text" id="cnpj" class="mb-2 form-control cpfCnpj" *ngIf="!isCPF"
+              minlength="14" maxlength="14" numbersOnly
+              [ngClass]="{'is-invalid': registerForm.get('cnpjBeneficiario').errors && registerForm.get('cnpjBeneficiario').touched}"
+              formControlName="cnpjBeneficiario" placement="top-left"
+              [ngbTooltip]="validacaoTextos('cnpjBeneficiario', 'CNPJ')"  />
+          </div>
+        </div>
+        <h6 class="titulo">Dados Bancários</h6>
+        <div class="form-row mb-2">
+          <div class="d-flex col-12 p-0 justify-content-between pr-4">
+            <div class="col-md-5 d-flex p-0 ">
+              <div class="label col-7 p-0 pl-1">
+                <label for="banco" class="mb-0 labels">Banco</label>
+                <input type="text" id="banco" class="form-control" maxlength="3"
+                  [ngClass]="{'is-invalid': registerForm.get('numeroBancoBeneficiario').errors && registerForm.get('numeroBancoBeneficiario').touched}"
+                  formControlName="numeroBancoBeneficiario" placement="top-left"
+                  [ngbTooltip]="validacaoTextos('numeroBancoBeneficiario', 'Banco')">
+
+              </div>
+              <div class="input col-4 p-0 ml-1 ">
+                <label for="dv-banco" class="mb-0 labels">DV</label>
+                <input type="text" maxlength="1" id="dv-banco" class="form-control"
+                  [ngClass]="{'is-invalid': registerForm.get('digitoBancoBeneficiario').errors && registerForm.get('digitoBancoBeneficiario').touched}"
+                  formControlName="digitoBancoBeneficiario" placement="top-left"
+                  [ngbTooltip]="validacaoTextos('digitoBancoBeneficiario', 'DV Banco')">
+              </div>
+            </div>
+            <div class="col-md-5 d-flex ">
+              <div class="label col-7 p-0">
+                <label for="agencia" class="mb-0 labels">Agência</label>
+                <input type="text" id="agencia" class="form-control" maxlength="11"
+                  [ngClass]="{'is-invalid': registerForm.get('numeroAgenciaBeneficiario').errors && registerForm.get('numeroAgenciaBeneficiario').touched}"
+                  formControlName="numeroAgenciaBeneficiario" placement="top-left"
+                  [ngbTooltip]="validacaoTextos('numeroAgenciaBeneficiario', 'Agência')">
+
+              </div>
+              <div class="input col-4 p-0 ml-1">
+                <label for="dv-agencia" class="mb-0 labels">DV</label>
+                <input type="text" maxlength="1" id="dv-ag" class="form-control"
+                  [ngClass]="{'is-invalid': registerForm.get('digitoAgenciaBeneficiario').errors && registerForm.get('digitoAgenciaBeneficiario').touched}"
+                  formControlName="digitoAgenciaBeneficiario" placement="top-left"
+                  [ngbTooltip]="validacaoTextos('digitoAgenciaBeneficiario', 'DV Agência')">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row mb-2">
+          <div class="d-flex  col-12 p-0 justify-content-between pr-4">
+            <div class="col-md-5 d-flex p-0 ">
+              <div class="label col-9 p-0 pl-1">
+                <label for="conta" class="mb-0">N° C/C</label>
+                <input type="text" id="conta" class="form-control" maxlength="18"
+                  [ngClass]="{'is-invalid': registerForm.get('numeroContaCorrenteBeneficiario').errors && registerForm.get('numeroContaCorrenteBeneficiario').touched}"
+                  formControlName="numeroContaCorrenteBeneficiario" placement="top-left"
+                  [ngbTooltip]="validacaoTextos('numeroContaCorrenteBeneficiario', 'Nº C/C')">
+
+              </div>
+              <div class="input col-4 p-0 pl-1 ">
+                <label for="dv-cc" class="mb-0">DV</label>
+                <input type="text" maxlength="1" id="dv-cc" class="form-control"
+                  [ngClass]="{'is-invalid': registerForm.get('digitoContaCorrenteBeneficiario').errors && registerForm.get('digitoContaCorrenteBeneficiario').touched}"
+                  formControlName="digitoContaCorrenteBeneficiario" placement="top-left"
+                  [ngbTooltip]="validacaoTextos('digitoContaCorrenteBeneficiario', 'DV Nº C/C')">
+              </div>
+            </div>
+            <div class="col-md-5 d-flex ">
+              <div class="label col-12 p-0">
+                <label for="valor" class="mb-0">Valor</label>
+                <input type="text" id="valor" class="form-control" placeholder="0,00"
+                  [ngClass]="{'is-invalid': registerForm.get('valor').errors && registerForm.get('valor').touched}"
+                  formControlName="valor" placement="top-left" [ngbTooltip]="validacaoTextos('valor', 'Valor')"
+                  currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }"
+                  maxlength="15"
+                  >
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+
+          <div style="width: 20%" class="mr-1 form-group">
+
+          </div>
+          <div style="width: 10%" class="mr-5 form-group">
+
+          </div>
+          <div class="form-row">
+            <div class="col-md-12">
+              <label for="cidade">Cidade</label>
+              <input type="text" id="cidade" class="mb-1 form-control" maxlength="25"
+                [ngClass]="{'is-invalid': registerForm.get('cidadeBeneficiario').errors && registerForm.get('cidadeBeneficiario').touched}"
+                formControlName="cidadeBeneficiario" placement="top-left"
+                [ngbTooltip]="validacaoTextos('cidadeBeneficiario', 'Cidade')" tooltipClass="erroTooltip"/>
+              <label for="comentario">Histórico</label>
+              <input type="text" id="comentario" class="mb-1 form-control" maxlength="50"
+                formControlName="comentario" />
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-cancelar-oi" (click)="bsModalRef.hide()"><span class="texto-btn-oi cancelar">
+          Cancelar </span></button>
+
+      <button type="button" class="btn btn-primary" (click)="salvarAlteracao()" [ngClass]="!registerForm.valid ? 'btn-primary-disabled' : '' "
+        [disabled]="!registerForm.valid"><span class="texto-btn-oi confirmar"> Confirmar </span></button>
+    </div>
+  </div>
+  <div>
+  </div>
+
+
+</div>
+</div>

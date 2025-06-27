@@ -1,0 +1,22 @@
+<app-manutencao-generica
+  tituloAdicionar="Adicionar Profissional"
+  tituloLista="Profissionais"
+  titulo="Manutenção - Profissional"
+  [breadcrump]="breadcrumb"
+  [colunas]="colunas"
+  [registros]="obterResultados"
+  [totalDeRegistros]="totalDeRegistros"
+  [(pagina)]="pagina"
+  [(ordenacaoColuna)]="ordenacaoColuna"
+  [(ordenacaoDirecao)]="ordenacaoDirecao"
+  [(totalDeRegistrosPorPagina)]="totalDeRegistrosPorPagina"
+  (aoClicarNovoRegistro)="abrirDialogoDeCriar()"
+  (aoClicarEditarRegistro)="abrirDialogoDeAtualizar($event.id)"
+  (aoRemoverRegistro)="remover($event.id)"
+  (aoCarregarRegistros)="trocarPagina()"
+  (aoClicarExportar)="exportar()"
+  [exibirAdicionar]="true">
+
+  <profissionais-filtros (obterParametros)="pagina = 1; obter($event)"></profissionais-filtros>
+
+</app-manutencao-generica>

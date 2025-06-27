@@ -1,0 +1,108 @@
+<div class="container" style="padding-right: 12rem; padding-left: 14rem;">
+  <div class="listagem">
+    <div class="processosListados d-flex p-3">
+      <b><span class="text-danger">{{qtdRegistros}}</span> PROCEDIMENTO(S) CRIMINAL(IS) {{title}}(S) ENCONTRADO(S)*
+        <span style="cursor: pointer;" (click)="modalParametro()" class="text-danger pl-4">PARÂMETROS DE CONSULTA</span>
+        <i class="fas fa-long-arrow-down ml-2" style="cursor: pointer;" (click)="modalParametro()"></i>
+      </b>
+      <div class="btn-group d-flex ml-auto">
+        <a *ngIf="qtdRegistros == 0" class="btnLink mr-4" (click)="voltar()">Voltar</a>
+        <a *ngIf="qtdRegistros == 0" class="btnLink" href="{{ambiente}}{{rotaNovo}}">Novo <i class="fas fa-plus-circle ml-1"></i></a>
+      </div>
+    </div>
+
+    <div class="parametrosConsulta" *ngIf="modal">
+      <table style="width: 100%;">
+        <tr>
+          <table style="width: 100%;">
+            <ng-container *ngFor="let item of parametrosConsulta">
+              <tr>
+                <td style="padding-bottom: 3px;"><b>{{item.tipo}}:</b></td>
+                <td style="padding-bottom: 3px;" class="pl-2"><b>{{item.descricao}}</b></td>
+              </tr>
+            </ng-container>
+          </table>
+        </tr>
+        <tr>
+          <td style="text-align:center; padding-top: 10px">
+            <div class="btn btn-primary p-1" (click)="modalParametro()">
+              <span class="p-2">
+                Fechar
+              </span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processosListados d-flex p-3 mt-4" style="text-align:center; flex-direction: column;">
+      <ng-container *ngIf="qtdRegistros == 0">
+        <b class="text-danger">Nenhum registro foi encontrado para essa consulta!</b>
+        <a class="ml-4" style="color: #777777; cursor: pointer;" (click)="voltar()">Nova Consulta</a>
+      </ng-container>
+      <ng-container *ngIf="qtdRegistros != 0">
+        <div class="ml-auto mr-4 mb-2">
+          <a style="display: none;" class="btnLink mr-4" (click)="imprimir(null)">Imprimir Todos <i class="fas fa-print ml-1"></i></a>
+          <a class="btnLink mr-4" (click)="download()">Download <i class="fas fa-download ml-1"></i></a>
+          <a class="btnLink mr-4" (click)="voltar()">Voltar</a>
+          <a class="btnLink" href="{{ambiente}}{{rotaNovo}}" *ngIf="podeIncluir">Novo <i class="fas fa-plus-circle ml-1"></i></a>
+        </div>
+        <div class="col-md-12">
+          <table id="empresas" class="table table-striped table-sm">
+            <ng-container *ngFor="let emp of resultadoBusca; let i = index">
+
+              <thead>
+                <tr style="text-align: initial; background-color: #786bb9a1;">
+                  <td colspan="6"><b style="margin-left: 10px;">{{emp.nome}}</b></td>
+                </tr>
+                <tr>
+                  <td class="headerTable"><b>{{primeiraColuna}}</b></td>
+                  <td class="headerTable"><b>{{segundaColuna}}</b></td>
+                  <td class="headerTable"><b>ASSUNTO(S)</b></td>
+                  <td class="headerTable"><b>PARTES</b></td>
+                  <td class="headerTable"><b>{{quintaColuna}}</b></td>
+                  <td class=""></td>
+                </tr>
+              </thead>
+
+              <tbody>
+                <ng-container *ngFor="let proc of emp.processos">
+                  <tr style="text-align: initial;">
+                    <td class="bodyTable" [innerHtml]="dadosColuna1(proc)"></td>
+                    <td class="bodyTable" [innerHtml]="dadosColuna2(proc)"></td>
+                    <td class="bodyTable" style="text-align: center;" [innerHtml]="dadosColuna3(proc)"></td>
+
+                    <td class="bodyTable">
+                      <ng-container *ngFor="let item of proc.partes | keyvalue">
+                        <div><b class="text-danger">{{item.key}}</b></div>
+                        <div title="{{nomeparte}}" style="line-height: initial;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;max-width: 200px;" *ngFor="let nomeparte of item.value">
+                          {{nomeparte}}
+                        </div>
+                      </ng-container>
+                    </td>
+
+                    <td class="bodyTable" style="text-align: center;">{{proc.instauracao}}</td>
+                    <td>
+                      <div class="mt-5">
+                        <a class="p-2 mr-1" *ngIf="title == 'ADMINISTRATIVO'" href="{{ambiente}}/2.0/processo/CriminalAdministrativo/Alteracao/AlterarProcesso.aspx?codProcesso={{proc.id}}&e=0&vl=1"><i class="icons fas fa-search ml-1"></i></a>
+                        <a class="p-2 mr-1" *ngIf="title == 'ADMINISTRATIVO'  && podeAlterar" href="{{ambiente}}/2.0/processo/CriminalAdministrativo/Alteracao/AlterarProcesso.aspx?codProcesso={{proc.id}}&e=1&vl=1"><i class="icons fas fa-edit ml-1"></i></a>
+                        <a class="p-2 mr-1" *ngIf="title == 'JUDICIAL'" href="{{ambiente}}/2.0/processo/criminaljudicial/alteracao/AlterarProcesso.aspx?codProcesso={{proc.id}}&e=0&vl=1"><i class="icons fas fa-search ml-1"></i></a>
+                        <a class="p-2 mr-1" *ngIf="title == 'JUDICIAL' && podeAlterar" href="{{ambiente}}/2.0/processo/CriminalJudicial/Alteracao/AlterarProcesso.aspx?codProcesso={{proc.id}}&e=1&vl=1"><i class="icons fas fa-edit ml-1"></i></a>
+                        <a class="p-2" (click)="imprimir(proc.id)"><i class="icons fas fa-print ml-1"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+
+            </ng-container>
+          </table>
+
+          <sisjur-paginator [length]="qtdRegistros" (page)="pesquisar()"></sisjur-paginator>
+
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+</div>

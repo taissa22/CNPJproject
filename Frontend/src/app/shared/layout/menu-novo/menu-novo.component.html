@@ -1,0 +1,109 @@
+<div class="layoutCards" id="layoutCards">
+    <!-- <div style="display:flex; justify-content: flex-start; flex-wrap: wrap;"> -->
+        <ng-container *ngFor="let card of cards, let index = index">
+            <a>
+                <div class="card" (click)="exibirSubMenu(index)">
+                    <i class="{{card.icone}}" style="color: #574D81; font-size: 6vmin;"></i>
+                    <span class="text-card">{{card.nome}}</span>
+                </div>
+            </a>
+        </ng-container>
+    <!-- </div> -->
+</div>
+
+<!-- NAVEGAÇÃO -->
+
+<div class="layoutMenu" id="layoutMenu" style="display: none; width: 100%">
+
+    <div class="botaoLateral">
+        <div class="info" (click)="voltar()">
+          <i style="color: #574D81; cursor: pointer" class="fas fa-arrow-left fa-2x"></i>
+          <span style="font-family: tahoma; font-size: 12px; cursor: pointer" class="spanOpcoes">Voltar</span>
+        </div>
+    </div>
+    <div id="gridMenu" style="float: left; width: 100%; height: 100%; margin-left: 12%;">
+
+        <h1 style="font-size: 35px; font-weight: 800; color: #574d81;">{{nome}}</h1>
+
+        <div style="margin-top: 40px">
+            <i class="fas fa-home fa-1x" (click)="home()"
+                style="cursor: pointer;color: #574D81;"></i>
+            <span style="font-weight: 700; color: #574d81; font-size: 12px; display: inline-flex;">
+
+                <div *ngFor="let parteCaminho of caminhoPartesList, let indice = index">
+                  <span style='cursor:pointer' (click)="voltarPaginaNavegada(indice)">&nbsp;>&nbsp;{{parteCaminho}}</span>
+              </div>
+
+            </span>
+        </div>
+
+        <div id="listaOpcoes" style="margin-top: 40px; display: flex; padding-bottom: 40px;">
+
+            <ng-container *ngIf="qtdOpcoes < 5">
+                <div style="width: 34%; display: flex; flex-direction: column;">
+                    <ng-container *ngFor="let nivelAtual of nivelAtual, let indice = index">
+                        <span *ngIf="nivelAtual.subItens == null" style="margin-bottom: 15px; width: 150%;">
+                            <a *ngIf="nivelAtual.url != null" title="{{nivelAtual.modulos}}" href="{{nivelAtual.url}}"
+                                class="spanOpcoes" (click)='fecharNovoMenu(nivelAtual)'>{{nivelAtual.nome}}</a>
+                            <span *ngIf="nivelAtual.url == null" class="spanOpcoes">{{nivelAtual.nome}}</span>
+                        </span>
+                        <span *ngIf="nivelAtual.subItens != null" style="margin-bottom: 15px;">
+                            <a tabindex="0" (click)="obterDados(indice)" class="spanOpcoes">{{nivelAtual.nome}}
+                              <i class="fas fa-caret-right fa-1x"></i></a>
+                        </span>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="qtdOpcoes >= 5">
+                <div style="width: 34%; display: flex; flex-direction: column;">
+                    <ng-container *ngFor="let nivelAtual of nivelAtual, let indice = index">
+                        <ng-container *ngIf="indice < qtdColuna1">
+                            <span *ngIf="nivelAtual.subItens == null" style="margin-bottom: 15px;">
+                                <a *ngIf="nivelAtual.url != null" title="{{nivelAtual.modulos}}" href="{{nivelAtual.url}}"
+                                    class="spanOpcoes" (click)='fecharNovoMenu(nivelAtual)'>{{nivelAtual.nome}}</a>
+                                <span *ngIf="nivelAtual.url == null" class="spanOpcoes">{{nivelAtual.nome}}</span>
+                            </span>
+                            <span *ngIf="nivelAtual.subItens != null" style="margin-bottom: 15px;">
+                                <a tabindex="0" (click)="obterDados(indice)" class="spanOpcoes">{{nivelAtual.nome}}
+                                  <i class="fas fa-caret-right fa-1x"></i></a>
+                            </span>
+                        </ng-container>
+                    </ng-container>
+                </div>
+
+                <div style="width: 34%; display: flex; flex-direction: column;">
+                    <ng-container *ngFor="let nivelAtual of nivelAtual, let indice = index">
+                        <ng-container *ngIf="indice >= qtdColuna1 && indice < qtdColuna2 && indice < qtdOpcoes">
+                            <span *ngIf="nivelAtual.subItens == null" style="margin-bottom: 15px;">
+                                <a *ngIf="nivelAtual.url != null" title="{{nivelAtual.modulos}}" href="{{nivelAtual.url}}"
+                                    class="spanOpcoes" (click)='fecharNovoMenu(nivelAtual)'>{{nivelAtual.nome}}</a>
+                                <span *ngIf="nivelAtual.url == null" class="spanOpcoes">{{nivelAtual.nome}}</span>
+                            </span>
+                            <span *ngIf="nivelAtual.subItens != null" style="margin-bottom: 15px;">
+                                <a tabindex="0" (click)="obterDados(indice)" class="spanOpcoes">{{nivelAtual.nome}}
+                                  <i class="fas fa-caret-right fa-1x"></i></a>
+                            </span>
+                        </ng-container>
+                    </ng-container>
+                </div>
+
+                <div style="width: 34%; display: flex; flex-direction: column;">
+                    <ng-container *ngFor="let nivelAtual of nivelAtual, let indice = index">
+                        <ng-container *ngIf="indice >= qtdColuna2 && indice < qtdColuna3 && indice < qtdOpcoes">
+                            <span *ngIf="nivelAtual.subItens == null" style="margin-bottom: 15px;">
+                                <a *ngIf="nivelAtual.url != null" title="{{nivelAtual.modulos}}" href="{{nivelAtual.url}}"
+                                    class="spanOpcoes" (click)='fecharNovoMenu(nivelAtual)'>{{nivelAtual.nome}}</a>
+                                <span *ngIf="nivelAtual.url == null" class="spanOpcoes">{{nivelAtual.nome}}</span>
+                            </span>
+                            <span *ngIf="nivelAtual.subItens != null" style="margin-bottom: 15px;">
+                                <a tabindex="0" (click)="obterDados(indice)" class="spanOpcoes">{{nivelAtual.nome}}
+                                  <i class="fas fa-caret-right fa-1x"></i></a>
+                            </span>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+.warning-lancamento{
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.3;
+  letter-spacing: normal;
+  text-align: left;
+  color: #9597a6;
+}
+
+p{
+  padding-top: 47px;
+  font-weight: bold;
+}
+
+.desabilitar{
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
+}
+
+.divWarn{
+padding: 16px 0;
+}
+.selected {
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: 0.12px;
+  text-align: left;
+  color: #ffffff;
+  background-color: #786bb9 !important;
+}
+
+.alinharDireita{
+  text-align: right;
+}
+
+.selecionado{
+  cursor: pointer;
+}
+
+.overflow-scroll {
+  overflow-x:scroll;
+  overflow-y:initial;
+  border: 1px solid #dee2e6;
+
+
+
+}
+
+.title{
+ color: #554D80;
+ font-size: 14px;
+}

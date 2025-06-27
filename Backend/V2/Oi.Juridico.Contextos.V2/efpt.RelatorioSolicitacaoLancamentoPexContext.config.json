@@ -1,0 +1,139 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "RelatorioSolicitacaoLancamentoPexContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "RelatorioSolicitacaoLancamentoPexContext\\Data",
+   "OutputPath": "RelatorioSolicitacaoLancamentoPexContext\\Entities",
+   "ProjectRootNamespace": "Oi.Juridico.Contextos.V2",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "ExcludedColumns": [
+        "SENHA",
+        "PERFIL",
+        "IND_CIVEL",
+        "IND_TRABALHISTA",
+        "IND_REGULATORIO",
+        "IND_USUARIO_INTERNET",
+        "DSC_EMAIL",
+        "IND_TRIBUTARIO",
+        "IND_ATIVO",
+        "IND_CONTROLADORIA",
+        "IND_BLOQUEADO",
+        "IND_MUDAR_SENHA",
+        "DAT_VALIDADE_SENHA",
+        "IND_JUIZADO",
+        "IND_PERFIL_WEB",
+        "IND_PREPOSTO",
+        "IND_AUTORIZA_SERVICO",
+        "IND_CIVEL_ESTRATEGICO",
+        "DATA_DESATIVACAO",
+        "IND_RESTRITO",
+        "COD_PRIORIDADE_EXEC_REL",
+        "IND_CRIMINAL_ADM",
+        "IND_CRIMINAL_JUDICIAL",
+        "IND_CIVEL_ADM",
+        "IND_PROCON",
+        "IND_AUTORIZA_SERV_PROCON",
+        "OBS_USUARIO",
+        "IND_PEX",
+        "IND_ADM_APROVADOR_ACESSOS",
+        "IND_GESTOR_APROVADOR_ACESSOS",
+        "COD_TIPO_USUARIO_PERFIL",
+        "NUM_CPF",
+        "IND_OPERADOR_CADASTRO",
+        "COD_GESTOR_DEFAULT",
+        "IND_OPERADOR_VALIDACAO_JEC",
+        "IND_OPERADOR_VALIDACAO_CCONS",
+        "COD_SITUACAO_USUARIO",
+        "IND_INATIVACAO_MANUAL",
+        "IND_INATIVACAO_AUTOMATICA",
+        "IND_USUARIO_ESTRANGEIRO",
+        "COD_USUARIO_RESPONSAVEL"
+      ],
+      "Name": "JUR.ACA_USUARIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AG_PEX_REL_SOLIC_RESULTADO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AG_PEX_REL_SOLIC_UF",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AG_PEX_REL_SOLIC_TP_LAN",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AG_PEX_REL_SOLIC_STATUS",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AG_PEX_REL_SOLIC_ESCRIT",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AG_PEX_REL_SOLIC_COLUNAS",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.COLUNAS_PEX_REL_SOLIC",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AG_PEX_REL_SOLIC",
+      "ObjectType": 0
+    },
+
+    {
+      "Name": "JUR.PROFISSIONAL",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ESTADO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.TIPO_LANCAMENTO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AG_PEX_REL_SOLIC_DATA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AG_PEX_REL_SOLIC_MODELO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AG_PEX_REL_SOLIC_HIST",
+      "ObjectType": 0
+    }
+  ],
+   "UiHint": "SISJUR_DEV",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

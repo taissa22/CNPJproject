@@ -1,0 +1,23 @@
+<section class="container-breadcrumb">
+  <h3>{{ titulo }}</h3>
+  <p>{{ caminhoPaginaSap }}</p>
+  <p class="filtroSapSelecao">{{ filtroSap }}</p>
+  <combo-box
+    [opcoes]="tiposProcesso"
+    (selectionChange)="onTypeSelect($event)"
+    [titulo]="'Selecione o tipo de processo'"
+    [currentIndex]="tipoSelecionado.value"
+    [icone] = "true"
+    [classe]="'flutuante-direita'"
+    [label]="'Tipos de Processo'"
+  ></combo-box>
+</section>
+<app-cpn-filtro
+  [listaFiltro]="listaFiltro"
+  [button]="'Buscar Lotes'"
+  (funcBtn)="onClickbtn($event)"
+  (funcbtnclear)="limparFiltro($event)"
+  [textNomeFiltro]="'Critérios de seleção de lotes'"
+  [enabled] = "isDisabled"
+  [btnclear] = "true"
+></app-cpn-filtro>

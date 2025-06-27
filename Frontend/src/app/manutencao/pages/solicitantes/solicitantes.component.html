@@ -1,0 +1,64 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Solicitantes" breadcrump="{{breadcrumb}}"
+  [exibirAdicionar]=true>
+
+  <div class="row pt-3" (keydown.enter)="buscarTabela()" style="margin-left: auto;">
+    <div class="d-flex pr-1 ">
+      <div style="width: 25rem;">
+        <label for="descricao"> Nome Solicitante: </label>
+        <input type="search" (search)="onClearInputPesquisar()"
+          class="form-control mr-2" [formControl]="buscarDescricaoFormControl"
+          placeholder="Entre com o nome ou parte do nome do solicitante" maxlength="100">
+      </div>
+
+      <div class="ml-3" [ngStyle]="{ marginTop: '0.3rem' }" style="align-self: flex-end">
+        <button type="button" class="btn btn-primary" (click)="buscarTabela()">Buscar</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="mt-4 row">
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" >Lista de Solicitantes</b>
+    </div>
+
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar Lista
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <sisjur-table (sort)="buscarTabela()">      
+      <ng-container>
+        <sisjur-table-header> 
+          <sisjur-table-header-cell sort="codigo" width="10">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="nome" width="42">Nome</sisjur-table-header-cell>        
+          <sisjur-table-header-cell sort="email" width="42">E-mail</sisjur-table-header-cell>       
+          <sisjur-table-header-cell width="3" ></sisjur-table-header-cell>                 
+          <sisjur-table-header-cell width="3" ></sisjur-table-header-cell>                 
+
+        </sisjur-table-header>
+        <sisjur-table-row *ngFor="let item of solicitantes;let i = index" >
+          <sisjur-table-row-cell><span title="{{item.codSolicitante}}" class="content-row">{{item.codSolicitante}}</span></sisjur-table-row-cell>
+          <sisjur-table-row-cell><span title="{{item.nome}}" class="content-row">{{item.nome}}</span></sisjur-table-row-cell>
+          <sisjur-table-row-cell><span title="{{item.email}}" class="content-row">{{item.email}}</span></sisjur-table-row-cell>       
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="alterar(item)"> <i class="fa fa-edit"></i>  </button>            
+          </sisjur-table-row-cell>
+          
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="excluir(item)"> <i class="fa fa-trash"></i> </button>
+          </sisjur-table-row-cell>    
+
+        </sisjur-table-row>                
+      </ng-container>       
+    </sisjur-table> 
+    
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>  
+    </div>
+</div>
+
+</app-manutencao-generica>

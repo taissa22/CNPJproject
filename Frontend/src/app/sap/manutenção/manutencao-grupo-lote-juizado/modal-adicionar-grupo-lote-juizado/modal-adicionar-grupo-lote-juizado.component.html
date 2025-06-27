@@ -1,0 +1,42 @@
+<div bsModal #template="bs-modal" style="height: 1500;" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1"
+    [config]="{backdrop: 'static'}">
+     <div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">{{titulo}} Grupo de Lote de Juizado</h4>
+                <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body height-fix">
+                <form [formGroup]="registerForm">
+                    <div class="form-row">
+                            <div class="col-10">
+                                <label for="descricao">Grupo de Lote de Juizado:</label> <br>
+                                <input id="descricao" class="width form-control"
+                                    formControlName="descricao" StartWithSpace
+                                    [ngClass]="{'is-invalid': registerForm.get('descricao').errors && registerForm.get('descricao').touched}"
+                                    [ngbTooltip]="validacaoTextos('descricao', 'Grupo de Lote de Juizado', false)"
+                                    tooltipClass="erroTooltip" maxlength="200" oninput="this.value = this.value.toUpperCase()">
+                            </div>
+                    </div>
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="bsModalRef.hide()"><span
+                        class="texto-btn-oi cancelar">
+                        Cancelar </span></button>
+
+                <button type="button" class="btn btn-primary" (click)="salvarAlteracao()"
+                    [ngClass]="!registerForm.valid ? 'btn-primary-disabled' : '' "
+                    [disabled]="!registerForm.valid"><span class="texto-btn-oi confirmar"> Confirmar </span></button>
+            </div>
+        </div>
+        <div>
+        </div>
+
+
+    </div>
+</div>

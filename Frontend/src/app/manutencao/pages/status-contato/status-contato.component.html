@@ -1,0 +1,60 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Status de Contato" [breadcrump]="breadcrumb" [exibirAdicionar]="true">
+    <div class="row">
+        <div class="col-6 pr-1 pt-5">
+            <label class="col-form-label-sm" for="descricao">
+        <b>Descrição do Status:</b>
+      </label>
+            <input type="search" (search)="onClearInputPesquisar()" maxlength="100" class="form-control mr-4" id="descricao" [formControl]="buscarDescricaoFormControl" #input [value]="input.value" (keydown.enter)="buscarTabela()">
+        </div>
+        <div class="col-3 pr-1 d-flex align-items-end pb-1">
+            <button class="btn btn-primary btn-sm" (click)="buscarTabela()">Buscar</button>
+        </div>
+    </div>
+    <div class="mt-4 row">
+        <div class="col-sm-6" style="align-self: flex-end;">
+            <b class="roxo-padrao" style="font-size: 15px;">Lista de Status</b>
+        </div>
+        <div class="col-sm-6" style="text-align: right;">
+            <button class="btn btn-roxo pr-1 mr-2 pb-0" (click)="exportarLogStatusContatoAsync()">
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar Log
+      </button>
+            <button class="btn btn-roxo pr-1 pb-0" (click)="exportarListaStatusContatoAsync()">
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar Lista
+      </button>
+        </div>
+    </div>
+    <div>
+        <sisjur-table (sort)="buscarTabela()">
+            <ng-container>
+                <sisjur-table-header>
+                    <sisjur-table-header-cell width="50" sort="dsc">Descrição do Status</sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="contato">Contato Relizado</sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="acordo">Acordo Relizado</sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="status">Status</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                </sisjur-table-header>
+                <sisjur-table-row *ngFor="let item of listaStatusContato;let i = index">
+                    <sisjur-table-row-cell> {{item.dscStatusContato}} </sisjur-table-row-cell>
+                    <sisjur-table-row-cell> {{item.indContatoRealizado}} </sisjur-table-row-cell>
+                    <sisjur-table-row-cell> {{item.indAcordoRealizado}} </sisjur-table-row-cell>
+                    <sisjur-table-row-cell> {{item.indAtivo}} </sisjur-table-row-cell>
+                    <sisjur-table-row-cell>
+                        <button type="button" class="btn btn-icon" (click)="alterar(item.codStatusContato)"> <i
+                class="fa fa-edit"></i>
+            </button>
+                    </sisjur-table-row-cell>
+                    <sisjur-table-row-cell>
+                        <button type="button" class="btn btn-icon" (click)="excluir(item.codStatusContato)"> <i
+                class="fa fa-trash"></i> </button>
+                    </sisjur-table-row-cell>
+                </sisjur-table-row>
+            </ng-container>
+        </sisjur-table>
+        <div class="mt-2">
+            <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>
+        </div>
+    </div>
+</app-manutencao-generica>

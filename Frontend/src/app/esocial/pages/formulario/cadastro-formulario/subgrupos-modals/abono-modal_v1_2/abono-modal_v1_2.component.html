@@ -1,0 +1,37 @@
+<div class="container-modal">
+    <div class="title">
+        <h4 class="roxo-padrao mb-0">{{ titulo }} Abono</h4>
+        <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
+        </div>
+    </div>
+
+    <form [formGroup]="formGroup" class="modal-body pt-0">
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="abono" class="col-form-label-sm pb-0 mb-1">
+          <b>Ano Base:</b>
+        </label>
+                <input type="text" class="form-control" [formControl]="anoAbonoFormControl" [disableTooltip]="desabilitaTooltip(anoAbonoFormControl)" [ngbTooltip]="validacaoIR" [disabled]="!temPermissaoEsocialBlocoJValores" [class.disabled]="!temPermissaoEsocialBlocoJValores"
+                    id="anoInput" maxlength="4" (input)="validarAno(anoAbonoFormControl.value)" placeholder="YYYY" />
+            </div>
+            <ng-template #validacaoIR>
+                <span
+                  *ngIf="anoAbonoFormControl.invalid && anoAbonoFormControl.hasError('required')">
+                  Campo obrigatório.
+                </span>
+              </ng-template>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-link" aria-label="Close" (click)="close()" *ngIf="temPermissaoEsocialBlocoJValores">
+        Cancelar
+      </button>
+            <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()" *ngIf="temPermissaoEsocialBlocoJValores">
+        Confirmar
+      </button>
+            <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="close()" *ngIf="!temPermissaoEsocialBlocoJValores">
+        Fechar
+      </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,65 @@
+<div>
+  <div class="modal-header">
+    <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">Importação de % ATM por UF</h4>
+    <button type="button" (click)="activeModal.close()" class="close pull-right" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="pt-0 modal-body height-fix">
+    <span class="font-purple">Carrega uma planilha .CSV de até 4MB e no modelo padrão</span>
+    <div class="pt-2 pl-1 pr-1 row d-flex">
+      <div class="col-3">
+        <span class="pf-0">
+          Data da Vigência:
+        </span>
+
+        <div class="form-inline prlnk-datepicker">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="form-control form-control-sm" type="search" rInputMask="99/99/9999" maxlength="10"
+                placeholder="DD/MM/AAAA" [bsConfig]="{ showWeekNumbers: false }" bsDatepicker
+                #dataDaVigencia="bsDatepicker" [formControl]="dataVigenciaFormControl" id="dataDaVigencia"
+                (bsValueChange)="atualizarData($event)" />
+              <div class="input-group-append">
+                <button class="btn calendar" type="button" (click)="dataDaVigencia.toggle()">
+                  <i class="fa-solid fa-calendar-days fa-lg"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-9">
+        <span>Arquivo para importação:</span>
+        <div class="d-flex">
+          <input type="file" style="display: none" (change)="aoAdicionarArquivo()" #arquivo />
+          <input type="text" id="percentuais-atm" class="form-control col-9" placeholder="Nenhum arquivo selecionado"
+            [formControl]="nomeArquivoFormControl" readonly />
+          <div class="col-3">
+            <button type="button" (click)="arquivo.click()" class="btn btn-primary ml-1"
+              style="width: 90px; display: flex; align-items: center; justify-content: center; padding-left: 9px;">
+              <i class="fas fa-folder mr-1"></i> Selecionar
+            </button>
+          </div>
+        </div>
+        <div class="col-12 pt-1 pl-0">
+          <a href="assets/planilha-padrao-percentual-atm/Planilha_Padrao.csv"
+            class="font-purple btn-link btn-text-cursor">
+            <span class="roxo-padrao" style="font-size:10px;">BAIXAR PLANILHA PADRÃO <i
+                class="fas fa-download pr-1"></i></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="cancelar()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary texto-btn-oi confirmar" style="width: 90px;" (click)="confirmar()">
+      Confirmar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+input[type='checkbox']{
+    margin-top: -3px;
+}
+
+.modal-title{
+    padding-left: 0px;
+    font-size: 15px;
+    font-weight: bold;
+}
+::ng-deep {
+    .modal-content {
+        min-width: 370px!important;
+        max-width: 371px!important;
+    }
+    .modal-sm {
+        min-width: 370px!important;
+        max-width: 371px!important;
+    }
+}

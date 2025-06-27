@@ -1,0 +1,101 @@
+<style>
+  .modal-header button {
+    color: gray;
+  }
+
+  .modal-title {
+    margin: auto;
+  }
+
+  .btn-icon {
+    font-size: 18px;
+  }
+</style>
+
+<div class="modal-header">
+  <span class="modal-title pl-0">Incluir Indice de Correção da esfera</span>
+  <button type="button" id="close-button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px">
+      <div fxFlex>
+        <label class="col-form-label-sm" for="data">
+          <b>Início de Vigência:</b>
+        </label>
+        <div class="d-flex">
+          <input
+          type="text"
+          class="form-control form-control-sm"
+          placeholder="DD/MM/AAAA"
+          rInputMask="99/99/9999"
+          [bsConfig]="{showWeekNumbers: false,dateInputFormat: 'DD-MM-YYYY' }"          
+          name="data"
+          id="data"
+          [formControl]="dataVigenciaFormControl"
+          bsDatepicker
+          #data="bsDatepicker"          
+          style="width: 120px;"
+          placement="top-left top-right bottom-left bottom-right"
+          [disableTooltip]="desabilitaTooltip(dataVigenciaFormControl)"
+          [ngbTooltip]="validacaoData" />
+          <div class="input-group-append">
+              <button
+              type="button"
+              class="btn btn btn-outline-secondary calendar"
+              (click)="data.toggle()"
+              [attr.aria-expanded]="data.isOpen"
+              [disabled]="dataVigenciaFormControl.disabled">
+              <i class="fa-solid fa-calendar-days"></i>
+              </button>
+          </div>
+          <ng-template #validacaoData>
+              <span *ngIf="dataVigenciaFormControl.invalid && dataVigenciaFormControl.errors.required">
+              Campo obrigatório
+              </span>
+              <span *ngIf="dataVigenciaFormControl.invalid && dataVigenciaFormControl.errors.validDate">
+              Data inválida
+              </span>
+              <span
+              *ngIf="dataVigenciaFormControl.invalid && dataVigenciaFormControl.errors.bsDate && dataVigenciaFormControl.errors.bsDate.invalid">
+              Data inválida
+              </span>
+          </ng-template>
+        </div>
+      </div>
+      
+      <div fxFlex>
+          <label for="indices">
+              <b>Índice de Correção:</b>
+          </label>      
+          <ng-select
+          [ngStyle]="{'fontSize': '11px'}"
+          id="indices"
+          [items]="indice"
+          bindLabel="descricao"
+          bindValue="id"
+          appearance="outline"
+          notFoundText="Nenhuma opção disponível"
+          [searchable]="true"
+          [clearable]="false"
+          [placeholder]="'Selecione uma opção'"
+          [formControl]="indiceFromControl"      
+          placement="top-left top-right bottom-left bottom-right"
+          [disableTooltip]="desabilitaTooltip(indiceFromControl)"
+          [ngbTooltip]="validacaoIndice"
+          >
+          </ng-select>
+          <ng-template #validacaoIndice>
+            <span *ngIf="indiceFromControl.invalid && indiceFromControl.errors.required">
+            Campo obrigatório
+            </span>           
+        </ng-template>
+      </div> 
+</form>
+
+
+<div class="modal-footer">
+  <button type="button" id="cancelar-button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" id="confirmar-button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>

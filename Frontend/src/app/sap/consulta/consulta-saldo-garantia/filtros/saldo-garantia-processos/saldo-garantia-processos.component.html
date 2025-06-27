@@ -1,0 +1,108 @@
+<div class="seletorComBusca">
+  <div class="titulo_listaselecao">
+    <div class="titulo">Processos Adicionados</div>
+  </div>
+
+  <div class="tabelaSeletorComBusca">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 200px;" >N° do Processo</th>
+          <th style="width: 142px;"
+          *ngIf='tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo'>
+          Comarca</th>
+          <th *ngIf="tipoProcessoSelecionado != enumTipoProcesso.juizadoEspecial
+          && tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo" style="width: 56px;">
+            Vara</th>
+          <th *ngIf="tipoProcessoSelecionado != enumTipoProcesso.juizadoEspecial
+          && tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo" style="width: 194px;">
+            Tipo de Vara</th>
+          <th *ngIf="tipoProcessoSelecionado == enumTipoProcesso.juizadoEspecial
+          && tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo" style="width: 56px;">
+            Juizado</th>
+          <th *ngIf="tipoProcessoSelecionado == enumTipoProcesso.juizadoEspecial
+          && tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo" style="width: 194px;">
+            Tipo de Juizado</th>
+          <th  style="width: 200px;">Empresa do Grupo</th>
+          <th style="width: 30px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let processoSelecionado of processosSelecionados">
+          <td style="width: 200px;">{{ processoSelecionado.numeroProcesso }}</td>
+          <td style="width: 142px;"
+          *ngIf='tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo'>{{ processoSelecionado.comarca}}</td>
+          <td style="width: 56px;"
+          *ngIf='tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo'>{{ processoSelecionado.vara }}</td>
+          <td style="width: 194px;"
+          *ngIf='tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo'>{{ processoSelecionado.tipoVara }}</td>
+          <td style="width: 200px;">{{ processoSelecionado.empresaGrupo }}</td>
+          <td (click)="removeProcesso(processoSelecionado)" style="text-align: center;">
+            <i class="fas fa-trash fa-2x roxo-padrao"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="mensagem-tabela" *ngIf="processosSelecionados.length <= 0">
+      Nenhum item adicionado ainda
+    </p>
+  </div>
+
+  <div class="titulo_listaselecaoComBusca">
+    <div class="titulo">
+      Processos Encontrados
+    </div>
+    <form [formGroup]="buscaForm">
+      <div class="busca">
+        Busca:
+        <input type="text" maxlength="55" class="mt-1"
+         formControlName="processoId" numbersPontoHifenBarraOnly  placeholder="N° do Processo">
+      </div>
+    </form>
+  </div>
+  <div class="tabelaSeletorComBusca">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 200px;">N° do processo</th>
+          <th style="width: 142px;"
+          *ngIf='tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo'>Comarca</th>
+          <th *ngIf="tipoProcessoSelecionado != enumTipoProcesso.juizadoEspecial
+          && tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo" style="width: 56px;">Vara</th>
+          <th *ngIf="tipoProcessoSelecionado != enumTipoProcesso.juizadoEspecial
+          && tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo" style="width: 194px;">Tipo de Vara</th>
+          <th *ngIf="tipoProcessoSelecionado == enumTipoProcesso.juizadoEspecial
+          && tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo" style="width: 56px;">Juizado</th>
+          <th *ngIf="tipoProcessoSelecionado == enumTipoProcesso.juizadoEspecial
+          && tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo" style="width: 194px;">Tipo de Juizado</th>
+          <th  style="width: 200px;">Empresa do Grupo</th>
+          <th style="width: 30px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="preAdicionarProcesso(processo)"
+         [class.preselecionado]="preSelecionado(processo) == processo"
+        *ngFor="let processo of processo">
+          <td *ngIf="processo">{{ processo.numeroProcesso }}</td>
+          <td *ngIf='tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo'>{{ processo.comarca}}</td>
+          <td *ngIf='tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo'>{{ processo.vara }}</td>
+          <td *ngIf='tipoProcessoSelecionado != enumTipoProcesso.tributarioAdministrativo'>{{ processo.tipoVara }}</td>
+          <td *ngIf="processo">{{ processo.empresaGrupo }}</td>
+
+          <td *ngIf="processo"></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="mensagem-tabela" *ngIf="!processo">
+      {{ info }}
+    </p>
+  </div>
+  <div class="buttons-filtros">
+    <button class="btn btn-primary btn-sm btn-sap" (click)="adicionarProcessosSelecionados()">
+      Adicionar Selecionados
+    </button>
+    <!-- <button class="btn btn-primary btn-sm" (click)="adicionarTodosSaps()">
+      Adicionar Todos
+    </button> -->
+  </div>
+</div>

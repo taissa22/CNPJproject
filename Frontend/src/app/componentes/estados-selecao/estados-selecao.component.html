@@ -1,0 +1,155 @@
+<ng-container>
+  <div class="row" style="    font-size: 14px;">
+    <label *ngIf="tipoProcesso == 7" style="margin-left: 3px; font-size: 14px; color: #6f62b2;"> <b> Estados de Atuação - Juizado Especial Civel</b> </label>
+    <label *ngIf="tipoProcesso == 1" style="margin-left: 3px; font-size: 14px; color: #6f62b2;"> <b> Estados de Atuação - Consumidor</b> </label>
+  </div>
+
+  <div class="row">
+    <label style="margin-left: 3px; color: #6f62b2;">Informe um ou mais Estados de atuação do escritório</label>
+  </div>
+  <div class="row" style=" margin-left: 0px;">
+    <input type="checkbox" id="TODOS"    [formControl] = "TodosFormControl">
+    <label class="m-0 p-0 pl-1 mb-1">TODOS</label>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div>
+        <input type="checkbox" id="AC" (change)="atualizarRetorno('AC', this.$event.target.checked)"   [formControl] = "ACFormControl">
+        <label class="m-0 p-0 pl-1 mb-1">AC</label>
+      </div>
+
+      <div>
+        <input type="checkbox"  id="AL" (change)="atualizarRetorno('AL', this.$event.target.checked)"  [formControl]="ALFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">AL</label>
+      </div>
+
+      <div>
+        <input type="checkbox" for="AM" name="AM" (change)="atualizarRetorno('AM', this.$event.target.checked)"  [formControl]="AMFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">AM</label>
+      </div>
+
+      <div>
+        <input type="checkbox" for="AP" name="AP" (change)="atualizarRetorno('AP', this.$event.target.checked)"  [formControl]="APFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">AP</label>
+      </div>
+
+      <div>
+        <input type="checkbox" for="BA" name="BA" (change)="atualizarRetorno('BA', this.$event.target.checked)"  [formControl]="BAFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">BA</label>
+      </div>
+
+      <div>
+        <input type="checkbox" for="CE" name="CE" (change)="atualizarRetorno('CE', this.$event.target.checked)"  [formControl]="CEFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">CE</label>
+      </div>
+
+      <div>
+        <input type="checkbox" for="DF" name="DF" (change)="atualizarRetorno('DF', this.$event.target.checked)"  [formControl]="DFFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">DF</label>
+      </div>
+
+      <div>
+        <input type="checkbox" for="ES" name="ES" (change)="atualizarRetorno('ES', this.$event.target.checked)"  [formControl]="ESFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">ES</label>
+      </div>
+
+      <div>
+        <input type="checkbox" for="GO" name="GO" (change)="atualizarRetorno('GO', this.$event.target.checked)"  [formControl]="GOFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">GO</label>
+      </div>
+
+    </div>
+
+
+    <div class="col-sm-4">
+      <div>
+        <input type="checkbox" for="MA" name="MA" (change)="atualizarRetorno('MA', this.$event.target.checked)"  [formControl]="MAFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">MA</label>
+      </div>
+      <div>
+        <input type="checkbox" for="MG" name="MG" (change)="atualizarRetorno('MG', this.$event.target.checked)"  [formControl]="MGFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">MG</label>
+      </div>
+      <div>
+        <input type="checkbox" for="MS" name="MS" (change)="atualizarRetorno('MS', this.$event.target.checked)"  [formControl]="MSFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">MS</label>
+      </div>
+      <div>
+        <input type="checkbox" for="MT" name="MT" (change)="atualizarRetorno('MT', this.$event.target.checked)"  [formControl]="MTFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">MT</label>
+      </div>
+      <div>
+        <input type="checkbox" for="PA" name="PA" (change)="atualizarRetorno('PA', this.$event.target.checked)"  [formControl]="PAFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">PA</label>
+      </div>
+      <div>
+        <input type="checkbox" for="PB" name="PB" (change)="atualizarRetorno('PB', this.$event.target.checked)"  [formControl]="PBFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">PB</label>
+      </div>
+      <div>
+        <input type="checkbox" for="PE" name="PE" (change)="atualizarRetorno('PE', this.$event.target.checked)"  [formControl]="PEFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">PE</label>
+      </div>
+      <div>
+        <input type="checkbox" for="PI" name="PI" (change)="atualizarRetorno('PI', this.$event.target.checked)"  [formControl]="PIFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">PI</label>
+      </div>
+      <div>
+        <input type="checkbox" for="PR" name="PR" (change)="atualizarRetorno('PR', this.$event.target.checked)"  [formControl]="PRFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">PR</label>
+      </div>
+
+
+    </div>
+
+    <div class="col-sm-4">
+      <div>
+        <input type="checkbox" for="RJ" name="RJ" (change)="atualizarRetorno('RJ', this.$event.target.checked)"  [formControl]="RJFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">RJ</label>
+      </div>
+
+      <div>
+        <input type="checkbox" for="RN" name="RN" (change)="atualizarRetorno('RN', this.$event.target.checked)"  [formControl]="RNFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">RN</label>
+      </div>
+      <div>
+        <input type="checkbox" for="RO" name="RO"  (change)="atualizarRetorno('RO', this.$event.target.checked)"  [formControl]="ROFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">RO</label>
+      </div>
+      <div>
+        <input type="checkbox" for="RR" name="RR" (change)="atualizarRetorno('RR', this.$event.target.checked)"  [formControl]="RRFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">RR</label>
+      </div>
+      <div>
+        <input type="checkbox" for="RS" name="RS" (change)="atualizarRetorno('RS', this.$event.target.checked)"  [formControl]="RSFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">RS</label>
+      </div>
+      <div>
+        <input type="checkbox" for="SC" name="SC" (change)="atualizarRetorno('SC', this.$event.target.checked)"  [formControl]="SCFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">SC</label>
+      </div>
+      <div>
+        <input type="checkbox" for="SE" name="SE" (change)="atualizarRetorno('SE', this.$event.target.checked)" [formControl]="SEFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">SE</label>
+      </div>
+      <div>
+        <input type="checkbox" for="SP" name="SP" (change)="atualizarRetorno('SP', this.$event.target.checked)"  [formControl]="SPFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">SP</label>
+      </div>
+
+      <div>
+        <input type="checkbox" for="TO" name="TO" (change)="atualizarRetorno('TO', this.$event.target.checked)"  [formControl] = "TOFormControl" class="mb-2">
+        <label class="m-0 p-0 pl-1 mb-1">TO</label>
+      </div>
+    </div>
+    <div>
+      <label style="color:red; margin-left: 7px;" > 'Se marcado 'Todos' ou nenhuma UF e clicar em Confirmar, o sistema vinculará o escritório em todas as UF's do País.' </label>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="save()">Confirmar</button>
+  </div>
+</ng-container>

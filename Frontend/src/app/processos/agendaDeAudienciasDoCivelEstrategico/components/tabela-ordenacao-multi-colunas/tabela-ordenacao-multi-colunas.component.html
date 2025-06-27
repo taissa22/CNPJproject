@@ -1,0 +1,66 @@
+<div class="table-box" style="overflow: auto;">
+  <table id="tabela-ordenacao-multi-colunas" class="table table-striped table-sm mb-0" style="width: 3000px;">
+    <thead>
+      <tr>
+        <th
+          scope="col"
+          *ngFor="let col of colunas; let i = index"
+          class="font-weight-bold"
+          [ngClass]="col.cssClass"
+          [ngStyle]="{ 'width': col.largura, cursor: 'pointer' }">
+          {{ col.nomeExibicao }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let l of lista"
+        (click)="selecionar(l)"
+        style="cursor: pointer;"
+        [ngClass]="{ 'bg-primary font-white': itemSelecionado === l }">
+        <ng-container *ngFor="let col of colunas; let i = index">
+          <td [ngClass]="col.cssClass">{{ col.getData(l) }}</td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row pt-3">
+  <div class="col-md-6 mb-2">
+  <span class="font-small"><b>Total de Registros:</b> {{ totalDeRegistros }}</span>
+  <span> - </span>
+  <span class="font-small">
+    <b>Itens por página:</b>&nbsp;
+  </span>
+  <select
+    class="font-small"
+    id="itensPorPagina"
+    [(ngModel)]="totalDeRegistrosPorPagina"
+    (change)="alterarQuantidadePorPagina()">
+    <option class="font-small"
+      *ngFor="let i of quantidadeRegistrosPorPagina"
+      [ngValue]="i">
+      {{ i }}
+    </option>
+  </select>
+  </div>
+  <div class="col-md-6">
+    <ngb-pagination style="float:right;"
+      [(page)]="paginaAtual"
+      [pageSize]="totalDeRegistrosPorPagina"
+      [collectionSize]="totalDeRegistros"
+      [ellipses]="true"
+      [boundaryLinks]="true"
+      [maxSize]="6"
+      [rotate]="true"
+      (pageChange)="onPageChange()"
+      *ngIf="exibirPaginacao()">
+      <ng-template ngbPaginationFirst>Primeiro</ng-template>
+      <ng-template ngbPaginationLast>Último</ng-template>
+      <ng-template ngbPaginationPrevious>Anterior</ng-template>
+      <ng-template ngbPaginationNext>Próximo</ng-template>
+      <ng-template ngbPaginationEllipsis>...</ng-template>
+      <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+    </ngb-pagination>
+  </div>
+</div>

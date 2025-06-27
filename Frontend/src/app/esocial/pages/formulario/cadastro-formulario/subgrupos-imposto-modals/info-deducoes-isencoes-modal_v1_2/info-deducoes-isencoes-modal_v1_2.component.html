@@ -1,0 +1,845 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">
+      Informações Complementares - Rendimentos Tributáveis e Deduções/Isenções
+    </h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row cardInfo">
+      <div class="col-sm-1 mt-3">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>ID:</b>
+        </label>
+        <p>{{ codIrrf }}</p>
+      </div>
+      <div class="col-sm-4 mt-3">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Código Receita (CR) IRRF:</b>
+        </label>
+        <p>{{ codReceita }}</p>
+      </div>
+      <div class="col-sm-4 mt-3">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Valor Correspondente (CR) IRRF - Rendimento Mensal:</b>
+        </label>
+        <p>{{ valorIrrf | currency: 'BRL' : 'R$ ' : '1.2-2' : 'pt' }}</p>
+      </div>
+      <div class="col-sm-3 mt-3">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Valor Correspondente (CR) IRRF - 13º:</b>
+        </label>
+        <p>{{ valorIrrf13 | currency: 'BRL' : 'R$ ' : '1.2-2' : 'pt' }}</p>
+      </div>
+    </div>
+
+    <!-- Rendimento Tributável Mensal do IR: -->
+    <div class="row mt-2">
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Rendimento Tributável Mensal do IR:</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVrrendtribFormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVrrendtribFormControl)"
+          [ngbTooltip]="validacaoTributavelMensal"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoTributavelMensal>
+          <span
+            *ngIf="
+              infoirVrrendtribFormControl.invalid &&
+              infoirVrrendtribFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVrrendtribFormControl.invalid &&
+              infoirVrrendtribFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+      <!-- Rendimento Tributável do IR (13°): -->
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Rendimento Tributável do IR (13°):</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVrrendtrib13FormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVrrendtrib13FormControl)"
+          [ngbTooltip]="validacaoTributavelMoleGrave13"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoTributavelMoleGrave13>
+          <span
+            *ngIf="
+              infoirVrrendtrib13FormControl.invalid &&
+              infoirVrrendtrib13FormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVrprevoficial13FormControl.invalid &&
+              infoirVrprevoficial13FormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Rendimento Isento (Moléstia Grave): -->
+    <div class="row mt-2">
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Rendimento Isento (Moléstia Grave):</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVrrendmolegraveFormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVrrendmolegraveFormControl)"
+          [ngbTooltip]="validacaoMolestiaGrave"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoMolestiaGrave>
+          <span
+            *ngIf="
+              infoirVrrendmolegraveFormControl.invalid &&
+              infoirVrrendmolegraveFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVrrendmolegraveFormControl.invalid &&
+              infoirVrrendmolegraveFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+      <!-- Rendimento Isento (Moléstia Grave) (13º) -->
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Rendimento Isento (Moléstia Grave) (13º):</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVrrendmolegrave13FormControl"
+          [disableTooltip]="
+            desabilitaTooltip(infoirVrrendmolegrave13FormControl)
+          "
+          [ngbTooltip]="validacaoMolestiaGrave"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoMolestiaGrave>
+          <span
+            *ngIf="
+              infoirVrrendmolegrave13FormControl.invalid &&
+              infoirVrrendmolegrave13FormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVrrendmolegrave13FormControl.invalid &&
+              infoirVrrendmolegrave13FormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+    </div>
+
+    <!--Parcela Isenta Aposentadoria (65+):  -->
+    <div class="row mt-2">
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Parcela Isenta Aposentadoria (65+):</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVrrendisen65FormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVrrendisen65FormControl)"
+          [ngbTooltip]="validacaoIsentaApos65"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoIsentaApos65>
+          <span
+            *ngIf="
+              infoirVrrendisen65FormControl.invalid &&
+              infoirVrrendisen65FormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVrrendisen65FormControl.invalid &&
+              infoirVrrendisen65FormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+      <!-- Parcela Isenta Aposentadoria (65+)(13º): -->
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Parcela Isenta Aposentadoria (65+) (13º):</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVrrendisen65decFormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVrrendisen65decFormControl)"
+          [ngbTooltip]="validacaoIsentaApos65"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoIsentaApos65>
+          <span
+            *ngIf="
+              infoirVrrendisen65decFormControl.invalid &&
+              infoirVrrendisen65decFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVrrendisen65decFormControl.invalid &&
+              infoirVrrendisen65decFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Juros Mora (por atraso pagamento): -->
+    <div class="row mt-2">
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Juros Mora (por atraso pagamento):</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVrjurosmoraFormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVrjurosmoraFormControl)"
+          [ngbTooltip]="validacaoJurosMora"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoJurosMora>
+          <span
+            *ngIf="
+              infoirVrjurosmoraFormControl.invalid &&
+              infoirVrjurosmoraFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVrjurosmoraFormControl.invalid &&
+              infoirVrjurosmoraFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+      <!-- Juros Mora (por atraso pagamento)(13º): -->
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Juros Mora (por atraso pagamento) (13º):</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVrjurosmora13FormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVrjurosmora13FormControl)"
+          [ngbTooltip]="validacaoJurosMora"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoJurosMora>
+          <span
+            *ngIf="
+              infoirVrjurosmora13FormControl.invalid &&
+              infoirVrjurosmora13FormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVrjurosmora13FormControl.invalid &&
+              infoirVrjurosmora13FormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+
+      <!-- Previdência Oficial(13º): -->
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 mt-2">
+          <b>Previdência Oficial:</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVrprevoficialFormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVrprevoficialFormControl)"
+          [ngbTooltip]="validacaoPrevidenciaOficial"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoPrevidenciaOficial>
+          <span
+            *ngIf="
+              infoirVrprevoficialFormControl.invalid &&
+              infoirVrprevoficialFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVrprevoficialFormControl.invalid &&
+              infoirVrprevoficialFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 mt-2">
+          <b>Previdência Oficial (13º):</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVrprevoficial13FormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVrprevoficial13FormControl)"
+          [ngbTooltip]="validacaoPrevidenciaOficial"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoPrevidenciaOficial>
+          <span
+            *ngIf="
+              infoirVrprevoficial13FormControl.invalid &&
+              infoirVrprevoficial13FormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVrprevoficial13FormControl.invalid &&
+              infoirVrprevoficial13FormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+
+      <div class="col-sm-6 mt-4"></div>
+
+      <div class="col-sm-6 mt-4">
+        <label class="col-form-label-sm pb-0 mb-1" style="width: 100%">
+          <b>Outros Rendimentos Isentos ou Não Tributáveis:</b>
+        </label>
+        <label
+          for="valorRend"
+          class="col-form-label-sm pb-0 mb-1"
+          style="display: flex; align-items: center; font-size: 13px"
+        >
+          Valor R$
+          <input
+            type="text"
+            currencyMask
+            id="valorRend"
+            style="width: 80%"
+            [options]="{
+              prefix: 'R$ ',
+              thousands: '.',
+              decimal: ',',
+              allowNegative: false,
+              align: 'left'
+            }"
+            min="0"
+            maxlength="21"
+            class="form-control ml-auto"
+            [formControl]="infoirVrrendisenntribFormControl"
+            (blur)="validaOutrosRendimentos()"
+            [disableTooltip]="
+              desabilitaTooltip(infoirVrrendisenntribFormControl)
+            "
+            [ngbTooltip]="validacaoValorOutros"
+            [disabled]="!temPermissaoBlocoCeDeE"
+            [class.disabled]="!temPermissaoBlocoCeDeE"
+          />
+          <ng-template #validacaoValorOutros>
+            <span
+              *ngIf="
+                infoirVrrendisenntribFormControl.invalid &&
+                infoirVrrendisenntribFormControl.hasError('required')
+              "
+            >
+              Campo Obrigatório.
+            </span>
+            <span
+              *ngIf="
+                infoirVrrendisenntribFormControl.invalid &&
+                infoirVrrendisenntribFormControl.hasError('min')
+              "
+            >
+              Valor deve ser maior ou igual a 0 (zero).
+            </span>
+          </ng-template>
+        </label>
+
+        <label
+          for="descricao"
+          class="col-form-label-sm pb-0 mb-1"
+          style="
+            display: flex;
+            align-items: flex-start;
+            font-size: 13px;
+            flex-wrap: wrap;
+          "
+        >
+          Descrição
+        </label>
+        <textarea
+          (input)="countDesc()"
+          name="descricao"
+          id="descricao"
+          cols="30"
+          rows="10"
+          class="form-control ml-auto descricao"
+          maxlength="60"
+          [formControl]="infoirDescisenntribFormControl"
+          [disabled]="
+            !temPermissaoBlocoCeDeE &&
+            infoirVrrendisenntribFormControl.value &&
+            infoirVrrendisenntribFormControl.value > 0
+          "
+          [disableTooltip]="desabilitaTooltip(infoirDescisenntribFormControl)"
+          [ngbTooltip]="validacaoDescricaoOutros"
+          [class.disabled]="
+            !temPermissaoBlocoCeDeE &&
+            infoirVrrendisenntribFormControl.value &&
+            infoirVrrendisenntribFormControl.value > 0
+          "
+        ></textarea>
+        <br />
+        <p class="ml-auto">{{ descCount }}/60</p>
+
+        <ng-template #validacaoDescricaoOutros>
+          <span
+            *ngIf="
+              infoirDescisenntribFormControl.invalid &&
+              infoirDescisenntribFormControl.hasError('required')
+            "
+          >
+            Campo obrigatório caso o campo valor seja maior do que 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+
+      <!-- Rendimentos Insentos Exclusivos do CR   -->
+    </div>
+
+    <!--Rendimentos Insentos Exclusivos do CR  -->
+
+    <h4 class="mb-2" style="color: #6f62b2 !important">
+      Rendimento Isentos Exclusivos do CR 0561
+    </h4>
+    <div class="row mt-2">
+      <!-- Diárias -->
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Diárias</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVlrDiariasFormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVlrDiariasFormControl)"
+          [ngbTooltip]="validacaoInfoIrDiarias"
+          [disabled]="isInputDisabled || !temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoInfoIrDiarias>
+          <span
+            *ngIf="
+              infoirVlrDiariasFormControl.invalid &&
+              infoirVlrDiariasFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVlrDiariasFormControl.invalid &&
+              infoirVlrDiariasFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+
+      <!-- Ajuda de custo -->
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Ajuda de custo:</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVlrAjudaCustoFormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVlrAjudaCustoFormControl)"
+          [ngbTooltip]="validacaoAjudaCusto"
+          [disabled]="isInputDisabled || !temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoAjudaCusto>
+          <span
+            *ngIf="
+              infoirVlrAjudaCustoFormControl.invalid &&
+              infoirVlrAjudaCustoFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVlrAjudaCustoFormControl.invalid &&
+              infoirVlrAjudaCustoFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+
+      <!-- Indenização e Rescisão de Contrato -->
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 mt-2">
+          <b>Indenização e Rescisão de Contrato:</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVlrIndResContratoFormControl"
+          [disableTooltip]="
+            desabilitaTooltip(infoirVlrIndResContratoFormControl)
+          "
+          [ngbTooltip]="validacaoIndeRescContrato"
+          [disabled]="isInputDisabled || !temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoIndeRescContrato>
+          <span
+            *ngIf="
+              infoirVlrIndResContratoFormControl.invalid &&
+              infoirVlrIndResContratoFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVlrIndResContratoFormControl.invalid &&
+              infoirVlrIndResContratoFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+
+      <!-- Abono Pecuniário -->
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 mt-2">
+          <b>Abono Pecuniário:</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVlrAbonoPecFormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVlrAbonoPecFormControl)"
+          [ngbTooltip]="validacaoAbonoPec"
+          [disabled]="isInputDisabled || !temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoAbonoPec>
+          <span
+            *ngIf="
+              infoirVlrAbonoPecFormControl.invalid &&
+              infoirVlrAbonoPecFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVlrAbonoPecFormControl.invalid &&
+              infoirVlrAbonoPecFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+
+      <!-- Auxílio Moradia -->
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 mt-2">
+          <b>Auxílio Moradia:</b>
+        </label>
+        <input
+          type="text"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          min="0"
+          maxlength="21"
+          class="form-control"
+          [formControl]="infoirVlrAuxMoradiaFormControl"
+          [disableTooltip]="desabilitaTooltip(infoirVlrAuxMoradiaFormControl)"
+          [ngbTooltip]="validacaoAuxMoradia"
+          [disabled]="isInputDisabled || !temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoAuxMoradia>
+          <span
+            *ngIf="
+              infoirVlrAuxMoradiaFormControl.invalid &&
+              infoirVlrAuxMoradiaFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infoirVlrAuxMoradiaFormControl.invalid &&
+              infoirVlrAuxMoradiaFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior ou igual a 0 (zero).
+          </span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-link"
+        aria-label="Close"
+        (click)="close()"
+        *ngIf="temPermissaoBlocoCeDeE"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="validaCamposBtn()"
+        (click)="salvar()"
+        *ngIf="temPermissaoBlocoCeDeE"
+      >
+        Confirmar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="formGroup.invalid"
+        (click)="close()"
+        *ngIf="!temPermissaoBlocoCeDeE"
+      >
+        Fechar
+      </button>
+    </div>
+  </form>
+</div>

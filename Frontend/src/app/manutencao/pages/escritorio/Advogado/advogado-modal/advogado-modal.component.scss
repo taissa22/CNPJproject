@@ -1,0 +1,18 @@
+.modal-title{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+
+::ng-deep {
+    .advogado-modal{
+        .modal-dialog {
+            min-width: 500px!important;
+            max-width: 500px!important;
+        }
+    }
+    .ng-select.ng-select-single .ng-select-container {
+      height: 10px;
+    }
+}

@@ -1,0 +1,20 @@
+.page-index {
+  margin: 2.75rem 15rem !important;
+}
+
+::ng-deep {
+  .container-breadcrumb {
+    width: 100% !important;
+  }
+
+  .pagina {
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+.content-row {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

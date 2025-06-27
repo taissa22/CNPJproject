@@ -1,0 +1,18 @@
+.botaoImportar{
+  text-align: end;
+    position: absolute;
+    display: block;
+    right: 8%;
+    top: 171px;
+    z-index: 9999;
+}
+.btn{
+  padding: 3px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-family: roboto;
+}
+
+input[type="file"] {
+  display: none;
+}

@@ -1,0 +1,172 @@
+{
+  "TipoProcesso": {
+    "data": [
+      {
+        "descricao": "Cível Consumidor",
+        "id": 1,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Trabalhista",
+        "id": 2,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Administrativo",
+        "id": 3,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Tributário Administrativo",
+        "id": 4,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Tributário Judicial",
+        "id": 5,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Trabalhista Administrativo",
+        "id": 6,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Juizado Especial",
+        "id": 7,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Expressinho",
+        "id": 8,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Cível Estratégico",
+        "id": 9,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Descumprimento Administrativo",
+        "id": 10,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Denuncia Fiscal",
+        "id": 11,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Cível Administrativo",
+        "id": 12,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Criminal",
+        "id": 13,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Criminal Administrativo",
+        "id": 14,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Criminal Judicial",
+        "id": 15,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Ofício Cível Administrativo",
+        "id": 16,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Procon",
+        "id": 17,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "Serviços",
+        "id": 30,
+        "somenteLeitura": false
+      },
+      {
+        "descricao": "PEX",
+        "id": 18,
+        "somenteLeitura": false
+      }
+    ],
+    "sucesso": "true",
+    "mensagem": "null",
+    "urlRedirect": "null"
+  },
+  "NumeroGuia": {
+    "data": "101",
+    "sucesso": "true",
+    "mensagem": "null",
+    "urlRedirect": "null"
+  },
+  "NumeroSap": {
+    "data": "12345678",
+    "sucesso": "true",
+    "mensagem": "null",
+    "urlRedirect": "null"
+  },
+  "Resultado": {
+    "data": [
+      {
+        "DescricaoLote": "Uma descrição para o lote.",
+        "FormaPagamento": "Cartão de débito",
+        "NomeEmpresaGrupo": "ALEXANDER SANTOS S.A.",
+        "NomeUsuario": "Alexander Santos",
+        "DataCriacao": "01/01/2020",
+        "CodigoStatusPagamento": 3,
+        "StatusPagamento": "Em pagamento",
+        "DataCriacaoPedido": "01/01/2020",
+        "NumeroPedidoSAP": 123123,
+        "ExisteBordero": false
+      },
+      {
+        "DescricaoLote": "Uma descrição para o lote.",
+        "FormaPagamento": "Cartão de débito",
+        "NomeEmpresaGrupo": "ALEXANDER SANTOS S.A.",
+        "NomeUsuario": "Alexander Santos",
+        "DataCriacao": "01/01/2020",
+        "CodigoStatusPagamento": 2,
+        "StatusPagamento": "Em pagamento",
+        "DataCriacaoPedido": "01/01/2020",
+        "NumeroPedidoSAP": 123123,
+        "ExisteBordero": true
+      }
+    ],
+    "sucesso": "true",
+    "mensagem": "null",
+    "urlRedirect": "null",
+    "total": 2
+  },
+  "LancamentoLote": {
+    "data": [
+      {
+        "DescricaoLote": "Uma descrição para o lote.",
+        "FormaPagamento": "Cartão de débito",
+        "NomeEmpresaGrupo": "ALEXANDER SANTOS S.A.",
+        "NomeUsuario": "Alexander Santos",
+        "DataCriacao": "01/01/2020",
+        "Valor": "1223445,05"
+      },
+      {
+        "DescricaoLote": "Uma descrição para o lote.",
+        "FormaPagamento": "Cartão de débito",
+        "NomeEmpresaGrupo": "ALEXANDER SANTOS S.A.",
+        "NomeUsuario": "Alexander Santos",
+        "DataCriacao": "01/01/2020",
+        "Valor": "1223445,05"
+      }
+    ],
+    "sucesso": "true",
+    "mensagem": "null",
+    "urlRedirect": "null",
+    "total": 2
+  }
+}

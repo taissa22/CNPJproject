@@ -1,0 +1,36 @@
+.descricao {
+  margin-top: 4px;
+}
+
+.tagServico {
+  background-color: #00000000;
+  color: #00000073;
+  padding: 4px 6px;
+  font-weight: normal;
+  border-radius: 0;
+  line-height: 16px;
+  height: 24px;
+  margin: 5px;
+  border-width: 1px;
+  border-color: #00000073;
+  border-style: solid;
+}
+
+.tagDocumento {
+  background-color: #00000000;
+  color: #00000073;
+  padding: 4px 6px;
+  font-weight: normal;
+  border-radius: 0;
+  line-height: 16px;
+  height: 24px;
+  margin: 5px;
+  border-width: 1px;
+  border-color: #00000073;
+  border-style: solid;
+}
+
+input::-webkit-input-placeholder {
+  color: black;
+  opacity: 0.5;
+}

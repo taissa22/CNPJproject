@@ -1,0 +1,160 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">{{ titulo }}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body pt-0" [formGroup]="formulario">
+  <form>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="col-form-label-sm" for="descricao">
+          <b>Descrição:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="descricao" name="descricao"
+          maxlength="50"
+          [formControl]="descricaoFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(descricaoFormControl)"
+          [ngbTooltip]="validacaoTexto"
+          maxlength="50" />
+        <ng-template #validacaoTexto>
+          <span *ngIf="descricaoFormControl.invalid && descricaoFormControl.errors.required">
+            Campo obrigatório
+          </span>
+          <span *ngIf="descricaoFormControl.invalid && descricaoFormControl.errors.maxlength">
+            A descrição não pode ter mais de 50 caracteres
+          </span>
+        </ng-template>
+      </div>
+      <div class="col-md-2 form-inline pl-0">
+        <label class="col-form-label-sm">&nbsp;</label>
+        <div class="input-group" style="width: 100%">
+          <input
+            type="checkbox"
+            name="ativo"
+            id="ativo"
+            [formControl]="ativoFormControl"
+          />
+          <label
+            for="ativo"
+            class="form-check-label col-form-label-sm pl-1"
+            style="font-size: 12px;"
+          >
+            Ativo
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <label class="col-form-label-sm" for="riscoPerda">
+          <b>Risco de Perda Potencial Inicial:</b>
+        </label>
+        <ng-select
+          [ngStyle]="{'fontSize': '11px'}"
+          id="riscoPerda"
+          [items]="riscosPerdas"
+          bindLabel="value"
+          bindValue="key"
+          appearance="outline"
+          notFoundText="Nenhuma opção disponível"
+          [searchable]="true"
+          [clearable]="true"
+          [placeholder]="'Selecione uma opção'"
+          [formControl]="riscoPerdaFormControl"
+          [disableTooltip]="desabilitaTooltip(riscoPerdaFormControl)"
+          placement="top-left"
+          [ngbTooltip]="validacaoRiscoPerda"></ng-select>
+
+        <!-- <ngx-select
+          id="riscoPerda"
+          [allowClear]="true"
+          [items]="riscosPerdas"
+          [formControl]="riscoPerdaFormControl"
+          placeholder="Escolha uma opção"
+          [disableTooltip]="desabilitaTooltip(riscoPerdaFormControl)"
+          placement="top-left"
+          [ngbTooltip]="validacaoRiscoPerda">
+        </ngx-select> -->
+        <ng-template #validacaoRiscoPerda>
+          <span *ngIf="riscoPerdaFormControl.invalid && riscoPerdaFormControl.errors.required">
+            Campo obrigatório
+          </span>
+        </ng-template>
+      </div>
+      <div class="col-md-4 form-inline pl-0">
+        <label class="col-form-label-sm">&nbsp;</label>
+        <div class="input-group" style="width: 100%">
+          <input
+            type="checkbox"
+            name="provavelZero"
+            id="provaveZero"
+            [formControl]="provavelZeroFormControl"
+          />
+          <label
+            for="provavelZero"
+            class="form-check-label col-form-label-sm pl-1"
+            style="font-size: 12px;"
+          >
+            Provável Zero
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <table>
+          <tbody>
+            <tr>
+              <td style="width:80px;">
+                <div class="form-check form-check-inline">
+                  <input
+                    type="radio"
+                    name="proprioTerceiro"
+                    id="proprioTerceiro-proprio"
+                    value="P"
+                    [formControl]="proprioTerceiroFormControl"
+                  />
+                  <label
+                    for="proprioTerceiro-proprio"
+                    class="form-check-label col-form-label-sm pl-1"
+                    style="font-size: 12px;"
+                  >
+                  Próprio
+                </label>
+                </div>
+              </td>
+              <td style="width:80px;">
+                <div class="form-check form-check-inline">
+                  <input
+                    type="radio"
+                    name="proprioTerceiro"
+                    id="proprioTerceiro-terceiro"
+                    value="T"
+                    [formControl]="proprioTerceiroFormControl"
+                  />
+                  <label
+                    for="proprioTerceiro-terceiro"
+                    class="form-check-label col-form-label-sm pl-1"
+                    style="font-size: 12px;"
+                  >
+                  Terceiro
+                </label>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="activeModal.dismiss()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="confirmar()">Confirmar</button>
+</div>
+

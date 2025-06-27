@@ -1,0 +1,123 @@
+<div class="container">
+  <span fxLayout="row" fxLayoutAlign="start center" class="title">
+    <h4 fxFlex>Agendar Cálculo VEP</h4>
+    <div
+      type="button"
+      class="roxo-padrao"
+      (click)="activeModal.close(false)"
+      aria-label="Close"
+    >
+      <i class="fa-solid fa-xmark" style="font-size: 20px"></i>
+    </div>
+  </span>
+
+  <span fxLayout="row" fxLayoutAlign="start center" class="sub-title">
+    <h6>
+      Selecione a periodicidade de execução desejada, informe o número de meses e
+      clique em "Agendar".
+    </h6>
+  </span>
+
+  <div [formGroup]="vepForm" fxLayout="row" fxLayoutAlign="start flex-start" class="periocidade-selects">
+    <div class="col p-0">
+      <b>Configuração da Execução:</b>
+      <span class="d-flex radio pt-1">
+        <input
+          class="mb-1"
+          type="radio"
+          name="select"
+          id="imediata"
+          value="0"
+          [checked]="true"
+          [formControl]="periodicidadeExecucaoFormControl"
+        />
+        <label class="ml-1" for="imediata">Execução Imediata</label><br />
+      </span>
+      <span class="d-flex radio mt-1">
+        <input
+          class="mb-1"
+          type="radio"
+          name="select"
+          id="especifica"
+          value="1"
+          [formControl]="periodicidadeExecucaoFormControl"
+        />
+        <label class="ml-1" for="especifica">Data Específica</label><br />
+      </span>
+      <span class="d-flex" style="margin: 0 1.4rem;" *ngIf="periodicidadeExecucaoFormControl.value == 1">
+        <app-datas [dataInicio]="dataEspecificaFormControl.value" (retDataInicio)="dataEspecificaFormControl.setValue($event)"
+          [minDate]="dataAtual"></app-datas>
+      </span>
+
+      <span class="d-flex radio mt-1">
+        <input
+          class="mb-1"
+          type="radio"
+          name="select"
+          id="mensal"
+          value="4"
+          [formControl]="periodicidadeExecucaoFormControl"
+        />
+        <label class="ml-1" for="mensal">Mensal</label>
+      </span>
+      <span class="d-flex" style="margin: 0 1.4rem; flex-direction: column;" *ngIf="periodicidadeExecucaoFormControl.value == 4">
+        <span class="d-flex">
+          <input
+          class="mb-1"
+          type="checkbox"
+          name="select"
+          id="ultimoDiaMes"
+          [formControl]="indUltimoDiaMesFormControl"
+          (click)="desabilitarSelectDias()"
+          />
+          <label class="ml-1" for="ultimoDiaMes">Último dia do mês</label>
+        </span>
+        <div class="col p-0">
+          Dia da execução:
+          <ng-select
+            id="diaExecucao"
+            style="width: 5rem;"
+            [items]="diasDoMes"
+            notFoundText="Nenhuma opção disponível"
+            [searchable]="false"
+            [clearable]="false"
+            [virtualScroll]="true"
+            [formControl]="diaExecucaoFormControl"
+            [disabled]="indUltimoDiaMesFormControl.value == 'true'"
+            [class.disabled]="indUltimoDiaMesFormControl.value == 'true'"
+          >
+          </ng-select>
+        </div>
+      </span>
+
+    </div>
+    <div class="col">
+      <b
+        >Nº de Meses:<i
+          [ngbTooltip]="
+            'Indica o período de encerramento dos processos a serem considerados no cálculo.'
+          "
+          class="fa fa-info-circle pl-2"
+        ></i></b>
+      <ng-select
+        id="numeroMeses"
+        style="width: 5rem;"
+        [items]="mesesItems"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="false"
+        [clearable]="false"
+        [virtualScroll]="true"
+        [formControl]="numMesesFormControl"
+      >
+      </ng-select>
+    </div>
+  </div>
+  <div class="modal-footer p-0">
+    <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="activeModal.close(false)"><span
+        class="texto-btn-oi cancelar">
+        Cancelar </span></button>
+
+    <button type="button" class="btn btn-primary" (click)="agendar()"><span class="texto-btn-oi confirmar">
+        Agendar </span></button>
+  </div>
+</div>

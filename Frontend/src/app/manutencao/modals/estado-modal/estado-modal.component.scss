@@ -1,0 +1,21 @@
+.modal-header button {
+    color: gray;
+}
+
+.modal-title {
+    margin: auto;
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+::ng-deep {
+    .modal-content {
+        min-width: 370px!important;
+        max-width: 371px!important;
+    }
+    .modal-sm {
+        min-width: 370px!important;
+        max-width: 371px!important;
+    }
+}

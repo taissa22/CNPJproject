@@ -1,0 +1,18 @@
+<label *ngIf='despesas.length == 0'>Nenhuma despesa encontrada.</label>
+
+<table class="table table-striped fonte-padrao" *ngIf='despesas.length > 0'>
+    <thead>
+        <th nowrap *ngFor="let header of despesasKeys">
+            {{ header | estornoLancamentoTabelaAlias }}
+        </th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let despesa of despesas" class="pointer"
+            [ngClass]="(despesa.selected) && 'selected'"
+            (click)="onClickDespesa(despesa)">
+            <td nowrap *ngFor="let header of despesasKeys" [ngClass]="{'alignDireita': header == 'valor'}">
+                {{ header == 'valor'? (despesa[header]  | currency: "BRL":'':"1.2-2":"pt") :despesa[header] }}
+            </td>
+        </tr>
+    </tbody>
+</table>

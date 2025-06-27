@@ -1,0 +1,35 @@
+<form [formGroup]='form'>
+
+   <div class="container-fluid">
+    <div class="row">
+      <div class="col-3 pl-0">
+        <combo-box [label]="'Tribunal BB:'" [classe]="'fornecedor'" [opcoes]="tribunal" [isWhite]="true"
+          (selectionChange)="form.get('codigoBBTribunal').setValue($event);"></combo-box>
+      </div>
+      <div class="col-3 ">
+        <combo-box [label]="'Comarca BB:'" [classe]="'fornecedor'" [opcoes]="comarca" [isWhite]="true"
+          (selectionChange)="form.get('codigoBBComarca').setValue($event);"></combo-box>
+
+      </div>
+      <div class="col-3 ">
+        <label for="fornecedorSap">
+          Nome Órgão BB:
+        </label>
+        <br>
+        <input class="form-control" type="search" formControlName="nomeBBOrgao" maxlength="100"
+        oninput="this.value = this.value.toUpperCase()" StartWithSpace>
+      </div>
+      <div class="col-2 ">
+        <label for="fornecedorSap">
+          Órgão BB:
+        </label>
+        <br>
+        <input class="form-control" type="search" formControlName="codigo" maxlength="9"
+         numbersOnly>
+      </div>
+      <div class="col-1 d-flex align-items-end justify-content-end p-0">
+        <button class="btn btn-primary" (click)="buscar()">Buscar</button>
+      </div>
+    </div>
+  </div>
+</form>

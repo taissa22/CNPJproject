@@ -1,0 +1,1310 @@
+<app-container-pagina
+  [titulo]="'Cadastro eSocial'"
+  [caminho]="breadcrumb"
+  [hasAdicionar]="false"
+>
+  <div
+    class="mt-4 d-flex"
+    style="width: 70rem; align-items: center"
+    (keydown.enter)="buscarProcesso(codigoInternoProcessoFiltro, false)"
+  >
+    <label for="buscarCodigo" class="mr-2"><b>Processo:</b></label>
+    <ng-select
+      style="width: 11.5rem; margin-right: 0.5rem"
+      id="processoCodigoInterno"
+      [items]="processoCodigoInternoList"
+      bindValue="id"
+      bindLabel="name"
+      notFoundText="Nenhuma opção disponível"
+      [searchable]="true"
+      [clearable]="true"
+      [multiple]="false"
+      [formControl]="processoCodigoInternoFormControl"
+      placeholder="Selecione"
+      [title]="placeholderProcesso()"
+      (change)="exibicaoCriterios(); changeProcessoCodigoInterno()"
+    >
+    </ng-select>
+
+    <ng-select
+      style="width: 8.5rem; margin-right: 0.5rem"
+      id="criterios"
+      [items]="criteriosList"
+      bindValue="id"
+      bindLabel="name"
+      notFoundText="Nenhuma opção disponível"
+      [searchable]="true"
+      [clearable]="true"
+      [multiple]="false"
+      [formControl]="criteriosFormControl"
+      placeholder="Selecione"
+      [title]="titleCriterios()"
+    >
+    </ng-select>
+
+    <input
+      id="buscarCodigo"
+      type="text"
+      class="form-control mr-4"
+      placeholder="Código interno"
+      [maxLength]="maxLengthCodInterno()"
+      style="width: 15rem; margin-right: 0.5rem"
+      [formControl]="codigoInternoFormControl"
+      [(ngModel)]="codigoInternoProcessoFiltro"
+      [placeholder]="placeholderProcesso()"
+      numbersOnly
+      (input)="removerNaoNumericos()"
+    />
+    <button
+      class="btn btn-primary"
+      (click)="buscarProcesso(codigoInternoProcessoFiltro, false)"
+    >
+      Buscar
+    </button>
+  </div>
+
+  <form>
+    <div>
+      <!-- CARD PESQUISA -->
+      <div
+        class="mt-4 row"
+        *ngIf="pesquisaProcesso"
+        style="align-items: center"
+      >
+        <div class="col-sm-12">
+          <div class="card">
+            Processo: {{ pesquisaProcesso.nroProcessoCartorio }} |
+            {{ pesquisaProcesso.ufVara }} - {{ pesquisaProcesso.nomeComarca }} |
+            {{ pesquisaProcesso.nomeVara }} <br />
+            {{ pesquisaProcesso.indAtivo }} |
+            {{ pesquisaProcesso.nomeEmpresaGrupo }} |
+            {{ pesquisaProcesso.indProprioTerceiro }} | Código Interno:
+            {{ pesquisaProcesso.codProcesso }}
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTRO -->
+      <div
+        *ngIf="pesquisaProcesso"
+        class="mt-5"
+        style="display: flex; width: 100%; align-items: center"
+      >
+        <div style="display: flex; align-items: center; width: 25%">
+          <label
+            style="white-space: nowrap; margin-top: 21px"
+            for="filtrostatusFormulario"
+            ><b>Filtrar por:</b></label
+          >
+          <div style="width: -webkit-fill-available">
+            <label for="filtrostatusFormulario" class="ml-2"
+              ><b>Status do Formulário:</b></label
+            >
+            <ng-select
+              class="ml-2"
+              style="width: 100%"
+              id="filtrostatusFormulario"
+              [items]="statusFormularioList"
+              bindLabel="descricao"
+              bindValue="id"
+              [clearable]="true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="filtroStatusForm"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div
+          class="ml-2"
+          style="
+            display: flex;
+            align-items: flex-start;
+            width: 25%;
+            flex-direction: column;
+          "
+        >
+          <label for="filtroStatusReclamante" class="ml-2"
+            ><b>Status do Reclamante:</b></label
+          >
+          <ng-select
+            class="ml-2"
+            style="width: 100%"
+            id="filtroStatusReclamante"
+            [items]="statusReclamanteListFiltro"
+            bindLabel="descricao"
+            bindValue="id"
+            [clearable]="true"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="filtroStatusReclamante"
+          >
+          </ng-select>
+        </div>
+        <div
+          class="ml-2"
+          style="display: flex; align-items: flex-end; width: 55%"
+        >
+          <div style="width: 100%" class="mr-4">
+            <label for="nomeCpfReclamante" class="ml-2"
+              ><b>Nome ou CPF do Reclamante:</b></label
+            >
+            <input
+              class="ml-2 mr-2"
+              type="search"
+              id="nomeCpfReclamante"
+              style="
+                width: 100%;
+                border: 1px solid #ccc;
+                padding: 5px;
+                outline-offset: 0;
+              "
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="filtroNomeCpf"
+            />
+          </div>
+          <button
+            class="btn btn-primary ml-auto"
+            (click)="buscarTabela(codigoInterno, false)"
+          >
+            Filtrar
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-4 mb-2 row" style="align-items: center">
+        <div class="col-sm-2">
+          <b class="roxo-padrao" style="font-size: 15px">Reclamantes</b>
+        </div>
+      </div>
+
+      <!-- GRID RECLAMANTES -->
+      <div>
+        <table id="table-reclamantes" class="table-reclamantes d-flex">
+          <ng-container *ngIf="dataSource.length == 0">
+            <tr>
+              <div
+                style="
+                  padding: 5px;
+                  text-align: center;
+                  background-color: whitesmoke;
+                  font-weight: 900;
+                "
+              >
+                {{ mensagemPesquisa }}
+              </div>
+            </tr>
+          </ng-container>
+          <ng-container *ngFor="let parte of dataSource; let i = index">
+            <tr class="card-line">
+              <div style="width: 50%">
+                <p class="mb-0" style="font-weight: 900; color: black">
+                  {{ parte.nomeParte }}
+                </p>
+                <p style="color: black">{{ parte.cpfParte | cpfCnpj }}</p>
+                <br />
+              </div>
+              <div
+                style="
+                  width: 50%;
+                  text-align: end;
+                  display: flex;
+                  justify-content: flex-end;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <div
+                    style="
+                      width: 100%;
+                      display: flex;
+                      justify-content: flex-end;
+                    "
+                  >
+                    <div
+                      class="tag-status"
+                      [ngStyle]="{
+                        color:
+                          parte.statusReclamante == 'Pendente de análise'
+                            ? 'black'
+                            : 'white',
+                        'background-color': defineCorTagStatusReclamante(
+                          parte.statusReclamante
+                        ),
+                        'border-color': defineCorTagStatusReclamante(
+                          parte.statusReclamante
+                        )
+                      }"
+                    >
+                      {{ parte.statusReclamante }}
+                    </div>
+                  </div>
+                  <!-- reclamanteStatusSelecionado != i -->
+                  <ng-container *ngIf="temPermissaoAlterarStatusReclamante">
+                    <div
+                      class="mt-2"
+                      style="text-align: center"
+                      *ngIf="this.reclamanteStatusSelecionado != i"
+                    >
+                      <a
+                        class="roxo-padrao"
+                        style="font-style: italic; cursor: pointer"
+                        (click)="selecionarReclamanteStatus(i, parte)"
+                        >Alterar status</a
+                      >
+                    </div>
+
+                    <div
+                      class="mt-2 d-flex"
+                      style="align-items: center"
+                      *ngIf="this.reclamanteStatusSelecionado == i"
+                    >
+                      <ng-select
+                        style="width: 15rem; text-align: initial"
+                        id="statusReclamante"
+                        [(ngModel)]="selectStatus"
+                        [ngModelOptions]="{ standalone: true }"
+                        [items]="statusReclamanteList"
+                        bindLabel="descricao"
+                        bindValue="id"
+                        [clearable]="false"
+                        placeholder="Selecione o status"
+                      >
+                      </ng-select>
+                      <div class="btns ml-2">
+                        <i
+                          class="roxo-padrao fa-regular fa-square-check"
+                          (click)="
+                            salvarStatus(
+                              parte.codProcesso,
+                              parte.codParte,
+                              selectStatus,
+                              parte.formulario2500
+                            );
+                            selecionarReclamanteStatus(-1)
+                          "
+                        ></i>
+                        <i
+                          class="roxo-padrao fa-regular fa-rectangle-xmark ml-2"
+                          (click)="selecionarReclamanteStatus(-1)"
+                        ></i>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </tr>
+            <!-- FORMULARIO 2500 -->
+            <ng-container *ngIf="parte.formulario2500">
+              <table id="table-formularios" class="table-striped">
+                <thead>
+                  <tr>
+                    <th style="width: 3%"></th>
+                    <th style="width: 5%">Fomulário</th>
+                    <th style="width: 20%; text-align: center">Status</th>
+                    <th>Última Atualização</th>
+                    <th
+                      style="
+                        width: 20%;
+                        display: flex;
+                        justify-content: flex-end;
+                        width: 100%;
+                      "
+                    >
+                      <span
+                        class="mr-2 roxo-padrao"
+                        style="
+                          margin-top: -9px;
+                          background-color: white;
+                          padding: 0 10px;
+                          font-weight: 500;
+                          display: flex;
+                          align-items: center;
+                        "
+                        *ngIf="
+                          podeExibirNovo2501(
+                            parte.formulario2500.statusFormulario
+                          )
+                        "
+                        (click)="adicionarF2501(codigoInterno, parte.codParte)"
+                      >
+                        <p
+                          style="cursor: pointer; margin-bottom: 25px"
+                          (click)="
+                            adicionarF2501(codigoInterno, parte.codParte)
+                          "
+                        >
+                          Novo 2501
+                        </p>
+                        <i
+                          class="fas fa-plus-circle ml-1"
+                          style="
+                            cursor: pointer;
+                            margin-bottom: 25px;
+                            font-size: 20px;
+                          "
+                          (click)="
+                            adicionarF2501(codigoInterno, parte.codParte)
+                          "
+                        ></i>
+                      </span>
+                      <span
+                        class="mr-2 roxo-padrao"
+                        style="
+                          margin-top: -9px;
+                          background-color: white;
+                          padding: 0 10px;
+                          font-weight: 500;
+                          display: flex;
+                          align-items: center;
+                        "
+                        *ngIf="
+                          podeExibirNovo2500(
+                            parte.formulario2500.statusFormulario
+                          )
+                        "
+                        (click)="criarNovoF2500(codigoInterno, parte.codParte)"
+                      >
+                        <p
+                          style="cursor: pointer; margin-bottom: 25px"
+                          (click)="
+                            criarNovoF2500(codigoInterno, parte.codParte)
+                          "
+                        >
+                          Novo 2500
+                        </p>
+                        <i
+                          class="fas fa-plus-circle ml-1"
+                          style="
+                            cursor: pointer;
+                            margin-bottom: 25px;
+                            font-size: 20px;
+                          "
+                          (click)="
+                            criarNovoF2500(codigoInterno, parte.codParte)
+                          "
+                        ></i>
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="content">
+                  <!-- F2500 -->
+                  <ng-container>
+                    <tr>
+                      <td class="t-content">
+                        <button
+                          type="button"
+                          class="btn pt-2"
+                          *ngIf="parte.formulario2500.historico.length > 1"
+                          (click)="selecionarFormulario2500(i)"
+                        >
+                          <i
+                            class="roxo-padrao fas fa-plus pt-1"
+                            *ngIf="formulario2500Selecionado != i"
+                          ></i>
+                          <i
+                            class="roxo-padrao fas fa-minus pt-1"
+                            *ngIf="formulario2500Selecionado == i"
+                          ></i>
+                        </button>
+                      </td>
+                      <td class="t-content" title="2500">
+                        <div class="content-retificado">
+                          <span>2500</span>
+                          <div
+                            class="ml-1 tag-retificado"
+                            *ngIf="parte.formulario2500.indRetificado"
+                          >
+                            R
+                          </div>
+                        </div>
+                      </td>
+                      <td class="t-content">
+                        <div
+                          class="pt-2 pb-1"
+                          style="
+                            text-align: center;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex-direction: column;
+                          "
+                        >
+                          <div class="status-finalizacoes">
+                            <div
+                              class="tag-status"
+                              title="{{
+                                obtemDescricaoStatus(
+                                  parte.formulario2500.statusFormulario
+                                )
+                              }}"
+                              [ngStyle]="{
+                                color:
+                                  parte.formulario2500.statusFormulario == 0
+                                    ? 'black'
+                                    : 'white',
+                                'background-color':
+                                  defineCorTagStatusFormulario(
+                                    parte.formulario2500.statusFormulario
+                                  ),
+                                'border-color':
+                                  parte.formulario2500.statusFormulario == 0
+                                    ? 'black'
+                                    : defineCorTagStatusFormulario(
+                                        parte.formulario2500.statusFormulario
+                                      )
+                              }"
+                            >
+                              {{
+                                obtemDescricaoStatus(
+                                  parte.formulario2500.statusFormulario
+                                )
+                              }}
+                            </div>
+                            <div *ngIf="parte.formulario2500.exibirRetorno2500">
+                              &nbsp;
+                              <button
+                                class="btn btn-link ml-auto p-0 mr-3"
+                                style="cursor: pointer; text-decoration: none"
+                                (click)="
+                                  exportarRetorno2500(
+                                    parte.formulario2500.idF2500
+                                  )
+                                "
+                              >
+                                <i
+                                  title="{{ tooltipEscritorioContador }}"
+                                  class="fas fa-download pr-1"
+                                  style="
+                                    font-size: 15px;
+                                    cursor: pointer !important;
+                                    font: roboto;
+                                  "
+                                ></i>
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="status-finalizacoes"
+                            id="status-finalizacoes"
+                          >
+                            <div
+                              id="status-finalizado-contador"
+                              class="status-finalizacoes"
+                            >
+                              <span>Contador: </span>
+                              <ng-template
+                                [ngTemplateOutlet]="iconeCheckContador2500"
+                                [ngTemplateOutletContext]="{ parte: parte }"
+                              ></ng-template>
+                            </div>
+                            <span class="mr-1 ml-1">|</span>
+                            <div
+                              id="status-finalizado-escritorio"
+                              class="status-finalizacoes"
+                            >
+                              <span>Escritório: </span>
+                              <ng-template
+                                [ngTemplateOutlet]="iconeCheckEscritorio2500"
+                                [ngTemplateOutletContext]="{ parte: parte }"
+                              ></ng-template>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="t-content"
+                        title="{{ parte.formulario2500.nomeUsuario }}"
+                      >
+                        <div
+                          class="pt-2 pb-1"
+                          style="display: flex; flex-direction: column"
+                        >
+                          <div>
+                            {{ parte.formulario2500.nomeUsuario }} em
+                            {{ parte.formulario2500.logDataOperacaoFormatada }}
+                          </div>
+                          <div>ID {{ parte.formulario2500.idF2500 }}</div>
+                        </div>
+                      </td>
+                      <td class="t-content">
+                        <div class="alinhamento-botoes">
+                          <button
+                            type="button"
+                            style="cursor: auto"
+                            class="btn"
+                            *ngIf="
+                              temPermissaoConsultarFormularioEsocial &&
+                              parte.formulario2500.statusFormulario > 0
+                            "
+                          >
+                            <i
+                              class="roxo-padrao fas fa-magnifying-glass fa-sm cadastar"
+                              style="font-size: 18px; cursor: pointer"
+                              (click)="consultarF2500(parte.formulario2500)"
+                            ></i>
+                            <label
+                              for="cadastar"
+                              style="
+                                font-size: 14px;
+                                color: #6f62b2;
+                                margin-left: 5px;
+                                margin-bottom: 0;
+                                cursor: pointer;
+                              "
+                              (click)="consultarF2500(parte.formulario2500)"
+                              >Consultar</label
+                            >
+                          </button>
+                          <button
+                            type="button"
+                            style="cursor: auto"
+                            class="btn"
+                            *ngIf="
+                              temPermissaoCadastrarFormulario2500Esocial &&
+                              podeExibirCadastrarF2500(parte.formulario2500)
+                            "
+                          >
+                            <i
+                              class="roxo-padrao fas fa-edit fa-sm cadastar"
+                              style="font-size: 18px; cursor: pointer"
+                              (click)="cadastrarF2500(parte.formulario2500)"
+                            ></i>
+                            <label
+                              for="cadastar"
+                              style="
+                                font-size: 14px;
+                                color: #6f62b2;
+                                margin-left: 5px;
+                                margin-bottom: 0;
+                                cursor: pointer;
+                              "
+                              (click)="cadastrarF2500(parte.formulario2500)"
+                              >{{
+                                parte.formulario2500.statusFormulario == 0
+                                  ? 'Cadastrar'
+                                  : 'Editar'
+                              }}</label
+                            >
+                          </button>
+                          <button
+                            type="button"
+                            style="cursor: auto"
+                            class="btn"
+                            *ngIf="
+                              temPermissaoRetificarFormulario2500Esocial &&
+                              parte.formulario2500.statusFormulario == 4
+                            "
+                          >
+                            <i
+                              class="roxo-padrao fas fa-edit fa-sm cadastar"
+                              style="font-size: 18px; cursor: pointer"
+                              (click)="retificarF2500(parte.formulario2500)"
+                            ></i>
+                            <label
+                              for="cadastar"
+                              style="
+                                font-size: 14px;
+                                color: #6f62b2;
+                                margin-left: 5px;
+                                margin-bottom: 0;
+                                cursor: pointer;
+                              "
+                              (click)="retificarF2500(parte.formulario2500)"
+                              >Retificar</label
+                            >
+                          </button>
+                          <button
+                            type="button"
+                            style="cursor: auto"
+                            class="btn"
+                            *ngIf="
+                              temPermissaoRetificarFormulario2500Esocial &&
+                              (parte.formulario2500.statusFormulario == 1 ||
+                                parte.formulario2500.statusFormulario == 2) &&
+                              parte.formulario2500.indRetificado
+                            "
+                          >
+                            <i
+                              class="roxo-padrao fas fa-trash fa-sm excluir"
+                              style="font-size: 18px; cursor: pointer"
+                              (click)="removerF2500(parte.formulario2500)"
+                            ></i>
+                            <label
+                              for="cadastar"
+                              style="
+                                font-size: 14px;
+                                color: #6f62b2;
+                                margin-left: 5px;
+                                margin-bottom: 0;
+                                cursor: pointer;
+                              "
+                              (click)="removerF2500(parte.formulario2500)"
+                              >Remover</label
+                            >
+                          </button>
+                          <button
+                            type="button"
+                            style="cursor: auto"
+                            class="btn"
+                            *ngIf="
+                              temPermissaoExcluirFormulario2500Esocial &&
+                              parte.formulario2500.statusFormulario == 4
+                            "
+                          >
+                            <i
+                              class="roxo-padrao fas fa-trash fa-sm excluir"
+                              style="font-size: 18px; cursor: pointer"
+                              (click)="
+                                excluirF2500(parte, parte.formulario2500)
+                              "
+                            ></i>
+                            <label
+                              for="excluir"
+                              (click)="
+                                excluirF2500(parte, parte.formulario2500)
+                              "
+                              style="
+                                font-size: 14px;
+                                color: #6f62b2;
+                                margin-left: 5px;
+                                margin-bottom: 0;
+                                cursor: pointer;
+                              "
+                              >Excluir (S-3500)</label
+                            >
+                          </button>
+                          <button
+                            type="button"
+                            style="cursor: auto"
+                            class="btn"
+                            *ngIf="
+                              temPermissaoExcluirFormulario2500Esocial &&
+                              (parte.formulario2500.statusFormulario == 13 ||
+                                parte.formulario2500.statusFormulario == 15)
+                            "
+                          >
+                            <i
+                              class="roxo-padrao fas fa-rotate-left fa-sm excluir"
+                              style="font-size: 18px; cursor: pointer"
+                              (click)="
+                                desfazerExclusaoF2500(parte.formulario2500)
+                              "
+                            ></i>
+                            <label
+                              for="excluir"
+                              (click)="
+                                desfazerExclusaoF2500(parte.formulario2500)
+                              "
+                              style="
+                                font-size: 14px;
+                                color: #6f62b2;
+                                margin-left: 5px;
+                                margin-bottom: 0;
+                                cursor: pointer;
+                              "
+                              >Desfazer Exclusão S-3500</label
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr *ngIf="formulario2500Selecionado == i">
+                      <td colspan="6">
+                        <app-historico-formulario
+                          [formulario2500]="parte.formulario2500.historico"
+                          (aoConsultarFormulario2500)="consultarF2500($event)"
+                        ></app-historico-formulario>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <!-- F2501 -->
+                  <ng-container *ngIf="parte.listaFormularios2501">
+                    <ng-container
+                      *ngFor="
+                        let f2501 of parte.listaFormularios2501;
+                        let i = index
+                      "
+                    >
+                      <tr>
+                        <td class="t-content">
+                          <button
+                            type="button"
+                            class="btn pt-2"
+                            *ngIf="f2501.historico.length > 1"
+                            (click)="selecionarFormulario2501(i)"
+                          >
+                            <i
+                              class="roxo-padrao fas fa-plus pt-1"
+                              *ngIf="formulario2501Selecionado != i"
+                            ></i>
+                            <i
+                              class="roxo-padrao fas fa-minus pt-1"
+                              *ngIf="formulario2501Selecionado == i"
+                            ></i>
+                          </button>
+                        </td>
+                        <td class="t-content" title="2501">
+                          <div class="content-retificado">
+                            <span>2501</span>
+                            <span
+                              style="font-size: 11px; font-weight: 300"
+                              *ngIf="f2501.periodoApuracao"
+                              >&nbsp;({{
+                                formataPeriodoApuracao(f2501.periodoApuracao)
+                              }})</span
+                            >
+                            <div
+                              class="ml-1 tag-retificado"
+                              *ngIf="f2501.indRetificado"
+                            >
+                              R
+                            </div>
+                          </div>
+                        </td>
+                        <td class="t-content">
+                          <div
+                            class="pt-2 pb-1"
+                            style="
+                              text-align: center;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              flex-direction: column;
+                            "
+                          >
+                            <div class="status-finalizacoes">
+                              <div
+                                class="tag-status"
+                                title="{{
+                                  obtemDescricaoStatus(f2501.statusFormulario)
+                                }}"
+                                [ngStyle]="{
+                                  color:
+                                    f2501.statusFormulario == 0
+                                      ? 'black'
+                                      : 'white',
+                                  'background-color':
+                                    defineCorTagStatusFormulario(
+                                      f2501.statusFormulario
+                                    ),
+                                  'border-color':
+                                    f2501.statusFormulario == 0
+                                      ? 'black'
+                                      : defineCorTagStatusFormulario(
+                                          f2501.statusFormulario
+                                        )
+                                }"
+                              >
+                                {{
+                                  obtemDescricaoStatus(f2501.statusFormulario)
+                                }}
+                              </div>
+                              <div *ngIf="f2501.exibirRetorno2501">
+                                &nbsp;
+                                <button
+                                  class="btn btn-link ml-auto p-0 mr-3"
+                                  style="cursor: pointer; text-decoration: none"
+                                  (click)="exportarRetorno2501(f2501.idF2501)"
+                                >
+                                  <i
+                                    title="{{ tooltipEscritorioContador }}"
+                                    class="fas fa-download pr-1"
+                                    style="
+                                      font-size: 15px;
+                                      cursor: pointer !important;
+                                      font: roboto;
+                                    "
+                                  ></i>
+                                </button>
+                              </div>
+                            </div>
+                            <div
+                              class="status-finalizacoes"
+                              id="status-finalizacoes"
+                            >
+                              <div
+                                id="status-finalizado-contador"
+                                class="status-finalizacoes"
+                              >
+                                <span>Contador: </span>
+                                <ng-template
+                                  [ngTemplateOutlet]="iconeCheckContador2501"
+                                  [ngTemplateOutletContext]="{ f2501: f2501 }"
+                                ></ng-template>
+                              </div>
+                              <span class="mr-1 ml-1">|</span>
+                              <div
+                                id="status-finalizado-escritorio"
+                                class="status-finalizacoes"
+                              >
+                                <span>Escritório: </span>
+                                <ng-template
+                                  [ngTemplateOutlet]="iconeCheckEscritorio2501"
+                                  [ngTemplateOutletContext]="{ f2501: f2501 }"
+                                ></ng-template>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="t-content" title="{{ f2501.nomeUsuario }}">
+                          <div
+                            class="pt-2 pb-1"
+                            style="
+                              display: flex;
+                              justify-content: center;
+                              flex-direction: column;
+                            "
+                          >
+                            <div>
+                              {{ f2501.nomeUsuario }} em
+                              {{ f2501.logDataOperacaoFormatada }}
+                            </div>
+                            <div>ID {{ f2501.idF2501 }}</div>
+                          </div>
+                        </td>
+                        <td class="t-content">
+                          <div class="alinhamento-botoes">
+                            <button
+                              type="button"
+                              style="cursor: auto"
+                              class="btn"
+                              *ngIf="
+                                temPermissaoConsultarFormularioEsocial &&
+                                f2501.statusFormulario > 0
+                              "
+                            >
+                              <i
+                                class="roxo-padrao fas fa-magnifying-glass fa-sm cadastar"
+                                style="font-size: 18px; cursor: pointer"
+                                (click)="consultarF2501(f2501)"
+                              ></i>
+                              <label
+                                for="cadastar"
+                                style="
+                                  font-size: 14px;
+                                  color: #6f62b2;
+                                  margin-left: 5px;
+                                  margin-bottom: 0;
+                                  cursor: pointer;
+                                "
+                                (click)="consultarF2501(f2501)"
+                                >Consultar</label
+                              >
+                            </button>
+                            <button
+                              type="button"
+                              style="cursor: auto"
+                              class="btn"
+                              *ngIf="
+                                temPermissaoCadastrarFormulario2501Esocial &&
+                                podeExibirCadastrarF2501(f2501)
+                              "
+                            >
+                              <i
+                                class="roxo-padrao fas fa-edit fa-sm cadastar"
+                                style="font-size: 18px; cursor: pointer"
+                                (click)="cadastrarF2501(f2501)"
+                              ></i>
+                              <label
+                                for="cadastar"
+                                style="
+                                  font-size: 14px;
+                                  color: #6f62b2;
+                                  margin-left: 5px;
+                                  margin-bottom: 0;
+                                  cursor: pointer;
+                                "
+                                (click)="cadastrarF2501(f2501)"
+                                >{{
+                                  f2501.statusFormulario == 0
+                                    ? 'Cadastrar'
+                                    : 'Editar'
+                                }}</label
+                              >
+                            </button>
+                            <button
+                              type="button"
+                              style="cursor: auto"
+                              class="btn"
+                              *ngIf="
+                                temPermissaoRetificarFormulario2501Esocial &&
+                                (f2501.statusFormulario == 4 ||
+                                  f2501.statusFormulario == 8)
+                              "
+                            >
+                              <i
+                                class="roxo-padrao fas fa-edit fa-sm retificar"
+                                style="font-size: 18px; cursor: pointer"
+                                (click)="retificarF2501(f2501)"
+                              ></i>
+                              <label
+                                for="retificar"
+                                style="
+                                  font-size: 14px;
+                                  color: #6f62b2;
+                                  margin-left: 5px;
+                                  margin-bottom: 0;
+                                  cursor: pointer;
+                                "
+                                (click)="retificarF2501(f2501)"
+                                >Retificar</label
+                              >
+                            </button>
+                            <button
+                              type="button"
+                              style="cursor: auto"
+                              class="btn"
+                              *ngIf="
+                                temPermissaoRemoverFormulario2501Esocial &&
+                                (f2501.statusFormulario == 0 ||
+                                  f2501.statusFormulario == 1 ||
+                                  f2501.statusFormulario == 2 ||
+                                  f2501.statusFormulario == 5 ||
+                                  ((f2501.statusFormulario == 1 ||
+                                    f2501.statusFormulario == 2) &&
+                                    f2501.indRetificado))
+                              "
+                            >
+                              <i
+                                class="roxo-padrao fas fa-trash fa-sm remover"
+                                style="font-size: 18px; cursor: pointer"
+                                (click)="removerF2501(f2501)"
+                              ></i>
+                              <label
+                                for="remover"
+                                style="
+                                  font-size: 14px;
+                                  color: #6f62b2;
+                                  margin-left: 5px;
+                                  margin-bottom: 0;
+                                  cursor: pointer;
+                                "
+                                (click)="removerF2501(f2501)"
+                                >Remover</label
+                              >
+                            </button>
+                            <button
+                              type="button"
+                              style="cursor: auto"
+                              class="btn"
+                              *ngIf="
+                                temPermissaoExcluirFormulario2501Esocial &&
+                                f2501.statusFormulario == 4
+                              "
+                            >
+                              <i
+                                class="roxo-padrao fas fa-trash fa-sm excluir"
+                                style="font-size: 18px; cursor: pointer"
+                                (click)="excluirF2501(parte, f2501)"
+                              ></i>
+                              <label
+                                for="excluir"
+                                (click)="excluirF2501(parte, f2501)"
+                                style="
+                                  font-size: 14px;
+                                  color: #6f62b2;
+                                  margin-left: 5px;
+                                  margin-bottom: 0;
+                                  cursor: pointer;
+                                "
+                                >Excluir (S-3500)</label
+                              >
+                            </button>
+                            <button
+                              type="button"
+                              style="cursor: auto"
+                              class="btn"
+                              *ngIf="
+                                temPermissaoExcluirFormulario2501Esocial &&
+                                (f2501.statusFormulario == 13 ||
+                                  f2501.statusFormulario == 15)
+                              "
+                            >
+                              <i
+                                class="roxo-padrao fas fa-rotate-left fa-sm excluir"
+                                style="font-size: 18px; cursor: pointer"
+                                (click)="desfazerExclusaoF2501(f2501)"
+                              ></i>
+                              <label
+                                for="excluir"
+                                (click)="desfazerExclusaoF2501(f2501)"
+                                style="
+                                  font-size: 14px;
+                                  color: #6f62b2;
+                                  margin-left: 5px;
+                                  margin-bottom: 0;
+                                  cursor: pointer;
+                                "
+                                >Desfazer Exclusão S-3500</label
+                              >
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr *ngIf="formulario2501Selecionado == i">
+                        <td colspan="6">
+                          <app-historico-formulario
+                            [formulario2501]="f2501.historico"
+                            (aoConsultarFormulario2501)="consultarF2501($event)"
+                          ></app-historico-formulario>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                </tbody>
+              </table>
+            </ng-container>
+          </ng-container>
+        </table>
+        <br />
+        <sisjur-paginator
+          [length]="total"
+          (page)="buscarTabela(codigoInterno, false)"
+        ></sisjur-paginator>
+      </div>
+    </div>
+
+    <!-- #region icones checagem -->
+    <ng-template #iconeCheckEscritorio2500 let-parte="parte">
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="white"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="parte.formulario2500.finalizadoEscritorio == null"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="#a1dea7"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="parte.formulario2500.finalizadoEscritorio == true"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="#fefe0a"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="parte.formulario2500.finalizadoEscritorio == false"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+    </ng-template>
+
+    <ng-template #iconeCheckContador2500 let-parte="parte">
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="white"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="parte.formulario2500.finalizadoContador == null"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="#a1dea7"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="parte.formulario2500.finalizadoContador == true"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="#fefe0a"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="parte.formulario2500.finalizadoContador == false"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+    </ng-template>
+
+    <!-- <ng-template #iconeCheckEscritorio2501 let-f2501="f2501">
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="white"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="f2501.finalizadoEscritorio == null"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="#a1dea7"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="f2501.finalizadoEscritorio == true"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="#fefe0a"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="f2501.finalizadoEscritorio == false"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+    </ng-template> -->
+
+    <ng-template #iconeCheckContador2501 let-f2501="f2501">
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="white"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="f2501.finalizadoContador == null"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="#a1dea7"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="f2501.finalizadoContador == true && !f2501.EhDataFutura()"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="#ff7f27"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="f2501.finalizadoContador == true && f2501.EhDataFutura()"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+      <svg
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        fill="#fefe0a"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="f2501.finalizadoContador == false"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+    </ng-template>
+
+    <ng-template #iconeCheckEscritorio2501 let-f2501="f2501">
+      <svg
+        [attr.fill]="
+          getContadorStatus(f2501.periodoApuracao, f2501.finalizadoEscritorio)
+            .color
+        "
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="f2501.finalizadoEscritorio == null"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+
+      <svg
+        [attr.fill]="
+          getContadorStatus(f2501.periodoApuracao, f2501.finalizadoEscritorio)
+            .color
+        "
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="f2501.finalizadoEscritorio == true"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+
+      <svg
+        [attr.fill]="
+          getContadorStatus(f2501.periodoApuracao, f2501.finalizadoEscritorio)
+            .color
+        "
+        xmlns="src\assets\icons\check-circle-fill.svg"
+        width="13"
+        height="13"
+        class="svg-check"
+        viewBox="0 0 16 16"
+        *ngIf="f2501.finalizadoEscritorio == false"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+    </ng-template>
+
+    <!-- #endregion -->
+  </form>
+</app-container-pagina>

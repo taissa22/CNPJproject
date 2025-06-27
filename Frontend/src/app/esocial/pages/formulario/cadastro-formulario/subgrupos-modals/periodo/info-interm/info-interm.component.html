@@ -1,0 +1,38 @@
+<div class="pb-3" style="margin: 1rem;">
+  <div class="roxo-padrao btn-novo mt-1" *ngIf="!consulta">
+      <i class="fas fa-plus-circle ml-auto mr-1 fs-2" (click)="incluir()"></i>
+      <span class="fs-1" (click)="incluir()">Incluir</span>
+  </div>
+  <div style="margin-top: 8px;">
+      <sisjur-table (sort)="buscarTabela()">
+          <ng-container>
+              <sisjur-table-header>
+                  <sisjur-table-header-cell width="32">Dia do Mês Trabalhado</sisjur-table-header-cell>
+                  <sisjur-table-header-cell width="50">Quantidade de Horas Trabalhadas no Dia</sisjur-table-header-cell>
+                  <sisjur-table-header-cell width="4"></sisjur-table-header-cell>
+                  <sisjur-table-header-cell width="4"></sisjur-table-header-cell>
+              </sisjur-table-header>
+              <ng-container *ngFor="let item of dataSource let i = index">
+                  <sisjur-table-row>
+                      <sisjur-table-row-cell>{{item.infointermDia}}</sisjur-table-row-cell>
+                      <sisjur-table-row-cell>{{item.infointermHrstrab}}
+                      </sisjur-table-row-cell>
+                      <sisjur-table-row-cell>
+                          <button type="button" class="btn btn-icon" (click)="alterar(item)" *ngIf="consulta"> <i class="fa fa-magnifying-glass"></i> </button>
+                          <button type="button" class="btn btn-icon" (click)="alterar(item)" *ngIf="!consulta"> <i class="fa fa-edit"></i> </button>
+                      </sisjur-table-row-cell>
+                      <sisjur-table-row-cell>
+                          <button type="button" class="btn btn-icon" (click)="excluir(item.idEsF2500Infointerm, item.infointermDia)" *ngIf="!consulta"> <i
+                class="fa fa-trash"></i> </button>
+                      </sisjur-table-row-cell>
+                  </sisjur-table-row>
+
+              </ng-container>
+
+          </ng-container>
+      </sisjur-table>
+      <div class="mt-2">
+          <sisjur-paginator [length]="total" [MostrarQtdPorPagina]="false" [QtdFixaPorPagina]="10" (page)="buscarTabela()"></sisjur-paginator>
+      </div>
+  </div>
+</div>

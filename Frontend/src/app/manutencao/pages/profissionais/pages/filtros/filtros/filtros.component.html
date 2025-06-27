@@ -1,0 +1,41 @@
+<div class="row pt-3">
+  <div class="col-md-12">
+    <p class="font-purple">
+      Ultilize pelo menos um dos critérios abaixo para localizar os profissionais.
+    </p>
+  </div>
+</div>
+<div class="row pt-3">
+  <div class="col-md-4 pr-1">
+    <label for="nome" class="col-form-label-sm">Nome:</label>
+    <input type="text" id="nome" [formControl]="nomeFormControl" (keyup.enter)="obterValoresDoFiltro()" maxlength="400" class="form-control">
+  </div>
+  <div class="col-md-2 px-1">
+    <label for="tipo" class="col-form-label-sm">Tipo:</label>
+    <select name="tipo" id="tipo" [formControl]="tipoFormControl" class="form-control">
+      <option value="" class="px-2"></option>
+      <option value="F" class="px-2">FÍSICA</option>
+      <option value="J" class="px-2">JURIDICA</option>
+    </select>
+  </div>
+  <div class="col-md-2 px-1">
+    <label for="cpf-cnpj" *ngIf="tipoFormControl.value === 'F'" class="col-form-label-sm">CPF:</label>
+    <label for="cpf-cnpj" *ngIf="tipoFormControl.value === 'J'" class="col-form-label-sm">CNPJ:</label>
+    <label for="cpf-cnpj" *ngIf="tipoFormControl.value === ''" class="col-form-label-sm">CPF/CNPJ:</label>
+    <input type="text" id="cpf-cnpj" [formControl]="cpfCnpjFormControl"
+      (keyup.enter)="obterValoresDoFiltro()" class="form-control" [textMask]="{ mask: cpfCnpjMask(tipoFormControl), showMask: true }">
+  </div>
+  <div class="col-md-2 px-1">
+    <label for="advogado-do-autor" class="col-form-label-sm">Advogado do Autor:</label>
+    <select name="advogado-do-autor" id="advogado-do-autor" [formControl]="advogadoAutorFormControl"
+      (keyup.enter)="obterValoresDoFiltro()" class="form-control">
+      <option value="" class="px-2">INDIFERENTE</option>
+      <option value="true" class="px-2">SIM</option>
+      <option value="false" class="px-2">NÃO</option>
+    </select>
+  </div>
+  <div class="col-md-1 pl-1" style="padding-top: 1.8rem;">
+    <button type="button" class="btn btn-primary" (click)="obterValoresDoFiltro()">Buscar</button>
+  </div>
+  <div class="col-md-2"></div>
+</div>

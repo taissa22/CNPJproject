@@ -1,0 +1,64 @@
+<app-container-pagina [titulo]="'Órgãos BB'" [caminho]="breadcrumb" [hasAdicionar]="true"
+  [texto]="'Utilize pelo menos um dos critérios abaixo para localizar os órgãos BB.'"
+  (adicionarClicked)='adicionarOrgaoBB($event)'>
+
+  <filtro-orgao-bb></filtro-orgao-bb>
+
+  <div *ngIf="isNotFound">
+    <p>Nenhum Órgão BB encontrado</p>
+  </div>
+
+  <ng-container *ngIf="data.length > 0 && !isNotFound">
+    <div class="roxo-padrao pt-3 mt-3"
+
+         style="text-align:right">
+      <div>
+        <i class="fas fa-download pr-1" style="font-size:15px;cursor: pointer;"
+         (click)="onClickExportarPorFiltro('Orgao_BB', filtroService.valoresFiltro)"></i>
+        <span style="font-size:12px;cursor: pointer;"
+         (click)="onClickExportarPorFiltro('Orgao_BB', filtroService.valoresFiltro)">Exportar</span>
+      </div>
+    </div>
+
+
+  <div >
+        <table class='table table-striped fonte-padrao' style="border: 1px solid #dee2e6">
+      <th col nowrap *ngFor="let header of listaHeaders">
+        {{ header['campo'] | orgaosBBalias }}
+        <app-botao-ordenacao [isActive]="header.isActive"
+                             (stateChange)="onChangeOrdenacao(header)">
+        </app-botao-ordenacao>
+      </th>
+      <th></th>
+    <tbody>
+    <tr row nowrap class="table-item"
+        *ngFor="let item of data"  >
+        <td class="text-limit" nowrap *ngFor="let header of listaHeaders" >
+         <span [ngbTooltip]='(item[header.campo] && item[header.campo].length > 40) && item[header.campo]'> {{ item[header.campo] | boolToPT }} </span>
+        </td>
+          <td style="font-size:10px ;text-align: right">
+            <i class="fas fa-edit roxo-padrao fa-2x mr-1" (click)="editarOrgaoBB(item)"></i>
+            <i class="fas fa-trash roxo-padrao fa-2x" (click)="onClickExcluir(item.id,
+            'Órgão BB', 'o', item.nome )"></i>
+          </td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+  <div class="row pt-3 d-flex align-items-center" *ngIf="listaHeaders.length > 0 ">
+    <div class="col-sm-6"> <span class="title pr-2">
+      Total de registros: {{ service.totalSubject.value }} - Itens por página</span>
+      <app-table-options *ngIf="listaHeaders.length > 0" (valueChange)="onChangeQuantidade($event)">
+      </app-table-options>
+    </div>
+    <div class="col-sm-6">
+      <app-paginacao-buttons [pageMax]="service.quantidadePorPagina"
+                             [totalRegistro]="service.totalSubject.value"
+                             [currentPage]="service.paginaAtual"
+                             (onPageSelect)="onChangePagina($event)"
+                             (onClickNextPage)="onChangePagina($event)">
+      </app-paginacao-buttons>
+    </div>
+  </div>
+</ng-container>
+  </app-container-pagina>

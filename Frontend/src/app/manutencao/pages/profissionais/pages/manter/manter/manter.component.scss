@@ -1,0 +1,25 @@
+.ngb-tab-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+}
+::ng-deep #tab-dados-pessoas {
+  border-top: solid 1px #dee2e6;
+  border-left: solid 1px #dee2e6;
+}
+::ng-deep #tab-enderecos {
+  border-top: solid 1px #dee2e6;
+  border-right: solid 1px #dee2e6;
+}
+::ng-deep #ngb-tab-0 {
+  border-top: solid 1px #dee2e6;
+  border-left: solid 1px #dee2e6;
+}
+::ng-deep #ngb-tab-1 {
+  border-top: solid 1px #dee2e6;
+  border-right: solid 1px #dee2e6;
+}
+::ng-deep #ngb-tab-2 {
+  border-top: solid 1px #dee2e6;
+  border-right: solid 1px #dee2e6;
+}

@@ -1,0 +1,74 @@
+<div bsModal #template="bs-modal" style=" width: 600px;" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name1" [config]="{backdrop: 'static'}">
+  <div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">
+          Ordenação e Prioridade - {{title}}
+        </h4>
+        <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pt-0">
+        <p class="subtitulo">
+          Selecione a coluna e arraste para cima ou para baixo a fim de alterar
+          a prioridade de ordenação.
+        </p>
+        <div style="border: 1px solid #dee2e6; font-weight: bold;" class="d-flex p-2">
+          <div class="col-2 text-center">Prioridade</div>
+          <div class="col-4">Nome Coluna</div>
+          <div class="col-6 text-center">Tipo Ordenação</div>
+        </div>
+        <div  class="example-list" (cdkDropListDropped)="drop($event)" cdkDropList>
+
+          <div class="example-box" *ngFor="let value of values; index as i " cdkDrag
+          >
+            <ng-container [ngTemplateOutlet]="refMovies"
+            [ngTemplateOutletContext]="{value: value, radio: i}"
+            >
+            </ng-container>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancelar-oi roxo-padrao"
+        (click)="bsModalRef.hide()">
+          <span class="texto-btn-oi cancelar">
+            Cancelar </span>
+        </button>
+        <button type="button" class="btn btn-primary" (click)="save()">
+          <span class="texto-btn-oi confirmar">
+            Confirmar
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #refMovies let-dado="value" let-radio="radio">
+  <div class="col-2 font text-center" >
+    {{radio + 1}}
+  </div>
+
+  <div class="col-5 font ">
+    {{dado.columnName}}
+  </div>
+
+  <div class="col-5 font">
+    <div class="d-flex align-items-center">
+      <div class="mr-2 d-flex align-items-center">
+        <input type="radio" class="mr-2" [(ngModel)]="dado.direction"
+        value="asc" [name]="radio" [id]="radio + 'asc'">
+        <label [for]="radio + 'asc'" class="mb-0">Ascendente</label>
+      </div>
+      <div class="mr-2  d-flex align-items-center">
+        <input type="radio" class="mr-2"
+         [(ngModel)]="dado.direction" value="desc" [name]="radio" [id]="radio + 'desc'">
+        <label [for]="radio + 'desc'" class="mb-0">Descendente</label>
+      </div>
+    </div>
+  </div>
+</ng-template>

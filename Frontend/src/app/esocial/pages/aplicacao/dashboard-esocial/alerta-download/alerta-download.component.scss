@@ -1,0 +1,53 @@
+.alert-card {
+    display: flex;
+    flex-direction: row;
+    box-shadow: 1px 1px 8px 0px #0000007a;
+    border-radius: 5px;
+}
+
+.alert-icon {
+    display: flex;
+    width: 15%;
+    justify-content: center;
+    align-items: center;
+}
+
+.fa-triangle-exclamation {
+    font-size: 30px;
+}
+
+.alert-content {
+    width: 82%;
+    display: flex;
+    flex-direction: column;
+}
+
+.alert-action {
+    display: flex;
+    width: 8%;
+}
+
+.red {
+    color: red;
+}
+
+.btn-secondary {
+    width: -webkit-fill-available;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-secondary:hover {
+    border: none !important;
+}
+
+.btn-secondary:not(:hover) {
+    border: none !important;
+}
+
+.fa-arrow-down {
+    font-size: 20px;
+    color: white;
+}

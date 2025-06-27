@@ -1,0 +1,34 @@
+export const CabecalhoObservacoesTributarioJudicial = [
+    {
+        nome: 'Operação',
+        prop: 'operacao'
+    },
+    {
+        nome: 'Data e Hora do Log',
+        prop: 'dataLog'
+    },
+    {
+        nome: 'Código Usuário Log',
+        prop: 'codigoUsuarioLog'
+    },
+    {
+        nome: 'Nome Usuário Log',
+        prop: 'nomeUsuarioLog'
+    },
+    {
+        nome: 'Data da Observação Antes',
+        prop: 'dataObservacaoAntes'
+    },
+    {
+        nome: 'Data da Observação Depois',
+        prop: 'dataObservacaoDepois'
+    },
+    {
+        nome: 'Descrição da Observação Antes',
+        prop: 'descricaoObservacaoAntes'
+    },
+    {
+        nome: 'Descrição da Observação Depois',
+        prop: 'descricaoObservacaoDepois'
+    },
+];

@@ -1,0 +1,87 @@
+.selecaoFiltro {
+    margin-top: 15px;
+    margin-right: -70px;
+    margin-left: -100px;
+}
+
+.opt {
+    margin-left: auto;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.tittle {
+    color: #615989
+}
+
+.content {
+    border: 1px solid #f0f0f0
+}
+
+.menosFiltros {
+    display: flex;
+    padding-top: 20px;
+}
+
+.maisFiltros {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.inputProcedimento {
+    margin-top: auto;
+
+    input {
+        width: -webkit-fill-available;
+        border: 1px solid #ccc;
+        height: 30px;
+    }
+}
+
+.inputCpfCnpj {
+    margin-top: auto;
+
+    input {
+        width: 97.5%;
+        border: 1px solid #ccc;
+        height: 30px;
+    }
+}
+
+.inputNomeParte {
+    margin-top: auto;
+
+    input {
+        width: 97.5%;
+        border: 1px solid #ccc;
+        height: 30px;
+    }
+}
+
+.inputTestemunha {
+    width: 100%;
+    border: 1px solid #ccc;
+    height: 30px;
+}
+
+.situacao {
+    margin-left: auto;
+    padding-right: 0;
+}
+
+.btnLink {
+    cursor: pointer;
+    color: #786BB9 !important;
+}
+
+.ultimoAcessados {
+    border: 1px solid #f0f0f0;
+    padding-top: 20px;
+    margin-top: 25px;
+}
+
+.icons {
+    cursor: pointer;
+    color: #786BB9 !important;
+    font-size: 15px;
+}

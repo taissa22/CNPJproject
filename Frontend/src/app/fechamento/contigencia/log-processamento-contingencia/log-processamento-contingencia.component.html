@@ -1,0 +1,107 @@
+<app-container-pagina titulo="Consultar Logs de Processamento Contingência" caminho="{{breadcrumb}}"
+  [hasAdicionar]="false">
+
+  <div style="margin-top: 15px; align-items: center;">
+    <div class="options d-flex" style="align-items: center">
+      <div style="align-items: center;width: 50%;display: flex;">
+        <span>Mostrar</span>
+        <ng-select [items]="dropdownList" bindLabel="nome" bindValue="id" [closeOnSelect]="false"
+          placeholder="Selecione o Fechamento" appendTo="body" multiple="true" [(ngModel)]="selectedItems"
+          style="margin-left: 15px; width: -webkit-fill-available;">
+        </ng-select>
+      </div>
+
+      <div class="ml-4 d-flex" style="width:50%">
+        <div class="d-flex" style="width:34%">
+          <div class="d-flex" style="align-items: center;">
+            <input type="checkbox" id="11" (click)="checkOpt()"><label class="ml-1" for="radio"
+              style="margin-bottom: 0;">Somente não finalizadas</label>
+          </div>
+        </div>
+
+        <div>
+          <div class="rangeData ml-3">
+            <app-data-range [dataInicio]="dataInicio" [dataFim]="dataFim" (retDataFim)="dataFim = $event"
+              (retDataInicio)="dataInicio = $event">
+            </app-data-range>
+          </div>
+        </div>
+
+        <div class="ml-auto">
+          <div class="btn btn-primary ml-4" (click)="obterDados()">Buscar</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- TABELA -->
+  <div class="mt-3">
+    <div class="width-full">
+      <sisjur-table (sort)="obterDados()">
+        <ng-container>
+          <sisjur-table-header>
+            <sisjur-table-header-cell sort="tipo" width="15"><span id="cell">Tipo
+                Fechamento</span></sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="empresa" width="15"><span id="cell">Empresa
+                Centralizadora</span></sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="parametro" width="29"><span
+                id="cell">Parâmetros</span></sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="fechamento" width="10"><span id="cell">Fechamento
+                Mês</span></sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="agendado" width="10"><span id="cell">Agendado
+                para</span></sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="execucao" width="11"><span
+                id="cell">Execução</span></sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="situacao" width="8"><span
+                id="cell">Situação</span></sisjur-table-header-cell>
+            <sisjur-table-header-cell width="2"><span id="cell"></span></sisjur-table-header-cell>
+          </sisjur-table-header>
+
+          <sisjur-table-row *ngFor="let item of dadosLog">
+            <sisjur-table-row-cell><span id="cell"
+                title="{{item.tipoFechamento}}">{{item.tipoFechamento}}</span></sisjur-table-row-cell>
+            <sisjur-table-row-cell><span id="cell"
+                title="{{item.empresaCentralizadora}}">{{item.empresaCentralizadora}}</span></sisjur-table-row-cell>
+            <sisjur-table-row-cell><span id="cell"
+                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 369px;"
+                title="{{item.parametros}}">{{item.parametros}}</span></sisjur-table-row-cell>
+            <sisjur-table-row-cell><span id="cell"
+                title="{{item.fechamentoMes}}">{{item.fechamentoMes}}</span></sisjur-table-row-cell>
+            <sisjur-table-row-cell><span id="cell"
+                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 154px;"
+                title="{{item.agendadoPara}}">{{item.agendadoPara}}</span></sisjur-table-row-cell>
+            <sisjur-table-row-cell><span
+                style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 170px;"
+                title="{{item.execucao}}">{{item.execucao}}</span></sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <ng-container *ngIf="item.situacao == 'Erro'">
+                <span id="cell" title="{{item.situacao}}" (click)="mostrarErro(item.mensagemErro)" style="font-color: red">
+                  {{item.situacao}} <i class="fas fa-info-circle ml-1 cursor" style="font-color: red"></i>
+                </span>
+              </ng-container>
+              <ng-container *ngIf="item.situacao != 'Erro'">
+                <span id="cell" title="{{item.situacao}}">
+                  {{item.situacao}}
+                </span>
+              </ng-container>
+              </sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <span id="cell">
+                <i *ngIf="item.situacao != 'Encerrado'" class="fas fa-trash"
+                  style="color:#786bb9; cursor: pointer;" (click)="excluirFechamento(item.id)"></i>
+              </span>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+        </ng-container>
+
+      </sisjur-table>
+      <div class="mt-3">
+        <sisjur-paginator [length]="totalLog" (page)="obterDados()"></sisjur-paginator>
+      </div>
+    </div>
+  </div>
+
+</app-container-pagina>

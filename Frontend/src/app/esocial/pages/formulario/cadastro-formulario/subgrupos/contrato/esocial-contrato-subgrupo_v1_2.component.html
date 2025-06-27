@@ -1,0 +1,118 @@
+<div>
+  <div class="roxo-padrao btn-novo mt-1 d-flex" style="float: right; margin-right: 36px; margin-bottom: 10px">
+    <div *ngIf="temPermissaoEsocialBlocoABCDEFHI && (!finalizadoEscritorio || (finalizadoEscritorio && temPermissaoEnviarEsocial)) ">
+      <i class="fas fa-plus-circle ml-auto mr-1 fs-2" style="font-size: 30px ; cursor: pointer" (click)="incluir()"></i>
+      <span class="fs-1" style="position: absolute; margin-top: 5px; cursor: pointer" (click)="incluir()">Incluir</span>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="mt-5">
+    <sisjur-table (sort)="buscarTabela()">
+      <ng-container>
+        <sisjur-table-header>
+          <sisjur-table-header-cell width="2"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="6">ID</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="18">Tipo de Contrato</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="14">Possui Inf. Evento Admissão/Início</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="18">Matrícula</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="32">Categoria</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="5" *ngIf="temPermissaoEsocialBlocoABCDEFHI"></sisjur-table-header-cell>
+        </sisjur-table-header>
+
+        <ng-container *ngFor="let item of dataSource; let i = index">
+          <sisjur-table-row>
+            <sisjur-table-row-cell class="ml-0">
+              <button type="button" class="botao-info btn pl-2" #btn value="true"
+                (click)="btn.value = selecionarContrato(btn.value);" style="cursor: auto;">
+                <!-- <i class="fas fa-plus roxo-padrao" *ngIf="btn.value == 'false'"></i>
+                <i class="fas fa-minus roxo-padrao" *ngIf="btn.value == 'true'"></i> -->
+                <i class="fa fa-info" style="color: whitesmoke"></i>
+              </button>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{
+              item.idEsF2500Infocontrato
+              }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell [title]="item.descricaoTipoContrato != null
+              && item.descricaoTipoContrato.length > 40 ? item.descricaoTipoContrato : ''">{{
+              item.descricaoTipoContrato != null
+              && item.descricaoTipoContrato.length > 40 ?
+              item.descricaoTipoContrato.substring(0,40)+'...' : item.descricaoTipoContrato
+              }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{
+              item.infocontrIndcontr == 'S' ? 'Sim' : item.infocontrIndcontr == 'N' ? 'Não' : ''
+              }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{
+              item.infocontrMatricula
+              }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell [title]="item.descricaoCategoria != null && item.descricaoCategoria.length > 40 ? 
+            item.descricaoCategoria.toUpperCase() : ''">{{
+            item.descricaoCategoria != null
+            && item.descricaoCategoria.length > 40 ? 
+            item.descricaoCategoria.toUpperCase().substring(0,40)+'...' : item.descricaoCategoria.toUpperCase()
+            }}</sisjur-table-row-cell>
+
+            <sisjur-table-row-cell *ngIf="temPermissaoEsocialBlocoABCDEFHI && (!finalizadoEscritorio || (finalizadoEscritorio && temPermissaoEnviarEsocial))">
+              <button type="button" class="btn btn-icon" (click)="alterar(item)">
+                <i class="fa fa-edit"></i>
+              </button>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell *ngIf="temPermissaoEsocialBlocoABCDEFHI && (!finalizadoEscritorio || (finalizadoEscritorio && temPermissaoEnviarEsocial))">
+              <button type="button" class="btn btn-icon" (click)="excluir(item)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell *ngIf="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)">
+              <button type="button" class="btn btn-icon" (click)="consultar(item)">
+                <i class="fa fa-search"></i>
+              </button>
+            </sisjur-table-row-cell>
+
+          </sisjur-table-row>
+
+          <sisjur-table-row *ngIf="btn.value == 'true'" [heightAuto]="true" background="#fff">
+            <sisjur-table-row-cell width="100" class="mt-0 mb-0 mr-0 ml-0">
+              <app-contrato-subgrupos-v1-2 *ngIf="dataSource" class="sub-contrato" [ngStyle]="{ 'width': '100%' }"
+                [idFormulario]="formularioId" [idContrato]="item.idEsF2500Infocontrato" [podeValidar]="podeValidar"
+                [salvarRascunho]="salvarRascunho"
+                [salvarEEnviar]="salvarEEnviar"
+                [finalizarEscritorio]="finalizarEscritorio"
+                [finalizarContador]="finalizarContador"
+                [finalizadoEscritorio]="finalizadoEscritorio"
+                [finalizadoContador]="finalizadoContador"
+                (aoFinalizarEscritorio)="setRetornoFinalizarEscritorio($event)"
+                (aoFinalizarContador)="setRetornoFinalizarContador($event)"
+                (aoValidar)="setRetornoValidacao($event)"
+                (aoSalvarRascunho)="setRetornoSalvarRascunho($event)"
+                (aoSalvarEEnviar)="setRetornoSalvarEEnviar($event)"
+                (aoAbrirPopup)="aoAbrirPopup.emit()"
+                [contrato]="item"
+                [tipoRegimePrevidenciarioList]="tipoRegimePrevidenciarioList"
+                [tipoContratoTempoParcialList]="tipoContratoTempoParcialList"
+                [motivoDesligamentoList]="motivoDesligamentoList" [repercussaoProcessoList]="repercussaoProcessoList"
+                [tipoRegimeTrabalhistaList]="tipoRegimeTrabalhistaList" [ideempregadorTpinsc]="ideempregadorTpinsc"
+                [temPermissaoEnviarEsocial]="temPermissaoEnviarEsocial"
+                [temPermissaoEsocialBlocoABCDEFHI]="temPermissaoEsocialBlocoABCDEFHI"
+                [temPermissaoEsocialBlocoGK]="temPermissaoEsocialBlocoGK"
+                [temPermissaoEsocialBlocoJDadosEstabelecimento]="temPermissaoEsocialBlocoJDadosEstabelecimento"
+                [temPermissaoEsocialBlocoJValores]="temPermissaoEsocialBlocoJValores"
+                [temPermissaoEsocialBlocoEPensaoAlimenticia]="temPermissaoEsocialBlocoEPensaoAlimenticia"
+                [dataSentencaHomolog]="dataSentenca"
+                [retornaStatusRascunho]="retornaStatusRascunho"></app-contrato-subgrupos-v1-2>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+
+        </ng-container>
+
+      </ng-container>
+    </sisjur-table>
+    <div class="mt-4">
+      <sisjur-paginator [MostrarQtdPorPagina]="false" [QtdFixaPorPagina]="10" [length]="total"
+        (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+  </div>
+</div>

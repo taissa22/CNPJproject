@@ -1,0 +1,97 @@
+<div class="seletorComBusca">
+  <div class="titulo_listaselecao">
+    <div class="titulo">Número de Contas Judiciais Adicionadas</div>
+  </div>
+
+  <div class="tabelaSeletorComBusca">
+    <table>
+      <thead>
+        <tr>
+          <!-- <th *ngFor="let titulo of titulos">
+          {{titulo.nome}}
+          </th> -->
+
+          <th>Número da Conta Judicial</th>
+
+
+          <th style="width: 30px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contaJudicialSelecionado of contaJudicialsSelecionadas">
+          <td>{{ contaJudicialSelecionado }}</td>
+
+          <td (click)="removeContaJudicial(contaJudicialSelecionado)"
+          style="text-align: center;">
+            <i class="fas fa-trash fa-2x roxo-padrao"></i>
+          </td>
+        </tr>
+        <!-- <tr>
+          <td>a</td>
+          <td>b</td>
+          <td>c</td>
+          <td>d</td>
+          <td>e</td>
+          <td style="text-align: center;">
+             <i class="fas fa-trash fa-2x roxo-padrao"></i></td>
+        </tr> -->
+      </tbody>
+    </table>
+
+    <p class="mensagem-tabela" *ngIf="contaJudicialsSelecionadas.length <= 0">
+
+      Nenhum item adicionado ainda
+
+    </p>
+  </div>
+
+  <div class="titulo_listaselecaoComBusca">
+    <div class="titulo">
+      Número de Contas Judiciais Encontradas
+    </div>
+    <form [formGroup]="buscaForm">
+      <div class="busca">
+        Busca:
+        <input
+          type="text"
+          maxlength="55"
+          class="mt-1"
+          formControlName="contaJudicialId"
+          numbersOnly
+        />
+      </div>
+    </form>
+  </div>
+  <div class="tabelaSeletorComBusca">
+    <table>
+      <thead>
+        <tr>
+          <th>Número da Conta Judicial</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="preAdicionarContaJudicial(contaJudicial)">
+          <td [class.preselecionado]="preSelecionado(contaJudicial)" *ngIf="contaJudicial">
+            {{ contaJudicial }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="mensagem-tabela" *ngIf="!contaJudicial">
+      {{ info }}
+    </p>
+  </div>
+  <div class="buttons-filtros">
+    <button
+      class="btn btn-primary btn-sm btn-sap"
+      (click)="adicionarContaJudicialSelecionados()"
+    >
+      Adicionar Selecionados
+    </button>
+    <!-- <button class="btn btn-primary btn-sm" (click)="adicionarTodosSaps()">
+      Adicionar Todos
+    </button> -->
+  </div>
+</div>

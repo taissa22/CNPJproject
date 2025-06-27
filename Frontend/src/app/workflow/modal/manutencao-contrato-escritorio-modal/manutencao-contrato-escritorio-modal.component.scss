@@ -1,0 +1,22 @@
+::ng-deep {
+    .contrato-escritorio-modal div .modal-content {
+        width: 58rem;
+    }
+}
+
+::ng-deep {
+    .escritorios .ng-select-container {
+        max-height: 108px !important;
+        overflow: auto !important;
+        height: 108px !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-content: flex-start !important;
+    }
+}
+
+::ng-deep {
+    ngb-tooltip-window .tooltip-inner {
+        min-width: 3rem !important;
+    }
+}

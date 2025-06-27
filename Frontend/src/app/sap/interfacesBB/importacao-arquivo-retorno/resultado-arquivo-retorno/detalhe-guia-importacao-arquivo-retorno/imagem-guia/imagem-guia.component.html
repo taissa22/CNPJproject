@@ -1,0 +1,231 @@
+<div class="borda-total" *ngIf="detalheGuia ">
+  <div class="header d-flex justify-content-between mt-5">
+    <img
+      src="assets/img/logo_bb_256.GIF">
+    <label class="title">DJO - Depósito Judicial Ouro</label>
+  </div>
+  <div class="justify-content-end d-flex ">
+    <div class="borda col-lx-1 col-sm-2 p-0 pb-2">
+      <label>N° da conta judicial</label> <br>
+    <label class="bold">{{detalheGuia.numeroContaJudicial}}</label>
+    </div>
+
+  </div>
+  <div class="row borda m-1 pb-2">
+    <div class="col-4 p-0">
+
+        <label>Número da Parcela</label> <br>
+        <label class="bold" >{{detalheGuia.numeroParcelaJudicial}}</label>
+
+    </div>
+    <div class="col-2 p-0">
+      <label>Data do depósito</label> <br>
+      <label class="bold">{{detalheGuia.dataRecebimentoFisico}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>Agência(pref/div)</label> <br>
+      <label class="bold" style="text-align: center;">{{detalheGuia.agencia}}</label>
+    </div>
+    <div class="col-4 p-0">
+      <label>Tipo de justiça</label> <br>
+      <label class="bold">{{detalheGuia.descricaoModalidadeBB}}</label>
+    </div>
+  </div>
+
+  <div class="row borda m-1 pb-2">
+    <div class="col-2 p-0">
+      <label>Data da guia</label> <br>
+      <label class="bold">{{detalheGuia.dataGuia}}</label>
+    </div>
+    <div class="col-2 p-0 ">
+      <label>N° da guia</label> <br>
+      <label class="bold">{{detalheGuia.numeroGuia}}</label>
+    </div>
+    <div class="col-4 p-0 ">
+      <label>N° do processo </label> <br>
+      <label class="bold">{{detalheGuia.numeroProcesso}}</label>
+    </div>
+
+    <div class="col-4 p-0">
+      <label>Tribunal</label> <br>
+      <label class="bold">{{detalheGuia.descricaoTribunalBB}}</label>
+    </div>
+  </div>
+
+  <div class="row borda m-1 pb-2">
+    <div class="col-4 p-0">
+      <label>Comarca</label> <br>
+      <label class="bold">{{detalheGuia.comarca}}</label>
+    </div>
+    <div class="col-4 p-0">
+      <label>Órgão/Vara</label> <br>
+      <label class="bold">{{detalheGuia.descricaoOrgaoBB}}</label>
+    </div>
+
+    <div class="col-2 p-0">
+      <label>Depositante</label> <br>
+      <label class="bold">{{detalheGuia.depositante}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>Valor do depósito - R$</label> <br>
+      <label class="bold">{{detalheGuia.valorLiquido}}</label>
+    </div>
+  </div>
+
+  <div class="row borda m-1 pb-2">
+    <div class="col-8 p-0">
+      <label>Nome do réu/impetrado</label> <br>
+      <label class="bold">{{detalheGuia.descricaoEmpresaGrupo}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>Tipo de pessoa</label> <br>
+      <label class="bold">{{detalheGuia.tipoReu}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>CPF/CNPJ</label> <br>
+      <label class="bold">{{detalheGuia.cpfCnpjReu | cpfCnpj}}</label>
+    </div>
+  </div>
+  <div class="row borda m-1 pb-2">
+    <div class="col-8 p-0">
+      <label>Nome do autor/impetrante</label> <br>
+      <label class="bold">{{detalheGuia.autor}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>Tipo de pessoa</label> <br>
+      <label class="bold">{{detalheGuia.tipoAutor}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>CPF/CNPJ</label> <br>
+      <label class="bold">{{detalheGuia.cpfCnpjAutor | cpfCnpj}}</label>
+    </div>
+  </div>
+  <div class="row borda m-1 pb-2">
+    <div class="col-12 p-0">
+      <label>Autênticação Eletrônica</label> <br>
+      <label class="bold">{{detalheGuia.autenticacaoEletronica}}</label>
+    </div>
+  </div>
+  <div class="row borda-tracilhada m-1 mt-4">
+    <div class="col-12 p-0">
+      <label>3° Via - Cartório</label>
+    </div>
+  </div>
+
+  <!-- Segunda parte -->
+<div class="marg">
+  <div class="header d-flex justify-content-between">
+    <img
+    src="assets/img/logo_bb_256.GIF">
+    <label class="title">DJO - Depósito Judicial Ouro</label>
+  </div>
+  <div class="justify-content-end d-flex ">
+    <div class="borda col-lx-1 col-sm-2 p-0 pb-2">
+      <label>N° da conta judicial</label> <br>
+    <label class="bold">{{detalheGuia.numeroContaJudicial}}</label>
+    </div>
+
+  </div>
+  <div class="row borda m-1 pb-2">
+    <div class="col-4 p-0">
+
+        <label>Número da Parcela</label> <br>
+        <label class="bold" >{{detalheGuia.numeroParcelaJudicial}}</label>
+
+    </div>
+    <div class="col-2 p-0">
+      <label>Data do depósito</label> <br>
+      <label class="bold">{{detalheGuia.dataRecebimentoFisico}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>Agência(pref/div)</label> <br>
+      <label class="bold" style="text-align: center;">{{detalheGuia.agencia}}</label>
+    </div>
+    <div class="col-4 p-0">
+      <label>Tipo de justiça</label> <br>
+      <label class="bold">{{detalheGuia.descricaoModalidadeBB}}</label>
+    </div>
+  </div>
+
+  <div class="row borda m-1 pb-2">
+    <div class="col-2 p-0">
+      <label>Data da guia</label> <br>
+      <label class="bold">{{detalheGuia.dataGuia}}</label>
+    </div>
+    <div class="col-2 p-0 ">
+      <label>N° da guia</label> <br>
+      <label class="bold">{{detalheGuia.numeroGuia}}</label>
+    </div>
+    <div class="col-4 p-0 ">
+      <label>N° do processo </label> <br>
+      <label class="bold">{{detalheGuia.numeroProcesso}}</label>
+    </div>
+
+    <div class="col-4 p-0">
+      <label>Tribunal</label> <br>
+      <label class="bold">{{detalheGuia.descricaoTribunalBB}}</label>
+    </div>
+  </div>
+
+  <div class="row borda m-1 pb-2">
+    <div class="col-4 p-0">
+      <label>Comarca</label> <br>
+      <label class="bold">{{detalheGuia.comarca}}</label>
+    </div>
+    <div class="col-4 p-0">
+      <label>Órgão/Vara</label> <br>
+      <label class="bold">{{detalheGuia.descricaoOrgaoBB}}</label>
+    </div>
+
+    <div class="col-2 p-0">
+      <label>Depositante</label> <br>
+      <label class="bold">{{detalheGuia.depositante}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>Valor do depósito - R$</label> <br>
+      <label class="bold">{{detalheGuia.valorLiquido}}</label>
+    </div>
+  </div>
+
+  <div class="row borda m-1 pb-2">
+    <div class="col-8 p-0">
+      <label>Nome do réu/impetrado</label> <br>
+      <label class="bold">{{detalheGuia.descricaoEmpresaGrupo}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>Tipo de pessoa</label> <br>
+      <label class="bold">{{detalheGuia.tipoReu}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>CPF/CNPJ</label> <br>
+      <label class="bold">{{detalheGuia.cpfCnpjReu | cpfCnpj}}</label>
+    </div>
+  </div>
+  <div class="row borda m-1 pb-2">
+    <div class="col-8 p-0">
+      <label>Nome do autor/impetrante</label> <br>
+      <label class="bold">{{detalheGuia.autor}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>Tipo de pessoa</label> <br>
+      <label class="bold">{{detalheGuia.tipoAutor}}</label>
+    </div>
+    <div class="col-2 p-0">
+      <label>CPF/CNPJ</label> <br>
+      <label class="bold">{{detalheGuia.cpfCnpjAutor |cpfCnpj}}</label>
+    </div>
+  </div>
+  <div class="row borda m-1 pb-2">
+    <div class="col-12 p-0">
+      <label>Autênticação Eletrônica</label> <br>
+      <label class="bold">{{detalheGuia.autenticacaoEletronica}}</label>
+    </div>
+  </div>
+  <div class="row borda-tracilhada m-1 mt-4">
+    <div class="col-12 p-0">
+      <label>4° Via - Depositante</label>
+    </div>
+  </div>
+
+</div>
+</div>

@@ -1,0 +1,91 @@
+<div bsModal #template="bs-modal" style="height: 1500;" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name1">
+  <div>
+    <div class="modal-content">
+      <div class="modal-header pb-1">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">{{titulo}}</h4>
+        <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pt-0">
+        <label class="pb-3 pt-2 subtitulo">
+          {{subTitulo}}
+        </label>
+        <h6 class="tituloColuna">
+          {{tituloAutor}}
+        </h6>
+        <div>
+          <div class="d-flex border">
+            <h6 class="col-4 tabela r">
+              Nome
+            </h6>
+            <h6 class="col-4 tabela l r">
+              CNPJ/CPF
+            </h6>
+            <h6 class="col-4 tabela l">
+              Carteira de Trabalho
+            </h6>
+          </div>
+          <div class=" barrinha" style="z-index: 1;">
+            <div *ngIf="partes.autores.length == 0 || !partes.autores" class="notFound">
+               Não há registros.
+              </div>
+            <ng-container *ngIf="partes.autores.length > 0">
+            <div *ngFor="let autor of partes.autores" class="d-flex">
+              <div class=" col-4 informacao"
+                [ngbTooltip]="autor['nomeParte'].length > 20? autor['nomeParte'] : '' " tooltipClass='teste'>
+                <div>{{ autor['nomeParte'] }}</div>
+              </div>
+
+              <div class=" col-4 informacao" style="padding-left: 20px;">
+                <div>{{ autor['cpf'] | cpfCnpj}}</div>
+              </div>
+              <div class=" col-4 informacao" style="padding-left: 26px;">
+                <div>{{ autor['carteiraTrabalhoParte'] | pis }}</div>
+              </div>
+            </div>
+          </ng-container>
+          </div>
+        </div>
+        <h6 class="pt-3 tituloColuna">
+          {{tituloReu}}
+        </h6>
+        <div >
+          <div class="d-flex border">
+            <h6 class="col-4 tabela r">
+              Nome
+            </h6>
+            <h6 class="col-4 tabela l r">
+              CNPJ/CPF
+            </h6>
+            <!-- <h6 class="col-4 tabela l ">
+              Carteira de Trabalho
+            </h6> -->
+          </div>
+          <div class=" barrinha" style="z-index: 1;">
+            <div *ngIf="partes.reus.length == 0 || !partes.reus"  class="notFound">
+              Não há registros.
+            </div>
+            <ng-container *ngIf="partes.reus.length > 0">
+            <div *ngFor="let reu of partes.reus" class="d-flex">
+              <div class=" col-4 informacao"
+                [ngbTooltip]="reu['nomeParte'].length > 20? reu['nomeParte'] : '' " tooltipClass='teste'>
+                <div>{{ reu['nomeParte'] }}</div>
+              </div>
+              <div class=" col-4 informacao" style="padding-left: 20px;">
+                <div>{{ reu['cgcParte'] | cpfCnpj}}</div>
+              </div>
+              <!-- <div class=" col-4 informacao" style="padding-left: 26px;">
+                <div>{{ reu['carteiraTrabalhoParte'] | pis }}</div>
+              </div> -->
+            </div>
+          </ng-container>
+          </div>
+        </div>
+      </div>
+      <div>
+      </div>
+    </div>
+  </div>
+</div>

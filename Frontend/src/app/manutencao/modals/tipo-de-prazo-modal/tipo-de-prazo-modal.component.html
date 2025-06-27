@@ -1,0 +1,129 @@
+<style>
+  .modal-header button {
+      color: gray;
+  }
+
+  .modal-title {
+      margin: auto;
+  }
+
+  .btn-icon {
+      font-size: 18px;
+  }
+
+</style>
+
+<div class="modal-header">
+  <span *ngIf="!tipoDePrazo" class="modal-title">Incluir Tipo de Prazo</span>
+  <span *ngIf="tipoDePrazo" class="modal-title">Alterar Tipo de Prazo</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+      <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0 ml-2" style="width: 30rem;">
+
+  <div>
+      <div class="d-flex flex-column bd-highlight" style="width: 80%;">
+          <label for="tipos-processo">
+              <b>Tipo de Processo:</b>
+          </label>
+
+          <combo-box [isWhite]="true" [opcoes]="tiposDeProcesso" [semResultado]="'Nenhum resultado encontrado'" [titulo]="'Selecione o tipo de processo'"
+              (selectionChange)="selecionarTipoProcesso($event)" [currentIndex] = "tipoProcessoFormControl.value" [isDisabled]="tipoProcessoFormControl.disabled">
+          </combo-box>
+      </div>
+
+      <div class="mt-2 d-flex flex-column bd-highlight" style="width: 80%;">
+          <label class="col-form-label-sm" for="descricao-input">
+              <b>Descrição:</b>
+          </label>
+          <div class="d-flex bd-highlight">
+              <div class=" w-100 bd-highlight">
+                  <input type="text" id="descricao-input" [formControl]="descricaoFormControl" class="form-control"
+                      [disableTooltip]="descricaoFormControl.valid || descricaoFormControl.untouched"
+                      [ngbTooltip]="descricaoError" maxlength="50" />
+                  <ng-template #descricaoError>
+                      <span *ngIf="descricaoFormControl.hasError('required')">
+                          Campo obrigatório
+                      </span>
+                      <span *ngIf="descricaoFormControl.hasError('maxlength')">
+                          O Limite é de 50 caracteres
+                      </span>
+                  </ng-template>
+              </div>
+              <div class="flex-shrink-1 bd-highlight ml-1" style="align-self: center;">
+                  <div class="ml-3 d-flex bd-highlight">
+                      <input class="" type="checkbox" [formControl]="ativoFormControl" style="align-self: center;">
+                      <label class="m-0 p-0 pl-1">Ativo</label>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="mt-2 d-flex flex-column bd-highlight">
+          <div class="d-flex bd-highlight">
+              <div class="flex-fill bd-highlight text-nowrap">
+                  <input [attr.disabled]= "!ativarPrazoServico? true : null" class="" type="checkbox" [formControl]="prazoServicoFormControl" style="align-self: center;">
+                  <label class="m-0 p-0 pl-1 text-nowrap" [ngStyle]="{'color': !ativarPrazoServico? '#DCDCDC' :'' }" >Prazo de Serviço</label>
+              </div>
+
+              <div class=" flex-fill bd-highlight text-nowrap">
+                  <input [attr.disabled]= "!ativarPrazoDocumento? true : null" class="" type="checkbox" [formControl]="prazoDocumentoFormControl " style="align-self: center;">
+                  <label class="m-0 p-0 pl-1 text-nowrap" [ngStyle]="{'color': !ativarPrazoDocumento? '#DCDCDC' :'' }">Prazo Referente a Documento</label>
+              </div>
+          </div>
+      </div>
+
+    </div>
+
+  <!-- <div class="d-flex align-items-center mt-2" *ngIf="tipoDePrazo">
+      <label class="fonte-padrao" for="calculoInicial-input"> Cálculo inicial: </label>
+      <input id="calculoInicial-input" type="checkbox" [formControl]="ehCalculoInicialFormControl" class="ml-2 ">
+  </div> -->
+
+  <div *ngIf="this.tipoProcessoFormControl.value == 1">
+    <label class="col-form-label-sm" for="tipoDePrazo">
+    <b>Tipo de Prazo Correspondente Cível Estratégico (DE x PARA Migração de Processo)</b>
+    </label>
+    <ng-select
+    [ngStyle]="{'fontSize': '11px'}"
+    id="tipoPrazo"
+    [items]="comboDeparaEstrategico"
+    [formControl]="comboDeparaEstrategicoFormControl"
+    bindLabel="nome"
+    bindValue="idEstrategico"
+    appearance="outline"
+    notFoundText="Nenhuma opção disponível"
+    [searchable]="true"
+    [clearable]="true"
+    clearAllText="Limpar"
+    [placeholder]="'Selecione uma opção'"></ng-select>
+</div>
+
+    <div *ngIf="this.tipoProcessoFormControl.value == 9">
+		<label class="col-form-label-sm" for="tipoDePrazo">
+		<b>Tipo de Prazo Correspondente Cível Consumidor (DE x PARA Migração de Processo)</b>
+		</label>
+		<ng-select
+		[ngStyle]="{'fontSize': '11px'}"
+		id="tipoPrazo"
+		[items]="comboDeparaConsumidor"
+		[formControl]="comboDeparaConsumidorFormControl"
+		bindLabel="nome"
+		bindValue="idConsumidor"
+		appearance="outline"
+		notFoundText="Nenhuma opção disponível"
+		[searchable]="true"
+		[clearable]="true"
+		clearAllText="Limpar"
+		[placeholder]="'Selecione uma opção'"></ng-select>
+    </div>
+
+</form>
+
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()">Confirmar</button>
+</div>

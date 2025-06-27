@@ -1,0 +1,42 @@
+html{
+  font-family: 'Roboto', sans-serif;
+}
+
+.container-filtros{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width: 65%;
+  max-width: 600px;
+  min-height: 350px;
+  margin: 0 auto;
+  margin-top: 40px;
+  position: relative;
+}
+
+.buttons-filtros{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 0 auto;
+  min-width: 65%;
+  max-width:800px;
+  margin-top: 5px;
+  height: 30px;
+  min-height: unset;
+}
+
+.container-filtros-header{
+  display: flex;
+  position:absolute;
+  top: -25px;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 20px;
+  line-height: 20px;
+  margin: 0 auto;
+  font-size: 14px;
+  width: 100%;
+  border-bottom: solid 1px rgb(180,180,180);
+  color: #6F62B2;
+}

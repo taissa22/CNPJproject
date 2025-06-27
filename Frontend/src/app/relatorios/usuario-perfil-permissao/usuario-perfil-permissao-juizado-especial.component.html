@@ -1,0 +1,70 @@
+<!-- topo da pagina -->
+<section class="container-breadcrumb">
+    <h3>Relatório Usuário x Perfil x Permissão</h3>
+    <p> Relatórios > Relatório Usuário x Perfil x Permissão </p>     
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" (click)="fazerAgendamento()">Agendar Relatório</button>
+    </div>
+</section>
+<br>
+
+<!-- Lista de agendados -->
+<section class="lower">
+    <div class="quad">
+        <div class="secao_titulo">RELATÓRIOS AGENDADOS / EXECUTADOS</div>
+        <div class="botoes_topodireita">
+            <button  (click)="atualizarLista()"><i class="pl-2 fas fa-redo"></i>ATUALIZAR LISTA</button>
+        </div>
+
+        <!--célula a ser replicada-->
+        <div class="celula_processos" *ngFor="let agendamento of listaAgendamentos index as i">
+            <div class="celula_esquerda">
+                <div *ngIf="agendamento.status == 0" class="descricao_processos">
+                    <span> Este relatório será executado em breve. Por favor, aguarde  </span> 
+                </div>
+                <div *ngIf="agendamento.status == 1" class="descricao_processos">
+                    <span> Este relatório está sendo processado </span> 
+                </div>
+                <div *ngIf="agendamento.status == 2" class="descricao_processos">
+                    <span> Relatório de Usuário </span> 
+                </div>
+                <div *ngIf="agendamento.status == 3" class="descricao_processos">
+                    <span> Erro no processamento </span> 
+                </div>
+
+                <div *ngIf="agendamento.status == 2" class="descricao_processos">
+                    <div class="statusFinalizado">
+                       Execução finalizada em {{agendamento.datFimExecucao | date:"dd/MM/yyyy HH:mm"}}
+                    </div>
+                </div>            
+                <div class="botoes_processos">
+                    <button *ngIf="agendamento.status == 0 || agendamento.status == 3 " (click)="deletarSolicitacoesAgendadas(agendamento.idAgendamento)">
+                        <i class="fa fa-trash"></i>Excluir Agendamento
+                    </button>
+                    <button *ngIf="agendamento.status == 2" (click)="download(agendamento.idAgendamento)">
+                        <i class="fa fa-download"></i>Baixar Relátorio
+                    </button>
+                </div>
+            </div>
+
+            <div class="celula_direita">
+                <i class="fas fa-info-circle mr-2"  
+                    *ngIf="agendamento.status == 3" 
+                    ngbTooltip="{{ agendamento.mensagemErro }}">
+                </i>
+                <div class="status_processo"
+                    [ngStyle]="{'background': retornaCorStatusAgendamento(agendamento.status)}">
+                    <div *ngIf="agendamento.status == 0"> Agendado </div>
+                    <div *ngIf="agendamento.status == 1"> Processando </div>
+                    <div *ngIf="agendamento.status == 2"> Finalizado </div>
+                    <div *ngIf="agendamento.status == 3"> Erro </div>
+                </div>
+                <div class="data_agendamento_processo">Solicitado por {{agendamento.nomeUsuario}} <br>
+                    em {{agendamento.datSolicitacao | date:"dd/MM/yyyy HH:mm"}}
+                </div>
+            </div>
+        </div>
+
+        <div class="vermais" *ngIf="this.vermais"><button (click)="verMais()">VER MAIS</button></div>
+    </div>
+</section>

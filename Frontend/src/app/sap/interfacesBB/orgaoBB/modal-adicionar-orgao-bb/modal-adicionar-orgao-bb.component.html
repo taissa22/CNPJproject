@@ -1,0 +1,70 @@
+<div bsModal #template="bs-modal" style="height: 1500;" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1"
+    [config]="{backdrop: 'static', animated: 'false'}">
+     <div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">{{titulo}} Órgão BB</h4>
+                <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body height-fix">
+                <form [formGroup]="registerForm">
+                    <div class="form-row">
+                        <div class="form-row mb-3">
+                            <div class="col-3">
+                                <label class="fonte-padrao-negrito" for="codigo">Órgão BB:</label> <br>
+                                <input id="codigo" type="search" class="width form-control" maxlength="9"
+                                    formControlName="codigo"
+                                    [ngClass]="{'is-invalid': registerForm.get('codigo').errors && registerForm.get('codigo').touched}"
+                                    [ngbTooltip]="validacaoTextos('codigo', 'Órgão BB', false)"
+                                    tooltipClass="erroTooltip" OnlyNumberNoStartWith0>
+                            </div>
+                            <div class="col-9">
+                                <label class="fonte-padrao-negrito" for="nome">Nome do Órgão BB:</label> <br>
+                                <input id="nome" type="search" class="width form-control" maxlength="100" formControlName="nome"
+                                    [ngClass]="{'is-invalid': registerForm.get('nome').errors && registerForm.get('nome').touched}"
+                                    [ngbTooltip]="validacaoTextos('nome', 'Nome do Órgão BB', false)" tooltipClass="erroTooltip"
+                                    oninput="this.value = this.value.toUpperCase()" StartWithSpace>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-row mb-3">
+                            <div class="col-12 mb-3">
+                                <!-- <label for="descricao">Descrição:</label> <br> -->
+                                <combo-box [label]="'Tribunal BB:'" (selectionChange)="setComboBox($event, 'codigoBBTribunal');"
+                                    [classe]="'fornecedor'" [opcoes]="tribunal"
+                                    [currentIndex]="getComboBox('codigoBBTribunal')" [titulo] = "'Selecione um Tribunal BB'">
+                                </combo-box>
+                            </div>
+                            <div class="col-12">
+                                <!-- <label for="descricao">Descrição:</label> <br> -->
+                                <combo-box [label]="'Comarca BB:'" (selectionChange)="setComboBox($event, 'codigoBBComarca');"
+                                    [classe]="'fornecedor'" [opcoes]="comarca"
+                                    [currentIndex]="getComboBox('codigoBBComarca')" [titulo] = "'Selecione uma Comarca BB'" >
+                                </combo-box>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="bsModalRef.hide()"><span
+                        class="texto-btn-oi cancelar">
+                        Cancelar </span></button>
+
+                <button type="button" class="btn btn-primary" (click)="salvarAlteracao()"
+                    [ngClass]="!registerForm.valid ? 'btn-primary-disabled' : '' "
+                    [disabled]="!registerForm.valid"><span class="texto-btn-oi confirmar"> Confirmar </span></button>
+            </div>
+        </div>
+        <div>
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-12">
+    <section class="painel p-3">
+      <div class="row">
+        <div class="col-6 pr-1">
+          <label for="pdf-comprovante" class="col-form-label-sm font-purple">Arquivos de Documentos a serem carregados:</label>
+          <input
+            type="file"
+            style="display: none"
+            (change)="aoAdicionarArquivo()"
+            #arquivo/>
+          <input
+            type="text"
+            id="pdf-comprovante"
+            class="form-control"
+            placeholder="Nenhum arquivo selecionado"
+            [formControl]="nomeArquivoFormControl"
+            readonly />
+        </div>
+        <div class="col-2 px-1" [ngStyle]="{ paddingTop: '1.6rem' }">
+          <button type="button" class="btn btn-primary" (click)="arquivo.click()">
+            <i class="fas fa-folder mr-1"></i> Selecionar
+          </button>
+        </div>
+        <div class="col-4 pl-1">
+          <p class="font-purple float-right btn-text-cursor" (click)="abrirModal()">
+            <i class="fas fa-question-circle pr-1"></i> Instruções para carga
+          </p>
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col-6 pr-1">
+        </div>
+      </div>
+      <div class="row pt-1">
+        <div class="col-6 pt-3">
+          <a [href]="downloadArquivoPadraoURL()" target="_blank" class="font-purple btn-link btn-text-cursor">
+            <small><i class="fas fa-download pr-1"></i> <span class="w700">BAIXAR ARQUIVOS PADRÃO</span></small>
+          </a>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-primary float-right" (click)="criar()" [disabled]="verificaArquivosSelecionados()">
+            Agendar
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

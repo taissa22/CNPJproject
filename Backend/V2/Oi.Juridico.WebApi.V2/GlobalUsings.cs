@@ -1,0 +1,16 @@
+﻿global using System.Text;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using System.Text.RegularExpressions;
+global using System.Diagnostics;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Logging;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System;
+global using System.Threading;
+global using System.Threading.Tasks;
+global using Oi.Juridico.Contextos.V2.Extensions;
+global using Oi.Juridico.AddOn.Extensions.Enum;

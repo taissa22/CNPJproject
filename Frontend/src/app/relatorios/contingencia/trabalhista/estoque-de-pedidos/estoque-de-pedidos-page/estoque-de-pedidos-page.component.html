@@ -1,0 +1,72 @@
+<style>
+  .borda-externa {
+    border: 1px solid rgba(145, 145, 145, 0.5);
+    width: 100%;
+    height: auto;
+  }
+
+  .checkbox {
+    vertical-align: text-top;
+  }
+</style>
+
+
+<app-container-pagina titulo="Relatório de Estoque de Pedidos e Diferença de Pagamentos"
+  [caminho]="breadcrumb"
+  texto="Selecione apenas uma empresa centralizadora para visualizar as empresas do grupo.">
+
+  <div class="fonte-padrao-negrito" style="color: #6f62b2; font-size: 14px;">Critérios para Pesquisa de Fechamento</div>
+  <hr class="mt-0">
+
+  <div class="borda-externa" style="margin-bottom: 12px;">
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="6%" style="padding: 12px;">
+      <div fxFlex>
+        <label class="col-form-label-sm" for="tipos-processo">
+          <b>Outliers:</b>
+        </label>
+        <ng-select appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="false" [clearable]="false"
+          [virtualScroll]="true" placeholder="- - -" [(ngModel)]="outlierAtual">
+          <ng-option *ngFor="let o of outliers" [value]="o">{{o.descricao}}</ng-option>
+        </ng-select>
+      </div>
+
+      <div fxFlex>
+        <label class="col-form-label-sm" for="tipos-processo">
+          <b>Data de Fechamento:</b>
+        </label>
+        <ng-select appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="false" [clearable]="false"
+          [virtualScroll]="true" placeholder="- - -" [(ngModel)]="fechamentoAtual">
+          <ng-option *ngFor="let f of fechamentos" [value]="f">
+            {{ f.dataFechamento | date:'dd/MM/yyyy' }} - {{ f.numeroDeMeses + ' meses - ' + f.tipoDeOutliers.descricao
+            }}
+          </ng-option>
+        </ng-select>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="6%" style="padding: 12px;">
+      <jur-selectable-panel fxFlex header="Empresas Centralizadoras" [items]="centralizadoras" multi-select="true"
+        checkbox="true" bindTo="nome" (selectionChange)="centralizadorasSelecionadas = $event"></jur-selectable-panel>
+
+      <jur-selectable-panel fxFlex header="Empresas do Grupo" [items]="empresasDoGrupo" multi-select="true"
+        checkbox="true" bindTo="nome" (selectionChange)="empresasDoGrupoSelecionadas = $event"></jur-selectable-panel>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" style="margin-bottom: 36px;"
+    *ngIf="outliers.length > 0; else noperms;">
+    <button class="btn btn-link" (click)="clear()">Limpar</button>
+    <button class="btn btn-primary" [disabled]="!fechamentoAtual || centralizadorasSelecionadas.length === 0"
+      (click)="paginaResult()">Pesquisar</button>
+  </div>
+
+  <ng-template #noperms>
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px" style="margin-bottom: 36px;">
+      <button class="btn btn-link" disabled>Limpar</button>
+      <button class="btn btn-primary" disabled
+        title="Se faz necessário ter ao menos uma permissão de seleção de outliers.">Pesquisar</button>
+    </div>
+  </ng-template>
+
+</app-container-pagina>

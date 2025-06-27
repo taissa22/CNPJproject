@@ -1,0 +1,116 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">{{ titulo }} Período</h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row">
+      <div class="col-sm-6 periodoRef">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Período Referência:</b>
+        </label>
+        <mes-ano-new
+          id="calctribPerref"
+          [control]="calctribPerrefFormControl"
+          [msgMaxDate]="
+            'Informe um Período de Referência menor ou igual ao Ano/Mês atual.'
+          "
+          [maxDate]="mesAtual"
+          [required]="true"
+        ></mes-ano-new>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Base de Cálculo da Contribuição Previdenciária:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          maxlength="21"
+          currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left' }"
+          [formControl]="calctribVrbccpmensalFormControl"
+          [disableTooltip]="
+          desabilitaTooltip(calctribVrbccpmensalFormControl)"
+          [ngbTooltip]="validacaoContrib"
+        />
+        <ng-template #validacaoContrib>
+          <span
+            *ngIf="
+              calctribVrbccpmensalFormControl.invalid &&
+              calctribVrbccpmensalFormControl.hasError('required')
+            "
+          >
+            Campo obrigatório.
+          </span>
+        </ng-template>
+      </div>
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Base Cálculo Inss 13º:</b>
+        </label>
+        <input
+          class="form-control"
+          type="text"
+          maxlength="21"
+          currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left' }"
+          [formControl]="calctribVrbccp13FormControl"
+          [disableTooltip]="
+          desabilitaTooltip(calctribVrbccp13FormControl)"
+          [ngbTooltip]="validacaoBaseCalculo"
+        />
+        <ng-template #validacaoBaseCalculo>
+          <span
+            *ngIf="
+              calctribVrbccp13FormControl.invalid &&
+              calctribVrbccp13FormControl.hasError('required')
+            "
+          >
+            Campo obrigatório.
+          </span>
+        </ng-template>
+      </div>
+
+    </div>
+
+  </form>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-link"
+      aria-label="Close"
+      (click)="close()"
+      *ngIf="temPermissaoBlocoCeDeE"
+    >
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="formGroup.invalid"
+      (click)="salvar()"
+      *ngIf="temPermissaoBlocoCeDeE"
+    >
+      Confirmar
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="formGroup.invalid"
+      (click)="close()"
+      *ngIf="!temPermissaoBlocoCeDeE"
+    >
+      Fechar
+    </button>
+  </div>
+</div>

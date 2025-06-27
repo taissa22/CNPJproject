@@ -1,0 +1,40 @@
+input[type='checkbox'] {
+  max-width: fit-content;
+}
+
+
+::ng-deep{
+  bs-datepicker-container,
+  bs-daterangepicker-container {
+    z-index: 20000!important;
+  }
+
+}
+
+
+
+::ng-deep .modal-contrato {
+  .modal-content {
+    min-width: 570px !important;
+    max-width: 571px !important;
+  }
+  .modal-sm {
+    min-width: 570px !important;
+    max-width: 571px !important;
+  }
+}
+
+.title {
+  padding: 0 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tooltip-info-ent{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.imput-matricula{    
+  width: 12rem;
+}

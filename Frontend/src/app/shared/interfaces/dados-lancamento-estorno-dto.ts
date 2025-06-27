@@ -1,0 +1,29 @@
+export interface DadosLancamentoEstornoDTO {
+    codigoProcesso: number;
+    codigoLancamento: number;
+    dataCriacaoPedido: string;
+    pedidoSAP: string;
+    dataRecebimentoFiscal: string;
+    dataPagamento: string;
+    dataLancamento: string;
+    valor: number;
+    statusPagamento: string;
+    codigoCategoriaPagamento: number;
+    categoriaPagamento: string;
+    formaPagamento: string;
+    fornecedor: string;
+    centro: string;
+    centroCusto: string;
+    dataLevantamento: string;
+    parteEfetivouLevantamento: string;
+    comentario: string;
+    quantidadeCredoresAssociados: number;
+    reduzirPagamentoCredor: boolean;
+    criarNovaParcelaFutura: boolean;
+    codigoTipoLancamento: number;
+    descricaoTipoLancamento: string;
+    valorCompromisso: number;
+    codigoCompromisso: number;
+  codigoParcela: number;
+  codigoTipoProcesso: any;
+}

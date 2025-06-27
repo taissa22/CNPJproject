@@ -1,0 +1,62 @@
+<div class="container-modal">
+    <div class="title">
+        <h4 class="roxo-padrao mb-0">{{titulo}} de Processos</h4>
+        <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
+        </div>
+    </div>
+
+    <form [formGroup]="formGroup" class="modal-body pt-0">
+        <div class="row mt-2">
+            <div class="col-sm-4">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Tipo de Processo:</b>
+                </label>
+                <ng-select class="form-control form-control-select" [items]="listaTipoProcessos" bindLabel="descricao" bindValue="id" placeholder="Selecione um item" [formControl]="infoprocretTpprocretFormControl" [disableTooltip]="
+                 desabilitaTooltip(infoprocretTpprocretFormControl)" [ngbTooltip]="validacaoTpProcesso" [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE">
+                </ng-select>
+                <ng-template #validacaoTpProcesso>
+                    <span *ngIf="
+                        infoprocretTpprocretFormControl.invalid &&
+                        infoprocretTpprocretFormControl.hasError('required')
+                      ">
+                      Campo obrigatório.
+                    </span>
+                </ng-template>
+            </div>
+            <div class="col-sm-4">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Número do Processo:</b>
+                </label>
+                <input type="text" name="nrProcesso" id="nrProcesso" class="form-control input-number" [formControl]="infoprocretNrprocretFormControl" maxlength="21" [disableTooltip]="
+                 desabilitaTooltip(infoprocretNrprocretFormControl)" [ngbTooltip]="validacaoNrProcesso" [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE" />
+                <ng-template #validacaoNrProcesso>
+                    <span *ngIf="
+                        infoprocretNrprocretFormControl.invalid &&
+                        infoprocretNrprocretFormControl.hasError('required')
+                      ">
+                      Campo obrigatório.
+                    </span>
+                </ng-template>
+            </div>
+            <div class="col-sm-4">
+                <label class="col-form-label-sm pb-0 mb-1">
+                    <b>Código do Indicativo da Suspensão:</b>
+                </label>
+                <input type="text" name="nrProcesso" id="nrProcesso" class="form-control input-number" [formControl]="infoprocretCodsuspFormControl" numbersOnly (input)="removerNaoNumericosCodProcesso()" maxlength="14" />
+            </div>
+        </div>
+
+        <div class="modal-footer pr-0">
+            <button type="button" class="btn btn-link" aria-label="Close" (click)="close()" *ngIf="temPermissaoBlocoCeDeE">
+                Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()" *ngIf="temPermissaoBlocoCeDeE">
+                Confirmar
+            </button>
+            <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="close()" *ngIf="!temPermissaoBlocoCeDeE">
+                Fechar
+            </button>
+        </div>
+    </form>
+</div>

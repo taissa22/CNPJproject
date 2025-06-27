@@ -1,0 +1,69 @@
+<app-manutencao-generica [exibirAdicionar]="true" (aoClicarNovoRegistro)="Novo()" titulo="Perfis"
+  breadcrump="{{breadcrump}}">
+  <br>
+    <i class="fas fa-plus-circle roxo-padrao fa-lg ml-2 novo" (click)="Novo()"></i>
+  <div class="row" style="margin-left: auto;margin-bottom: 5px;">
+    <div class="d-flex pr-1 " (keydown.enter)="obterModulos()">
+      <div style="width: 25rem;">
+        <label for="descricao"> <b>Descrição:</b> </label>
+        <input type="search" class="form-control mr-2" [formControl]="filtro"
+          placeholder="Entre com o texto da descrição ou parte dele" maxlength="100">
+      </div>
+
+      <div style="width: 18rem; margin-left: 20px;">
+        <label for="descricao"> <b>Módulo:</b> </label>
+        <ng-select [items]="modulos" bindLabel="name" placeholder="Selecione o módulo" [clearable]="false" [(ngModel)]="moduloSelecionado">
+        </ng-select>
+      </div>
+
+      <div style="width: 18rem; margin-left: 20px;">
+        <label for="descricao"> <b>Status:</b> </label>
+        <ng-select [items]="status" bindLabel="name" placeholder="Selecione o módulo" [clearable]="false" [(ngModel)]="statusSelecionado">
+        </ng-select>
+      </div>
+
+      <div class="ml-4" [ngStyle]="{ marginTop: '0.3rem' }" style="align-self: flex-end">
+        <button type="button" class="btn btn-primary" (click)="obterModulos()">Buscar</button>
+      </div>
+
+      <div style="align-self: flex-end; margin-left: 186px;">
+        <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()">
+          <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+          Exportar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="padding-top: 5px;">
+    <sisjur-table (sort)="obterModulos()">
+      <ng-container>
+        <sisjur-table-header>
+          <sisjur-table-header-cell sort="nome" width="20">Nome</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="descricao" width="35">Descrição</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="gestor" width="25">Gestor Default</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="modulo" width="7">Módulo</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="status" width="6">Status</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="7"></sisjur-table-header-cell>
+        </sisjur-table-header>
+        <sisjur-table-row *ngFor="let item of perfil;let i = index">
+          <sisjur-table-row-cell>{{item?.nome}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item?.descricao}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item?.gestorDefault}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item?.modulo}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item?.status}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <span></span>
+            <button type="button" class="btn btn-icon" (click)="alterar(item.nome)"> <i
+                [ngClass]="item?.modulo == 'Web' ? 'fa fa-edit' : 'fa fa-search'"></i></button>
+            <button type="button" class="btn btn-icon" (click)="excluir(item.nome)"> <i class="fa fa-trash"></i></button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </sisjur-table>
+    <div class="mt-2" style="padding-top: 5px;">
+      <sisjur-paginator [length]="totalDeRegistros" (page)="obterModulos()"></sisjur-paginator>
+    </div>
+  </div>
+</app-manutencao-generica>

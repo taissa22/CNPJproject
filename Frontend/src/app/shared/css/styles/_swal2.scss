@@ -1,0 +1,12 @@
+ @import '../../../node_modules/sweetalert2/src/variables';
+ $swal-success: #786bb9 !default;
+ @import '../../../node_modules/sweetalert2/src/sweetalert2';
+
+.swal2-styled.swal2-confirm, .swal2-styled.swal2-cancel { font-size: 0.8333333rem !important;}
+.swal2-styled.swal2-confirm { background-color: #786bb9!important; }
+
+div.swal2-container h2.swal2-title { font-size: 1.2rem!important; }
+
+.swal2-icon.swal2-success .swal2-success-ring { border: .25em solid #786bb9!important; }
+.swal2-icon.swal2-success,
+.swal2-icon.swal2-success [class^="swal2-success-line"] { color: #786bb9!important; background-color: #786bb9!important; border-color: #786bb9!important }

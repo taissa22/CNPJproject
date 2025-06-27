@@ -1,0 +1,154 @@
+<header fxLayout="row" fxLayoutAlign="start center">
+    <span fxFlex>
+        <h3 class="m-0" style="color: #786bb9; font-size: 20px; font-weight: 500;">Contratos</h3>
+        <p class="m-0" style="font-size: 12px; color: #555555">{{ breadcrumb }}</p>
+    </span>
+    <button class="btn btn-primary" (click)="incluir()">
+        <span>Incluir Contrato</span>
+    </button>
+</header>
+
+<main fxLayout="column">
+    <div class="row ml-0" (keydown.enter)="buscarTabela()">
+        <div style="width: 180px">
+            <label for="tipoContrato"> <b>Tipo Contrato:</b> </label>
+            <ng-select [ngStyle]="{ fontSize: '11px' }" [items]="tipoContratosList" bindLabel="descricao" 
+                bindValue="codigo" [formControl]="tipoContratoFormControl" appearance="outline" 
+                notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="true"
+                (change)="onClearInputPesquisar()"
+                [placeholder]="'Selecione um Tipo Contrato'"></ng-select>
+        </div>
+
+        <div style="margin-left: 1rem; width: 35rem">
+            <label for="buscarNomContrato"> <b>Nome Contrato:</b> </label>
+            <input type="search" (search)="onClearInputPesquisar()" class="form-control mr-2" [formControl]="buscarNomContratoFormControl" placeholder="Entre com o texto ou parte dele" maxlength="50" />
+        </div>
+
+        <div style="margin-top: 21px; margin-left: 10px">
+            <button type="button" class="btn btn-primary" (click)="buscarTabela()">
+                Buscar
+            </button>
+        </div>
+    </div>
+
+    <div class="mt-4 row m-0">
+        <div style="align-self: flex-end">
+            <b class="roxo-padrao" style="font-size: 15px">Lista de Contratos</b>
+        </div>
+
+        <div class="ml-auto" style="text-align: right">
+            <button class="btn btn-roxo pr-1 pb-0" (click)="exportarLogContrato()">
+                <i class="fas fa-download pr-1" style="font-size: 15px; cursor: pointer !important; font: roboto"></i>
+                Exportar Log
+            </button>
+
+            <button class="btn btn-roxo pr-1 pb-0" (click)="exportarListaContrato()">
+                <i class="fas fa-download pr-1" style="font-size: 15px; cursor: pointer !important; font: roboto"></i>
+                Exportar Lista
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <sisjur-table (sort)="buscarTabela()">
+            <ng-container>
+                <sisjur-table-header>
+                    <sisjur-table-header-cell sort="Nome Contrato" width="58">Nome Contrato</sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="Numero Contrato" width="20">Número Contrato</sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="Tipo Contrato" width="14">Tipo Contrato</sisjur-table-header-cell>
+                    <sisjur-table-header-cell sort="Status" width="11">Status</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                </sisjur-table-header>
+
+                <sisjur-table-row *ngFor="let item of contratos">
+
+                    <sisjur-table-row-cell>
+                        <span [title]="item.nomContrato" class="text_ellipsis">{{ item.nomContrato }}</span>
+                    </sisjur-table-row-cell>
+
+                    <sisjur-table-row-cell>
+                        <span [title]="titleNumeroContrato(item.numContratoJecVc, item.numContratoProcon)" class="text_ellipsis">{{ item.numContratoJecVc }} <span *ngIf="item.numContratoJecVc && item.numContratoProcon"> | </span> {{ item.numContratoProcon
+                        }} </span>
+                    </sisjur-table-row-cell>
+
+                    <sisjur-table-row-cell>
+                        <span [title]="item.tipoContratoEscritorio" class="text_ellipsis">{{ item.tipoContratoEscritorio
+                            }}</span>
+                    </sisjur-table-row-cell>
+
+                    <sisjur-table-row-cell>
+                        <span [title]="item.indAtivo" class="text_ellipsis">{{ item.indAtivo }}</span>
+                    </sisjur-table-row-cell>
+
+                    <sisjur-table-row-cell>
+                        <button type="button" class="btn btn-icon" [ngbTooltip]="detalhes"> <i class="fa fa-info-circle"></i>
+                          <ng-template #detalhes >
+                            <table style="display:flex; justify-content: space-between;">
+                              <tr class="col" style="width: 100%; justify-content: space-between; padding-left: 1px;">
+                                <td style="text-align: left; display:flex; justify-content: space-between;">
+                                    <div style="width: 46%">
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Número SGPAG: </b> <span style="width: 40%; white-space: nowrap;"> {{item.numSgpagJecVc}} <span *ngIf="item.numSgpagProcon && item.numSgpagJecVc"> | </span>{{ item.numSgpagProcon }} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>CNPJ: </b> <span style="width: 40%; white-space: nowrap;"> {{item.cnpj | cpfCnpj}} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Vigência: </b> <span style="width: 40%; white-space: nowrap;"> {{item.datInicioVigencia | date : 'dd/MM/yyyy' }} a {{item.datFimVigencia | date : 'dd/MM/yyyy' }} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Atuação: </b> <span style="width: 40%; white-space: nowrap;"> {{item.contratoAtuacao}} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Diretoria: </b> <span style="width: 40%; white-space: nowrap;"> {{item.contratoDiretoria}} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Considerar no Cálculo VEP: </b> <span style="width: 40%; white-space: nowrap;"> {{item.indConsideraCalculoVep}} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Meses Permanência: </b> <span style="width: 40%; white-space: nowrap;"> {{item.numMesesPermanencia}} </span></label></tr>
+                                    </div>
+                                    <div style="width: 43%">
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Preço Unitário JEC/VC: </b> <span style="width: 20%; white-space: nowrap;"> {{item.valUnitarioJecCc | currency: "BRL":"R$ ":"1.2-2":"pt"}} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Preço Unitário PROCON: </b> <span style="width: 20%; white-space: nowrap;"> {{item.valUnitarioProcon | currency: "BRL":"R$ ":"1.2-2":"pt"}} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Preço Unitário Audiências Capital: </b> <span style="width: 20%; white-space: nowrap;"> {{item.valUnitAudCapital | currency: "BRL":"R$ ":"1.2-2":"pt"}} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Preço Unitário Audiências Interior: </b> <span style="width: 20%; white-space: nowrap;"> {{item.valUnitAudInterior | currency: "BRL":"R$ ":"1.2-2":"pt"}} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>VEP: </b> <span style="width: 20%; white-space: nowrap;"> {{item.valVep | currency: "BRL":"R$ ":"1.2-2":"pt"}} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>Permanência Legado: </b> <span style="width: 20%; white-space: nowrap;"> {{item.indPermanenciaLegado}} </span></label></tr>
+                                        <tr class="d-flex"><label class="d-flex" style="width: 100%; justify-content: space-between;"><b>% Desconto Permanência: </b> <span style="width: 20%; white-space: nowrap;"> {{item.valDescontoPermanencia}} </span></label></tr>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="display:flex; justify-content: space-between;">
+                            <tr class="col" style="width: 100%; justify-content: space-between; padding-left: 1px;">
+                                <td style="text-align: left; display:flex; justify-content: space-between;">
+                                    <div style="width: 50%">
+                                        <tr><label><b>Escritórios: </b></label></tr>
+                                        <div *ngFor="let escritorio of listarEscritorio(item.escritorios)">
+                                            <tr><label>{{escritorio}} </label></tr>
+                                        </div>
+                                    </div>
+                                    <div style="width: 43%">
+                                        <tr><label><b>Estados: </b></label></tr>
+                                        <tr><label>{{item.uf}} </label></tr>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                            
+                          </ng-template>
+                        </button>
+
+
+                    </sisjur-table-row-cell>
+
+                    <sisjur-table-row-cell>
+                        <button type="button" class="btn btn-icon" (click)="alterar(item.codContratoEscritorio)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </sisjur-table-row-cell>
+                    <sisjur-table-row-cell>
+                        <button type="button" class="btn btn-icon" (click)="excluir(item.codContratoEscritorio)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </sisjur-table-row-cell>
+
+                </sisjur-table-row>
+            </ng-container>
+        </sisjur-table>
+        <div class="mt-2">
+            <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>
+        </div>
+    </div>
+</main>

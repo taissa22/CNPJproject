@@ -1,0 +1,105 @@
+
+
+<div bsModal #template="bs-modal" style="height: 1500;" tabindex="-1" role="dialog"
+aria-labelledby="dialog-sizes-name1" [config]="{backdrop: 'static'}">
+<div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">
+        Alteração de Fornecedor da Contingência SAP</h4>
+      <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body height-fix">
+      <form [formGroup]="form">
+        <div class="form-row mb-2">
+          <div class="col-11" style="padding-right: 1.5rem !important">
+            <label class="fonte-padrao-negrito" for="nome">Nome do Fornecedor:</label> <br>
+            <input id="nome" type="search" class="width form-control" maxlength="100"
+            formControlName="nome" >
+          </div>
+        </div>
+        <div class="form-row mb-2">
+          <div class="col-6">
+            <label class="fonte-padrao-negrito" for="codigo">Código Fornecedor SAP:</label> <br>
+            <input id="codigo" type="search" class="width form-control" maxlength="10"
+            formControlName="codigo"
+           >
+          </div>
+          <div class="col-4">
+            <label class="fonte-padrao-negrito" for="cnpj">CNPJ:</label> <br>
+            <input id="cnpj" type="search" class="width form-control"  maxlength="14"
+            [value]="form.get('cnpj').value | cpfCnpj"
+             formControlName="cnpj"
+            >
+          </div>
+        </div>
+        <div class="form-row mb-2 d-flex align-items-end">
+          <div class="col-6">
+            <label class="fonte-padrao-negrito" for="valorCartaFinanca">Valor da Carta da Fiança:</label> <br>
+            <input id="valorCartaFinanca" type="search" class="width form-control" maxlength="17"
+            formControlName="valorCartaFianca" currencyMask
+            [options]="{ prefix: '', thousands: '.', decimal: ',' }"
+           >
+          </div>
+          <div class="col-4">
+            <label class="fonte-padrao-negrito" for="orgCompras">Data de Vencimento
+              <br> da Carta da Fiança:</label> <br>
+              <div class="form-inline prlnk-datepicker">
+                <div class="form-group">
+            <div class="input-group">
+              <input class="form-control" type="search" [ngClass]="
+              {
+              'erro': form.get('dataVencimentoCartaFianca').errors?.invalid
+                        }" maxlength='10' rInputMask="99/99/9999" placeholder="dd/mm/aaaa" name="dp3" ngbDatepicker
+                #f="ngbDatepicker" [navigation]="'arrows'" firstDayOfWeek="7" showWeekNumbers="true"
+                formControlName="dataVencimentoCartaFianca" (blur)="validarData(form.get('dataVencimentoCartaFianca'))"
+                (focusout)="validarData(form.get('dataVencimentoCartaFianca'))"             >
+              <span *ngIf="form.get('dataVencimentoCartaFianca').errors?.invalid" class="guarda-erro" title="Data Inválida"></span>
+              <div class="input-group-append">
+                <button class="btn calendar"
+                  (click)="f.toggle();" type="button" tabindex="-1"><i
+                    class="fa-solid fa-calendar-days fa-lg"></i></button>
+            </div>
+            </div>
+            </div>
+          </div>
+          </div>
+       </div>
+        <div class="form-row">
+        <div class=" fonte-padrao-negrito col-8">
+          <label >Status do Fornecedor:</label>
+          <br>
+          <div class="d-flex mt-1">
+            <div class="d-flex align-items-center mr-2">
+              <input type="radio" id="ativo" class="mr-1" value="1" formControlName="statusFornecedor">
+              <label for="ativo" class="p-0 m-0">Ativo</label>
+            </div>
+            <div class="d-flex align-items-center">
+              <input type="radio" id="inativo" class="mr-1" value="2" formControlName="statusFornecedor">
+              <label for="inativo" class="p-0 m-0">Inativo</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="bsModalRef.hide()"><span class="texto-btn-oi cancelar">
+          Cancelar </span></button>
+
+      <button type="button" class="btn btn-primary" (click)="salvarAlteracao()" [ngClass]="!form.valid ? 'btn-primary-disabled' : '' "
+      [disabled]="!form.valid" ><span
+          class="texto-btn-oi confirmar"> Confirmar </span></button>
+    </div>
+  </div>
+  <div>
+  </div>
+
+
+</div>
+</div>

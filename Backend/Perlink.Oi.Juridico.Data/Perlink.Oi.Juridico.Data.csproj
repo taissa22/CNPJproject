@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RuntimeFrameworkVersion>2.2.0</RuntimeFrameworkVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ControleDeAcesso\Repository\Log\**" />
+    <EmbeddedResource Remove="ControleDeAcesso\Repository\Log\**" />
+    <None Remove="ControleDeAcesso\Repository\Log\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Perlink.Oi.Juridico.Domain\Perlink.Oi.Juridico.Domain.csproj" />
+    <ProjectReference Include="..\Perlink.Oi.Juridico.Infra\Perlink.Oi.Juridico.Infra.csproj" />   
+    <ProjectReference Include="..\Shared\Shared.Data\Shared.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApuracaoOutliers\Repository\" />
+    <Folder Include="Fechamento\Repository\" />
+  </ItemGroup>
+
+</Project>

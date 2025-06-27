@@ -1,0 +1,124 @@
+<style>
+  .title span {
+    display: inline-block;
+    width: calc(100% - 40px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .title>div {
+    height: 36px;
+    width: 32px;
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  .competencia>span {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    display: block;
+    width: 93%;
+  }
+
+  .competencia:first-of-type>span {
+    border-top: none;
+  }
+
+  .delete {
+    height: 36px;
+    width: 32px;
+    text-align: center;
+    line-height: 36px;
+  }
+</style>
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">{{ titulo }}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="cancelar()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body pt-0" [formGroup]="formulario">
+  <div class="row">
+    <div class="col-md-6 pr-1">
+      <label class="col-form-label-sm" for="orgao">
+        <b>Nome:</b>
+      </label>
+      <input type="text" id="orgao" [formControl]="nomeFormControl" class="form-control input-name"
+        [disableTooltip]="desabilitaTooltip(nomeFormControl)" [ngbTooltip]="validacaoOrgao" maxlength="400" />
+      <ng-template #validacaoOrgao>
+        <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.required">
+          Campo obrigatório
+        </span>
+        <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.maxlength">
+          O nome do órgão não pode ter mais de 400 caracteres
+        </span>
+      </ng-template>
+    </div>
+    <div class="col-md-3 px-1">
+      <label class="col-form-label-sm" for="telefone">
+        <b>Telefone:</b>
+      </label>
+      <input type="text" id="telefone" [textMask]="{ mask: telefoneMascara, guide: false, showMask: false }"
+        [formControl]="telefoneFormControl" class="form-control"
+        [disableTooltip]="desabilitaTooltip(telefoneFormControl)" [ngbTooltip]="validacaoTelefone" />
+      <ng-template #validacaoTelefone>
+        <span *ngIf="telefoneFormControl.invalid && telefoneFormControl.errors.pattern">
+          O telefone informado não corresponde a um número válido
+        </span>
+      </ng-template>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  <div class="row pt-3 competencia">
+    <div class="col-md-12 title">
+      <span class="col-form-label-sm">
+        <b style="color: #554d80;">{{ nomeCompetencia }}s do Órgão</b>
+      </span>
+      <div class="float-right" (click)="criarCompetencia()">
+        <a href="javascript:;">
+          <i class="fas fa-plus-circle fa-2x"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-2">
+    <div formArrayName="competencias" class="col-md-12 overflow-track" style="max-height: 300px; overflow: auto;">
+      <div *ngFor="let competencia of competenciaFormArray.controls; let i = index">
+        <span></span>
+        <div class="row" [formGroupName]="i">
+          <div class="col-md-6 pr-2">
+            <div class="row">
+              <div class="col-12 pr-1">
+                <label class="col-form-label-sm" for="nome">
+                  <b>Nome:</b>
+                </label>
+                <input id="nome" type="text" class="form-control" [formControl]="competencia.get('nome')"
+                  [disableTooltip]="desabilitaTooltip(competencia.get('nome'))" [ngbTooltip]="validacaoCompetencia"
+                  maxlength="40" />
+                <ng-template #validacaoCompetencia>
+                  <span *ngIf="competencia.get('nome').invalid && competencia.get('nome').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span *ngIf="competencia.get('nome').invalid && competencia.get('nome').errors.maxlength">
+                    O nome da {{ nomeCompetencia.toLowerCase() }} não pode ter mais de 40 caracteres
+                  </span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1 px-2 m-0">
+            <div class="row pt-4 m-0">
+              <div class="col-12 pl-3" class="delete" (click)="removerCompetencia(i)">
+                <a href="javascript:;">
+                  <i class="fas fa-trash fa-lg pt-3"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="cancelar()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="confirmar()">Confirmar</button>
+</div>

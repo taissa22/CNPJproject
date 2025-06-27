@@ -1,0 +1,65 @@
+.warning {
+  color: #ddf20b;
+  font-size: 15px;
+  vertical-align: middle;
+
+}
+
+
+.textoWarning {
+    color: #554d80;
+    font-family: Roboto;
+    width: 75px;
+    display: inline-block;
+    text-indent: 5px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.scroll {
+  // min-height: 15rem;
+  max-height: 30rem;
+  //height: 30rem;
+  overflow: auto;
+}
+
+.alinharDireita{
+    //display: block;
+    float: right;
+
+
+}
+
+.titulo {
+  opacity: 0.85;
+  font-family: Roboto;
+
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+  text-align: left;
+  color: #554d80;
+  font-weight: bold;
+}
+h1.titulo{
+  font-size: 17px;
+}
+
+.setaColor {
+  color: #554d80;
+}
+
+.conteudo{
+  width: 100%;
+
+}
+.contentConteudo{
+  padding: 0 0.7em;
+}

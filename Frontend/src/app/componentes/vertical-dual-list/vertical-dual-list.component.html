@@ -1,0 +1,72 @@
+<div class="seletorComBusca">
+    <div class="titulo_listaselecao">
+        <div class="titulo">{{ nomeContexto}} Adicionad{{artigo}}s</div>
+    </div>
+    <div class="tabelaSeletorComBusca">
+        <table>
+            <thead>
+                <tr>
+                    <th *ngFor="let header of headerAdicionados">{{ header }}</th>
+                    <th  style="text-align: center;
+                    width: 30px;" >
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let item of itens; index as i">
+                    <tr *ngIf="item['adicionado']">
+                        <td *ngFor="let header of headerAdicionados">{{ item[header] }}</td>
+                        <td (click)="removeItem(i)" style="text-align: center;">
+                            <i class="fas fa-trash fa-2x roxo-padrao"></i>
+                        </td>
+
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <p class="mensagem-tabela" *ngIf="hasEmptyAdicionados()">
+            Nenhum item adicionado ainda
+        </p>
+    </div>
+
+    <div class="titulo_listaselecaoComBusca">
+        <div class="titulo">
+            {{ nomeContexto }} Encontrad{{artigo}}s
+        </div>
+        <ng-content select="[busca]"></ng-content>
+    </div>
+    <div class="tabelaSeletorComBusca">
+        <table>
+            <thead>
+                <tr>
+                    <th *ngFor="let header of headers">{{ header }}</th>
+                    <th  style="text-align: center;
+                    width: 30px;" >
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let item of itens; index as i">
+                    <tr *ngIf="!item['adicionado']" (click)="selecionaItem(i)">
+
+                        <td [class.preselecionado]="item['selecionado']" *ngFor="let header of headers">{{ item[header] }}</td>
+                        <td [class.preselecionado]="item['selecionado']" style="text-align: center;
+                        width: 30px;"></td>
+
+                    </tr>
+
+                </ng-container>
+            </tbody>
+        </table>
+        <p class="mensagem-tabela" *ngIf="hasEmptyNaoAdicionados()">
+            Nenhum item encontrado.
+        </p>
+    </div>
+    <div class="buttons-filtros">
+        <button class="btn btn-primary btn-sm btn-sap" (click)="adicionaItens()" [disabled]="hasEmptyNaoAdicionados()">
+            Adicionar Selecionados
+        </button>
+    </div>
+</div>

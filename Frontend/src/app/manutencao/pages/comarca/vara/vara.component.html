@@ -1,0 +1,67 @@
+<div class="row my-4" (keydown.enter)="buscar()">
+  <div class="col-auto pr-2">
+    <span>Varas da Comarca Selecionada</span>
+  </div>
+  <div class="col d-flex">
+    <input type="search" class="form-control mt-1 mr-2" 
+    (search)="onClearInputPesquisar()" placeholder="Digite o tipo ou parte do texto" [formControl]="textoPesquisadoFormControl">
+    <button type="button" class="btn btn-primary my-1" (click)="buscar()" >Buscar</button>
+  </div>
+  <div class="col-auto">
+    <button class="roxo-padrao adicionar-vara" (click)="incluirVara()">
+      <i class="fas fa-plus-circle fa-lg "></i>
+      Incluir Vara
+    </button>
+  </div>
+</div>
+
+<jur-table *ngIf="varas.length > 0" sortDirection="asc" sortColumn="nome" [dataSource]="varas" (sort)="buscar()">
+  <jur-column-template title="{{ row.varaId }}" flex="8" headerName="Vara" sortColumn="Id" *jurRowData="let row">
+    {{ row.varaId }} °
+  </jur-column-template>
+
+  <jur-column-template title="{{ row.tipoVara?.nome  }}" flex="16" headerName="Tipo" sortColumn="Tipo"
+    *jurRowData="let row"> {{ row.tipoVara?.nome }}
+  </jur-column-template>
+
+  <jur-column-template title="{{ row.endereco }}" flex="24" headerName="Endereço" sortColumn="Endereco"
+    *jurRowData="let row">
+    <span *ngIf="row.endereco" style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;"
+      title="{{row.endereco}}" fxFlex>{{row.endereco }} </span>
+    <span *ngIf="!row.endereco"
+      style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;text-align: center;">-</span>
+  </jur-column-template>
+
+  <!-- <jur-column-template title="{{row?.profissional?.nome}}" flex="20" headerName="Escritório Juizado" sortColumn="escritorioJuizado" *jurRowData="let row">
+    <span> {{row?.profissional?.nome}}</span>
+    <span *ngIf="!row.profissional && !row.profissional?.nome">-</span>
+  </jur-column-template> -->
+
+  <jur-column-template title="{{ row?.orgaoBB?.TribunalBB?.nome}}" flex="22" headerName="Tribunal de Justiça BB"
+    sortColumn="tribunalDeJustica" *jurRowData="let row">
+    <span> {{row?.orgaoBB?.tribunalBB?.nome}}</span>
+    <span *ngIf="!row.orgaoBB && !row.orgaoBB?.TribunalBB && !row.orgaoBB?.TribunalBB?.nome">-</span>
+  </jur-column-template>
+
+  <jur-column-template title="{{ row?.orgaoBB?.nome }}" flex="12" headerName="Vara BB" sortColumn="varaBB"
+    *jurRowData="let row">
+    <span> {{row?.orgaoBB?.nome}} </span>
+    <span *ngIf="!row.orgaoBB && !row.orgaoBB?.nome">-</span>
+  </jur-column-template>
+
+  <jur-column-template *jurRowData="let row">
+    <div fxLayout="row" fxLayoutAlign="end center" style="font-size: 12px;">
+      <button type="button" class="btn btn-icon" (click)="alterarVara(row)">
+        <i class="fa fa-edit fa-sm"></i>
+      </button>
+      <button type="button" class="btn btn-icon" (click)="excluirVara(row)">
+        <i class="fa fa-trash fa-sm"></i>
+      </button>
+    </div>
+  </jur-column-template>
+</jur-table>
+
+<span *ngIf="total <= 8" class="total">Total de registros: {{ total }} - Itens por página </span>
+<div [hidden]="total <= 8">
+  <jur-paginator [length]="total" (page)="buscar()"></jur-paginator>
+</div>

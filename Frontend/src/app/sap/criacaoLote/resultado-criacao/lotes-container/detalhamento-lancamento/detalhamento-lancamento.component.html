@@ -1,0 +1,28 @@
+<div class="container mt-4 mr-0 ml-0" style=" max-width: 100% !important; padding-left: 39px;">
+    <div class="form-row">
+        <div class="col-md-12 divWarn">
+            <span class="warning-lancamento"><span class="fas fa-exclamation-circle"></span> Preencha a identificação do
+                lote e selecione os lançamentos que farão parte dele. Em seguida, clique no botão "Gerar Lote" para
+                conclusão.</span>
+        </div>
+    </div>
+    <div class="form-row pt-4 pb-5">
+
+        <div class="col-md-6 ">
+            <textarea-limitado [labelTextArea]="'Identificação do lote:'"
+            [limitCaracteres]='200' (textoCompleto)="textoChange($event)"></textarea-limitado>
+        </div>
+        <div class="co-md-6 col-xl-6">
+            <labels-lote></labels-lote>
+        </div>
+
+
+    </div>
+    <div class="">
+        <abasContent [ativarBordero] = "existeBordero"></abasContent>
+    </div>
+
+    <div class="d-flex justify-content-end mb-2" >
+      <button class="btn btn-primary mt-3 "  (click)="gerarLote()" [disabled]="!loteValido">Gerar Lote</button>
+  </div>
+</div>

@@ -1,0 +1,276 @@
+<style>
+  .title span {
+    display: inline-block;
+    width: calc(100% - 40px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .title>div {
+    height: 36px;
+    width: 32px;
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  .convenio>span {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    display: block;
+    width: 93%;
+  }
+
+  .convenio:first-of-type>span {
+    border-top: none;
+  }
+
+  .delete {
+    height: 36px;
+    width: 32px;
+    text-align: center;
+    line-height: 36px;
+  }
+</style>
+
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">{{ titulo }}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="cancelar()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div id="modal-body" class="modal-body pt-0" [formGroup]="formulario" [ngStyle]="{'fontSize': '11px'}">
+  <div class="row">
+    <div class="col-7">
+      <label class="col-form-label-sm" for="empresa-centralizadora">
+        <b>Empresa Centralizadora:</b>
+      </label>
+      <input type="text" id="empresa-centralizadora" [formControl]="nomeFormControl" class="form-control"
+        [disableTooltip]="desabilitaTooltip(nomeFormControl)" [ngbTooltip]="validacaoEmpresaCentralizadora"  maxlength="100"/>
+      <ng-template #validacaoEmpresaCentralizadora>
+        <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.required">
+          Campo obrigatório
+        </span>
+        <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.maxlength">
+          A Empresa Centralizadora não pode ter mais de 100 caracteres
+        </span>
+      </ng-template>
+    </div>
+    <div class="col-5"></div>
+  </div>
+  <div class="row pt-3">
+    <div class="col-md-12 title">
+      <span class="col-form-label-sm">
+        <b style="color: #554d80;">Convênio</b>
+      </span>
+      <div class="float-right" (click)="criarConvenio()">
+        <a href="javascript:;">
+          <i class="fas fa-plus-circle btn-add-icon" style="font-size: 20px"></i>
+        </a>
+      </div>
+    </div>
+    <div formArrayName="convenios" class="col-md-12 overflow-track" style="max-height: 300px; overflow: auto;"
+      (scroll)="closeDropdowns()">
+      <div class="convenio" *ngFor="let convenio of conveniosFromArray.controls; let i = index">
+        <span></span>
+        <div class="row py-4" [formGroupName]="i">
+          <div class="col-md-11">
+            <div class="row">
+              <div class="col-3 pr-1">
+                <label class="col-form-label-sm" for="estado">
+                  <b>Estado:</b>
+                </label>
+                <ng-select
+                labelForId="estado"
+                [items]="estados"
+                bindLabel="nome"
+                bindValue="id"
+                [searchable]="false"
+                [clearable]="false"
+                [formControl]="convenio.get('estado')"
+                appendTo="#modal-body"
+                [placeholder]="'Selecione'"
+                (change)="validaEstadoUnico()"
+                [disableTooltip]="desabilitaTooltip(convenio.get('estado'))"
+                [ngbTooltip]="validacaoEstado">
+                </ng-select>
+                <ng-template #validacaoEstado>
+                  <span *ngIf="convenio.get('estado').invalid && convenio.get('estado').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span *ngIf="convenio.get('estado').invalid && convenio.get('estado').getError('estadoNaoUnico')">
+                    Estado já informado
+                  </span>
+                </ng-template>
+              </div>
+              <div class="col-2 px-1">
+                <label class="col-form-label-sm" for="codigo-convenio">
+                  <b>Código do Convênio:</b>
+                </label>
+                <input type="text" id="codigo-convenio" [formControl]="convenio.get('codigo')" class="form-control"
+                  [disableTooltip]="desabilitaTooltip(convenio.get('codigo'))" [ngbTooltip]="validacaoCodigoConvenio"
+                  [textMask]="{ mask: soNumeros, guide: false }" maxlength="4"/>
+                <ng-template #validacaoCodigoConvenio>
+                  <span *ngIf="convenio.get('codigo').invalid && convenio.get('codigo').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span *ngIf="convenio.get('codigo').invalid && convenio.get('codigo').errors.maxlength">
+                    O Código Convênio não pode ter mais de 4 caracteres
+                  </span>
+                </ng-template>
+              </div>
+              <div class="col-3 px-1">
+                <label class="col-form-label-sm" for="cnpj-convenio">
+                  <b>CNPJ do Convênio:</b>
+                </label>
+                <input type="text" id="cnpj-convenio" [formControl]="convenio.get('cnpj')" class="form-control"
+                  [disableTooltip]="desabilitaTooltip(convenio.get('cnpj'))" [ngbTooltip]="validacaoCnpj"
+                  [textMask]="{ mask: mascaraCnpj }" />
+                <ng-template #validacaoCnpj>
+                  <span *ngIf="convenio.get('cnpj').invalid && convenio.get('cnpj').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span *ngIf="convenio.get('cnpj').getError('cnpjNotValid')">
+                    CNPJ incorreto. Favor informá-lo novamente
+                  </span>
+                </ng-template>
+              </div>
+              <div class="col-2 px-1">
+                <label class="col-form-label-sm" for="banco-debito">
+                  <b>Banco Débito:</b>
+                </label>
+                <input type="text" id="banco-debito" [formControl]="convenio.get('bancoDebito')" class="form-control"
+                  [disableTooltip]="desabilitaTooltip(convenio.get('bancoDebito'))" [ngbTooltip]="validacaoBancoDebito"
+                  [textMask]="{ mask: soNumeros, guide: false }" maxlength="9" />
+                <ng-template #validacaoBancoDebito>
+                  <span *ngIf="convenio.get('bancoDebito').invalid && convenio.get('bancoDebito').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span *ngIf="convenio.get('bancoDebito').invalid && convenio.get('bancoDebito').errors.maxlength">
+                    O Banco Débito não pode ter mais de 9 caracteres
+                  </span>
+                </ng-template>
+              </div>
+              <div class="col-2 pl-1">
+                <label class="col-form-label-sm" for="agencia-debito">
+                  <b>Agência Débito:</b>
+                </label>
+                <input type="text" id="agencia-debito" [formControl]="convenio.get('agenciaDebito')"
+                  class="form-control" [disableTooltip]="desabilitaTooltip(convenio.get('agenciaDebito'))"
+                  [ngbTooltip]="validacaoAgenciaDebito" [textMask]="{ mask: soNumeros, guide: false }" maxlength="4" />
+                <ng-template #validacaoAgenciaDebito>
+                  <span *ngIf="convenio.get('agenciaDebito').invalid && convenio.get('agenciaDebito').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span *ngIf="convenio.get('agenciaDebito').invalid && convenio.get('agenciaDebito').errors.maxlength">
+                    A Agência Débito não pode ter mais de 4 caracteres
+                  </span>
+                </ng-template>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3 pr-1">
+                <label class="col-form-label-sm" for="digito-agencia-debito">
+                  <b>Dígito Agência Débito:</b>
+                </label>
+                <input type="text" id="digito-agencia-debito" [formControl]="convenio.get('digitoAgenciaDebito')"
+                  class="form-control" [disableTooltip]="desabilitaTooltip(convenio.get('digitoAgenciaDebito'))"
+                  [ngbTooltip]="validacaoDigitoAgenciaDebito" maxlength="1" />
+                <ng-template #validacaoDigitoAgenciaDebito>
+                  <span
+                    *ngIf="convenio.get('digitoAgenciaDebito').invalid && convenio.get('digitoAgenciaDebito').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span
+                    *ngIf="convenio.get('digitoAgenciaDebito').invalid && convenio.get('digitoAgenciaDebito').errors.maxlength">
+                    O Dígito Agência Débito não pode ter mais de 1 caracteres
+                  </span>
+                </ng-template>
+              </div>
+              <div class="col-2 px-1">
+                <label class="col-form-label-sm" for="conta-debito">
+                  <b>Conta Débito:</b>
+                </label>
+                <input type="text" id="conta-debito" [formControl]="convenio.get('contaDebito')" class="form-control"
+                  [disableTooltip]="desabilitaTooltip(convenio.get('contaDebito'))"
+                  [textMask]="{ mask: soNumeros, guide: false }" [ngbTooltip]="validacaoContaDebito" maxlength="11" />
+                <ng-template #validacaoContaDebito>
+                  <span *ngIf="convenio.get('contaDebito').invalid && convenio.get('contaDebito').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span *ngIf="convenio.get('contaDebito').invalid && convenio.get('contaDebito').errors.maxlength">
+                    A Conta Débito não pode ter mais de 11 caracteres
+                  </span>
+                </ng-template>
+              </div>
+              <div class="col-2 px-1">
+                <label class="col-form-label-sm" for="mci">
+                  <b>MCI:</b>
+                </label>
+                <input type="text" id="mci" [formControl]="convenio.get('mci')" class="form-control"
+                  [disableTooltip]="desabilitaTooltip(convenio.get('mci'))"
+                  [textMask]="{ mask: soNumeros, guide: false }" [ngbTooltip]="validacaoMci" maxlength="9" />
+                <ng-template #validacaoMci>
+                  <span *ngIf="convenio.get('mci').invalid && convenio.get('mci').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span *ngIf="convenio.get('mci').invalid && convenio.get('mci').errors.maxlength">
+                    O MCI não pode ter mais de 9 caracteres
+                  </span>
+                </ng-template>
+              </div>
+              <div class="col-2 pl-1 pr-0">
+                <label class="col-form-label-sm" for="agencia-depositaria">
+                  <b [ngStyle]="{ letterSpacing: '-0.01rem' }">Agência Depositária:</b>
+                </label>
+                <input type="text" id="agencia-depositaria" [formControl]="convenio.get('agenciaDepositaria')"
+                  class="form-control" [disableTooltip]="desabilitaTooltip(convenio.get('agenciaDepositaria'))"
+                  [textMask]="{ mask: soNumeros, guide: false }" [ngbTooltip]="validacaoAgenciaDepositaria"
+                  maxlength="4" />
+                <ng-template #validacaoAgenciaDepositaria>
+                  <span
+                    *ngIf="convenio.get('agenciaDepositaria').invalid && convenio.get('agenciaDepositaria').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span
+                    *ngIf="convenio.get('agenciaDepositaria').invalid && convenio.get('agenciaDepositaria').errors.maxlength">
+                    A Agência Depositária não pode ter mais de 4 caracteres
+                  </span>
+                </ng-template>
+              </div>
+              <div class="col-3 pl-2">
+                <label class="col-form-label-sm" for="digito-agencia-depositaria">
+                  <b>Dígito Agência Depositária:</b>
+                </label>
+                <input type="text" id="digito-agencia-depositaria"
+                  [formControl]="convenio.get('digitoAgenciaDepositaria')" class="form-control"
+                  [disableTooltip]="desabilitaTooltip(convenio.get('digitoAgenciaDepositaria'))"
+                  [ngbTooltip]="validacaoDigitoAgenciaDepositaria" maxlength="1" max="1" />
+                <ng-template #validacaoDigitoAgenciaDepositaria>
+                  <span
+                    *ngIf="convenio.get('digitoAgenciaDepositaria').invalid && convenio.get('digitoAgenciaDepositaria').errors.required">
+                    Campo obrigatório
+                  </span>
+                  <span
+                    *ngIf="convenio.get('digitoAgenciaDepositaria').invalid && convenio.get('digitoAgenciaDepositaria').errors.maxlength">
+                    O Dígito Agência Depositária não pode ter mais de 1 caracteres
+                  </span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1 px-1 m-0">
+            <div class="row pt-5 m-0">
+              <div class="col-12 pl-3 delete" (click)="removerConvenio(i)">
+                <a href="javascript:;">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="cancelar()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="confirmar()">Confirmar</button>
+</div>

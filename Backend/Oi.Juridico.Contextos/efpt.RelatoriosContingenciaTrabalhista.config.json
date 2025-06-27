@@ -1,0 +1,49 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "RelatoriosContingenciaTrabalhistaContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "RelatoriosContingenciaTrabalhistaContext\\Data",
+   "OutputPath": "RelatoriosContingenciaTrabalhistaContext\\Entities",
+   "ProjectRootNamespace": "Oi.Juridico.Contextos",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "JUR.ITEM_FECHAMENTO_PROVISAO_TRAB",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ITEM_FECH_PROVISAO_PROVAVEIS",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.FECHAMENTOS_PROVISOES_TRAB",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ITEM_FECH_PROVISAO_POSSIVEIS",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "JUR.SISJUR_DEV",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

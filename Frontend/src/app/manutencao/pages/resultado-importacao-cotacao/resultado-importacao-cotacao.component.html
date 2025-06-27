@@ -1,0 +1,52 @@
+
+  
+  <section class="container-breadcrumb">
+    <button class="botaoDeVoltar" onClick="history.go(-1)">
+        <i class="fas fa-angle-double-left"></i> Voltar
+    </button>
+    <h3>Cotação de Índice</h3>
+    <p>Manutenção > Cadastros Compartilhados > Cotação</p>
+</section>
+
+<div class="container-breadcrumb">
+  
+    <div class="row mt-4">
+      <div class="col-md-6 pr-1 font-purple h5">
+        Coleção a Importar
+      </div>
+
+      <div class="col-md-6" style="text-align: right;">
+        <button type="button" (click)="importar()" class="btn btn-primary ml-1"
+        style="display: flex; align-items: center; justify-content: center; padding-left: 9px;float: right;margin-bottom: 10px;">
+         Aplicar importação
+      </button>
+      </div>
+
+    </div>
+
+    <div>
+
+      <jur-table   [sortDirection]="'desc'" [sortColumn]="'dataBase'" [dataSource]="listaCotacoesIndicesTrabalhistas" (sort)="pesquisarCotacao()">
+        <jur-column-template flex="15" headerName="Mês/Ano de Correção"  *jurRowData="let row">
+          {{ row.dataBase | date: 'MM/yyyy' }}
+        </jur-column-template>
+        <jur-column-template flex="25" headerName="Mês/Ano de Distribuição" sortColumn="dataBase" *jurRowData="let row">
+            {{ row.dataCorrecao | date: 'MM/yyyy' }}
+          </jur-column-template>
+        <jur-column-template flex="15" headerName="Valor" sortColumn="valorCotacao" *jurRowData="let row">
+          <span fxFlex="nogrow">{{ row.valorCotacao }}</span>
+        </jur-column-template>
+      </jur-table>
+    </div>
+    <div>
+        <div [style.display]="total > 2 ? 'inherit' : 'none'">
+            <jur-paginator   
+            [length]="total" (page)="pesquisarCotacao()"></jur-paginator>
+          </div>
+      </div>
+</div>
+<div>
+    <br>
+</div>
+
+ 

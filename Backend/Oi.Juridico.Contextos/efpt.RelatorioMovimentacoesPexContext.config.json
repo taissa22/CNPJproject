@@ -1,0 +1,52 @@
+﻿{
+  "CodeGenerationMode": 0,
+  "ContextClassName": "RelatorioMovimentacoesPexContext",
+  "ContextNamespace": null,
+  "DefaultDacpacSchema": null,
+  "FilterSchemas": false,
+  "IncludeConnectionString": false,
+  "ModelNamespace": null,
+  "OutputContextPath": "RelatorioMovimentacoesPexContext\\Data",
+  "OutputPath": "RelatorioMovimentacoesPexContext\\Entities",
+  "ProjectRootNamespace": "Oi.Juridico.Contextos",
+  "Schemas": null,
+  "SelectedHandlebarsLanguage": 0,
+  "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "Name": "JUR.AGEND_MOVIMENTACAO_PEX",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ACA_USUARIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.EMPRESAS_CENTRALIZADORAS",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.SOLIC_FECHAMENTO_CONT",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.FECHAMENTO_PEX_MEDIA",
+      "ObjectType": 0
+    }
+  ],
+  "UiHint": "JUR.SISJUR_DEV",
+  "UseBoolPropertiesWithoutDefaultSql": false,
+  "UseDatabaseNames": false,
+  "UseDbContextSplitting": true,
+  "UseFluentApiOnly": true,
+  "UseHandleBars": false,
+  "UseInflector": false,
+  "UseLegacyPluralizer": false,
+  "UseNoConstructor": false,
+  "UseNoNavigations": false,
+  "UseNoObjectFilter": false,
+  "UseNodaTime": false,
+  "UseNullableReferences": false,
+  "UseSchemaFolders": false,
+  "UseSpatial": false
+}

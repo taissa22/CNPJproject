@@ -1,0 +1,38 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "paths": {
+      "@shared/*": ["src/app/shared/*"],
+      "@assets/*": ["src/app/assets/*"],
+      "@shared/layout/*": ["src/app/shared/layout/*"],
+      "@core/*": ["src/app/core/*"],
+      "@core/services/*": ["src/app/core/services/*"],
+      "@core/interfaces/*": ["src/app/core/models/interfaces/*"],
+      "@environment": ["src/environments/environment"],
+      "@permissoes": ["src/app/permissoes/index.ts"],
+      "@manutencao/*": ["src/app/manutencao/*"],
+      "@relatorios/*": ["src/app/relatorios/*"],
+      "@esocial/*":["src/app/esocial/*"],
+      "@libs/*": ["src/libs/*"]
+    },
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es5",
+    "skipLibCheck": true,
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"]
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  },
+  "allowJs": true
+}

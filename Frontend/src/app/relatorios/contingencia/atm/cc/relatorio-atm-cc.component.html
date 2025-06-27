@@ -1,0 +1,189 @@
+<div class="container mt-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <h3 style="color: #786bb9">{{ tituloPagina }}</h3>
+      <p>{{ breadcrumb }}</p>
+    </div>
+    <div class="col text-right">
+      <button class="btn btn-primary" (click)="novoAgendamento()">
+        Novo Agendamento
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="row cabecalho-lista mt-4 align-items-center"
+    style="margin-bottom: 3px; display: flex;"
+  >
+    <div class="col-4">
+      <h3 class="lista-de-agendamentos" style="color: #786bb9">
+        Relatórios agendados / executados
+      </h3>
+    </div>
+    <div class="col text-right" style="display: flex; justify-content: flex-end;">
+      <p class="atualizar mb-0" (click)="obterAgendamentos(1)">
+        <img class="iconeAtualizar" src="assets/icons/atualizar.png" />
+        ATUALIZAR LISTA
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <tbody>
+          <tr *ngFor="let agendamento of visibleAgendamentos">
+            <td>
+              <div class="td-info" fxLayout="row" fxLayoutAlign="space-between">
+                <div class="col-8 texts">
+                  <span class="titulo-base-fechamento">
+                    Base de fechamento:
+                    {{ agendamento.mesAnoContabil | date : 'MM/yyyy' }} -
+                    <span class="titulo-base-fechamento">{{
+                      agendamento.datFechamento | date : 'dd/MM/yyyy'
+                    }}</span>
+                    - {{ agendamento.numeroMeses }} Meses </span
+                  ><br />
+                  <span style="margin-top: 10px; margin-bottom: 20px">{{
+                    agendamento.empresaCentralizadora
+                  }}</span
+                  ><br />
+                  <p style="margin-top: 10px">{{ agendamento.mensagem }}</p>
+                  <div class="row actions">
+                    <ng-container *ngIf="agendamento.status == 3">
+                      <div
+                        class="botao-download mr-4"
+                        (click)="exportarBase(agendamento.codAgendRelatorioAtm)"
+                      >
+                        <p
+                          class="roxo-padrao pointer m-0"
+                          *ngIf="agendamento.status == 3"
+                        >
+                          <i class="fas fa-download fa-lg"></i> Base de
+                          Fechamento
+                        </p>
+                      </div>
+
+                      <div
+                        class="botao-download"
+                        (click)="
+                          exportarRelatorio(agendamento.codAgendRelatorioAtm)
+                        "
+                      >
+                        <p
+                          class="roxo-padrao pointer m-0"
+                          *ngIf="agendamento.status == 3"
+                        >
+                          <i class="fas fa-download fa-lg"></i> Relatório ATM
+                        </p>
+                      </div>
+                    </ng-container>
+
+                    <span
+                      class="excluir"
+                      (click)="onDelete(agendamento.codAgendRelatorioAtm)"
+                      *ngIf="agendamento.status == 1"
+                    >
+                      <i
+                        id="icon-simbol"
+                        class="fa fa-trash roxo-padrao"
+                        style="font-size: medium !important; opacity: 100"
+                      ></i>
+                      Excluir
+                    </span>
+                  </div>
+                </div>
+                <div class="col-4 tbody-right">
+                  <div class="text-body">
+                    <span [ngClass]="getStatusClass(agendamento.status)">{{
+                      getStatusDescription(agendamento.status)
+                    }}</span>
+                  </div>
+                  <span
+                    >Agendamento solicitado por {{ agendamento.usrCodUsuario }}
+                    <br />
+                    em
+                    {{
+                      agendamento.datSolicitacao | date : 'dd/MM/yyyy HH:mm'
+                    }}</span
+                  ><br />
+                </div>
+              </div>
+            </td>
+          </tr>
+          <!-- Linha para o botão VER MAIS -->
+          <tr *ngIf="hasMoreItems">
+            <td colspan="100%">
+              <div class="btn-ver-mais" style="text-align: center">
+                <button class="btn-mais" (click)="mostrarMais()">
+                  VER MAIS
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 
+<div class="modal fade" id="novoRelatorioModal" tabindex="-1" role="dialog" aria-labelledby="novoRelatorioModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="novoRelatorioModalLabel">Novo Relatório ATM</h5>
+
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="novoAgendamentoForm">
+          <label class="text-subtitle-modal">Base de Fechamento</label>
+          <select class="form-control" formControlName="fechamento" style="font-size: 14px;">
+            <option *ngFor="let fechamento of fechamentos" [ngValue]="fechamento">
+              {{ fechamento.mesAnoFechamento | date: 'MM/yyyy' }} -
+              {{ fechamento.dataFechamento | date: 'dd/MM/yyyy' }} -
+              {{ fechamento.empresaCentralizador }} -
+              {{ fechamento.numMesesMediaHistorica > 1 ? fechamento.numMesesMediaHistorica + ' meses' :
+              fechamento.numMesesMediaHistorica + ' mês' }}
+            </option>
+          </select>
+
+          <div class="form-group">
+            <label class="text-subtitle-modal">Índices por UF para cálculo:</label>
+            <div formGroupName="indices">
+               
+              <div class="table-responsive" ok style="height: 300px;">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>UF</th>
+                      <th>Índice</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let indice of indicesPorEstado"
+                      [ngClass]="{'even': indicesPorEstado.indexOf(indice) % 2 === 0, 'odd': indicesPorEstado.indexOf(indice) % 2 !== 0}">
+                      <td>{{ indice.uf }}</td>
+                      <td>
+                        <select class="form-control" [formControlName]="indice.uf" style="font-size: 13px;">
+                          <option *ngFor="let opcao of indice.opcoes" [value]="opcao.id">{{ opcao.descricao }}</option>
+                        </select>
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="fechar()" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="onSave()" data-dismiss="modal">Agendar</button>
+      </div>
+    </div>
+  </div>
+</div>-->

@@ -1,0 +1,47 @@
+<div class="row my-4" style="align-items: center;">
+  <div class="col-auto pr-2">
+    <b>Escritórios</b>
+  </div>
+  <div class="col d-flex" style="padding-left: 0">
+    <input type="search" class="form-control mt-1 mr-2" style="width: 50%;"
+      placeholder="Digite o nome ou parte do nome do escritório" [(ngModel)]="campoPesquisa">
+    <button type="button" class="btn btn-primary my-1" (click)="obterEscritorios()">Buscar</button>
+  </div>
+</div>
+
+<table class="table table-striped table-sm">
+  <thead>
+    <tr style="height: 38px; background-color: white;">
+      <th class="font-weight-bold" *ngFor="let col of colunas; let i = index" style="padding-bottom: 8px" id="col{{i}}"
+        [ngStyle]="{'width': col.largura, 'cursor': (col.ordernar ? 'pointer' : 'initial')}" [sortable]="col.data"
+        (sort)="ordenar(col.data)" title="{{ col.titulo }}">
+        <span>
+          <span>{{ col.titulo }}&nbsp;</span>
+          <span *ngIf="col.ordernar">
+            <i class="roxo-padrao fas fa-arrows-alt-v" *ngIf="col.data != ordenacaoColuna"></i>
+            <i class="roxo-padrao fas fa-long-arrow-alt-up" *ngIf="col.data == ordenacaoColuna && ordenacaoDirecao == 'asc'"></i>
+            <i class="roxo-padrao fas fa-long-arrow-alt-down" *ngIf="col.data == ordenacaoColuna && ordenacaoDirecao == 'desc'"></i>
+          </span>
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="text-align: center;" *ngIf="dadosEscritorios.length == 0">
+      <td colspan="12">Nenhum dado retornado</td>
+    </tr>
+    <ng-container *ngFor="let item of dadosEscritorios; let i = index;">
+      <tr>
+        <td style="padding-top: 10px; padding-left: 20px;">{{item.nomProfissional}}</td>
+        <td style="padding-top: 10px">{{item.nomSolicitante}}</td>
+        <td style="padding-top: 10px">{{item.datVigenciaInicial | date: 'dd/MM/yyyy'}} até {{item.datVigenciaFinal | date: 'dd/MM/yyyy'}}</td>
+        <td style="padding-top: 10px">{{item.porcentagemProcessos}}</td>
+        <td style="padding-top: 10px">{{item.prioridade}}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<div>
+  <sisjur-paginator [length]="totalDadosEscritorios" (page)="obterEscritorios()"></sisjur-paginator>
+</div>

@@ -1,0 +1,67 @@
+html {
+  font-family: "Roboto", sans-serif;
+}
+
+.container-filtros {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-width: 85%;
+  max-width: 600px;
+  min-height: 400px;
+  margin: 0 auto;
+  margin-top: 40px;
+  position: relative;
+}
+
+.buttons-filtros {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 0 auto;
+  min-width: 85%;
+  max-width: 800px;
+  margin-top: 5px;
+  height: 30px;
+  min-height: unset;
+  font-size: 16px;
+}
+
+.container-filtros-header {
+  display: flex;
+  position: absolute;
+  top: -25px;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 20px;
+  line-height: 20px;
+  margin: 0 auto;
+  font-size: 12px;
+  width: 100%;
+  border-bottom: solid 1px rgb(180, 180, 180);
+  color: #6f62b2;
+}
+
+.container-filtros-header label {
+  cursor: pointer;
+}
+
+div.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.disabled-btn {
+  background-color: grey;
+}
+
+.option-box-line {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+}

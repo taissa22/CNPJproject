@@ -1,0 +1,62 @@
+<div bsModal #template="bs-modal" style="height: 1500;" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1"
+    [config]="{backdrop: 'static'}">
+    <div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">{{titulo}}</h4>
+                <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body height-fix">
+                <form [formGroup]="registerForm">
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <combo-box [opcoes]="comboTipoProcesso" titulo='Selecione o tipo de processo'
+                                (selectionChange)="onChangeComboTipoProcesso($event)" [label]="'Tipo de Processo:'"
+                                [classe]="'modais'">
+                            </combo-box>
+                        </div>
+                        <div class="col-2 d-flex checkbox">
+                            <input id="ativo" type="checkbox" formControlName="estaAtivo">
+                            <label for="ativo" class="m-0 p-0 pl-1">Ativo</label>
+                        </div>
+
+
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="col-2">
+                            <label for="sigla">Sigla:</label> <br>
+                            <input id="sigla" class="width form-control" maxlength="4" formControlName="sigla"
+                                [ngClass]="{'is-invalid': registerForm.get('sigla').errors && registerForm.get('sigla').touched}"
+                                [ngbTooltip]="validacaoTextos('sigla', 'Sigla', true)" tooltipClass="erroTooltip"
+                                StartWithSpace oninput="this.value = this.value.toUpperCase()">
+
+                        </div>
+                        <div class="col-8">
+                            <label for="descricao">Descricao:</label> <br>
+                            <input id="descricao" class="width form-control" maxlength="100" formControlName="descricao"
+                                [ngClass]="{'is-invalid': registerForm.get('descricao').errors && registerForm.get('descricao').touched}"
+                                [ngbTooltip]="validacaoTextos('descricao', 'Descricao', false)" tooltipClass="erroTooltip" StartWithSpace
+                                oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="bsModalRef.hide()"><span
+                        class="texto-btn-oi cancelar">
+                        Cancelar </span></button>
+
+                <button type="button" class="btn btn-primary" (click)="salvarAlteracao()"
+                    [ngClass]="!registerForm.valid ? 'btn-primary-disabled' : '' "
+                    [disabled]="!registerForm.valid"><span class="texto-btn-oi confirmar"> Confirmar </span></button>
+            </div>
+        </div>
+        <div>
+        </div>
+
+
+    </div>
+</div>

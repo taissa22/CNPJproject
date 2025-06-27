@@ -1,0 +1,111 @@
+.modal-header {
+  margin-top: 2%;
+  margin-left: 4%;
+}
+
+.modal-body {
+  margin-left: 4%;
+}
+
+.layoutMenu {
+  margin-top: 45px;
+  justify-content: center;
+}
+
+.botaoLateral {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 3.5vh;
+  height: 100%;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: relative;
+  left: 18px;
+  top: 2px;
+}
+
+.icons {
+  font-size: 5vw;
+  color: #574d81;
+}
+
+.layoutCards {
+  display: grid;
+  grid-template-columns: repeat(4, 20vw);
+  //width: 88%;
+  //flex-direction: row;
+  margin: 6vmin auto;
+  justify-content: center;
+  grid-gap: 1vw
+}
+
+.spanOpcoes {
+  font-weight: 800;
+  color: #574d81;
+  cursor: pointer;
+  font-family: tahoma;
+  font-size: 100%;
+}
+
+.card {
+  cursor: pointer;
+  //width: 18vw;
+  height: 20vh;
+  // display: flex;
+  // flex-direction: column;
+
+  flex: 1 0 21%;
+  //margin-bottom: 30px;
+
+  //margin-left: 30px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid rgb(87, 77, 129, 0.3);
+  box-shadow: 3px 6px 8px #00000029;
+}
+
+.text-card {
+  color: #574d81;
+  font-size: 2vmin;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  margin-top: 10px;
+  font-family: tahoma;
+}
+
+.card:hover {
+  background-color: #cbcce1;
+}
+
+// @media screen and (min-height: 600px) and (max-height: 920px) {
+//     .botaoLateral {
+//         margin-top: 220px
+//     }
+// }
+
+// @media (min-height: 921px) {
+//     .botaoLateral {
+//         margin-top: 420px
+//     }
+// }
+.infoUnico {
+  position: relative;
+  bottom: 12px;
+}
+
+#fechar {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  float: left;
+  margin-top: 57px;
+  color: #574D81
+}

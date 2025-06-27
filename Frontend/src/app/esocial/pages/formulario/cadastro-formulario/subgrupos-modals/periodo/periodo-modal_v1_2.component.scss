@@ -1,0 +1,79 @@
+.modal-header button {
+    color: gray;
+}
+
+.modal-title {
+    margin: auto;
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.input-number{
+    text-align: initial !important;
+}
+
+::ng-deep .modal-periodo{
+    .modal-content {
+        min-width: 700px !important;
+        max-width: 701px !important;
+    }
+
+    .modal-sm {
+        min-width: 700px !important;
+        max-width: 701px !important;
+    }
+}
+
+
+.container-modal {
+    padding: 1.2rem 0.5rem;
+}
+
+.modal-footer {
+    padding-bottom: 0;
+}
+
+.title {
+    padding: 0 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.periodoRef {
+    display: flex;
+    flex-direction: column;
+}
+
+.tooltip-periodo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+.tooltip-data{
+    width: 11.7rem;
+}
+
+::ng-deep {
+
+    bs-datepicker-container,
+    bs-daterangepicker-container {
+        z-index: 20000;
+    }
+}
+
+
+.divisoria {
+    margin: 2rem 0 1rem !important; 
+    border-top: 1px solid #ccc !important;
+}
+
+.divisoria h5 {
+    width: fit-content !important;
+    padding-right: 10px !important;
+    margin-top: -10px !important;
+    background-color: white !important;
+}

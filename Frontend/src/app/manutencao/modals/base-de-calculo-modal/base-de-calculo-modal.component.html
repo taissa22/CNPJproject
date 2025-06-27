@@ -1,0 +1,58 @@
+<style>
+  .modal-header button {
+    color: gray;
+  }
+
+  .modal-title {
+    margin: auto;
+  }
+
+  .btn-icon {
+    font-size: 18px;
+  }
+</style>
+
+<div class="modal-header">
+  <span class="modal-title">{{titulo}}</span>
+
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0 pb-0">
+
+  <div>
+    <label class="col-form-label-sm" for="descricao-input">
+      <b>Descrição da Base de Cálculo:</b>
+    </label>
+    <input type="text" id="descricao-input" [formControl]="descricaoFormControl" class="form-control"
+      [disableTooltip]="descricaoFormControl.valid || descricaoFormControl.untouched" [ngbTooltip]="descricaoError"
+      maxlength="50" />
+    <ng-template #descricaoError>
+      <span *ngIf="descricaoFormControl.hasError('required')">
+        Campo obrigatório
+      </span>
+      <span *ngIf="descricaoFormControl.hasError('maxlength')">
+        O Limite é de 50 caracteres
+      </span>
+    </ng-template>
+
+  </div>
+
+  <div class="align-items-center mt-3 d-flex align-items-center" *ngIf="baseDeCalculo">
+    <label class="fonte-padrao" for="calculoInicial-input"> Cálculo inicial:  </label>
+    <input id="calculoInicial-input" type="checkbox" [formControl]="ehCalculoInicialFormControl" class="ml-2 ">
+  </div>
+  <div class="mensagem-base-inicial">
+    <span *ngIf="desmarcouBaseInicial()"> Deve haver uma base de cálculo inicial indicada no cadastro. </span>
+    <span *ngIf="marcouBaseInicial()"> Só pode haver uma base de cálculo inicial! Ao confirmar a anterior será desmarcada! </span>
+  </div>
+</form>
+
+
+<div class="modal-footer pt-0">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid || desmarcouBaseInicial()"
+    (click)="save()">Confirmar</button>
+</div>

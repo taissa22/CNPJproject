@@ -1,0 +1,88 @@
+<app-container-pagina [titulo]="'Agendamento de Consulta Saldo de Garantias'" [caminho]="breadcrumb" textoRota="Voltar" rota="..">
+    <div class="page-header roxo-padrao">
+        <div class="mt-5">
+            <div class="d-inline-block">
+                <span style="font-size: 15px;">LISTA DE AGENDAMENTOS</span>
+            </div>
+            <div class="d-inline-block float-right" style="cursor: pointer" (click)="onAtualizar()">
+                ATUALIZAR LISTA <i class="pl-2 fas fa-redo"></i>
+            </div>
+        </div>
+        <div class="page-content">
+            <app-container-item *ngFor="let agendamento of agendamentos; index as i">
+                <div content class="p-2 d-flex justify-content-between" style="height: 90px;">
+                    <div class="contentEsquerdo d-flex flex-column">
+                        <div class="topo">
+                            <label class="titulo">{{agendamento.nomeAgendamento}}</label>
+                            <br>
+                            <label class="finalizadoem" *ngIf="agendamento.dataFinalizacao">
+                Finalizado em {{agendamento.dataFinalizacao}}
+              </label>
+                        </div>
+
+                        <div class="d-flex align-items-end" style="height: 100%">
+                            <button class="btn btn-roxo pl-0" [autoClose]="false"
+                             triggers="manual"
+                             #t="ngbTooltip"
+                              [ngbTooltip]="parametrosTemplate"
+                             (click)="verificarID(t, agendamento.id)"
+
+                             placement="bottom" tooltipClass="consultaSaldo" style="text-align: left;"
+                            >
+                <div style="cursor: pointer;">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20"
+                    height="22.581" viewBox="0 0 20 22.581">
+                    <defs>
+                      <pattern id="pattern" preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 31 35">
+                        <image width="31" height="35"
+                          xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAjCAYAAABsFtHvAAAABHNCSVQICAgIfAhkiAAAAzhJREFUWIXtlVtoXFUUQNe+985kgnk0EZKUxjbkYbCRJOqPSquJHVDoR0f0o76goSI4KVRB7fghiqJUakEREhSEQXwipYGCzvSnUROV0JqkmpDYGFM7YGwT85gQMpOZ2X6klkruDZPMjAp2/d1z9tlrH84+58I1/m+I3WDAH6rF0Eq7uWTKM3Kko3UyJ/KAP/QyIi/YBSsaE5Up1LzrcKd3PFO5YTP2kFOwqLyCEMFIfvPck1/U50AudgX9xaJH3V5gQkR6Mi1gLZEtL3W0LnjU7RWRn0Wk51B7qCFrchX7JnQsQPn66f2h0o3IrfUEq2h7wB/eA7BEHEVdIlJi5lMM/JFTuSA1CDVXfa/X9zfWfebZZJVcVDPbTibyf5KM5J58i90P1PPq0V0f6Qr9qnpcVX3prF/dcGl20fbGMh587GbmZ5Y49uHQ7dG5GCI0V2wpbN7Rus2nql1Am4jMpi9Pg+q6Eva2NXLisxFOfxvBtAzKNxewMB9n/NwMfb0R2vy3+qrrSgHuz5rck2/x6BO3cOyDHxk8M0lDUxl79zViuVZOMPLrPB+/N0iws5+Dz9/hU9V9IhK0y7X6zFWia8kbGsuIzsYYPDNJbX0pjzzefEUMULm1iIf3N7EcT9J98heAg065VslTpF5UNOK0YHNlIcM/XATAu7sWsemQLVuLuKGqmOGzFwGa19rMulDV7q5PhzXQHtbofEyd+CR4VgPtYU0kUqqqVXa5NnLVBoqK8wCYvrToGDR9aRG328Q0BRGZyJq8oakcgO++umAbMDYyzYWJOepuuh7gS6dEG5F3lVVcd77ptgoGTv/GyRNjJBN6ZXJ0aIr33+nHsgzu23MjwJtOiTb0jqtqy3I8eSrY+T3j52awXAblFQUsROPMzS5RUOimaFMeLpc5eX4svv1w586ZrMkvF+BLpTTY1xspHh2aIraUwDCEqpoSdu7axufHf+rp643sUHQosZzXcvTd1qmsyS8XsAl4Cmhh5UoNABNAUES6A/7Q24gcUNVR02Xd/dpb3t+zJk+HQ/7wERGeQRk3XOadVxeQ81/q6x33PqvKGwjVqXjC8Z3PKYED4Xv+FfE1/lP8CUX7RYQkE2bsAAAAAElFTkSuQmCC" />
+                      </pattern>
+                    </defs>
+                    <rect id="buscar" width="20" height="22.581" rx="10" fill="url(#pattern)" />
+                  </svg>
+
+                  <label class="roxo-padrao" style="cursor: pointer;">Critérios de Pesquisa</label>
+                </div>
+                <ng-template #parametrosTemplate >
+                  <app-criterios-de-pesquisa [listaSelecionados]='valoresCriterio'
+                  (modalFechou)="eventModalFechou($event, t)" [referenciaTooltip]="t" [origem]="'Consulta_Saldo_Garantia'"></app-criterios-de-pesquisa>
+              </ng-template>
+              </button>
+                            <button class="btn btn-roxo" *ngIf="exibirExcluir(agendamento.statusAgendamento)" (click)="onExcluir(i)">
+                <i class="fas fa-trash roxo-padrao" style="font-size: 14px;"></i>
+                <label class="roxo-padrao pl-1" style="cursor: pointer;"> Excluir </label>
+              </button>
+                            <button class="btn btn-roxo" *ngIf="agendamento.statusAgendamento == 'Finalizado'" (click)="onDownload(agendamento.nomeArquivo, agendamento.tipoProcesso)">
+                <i class="fas fa-download roxo-padrao" style="font-size: 14px;"></i>
+                <label class="roxo-padrao pl-1" style="cursor: pointer;"> Download </label>
+              </button>
+                        </div>
+                    </div>
+                    <div class="contentDireito">
+                        <div class="d-block " style="height: 10px;">
+                            <i class="fas fa-info-circle mr-2 " style="color: gray; font-size: 12px; line-height: 23px;" ngbTooltip="Ocorreu um erro ao processar o agendamento. Por favor contate o administrador do SISJUR." *ngIf="agendamento.statusAgendamento == 'Erro'"></i>
+                            <div class="status" [ngStyle]="{'background': verificarCor(agendamento.statusAgendamento)}">
+                                {{agendamento.statusAgendamento}}
+                            </div>
+                        </div>
+                        <div style="clear: both" class="d-block">
+                            <span>Agendado em </span>
+                            <br>
+                            <span>
+                {{agendamento.dataAgendamento}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </app-container-item>
+      <app-container-item style="cursor: pointer" *ngIf="vermais">
+        <div content style="text-align: center">
+          <span (click)="onVerMais()">VER MAIS</span>
+        </div>
+      </app-container-item>
+    </div>
+  </div>
+
+</app-container-pagina>
+

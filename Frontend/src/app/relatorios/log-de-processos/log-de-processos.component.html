@@ -1,0 +1,154 @@
+<div class="container mt-4">
+  <h3>Relatório Log de Processos</h3>
+  <p>{{breadcrumb}}</p>
+  <agendar-relatorio
+    (atualizarLista)="listarAgendamentos()"
+  ></agendar-relatorio>
+
+  <div class="row cabecalho-lista mt-4">
+    <div class="col-4">
+      <h3 class="lista-de-agendamentos mt-4">Lista de Agendamentos:</h3>
+    </div>
+    <div class="col-auto pr-0">
+      <label>Data do Agendamento:</label>
+    </div>
+    <div class="col-4">
+      <div class="row mt-3">
+        <div class="col-5 p-0 data-ini">
+          <input
+            class="form-control input-date"
+            name="dp"
+            ngbDatepicker
+            type="search"
+            rInputMask="99/99/9999"
+            placeholder="dd/mm/yyyy"
+            #d1="ngbDatepicker"
+            (ngModelChange)="listarAgendamentos(dataIniFormControl)"
+            id="dataIni"
+            (keyup)="mascaraDataKeyUp(dataIniFormControl, 'dataIni')"
+            (focusout)="resetarFormControlInvalido(dataIniFormControl)"
+            [formControl]="dataIniFormControl"
+            [displayMonths]="'displayMonths'"
+            [navigation]="'navigation-arrows'"
+            [outsideDays]="'outsideDays'"
+            [showWeekNumbers]="true"
+            maxlength="10"
+          />
+
+          <button
+            class="btn calendar margin-left"
+            (click)="d1.toggle()"
+            tabindex="-1"
+            type="button"
+          >
+            <i class="fa-solid fa-calendar-days fa-lg calendario-data"></i>
+          </button>
+        </div>
+        <div class="col-1 px-2">
+          <p>até</p>
+        </div>
+        <div class="col-5 p-0 data-fim ml-3">
+          <input
+            class="form-control input-date"
+            name="dp"
+            ngbDatepicker
+            type="search"
+            rInputMask="99/99/9999"
+            placeholder="dd/mm/yyyy"
+            #d2="ngbDatepicker"
+            (ngModelChange)="listarAgendamentos(dataFimFormControl)"
+            id="dataFim"
+            (keyup)="mascaraDataKeyUp(dataFimFormControl, 'dataFim')"
+            (focusout)="resetarFormControlInvalido(dataFimFormControl)"
+            [formControl]="dataFimFormControl"
+            [displayMonths]="'displayMonths'"
+            [navigation]="'navigation-arrows'"
+            [outsideDays]="'outsideDays'"
+            [showWeekNumbers]="true"
+            maxlength="10"
+          />
+
+          <button
+            class="btn calendar margin-left"
+            (click)="d2.toggle()"
+            tabindex="-1"
+            type="button"
+          >
+            <i class="fa-solid fa-calendar-days fa-lg calendario-data"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <p class="text-right atualizar" (click)="listarAgendamentos()">
+        <img class="iconeAtualizar" src="assets/icons/atualizar.png" />
+        Atualizar Lista
+      </p>
+    </div>
+  </div>
+  <div class="card item" *ngFor="let agendamento of agendamentos">
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <p>
+            Log de Processos - {{ agendamento.operacao }};
+            {{ agendamento.tipoLog }}; de {{ agendamento.dataIni }} até
+            {{ agendamento.dataFim }}
+          </p>
+          <p class="aviso-item" *ngIf="agendamento.status == 'Agendado'">
+            Este agendamento será processado em breve. Por favor aguarde.
+          </p>
+          <p class="aviso-item" *ngIf="agendamento.status == 'Erro'">
+            Ocorreu um erro técnico no processamento deste relatório. Aguarde alguns minutos e tente novamente. Se o erro persistir, por favor, abra um chamado para a equipe técnica
+          </p>
+          <span
+            class="cursor-pointer"
+            (click)="service.BaixarArquivo(agendamento.id)"
+            *ngIf="agendamento.status == 'Agendado' ||agendamento.status == 'Finalizado' " ><i class="fa fa-download" aria-hidden="true"></i> Arquivo
+            Carregado</span>
+          <span class="ml-4 cursor-pointer" (click)="remover(agendamento)"
+           *ngIf="agendamento.status == 'Agendado'" ><i class="fa fa-trash" aria-hidden="true"></i> Excluir</span>
+          <span
+            class="cursor-pointer ml-4"
+            (click)="service.BaixarArquivoZip(agendamento.id)"
+            *ngIf="agendamento.status == 'Finalizado'" ><i class="fa fa-download" aria-hidden="true"></i> Relátório Log Processos</span>
+
+        </div>
+        <div class="col text-right">
+          <h3>
+            <span
+              class="badge badge-primary colorized px-3"
+              [ngStyle]="{
+                background:
+                  agendamento.status == 'Não Definido'
+                    ? '#69ac5c'
+                    : agendamento.status == 'Agendado'
+                    ? '#3270a7'
+                    : agendamento.status == 'Processando'
+                    ? '#ff8c00'
+                    : agendamento.status == 'Finalizado'
+                    ? '#19a519'
+                    : agendamento.status == 'Cancelado'
+                    ? '#f80000'
+                    : agendamento.status == 'Erro'
+                    ? '#f80000'
+                    : ''
+              }"
+              >{{ agendamento.status }}</span
+            >
+          </h3>
+          <p>Solicitado por {{ agendamento.usuarioId }}</p>
+          <p>em {{ agendamento.dataDeCadastro }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4 mb-4 paginator">
+    <div class="col">
+      <sisjur-paginator
+        [length]="total"
+        (page)="listarAgendamentos()"
+      ></sisjur-paginator>
+    </div>
+  </div>
+</div>

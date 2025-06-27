@@ -1,0 +1,46 @@
+<div class="pb-4">
+  <div class="roxo-padrao btn-novo mt-4">
+    <h4 class=" roxo-padrao title mb-0" style="color: black;">Contribuições Sociais (D)</h4>
+    <div style="display: contents;" *ngIf="temPermissaoBlocoCeDeE">
+      <i class="fas fa-plus-circle mr-1 fs-2 ml-auto" (click)="incluir()"></i>
+      <span class="fs-1" (click)="incluir()">Incluir um Registro</span>
+    </div>
+  </div>
+  <div style="margin-top: 25px;">
+    <div class="d-flex">
+      <button class="btn btn-link ml-auto p-0 mr-4" style="cursor: pointer; text-decoration: none;"
+      (click)="exportar()" *ngIf="temDados">
+      <i class="fas fa-download pr-1" style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+      Exportar</button>
+  </div>
+    <sisjur-table (sort)="buscarTabela()">
+      <ng-container>
+        <sisjur-table-header>
+          <sisjur-table-header-cell width="46">Código Receita (CR) Contrib. Sociais</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="46">Valor Correspondente (CR) Contrib. Sociais</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="4"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="4" *ngIf="temPermissaoBlocoCeDeE"></sisjur-table-header-cell>
+        </sisjur-table-header>
+        <sisjur-table-row *ngFor="let item of dataSource let i = index">
+          <sisjur-table-row-cell><span
+              title="{{item.descricaoTpcr}}">{{item.descricaoTpcr}}</span></sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item.infocrcontribVrcr | currency: "BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501Infocrcontrib)" *ngIf="!temPermissaoBlocoCeDeE"> <i
+                class="fa fa-magnifying-glass"></i> </button>
+            <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501Infocrcontrib)" *ngIf="temPermissaoBlocoCeDeE"> <i
+              class="fa fa-edit"></i> </button>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell *ngIf="temPermissaoBlocoCeDeE">
+            <button type="button" class="btn btn-icon"
+              (click)="excluir(item.idEsF2501Infocrcontrib, item.descricaoTpcr)"> <i class="fa fa-trash"></i> </button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </sisjur-table>
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" [MostrarQtdPorPagina]="false" [QtdFixaPorPagina]="10"
+        (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+  </div>
+</div>

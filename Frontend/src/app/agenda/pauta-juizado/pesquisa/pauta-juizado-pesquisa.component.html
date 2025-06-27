@@ -1,0 +1,492 @@
+<div class="container pg-interna">
+  <br />
+  <app-container-pagina
+    titulo="Pesquisa de Pauta de Juizado Especial"
+    caminho="{{ breadcrumb }}"
+    [hasAdicionar]="false"
+  >
+    <br />
+    <div class="row pt-3">
+      <div class="col-md-12">
+        <h3 class="titulo-purple pb-0">Pauta de Juizado Especial</h3>
+      </div>
+    </div>
+    <div class="row pt-3" id="container-filtro">
+      <form [formGroup]="criteriosForm" autocomplete="off">
+        <div class="col-md-12 mb-4">
+          <div class="row">
+            <div class="col-md-5">
+              <label for="periodo" class="col-form-label-sm font-weight-bold">
+                Período:
+              </label>
+              <div class="form-inline">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input
+                      class="form-control form-control-sm"
+                      rInputMask="99/99/9999"
+                      maxlength="10"
+                      placeholder="DD/MM/AAAA"
+                      name="data-periodo-primeiro"
+                      min="0"
+                      id="data-periodo-primeiro"
+                      [formControl]="dataPrimeiroPeriodoFormControl"
+                      [maxDate]="dataSegundoPeriodoFormControl.value"
+                      [bsConfig]="{ showWeekNumbers: false }"
+                      bsDatepicker
+                      #dp="bsDatepicker"
+                      style="width: 100px"
+                      placement="top-left top-right bottom-left bottom-right"
+                      [disableTooltip]="
+                        desabilitaTooltip(dataPrimeiroPeriodoFormControl)
+                      "
+                      [ngbTooltip]="validacaoDataPrimeiro"
+                    />
+                    <ng-template #validacaoDataPrimeiro>
+                      <span
+                        *ngIf="
+                          dataPrimeiroPeriodoFormControl.invalid &&
+                          dataPrimeiroPeriodoFormControl.errors.required
+                        "
+                      >
+                        Campo obrigatório
+                      </span>
+                      <span
+                        *ngIf="
+                          dataPrimeiroPeriodoFormControl.getError(
+                            'primeiraDataMaior'
+                          )
+                        "
+                      >
+                        A data final não pode ser maior que a data inicial
+                      </span>
+                      <span
+                        *ngIf="
+                          dataPrimeiroPeriodoFormControl.getError(
+                            'maxDiasExcedido'
+                          )
+                        "
+                      >
+                        O período de dias não pode ser superior a
+                        {{ numeroMaximoDias }} dias
+                      </span>
+                    </ng-template>
+                    <div class="input-group-append">
+                      <button
+                        class="btn calendar"
+                        (click)="dp.toggle()"
+                        type="button"
+                      >
+                        <i class="fa-solid fa-calendar-days fa-lg"></i>
+                      </button>
+                    </div>
+                    <div class="mx-3 pt-2">
+                      <p>Até</p>
+                    </div>
+                    <input
+                      class="form-control form-control-sm"
+                      rInputMask="99/99/9999"
+                      maxlength="10"
+                      placeholder="DD/MM/AAAA"
+                      name="data-periodo-segundo"
+                      min="0"
+                      id="data-periodo-segundo"
+                      [formControl]="dataSegundoPeriodoFormControl"
+                      [minDate]="dataPrimeiroPeriodoFormControl.value"
+                      [bsConfig]="{ showWeekNumbers: false }"
+                      bsDatepicker
+                      #ds="bsDatepicker"
+                      style="width: 100px"
+                      placement="top-left top-right bottom-left bottom-right"
+                      [disableTooltip]="
+                        desabilitaTooltip(dataSegundoPeriodoFormControl)
+                      "
+                      [ngbTooltip]="validacaoDataSegundo"
+                    />
+                    <ng-template #validacaoDataSegundo>
+                      <span
+                        *ngIf="
+                          dataSegundoPeriodoFormControl.invalid &&
+                          dataSegundoPeriodoFormControl.errors.required
+                        "
+                      >
+                        Campo obrigatório
+                      </span>
+                      <span
+                        *ngIf="
+                          dataSegundoPeriodoFormControl.getError(
+                            'primeiraDataMaior'
+                          )
+                        "
+                      >
+                        A data final não pode ser maior que a data inicial
+                      </span>
+                      <span
+                        *ngIf="
+                          dataSegundoPeriodoFormControl.getError(
+                            'maxDiasExcedido'
+                          )
+                        "
+                      >
+                        O período de dias não pode ser superior a
+                        {{ numeroMaximoDias }} dias
+                      </span>
+                    </ng-template>
+                    <div class="input-group-append">
+                      <button
+                        class="btn calendar"
+                        (click)="ds.toggle()"
+                        type="button"
+                      >
+                        <i class="fa-solid fa-calendar-days fa-lg"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7 radio">
+              <label class="col-form-label-sm font-weight-bold"
+                >Situação do Processo:</label
+              >
+              <div class="pt-2">
+                <input
+                  type="radio"
+                  formControlName="chkSituacaoProcessoAtivo"
+                  id="chkSituacaoProcessoAtivo"
+                  value="1"
+                  [checked]="chkSituacaoProcessoAtivoStatus"
+                  (click)="chkSituacaoProcessoAtivoClick()"
+                />
+                <label
+                  for="chkSituacaoProcessoAtivo"
+                  class="m-0 pl-1 font-weight-bold"
+                  >Ativo</label
+                >
+                <input
+                  type="radio"
+                  formControlName="chkSituacaoProcessoInativo"
+                  id="chkSituacaoProcessoInativo"
+                  value="2"
+                  class="chkMarginLeft"
+                  [checked]="chkSituacaoProcessoInativoStatus"
+                  (click)="chkSituacaoProcessoInativoClick()"
+                />
+                <label
+                  for="chkSituacaoProcessoInativo"
+                  class="m-0 pl-1 font-weight-bold"
+                  >Inativo</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row pt-1">
+            <div class="col-md-5">
+              <label
+                class="col-form-label-sm font-weight-bold"
+                for="tipoAudiencia"
+              >
+                Tipo de Audiência:
+              </label>
+              <ng-select
+                [ngStyle]="{ fontSize: '11px' }"
+                id="tipoAudiencia"
+                [items]="tiposAudiencia"
+                bindLabel="dscTipoAudiencia"
+                bindValue="codTipoAud"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [virtualScroll]="true"
+                [formControl]="tipoAudienciaFormControl"
+                placeholder="Selecione o Tipo de Audiência"
+              >
+              </ng-select>
+            </div>
+            <div class="col-md-7">
+              <label class="col-form-label-sm font-weight-bold"
+                >Audiência sem Preposto:</label
+              >
+              <div class="pt-2">
+                <input
+                  type="radio"
+                  formControlName="chkAudienciaPrepostoSim"
+                  id="chkAudienciaPrepostoSim"
+                  value="1"
+                  [checked]="chkAudienciaPrepostoSimStatus"
+                  (click)="chkAudienciaPrepostoSimClick()"
+                />
+                <label
+                  for="chkAudienciaPrepostoSim"
+                  class="m-0 pl-1 font-weight-bold"
+                  >Sim</label
+                >
+                <input
+                  type="radio"
+                  formControlName="chkAudienciaPrepostoNao"
+                  id="chkAudienciaPrepostoNao"
+                  value="2"
+                  class="chkMarginLeft"
+                  [checked]="chkAudienciaPrepostoNaoStatus"
+                  (click)="chkAudienciaPrepostoNaoClick()"
+                />
+                <label
+                  for="chkAudienciaPrepostoNao"
+                  class="m-0 pl-1 font-weight-bold"
+                  >Não</label
+                >
+                <input
+                  type="radio"
+                  formControlName="chkAudienciaPrepostoIndiferente"
+                  id="chkAudienciaPrepostoIndiferente"
+                  value="3"
+                  class="chkMarginLeft"
+                  [checked]="chkAudienciaPrepostoIndiferenteStatus"
+                  (click)="chkAudienciaPrepostoIndiferenteClick()"
+                />
+                <label
+                  for="chkAudienciaPrepostoIndiferente"
+                  class="m-0 pl-1 font-weight-bold"
+                  >Indiferente</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-md-5">
+              <label
+                class="col-form-label-sm font-weight-bold"
+                for="empresaGrupo"
+              >
+                Empresa do Grupo:
+              </label>
+              <ng-select
+                [ngStyle]="{ fontSize: '11px' }"
+                id="empresaGrupo"
+                [items]="empresasGrupo"
+                bindLabel="nomParte"
+                bindValue="codParte"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [virtualScroll]="true"
+                [formControl]="empresaGrupoFormControl"
+                placeholder="Selecione a Empresa do Grupo"
+              >
+              </ng-select>
+            </div>
+            <div class="col-md-7">
+              <label
+                class="col-form-label-sm font-weight-bold"
+                for="empresaCentralizadora"
+              >
+                Empresa Centralizadora:
+              </label>
+              <ng-select
+                [ngStyle]="{ fontSize: '11px' }"
+                id="empresaCentralizadora"
+                [items]="empresasCentralizadoras"
+                bindLabel="nome"
+                bindValue="codigo"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [virtualScroll]="true"
+                [formControl]="empresaCentralizadoraFormControl"
+                placeholder="Selecione a Empresa Centralizadora"
+              >
+              </ng-select>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <div class="col-md-5">
+              <input
+                type="radio"
+                formControlName="chkJuizado"
+                id="chkJuizado"
+                value="1"
+                [checked]="chkJuizadoStatus"
+                (click)="radioJuizadoClick()"
+              />
+              <label for="chkJuizado" class="m-0 pl-1 font-weight-bold"
+                >Juizado</label
+              >
+            </div>
+            <div class="col-md-7">
+              <input
+                type="radio"
+                formControlName="chkGrupoJuizado"
+                id="chkGrupoJuizado"
+                value="2"
+                (click)="radioGrupoJuizadoClick()"
+                [checked]="chkGrupoJuizadoStatus"
+              />
+              <label for="chkGrupoJuizado" class="m-0 pl-1 font-weight-bold"
+                >Grupo de Juizado</label
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <label class="col-form-label-sm font-weight-bold" for="estado">
+                Estado:
+              </label>
+              <ng-select
+                [ngStyle]="{
+                  fontSize: '11px',
+                  opacity: estadoFormControl.enabled ? 1 : 0.5
+                }"
+                [items]="estados"
+                [formControl]="estadoFormControl"
+                bindLabel="descricao"
+                (change)="estadoChange()"
+                bindValue="id"
+                appearance="outline"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [placeholder]="'Selecione o Estado'"
+              >
+                <ng-template ng-option-tmp let-item="item">
+                  <div title="{{ item.descricao.toUpperCase() }}">
+                    {{ item.descricao.toUpperCase() }}
+                  </div>
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="col-md-7">
+              <label
+                class="col-form-label-sm font-weight-bold"
+                for="grupoJuizado"
+              >
+                &nbsp;
+              </label>
+              <ng-select
+                [ngStyle]="{
+                  fontSize: '11px',
+                  opacity: grupoJuizadoFormControl.enabled ? 1 : 0.5
+                }"
+                id="grupoJuizado"
+                [items]="gruposJuizado"
+                bindLabel="dscGrupoJuizado"
+                bindValue="codGrupoJuizado"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [virtualScroll]="true"
+                [formControl]="grupoJuizadoFormControl"
+                placeholder="Selecione o Grupo de Juizado"
+              >
+              </ng-select>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-md-5">
+              <label class="col-form-label-sm font-weight-bold" for="comarca">
+                Comarca:
+              </label>
+              <ng-select
+                [ngStyle]="{
+                  fontSize: '11px',
+                  opacity: comarcaFormControl.enabled ? 1 : 0.5
+                }"
+                [items]="comarcas"
+                formControlName="comarca"
+                bindLabel="descricao"
+                bindValue="id"
+                appearance="outline"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                placeholder="Selecione a comarca"
+                (change)="comarcaChange($event)"
+              >
+                <ng-template ng-option-tmp let-item="item">
+                  <div title="{{ item.descricao }}">{{ item.descricao }}</div>
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="col-md-7">
+              <label
+                class="col-form-label-sm font-weight-bold"
+                for="statusAudiencia"
+              >
+                Status de Audiência:
+              </label>
+              <ng-select
+                [ngStyle]="{ fontSize: '11px' }"
+                id="statusAudiencia"
+                [items]="audiencias"
+                bindLabel="dscStatusAudiencia"
+                bindValue="codStatusAudiencia"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [virtualScroll]="true"
+                [formControl]="statusAudienciaFormControl"
+                placeholder="Selecione um Status"
+              >
+              </ng-select>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-md-5">
+              <label
+                class="col-form-label-sm font-weight-bold"
+                for="tipoAudiencia"
+              >
+                Juizado:
+              </label>
+              <ng-select
+                [ngStyle]="{
+                  fontSize: '11px',
+                  opacity: juizadoFormControl.enabled ? 1 : 0.5
+                }"
+                id="juizado"
+                [items]="juizados"
+                bindLabel="nomTipoVara"
+                bindValue="codVara"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [virtualScroll]="true"
+                [formControl]="juizadoFormControl"
+                placeholder="Selecione o Juizado"
+              >
+              </ng-select>
+            </div>
+            <div class="col-md-7"></div>
+          </div>
+          <div class="row pt-1">
+            <div class="col-md-12">
+              <label class="col-form-label-sm font-weight-bold" for="matricula">
+                Preposto:
+              </label>
+              <ng-select
+                [items]="prepostos"
+                bindLabel="name"
+                bindValue="id"
+                [multiple]="true"
+                id="preposto"
+                [formControl]="prepostoFormControl"
+                placeholder="Selecione os Prepostos"
+                [ngStyle]="{ opacity: disabledPreposto ? 0.5 : 1 }"
+              >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row pt-3">
+      <div class="col-md-12">
+        <button class="btn btn-primary float-right" (click)="search()">
+          Pesquisar
+        </button>
+        <button class="btn btn-link float-right" (click)="clear()">
+          Limpar
+        </button>
+      </div>
+    </div>
+  </app-container-pagina>
+</div>

@@ -1,0 +1,157 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">{{ titulo }} de Advogados</h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row mt-2">
+      <div class="col-sm-12">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Tipo e Número de Inscrição:</b>
+        </label>
+        <div class="row">
+          <div class="col-sm-4 pr-0">
+            <ng-select
+          class="form-control form-control-select"
+          [items]="listaTipoAdv"
+          bindLabel="descricao"
+          bindValue="id"
+          placeholder="Selecione"
+          [formControl]="ideadvTpinscFormControl"
+          [disableTooltip]="desabilitaTooltip(ideadvTpinscFormControl)"
+          [ngbTooltip]="validacaoTpInscricao"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+          (change)="validaTpInsc()"
+        >
+        </ng-select>
+
+        <ng-template #validacaoTpInscricao>
+          <span
+            *ngIf="
+              ideadvTpinscFormControl.invalid &&
+              ideadvTpinscFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+        </ng-template>   
+          </div>
+          <div class="col-sm-8">      
+            <input
+              type="text"
+              [textMask]="{ mask: mascaraNrIncAdvogado }"
+              id="nrProcesso"
+              class="form-control"
+              [formControl]="ideadvNrinscFormControl"
+              [disableTooltip]="desabilitaTooltip(ideadvNrinscFormControl)"
+              [ngbTooltip]="validacaoCpfCnpj"
+              [disabled]="!temPermissaoBlocoCeDeE"
+              [class.disabled]="!temPermissaoBlocoCeDeE"
+            />  
+    
+            <ng-template #validacaoCpfCnpj>
+              <span
+                *ngIf="
+                  ideadvNrinscFormControl.invalid &&
+                  (ideadvNrinscFormControl.hasError('required') ||
+                    ideadvNrinscFormControl.hasError('minLength'))
+                "
+              >
+                Campo Obrigatório.
+              </span>
+              <span
+                *ngIf="
+                  ideadvNrinscFormControl.invalid &&
+                  ideadvNrinscFormControl.hasError('cpfNotValid')
+                "
+              >
+                CPF inválido.
+              </span>
+              <span
+                *ngIf="
+                  ideadvNrinscFormControl.invalid &&
+                  ideadvNrinscFormControl.hasError('cnpjNotValid')
+                "
+              >
+                CNPJ inválido.
+              </span>
+            </ng-template>
+          </div>
+        </div>        
+      </div>
+      
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-sm-12">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Valor da Despesa com o Advogado:</b>
+        </label>
+        <input
+          type="text"
+          name="despAdv"
+          id="despAdv"
+          class="form-control input-number"
+          [formControl]="ideadvVlradvFormControl"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          maxlength="21"
+          (blur)="adicionaValidators()"
+          [disableTooltip]="desabilitaTooltip(ideadvVlradvFormControl)"
+          [ngbTooltip]="validacaoDespesaAdv"
+          [disabled]="!temPermissaoBlocoCeDeE"
+        />
+        <ng-template #validacaoDespesaAdv>
+          <span
+                  *ngIf="
+                    ideadvVlradvFormControl.invalid &&
+                    ideadvVlradvFormControl.hasError('valorDespesaInvalido')
+                  "
+                >
+                  Deve ser maior que 0 (zero), se informado.
+                </span>                   
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="modal-footer pr-0">
+      <button
+        type="button"
+        class="btn btn-link"
+        aria-label="Close"
+        (click)="close()"
+        *ngIf="temPermissaoBlocoCeDeE"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="formGroup.invalid"
+        (click)="salvar()"
+        *ngIf="temPermissaoBlocoCeDeE"
+      >
+        Confirmar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="formGroup.invalid"
+        (click)="close()"
+        *ngIf="!temPermissaoBlocoCeDeE"
+      >
+        Fechar
+      </button>
+    </div>
+  </form>
+</div>

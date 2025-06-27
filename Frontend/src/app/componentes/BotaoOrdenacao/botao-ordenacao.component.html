@@ -1,0 +1,7 @@
+<button class="btn" (click)="onClick()" [disabled]="disabled">
+    <i *ngIf="!isActive" class="fas fa-sort ambos" style="color: #9597a6; font-size: 14px;"></i>
+    <i *ngIf="isActive && ordemCrescente"  class="fas fa-sort-down down" style=" font-size: 14px;"></i>
+    <span class="d-flex align-items-center">
+    <i *ngIf="isActive && !ordemCrescente" class="fas fa-sort-up up" style=" font-size: 14px;"></i>
+  </span>
+</button>

@@ -1,0 +1,171 @@
+<style>
+  header {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1024px;
+    max-width: calc(100% - 32px);
+    font-weight: normal;
+    margin-top: 1.6rem;
+    margin-bottom: 3.2rem;
+  }
+
+  header h1 {
+    color: #786bb9;
+    font-size: 2rem;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  header h3 {
+    color: #555555;
+    font-size: 1.2rem;
+    font-weight: normal;
+    margin: 0;
+  }
+
+  main {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1024px;
+    max-width: calc(100% - 32px);
+  }
+
+  main .title h4 {
+    color: #786bb9;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .btn:not(.btn-primary) {
+    color: #786bb9;
+  }
+
+  .btn i {
+    height: 1em;
+    width: 1em;
+    font-size: 1em;
+    margin: .4rem;
+    text-align: center;
+  }
+
+  .btn-small,
+  .btn-small * {
+    font-size: 1rem;
+  }
+
+
+  section.panel-container {
+    border: 1px solid #dee2e6;
+  }
+
+  section.panel {
+    border-bottom: 1px solid #dee2e6;
+    padding: 12px;
+  }
+
+  section.panel:last-child {
+    border: none;
+    padding: 6px;
+  }
+
+  section.panel .info h5 {
+    color: #786bb9;
+    font-size: 1.2rem;
+    font-weight: normal;
+    margin: 0;
+    margin-bottom: .4rem;
+  }
+
+  section.panel .info h6 {
+    color: #555555;
+    font-size: 1.1rem;
+    font-weight: normal;
+    margin: 0;
+    margin-bottom: .4rem;
+  }
+
+  section.download .btn:first-child {
+    padding-left: 0;
+  }
+
+  section.panel .status {
+    text-align: right;
+  }
+
+  section.panel .status span {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: normal;
+    display: inline-block;
+    padding: 0 1.2rem;
+    margin: 0;
+    margin-bottom: .4rem;
+    border-radius: 4px;
+  }
+
+  section.panel .status p {
+    color: #555555;
+    font-size: 1.1rem;
+    font-weight: normal;
+    margin: 0;
+  }
+</style>
+
+<header fxLayout="row" fxLayoutAlign="start center">
+  <span fxFlex>
+    <h1>Relatório ATM JEC</h1>
+    <h3>{{breadcrumb}}</h3>
+  </span>
+  <button class="btn btn-primary" (click)="novoAgendamento()">NOVO AGENDAMENTO</button>
+</header>
+
+<main fxLayout="column">
+
+  <span fxLayout="row" fxLayoutAlign="start center" class="title">
+    <h4 fxFlex>Relatórios agendados / executados</h4>
+    <button class="btn btn-small" (click)="refresh()">
+      <i class="fas fa-redo-alt"></i>
+      <span>ATUALIZAR LISTA</span>
+    </button>
+  </span>
+
+  <section class="panel-container" fxLayout="column">
+
+    <section class="panel" fxLayout="row" *ngFor="let a of agendamentos">
+
+      <section class="info" fxFlex [ngSwitch]="a.status > 1">
+        <h5>Base de fechamento: {{ a.mesAnoFechamento | date:'MM/yyyy' }} - {{ a.dataFechamento |
+          date:'dd/MM/yyyy' }} - {{ a.numeroDeMeses }} Meses </h5>
+        <h6 *ngSwitchCase="true">Finalizado em {{ a.fimDaExecucao | date:'dd/MM/yyyy HH:mm' }}</h6>
+        <h6 *ngIf="a.status == 1">Não finalizado</h6>
+
+        <section class="download" fxLayout="row" *ngIf="a.status == 2">
+          <button class="btn btn-small" (click)="downloadBase(a.id)">
+            <i class="fas fa-download"></i>
+            <span>Base de Fechamento</span>
+          </button>
+          <button class="btn btn-small" (click)="downloadRelatorio(a.id)">
+            <i class="fas fa-download"></i>
+            <span>Relatório ATM</span>
+          </button>
+        </section>
+      </section>
+
+      <section class="status" [ngSwitch]="a.status">
+        <span *ngSwitchDefault [style.background-color]="'#3270A7'">Agendado</span>
+        <span *ngSwitchCase="1" [style.background-color]="'#FF8C00'">Processando</span>
+        <span *ngSwitchCase="2" [style.background-color]="'#19A519'">Finalizado</span>
+        <span *ngSwitchCase="3" [style.background-color]="'#F80000'">Erro</span>
+        <p>Solicitado por {{ a.nomeUsuario }}</p>
+        <p>em {{ a.dataAgendamento | date:'dd/MM/yyyy HH:mm' }}</p>
+      </section>
+
+    </section>
+
+    <section class="panel" fxLayout="column" fxLayoutAlign="center center">
+      <button class="btn" (click)="loadMore()" [disabled]="!hasMorePages">VER MAIS</button>
+    </section>
+
+  </section>
+</main>

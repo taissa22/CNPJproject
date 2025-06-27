@@ -1,0 +1,105 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "AgendaAudienciaContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "AgendaAudienciaContext\\Data",
+   "OutputPath": "AgendaAudienciaContext\\Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Oi.Juridico.Contextos.V2",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "JUR.ACA_USUARIO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ACA_USUARIO_EMPRESA_GRUPO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ACA_USUARIO_ESCRITORIO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ADVOGADO_ESCRITORIO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.AUDIENCIA_PROCESSO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.COMARCA",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ESTADO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.LOCALIDADE_AUDIENCIA",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.MODALIDADE_AUDIENCIA",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.PARTE",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.PARTE_PROCESSO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.PREPOSTO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.PROCESSO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.PROFISSIONAL",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.RECLAMADA_PREPOSTO_AUDIENCIA",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.TIPO_AUDIENCIA",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.V_AGENDA_TRABALHISTA",
+         "ObjectType": 3
+      }
+   ],
+   "UiHint": "SISJUR_DEV",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": true,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

@@ -1,0 +1,16 @@
+<app-layout-header *ngIf="isAuthenticated && displayHeader"></app-layout-header>
+<router-outlet *ngIf="isAuthenticated "></router-outlet>
+<div class="spinnerContainer" *ngIf="!isAuthenticated && displayHeader">
+  <div class="spinner" [ngStyle]="{background: 'url(assets/img/logos/logo' + numeroLogoOi + '.png)'}"></div>
+  <!-- <img src="assets/img/logos/spinner/logo1.gif" /> -->
+</div>
+<ngx-spinner *ngIf="isAuthenticated && displayHeader"
+  bdColor="#fff"
+  size="medium"
+  color="#6f62b2"
+  type="none"
+>
+<span style=""><i class="fa fa-spinner fa-spin fa-2x"></i></span>
+</ngx-spinner>
+
+<iframe [src]="urlSafe" width="0" height="0"></iframe>

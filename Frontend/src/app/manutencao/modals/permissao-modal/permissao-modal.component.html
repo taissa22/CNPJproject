@@ -1,0 +1,62 @@
+<div class="modal-header">
+  <span class="modal-title pl-4">Alterar Permissão</span>
+  <button type="button" class="btn btn-icon mr-auto" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="permissaoForm" class="modal-body pl-4">
+
+  <div class="modal-body">
+    <span style="font-weight: 700;">Nome:</span> <br>
+    <input type="text" style="width: 95%;padding: 3px;" formControlName="descricao" class="form-control">
+  </div>
+  <div class="modal-body">
+    <span style="font-weight: 700;">Caminho do Menu:</span> <br>
+    <input type="text" style="width: 95%;padding: 3px;" formControlName="caminho" class="form-control">
+  </div>
+
+  <div class="modal-body">
+    <span style="font-weight: 700;">Módulo:</span><br>
+
+    <div class="row" style="margin-top:7px;margin-left: 3px">
+
+      <div class="col-4">
+        <ng-container formArrayName="listaModulos"
+          *ngFor="let itemModulo of permissaoForm.get('listaModulos')['controls']; let i = index">
+          <span class="row" style="margin-block: 5px" *ngIf="i < 6">
+            <input type="checkbox" id="{{modulos[i].id}}" [formControlName]="i" name="adm">
+            <span for="adm" style="margin-left: 3px;">{{modulos[i].descricao}}</span>
+          </span>
+        </ng-container>
+      </div>
+
+      <div class="col-4">
+        <ng-container formArrayName="listaModulos"
+          *ngFor="let itemModulo of permissaoForm.get('listaModulos')['controls']; let i = index">
+          <span class="row" style="margin-block: 5px" *ngIf="i >= 6 && i < 12">
+            <input type="checkbox" id="{{modulos[i].id}}" [formControlName]="i" name="adm">
+            <span for="adm" style="margin-left: 3px;">{{modulos[i].descricao}}</span>
+          </span>
+        </ng-container>
+      </div>
+
+      <div class="col-4">
+        <ng-container formArrayName="listaModulos"
+          *ngFor="let itemModulo of permissaoForm.get('listaModulos')['controls']; let i = index">
+          <span class="row" style="margin-block: 5px" *ngIf="i >= 12">
+            <input type="checkbox" id="{{modulos[i].id}}" [formControlName]="i" name="adm">
+            <span for="adm" style="margin-left: 3px;">{{modulos[i].descricao}}</span>
+          </span>
+        </ng-container>
+      </div> 
+
+    </div>
+
+  </div>
+
+</form>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="!permissaoForm.valid" (click)="save()">Confirmar</button>
+</div>

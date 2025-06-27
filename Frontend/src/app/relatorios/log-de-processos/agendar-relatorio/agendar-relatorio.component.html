@@ -1,0 +1,78 @@
+<h3>Agendar Relatório Log de Processos</h3>
+<p class="subtitulo">Para que sua carga seja realizada com sucesso, siga o passo a passo descrito nas instruções para a
+    carga.</p>
+<div class="card">
+    <div class="card-body" [formGroup]="formGroup">
+        <p class="titulo-upload">Arquivo com os códigos internos a serem consultados
+            <span class="float-right" (click)="abreInstrucoesParaCarga()"><i class="fa fa-question-circle" aria-hidden="true"></i> Instruções para
+                carga</span>
+        </p>
+        <div class="row">
+            <div class="col-5">
+                <input style="display:none" (change)="carregarArquivo()" #inputCsv id="arquivoDownload" type="file" />
+                <input type="text" [(ngModel)]="nomeDoArquivo" [ngModelOptions]="{standalone:true}" disabled="" class="form-control">
+                <p class="download" (click)="service.BaixarArquivoModelo()"><i class="fa fa-download fa-lg" aria-hidden="true"></i> &nbsp;BAIXAR ARQUIVO PADRÃO
+                </p>
+            </div>
+            <div class="col">
+                <label class="btn btn-primary cursor-pointer" for="arquivoDownload" >
+                    <i class="fa fa-folder fa-lg fa-fw" aria-hidden="true"></i> &nbsp; Selecionar</label>
+            </div>
+        </div>
+        <div class="row inputs">
+            <div class="col">
+                <label>Operação:</label>
+                <select class="form-control select-agendar" formControlName="Operacao" > 
+                    <option [value]="operacao.id" *ngFor="let operacao of comboOperacoes">{{operacao.texto}}</option>
+                </select>
+            </div>
+            <div class="col">
+                <label>Log:</label>
+                <select class="form-control select-agendar" formControlName="TipoLog">
+                    <option [value]="log.id" *ngFor="let log of comboLogs">{{log.texto}}</option>
+                </select>
+            </div>
+            <div class="col">
+                <label>Periodo:</label>
+                <div class="row">
+                    <div class="col-5 p-0 data-ini" >
+                        <input class="form-control input-date"  
+                            name="dp" ngbDatepicker type="search"
+                            rInputMask="99/99/9999" placeholder="dd/mm/yyyy" #d1="ngbDatepicker"
+                            formControlName="DataIni" [displayMonths]="'displayMonths'" 
+                            id= "dataIniAgend"  (keyup)="mascaraDataKeyUp(formGroup.get('DataIni'),'dataIniAgend')"
+                            (focusout)="resetarFormControlInvalido(formGroup.get('DataIni'))" 
+                            [navigation]="'navigation-arrows'" [outsideDays]="'outsideDays'" [showWeekNumbers]="true"
+                            maxlength="10">
+
+                        <button class="btn calendar margin-left" (click)="d1.toggle()" tabindex="-1" type="button"><i
+                                class="fa-solid fa-calendar-days fa-lg calendario-data"></i>
+                        </button>
+                    </div>
+                    <div class="col-1 px-2">
+                        <p style="margin-top: 5px;">até</p>
+                    </div>
+                    <div class="col-5 p-0 data-fim ml-3">
+                        <input class="form-control input-date" name="dp" ngbDatepicker type="search"
+                            rInputMask="99/99/9999" placeholder="dd/mm/yyyy" #d2="ngbDatepicker"
+                            formControlName="DataFim" [displayMonths]="'displayMonths'"
+                            id= "dataFimAgend"  (keyup)="mascaraDataKeyUp(formGroup.get('DataFim'),'dataFimAgend')"
+                            (focusout)="resetarFormControlInvalido(formGroup.get('DataFim'))" 
+                            [navigation]="'navigation-arrows'" [outsideDays]="'outsideDays'" [showWeekNumbers]="true"
+                            maxlength="10">
+
+                        <button class="btn calendar margin-left" (click)="d2.toggle()" tabindex="-1" type="button"><i
+                                class="fa-solid fa-calendar-days fa-lg calendario-data"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <button class="btn btn-primary float-right" (click)="salvar()">Agendar</button>
+            </div>
+        </div>
+
+    </div>
+</div>

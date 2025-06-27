@@ -1,0 +1,26 @@
+<app-dual-list [label]="'Escritórios'" [dualList]="listaEscritorios" (listaSelecionados)="mostraSelecionados($event)"
+  [habilitaSelecionadas]="false">
+</app-dual-list>
+
+<div class="considerar-filtro d-flex align-items-center mt-2">
+  <div class="pr-2">
+    Considerar como filtros:
+  </div>
+  <div class="mr-2 d-flex align-items-center">
+    <input type="radio"
+    class="mr-2"
+     [(ngModel)]="tipoEscritorio"
+     value="1"
+     (change)="onItemChange()"
+     id="audiencia">
+    <label for="audiencia">Escritório da Audiência</label>
+  </div>
+  <div class="mr-2  d-flex align-items-center">
+    <input type="radio" class="mr-2"
+     [(ngModel)]="tipoEscritorio"
+     value="2"
+     (change)="onItemChange()"
+     id="processo">
+    <label for="processo"> Escritório do Processo</label>
+  </div>
+</div>

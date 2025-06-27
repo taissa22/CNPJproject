@@ -1,0 +1,71 @@
+<div class="modal-header">
+  <span class="modal-title pl-0"><b>Arquivos de registros que serão carregados:</b></span>
+</div>
+
+<div class="modal-body pt-0">
+  <div class="col-sm-12 p-0">
+    <div>
+      <button type="button" (click)="arquivo.click()" class="btn btn-primary ml-1"
+        style="display: flex; align-items: center; justify-content: center;float:right;">
+        <i class="fas fa-folder mr-1"></i> Escolher Arquivo
+      </button>
+    </div>
+    <input type="file" style="display: none" (change)="aoAdicionarArquivo()" name="Arquivo" #arquivo accept=".csv" />
+    <input type="text" style="width:405px;" id="percentuais-atm" class="form-control" placeholder="Nome do arquivo"
+      [formControl]="nomeArquivoFormControl" readonly />
+  </div>
+  <div class="mt-2">
+    <span class="roxo-padrao">Carregue uma planilha .csv de até 10 MB que esteja no modelo padrão</span>
+  </div>
+  <div class="mt-2">
+
+    <a *ngIf="typeForm == 'periodo'" href="assets\esocial\Carga_2500_BaseCalculoFGTS.csv" class="font-purple btn-link btn-text-cursor">
+      <span class="roxo-padrao" style="font-size:10px;"><i class="fas fa-download pr-1"></i> BAIXAR PLANILHA PADRÃO </span>
+    </a>
+    <a *ngIf="typeForm == 'periodo-base'" href="assets\esocial\Carga_2501_PeriodoBaseCalculo.csv" class="font-purple btn-link btn-text-cursor">
+      <span class="roxo-padrao" style="font-size:10px;"><i class="fas fa-download pr-1"></i> BAIXAR PLANILHA PADRÃO </span>
+    </a>
+    <a *ngIf="typeForm == 'info-cr-irrf'" href="assets\esocial\Carga_2501_ImpostoRendaRetidoFonte.csv" class="font-purple btn-link btn-text-cursor">
+      <span class="roxo-padrao" style="font-size:10px;"><i class="fas fa-download pr-1"></i> BAIXAR PLANILHA PADRÃO </span>
+    </a>
+    <a *ngIf="typeForm == 'contribuicao'" href="assets\esocial\Carga_2501_ContribuicoesSociais.zip" class="font-purple btn-link btn-text-cursor">
+      <span class="roxo-padrao" style="font-size:10px;"><i class="fas fa-download pr-1"></i> BAIXAR PLANILHAS PADRÃO </span>
+    </a>
+    <a *ngIf="typeForm == 'remuneracao'" href="assets\esocial\Carga_2500_Remuneracao.csv" class="font-purple btn-link btn-text-cursor">
+      <span class="roxo-padrao" style="font-size:10px;"><i class="fas fa-download pr-1"></i> BAIXAR PLANILHA PADRÃO </span>
+    </a>
+  </div>
+  <div *ngIf="typeForm == 'contribuicao'" class="mt-2">
+    <b>Tipo de planilha:</b>
+    <div class="d-flex mt-1">
+      <input type="radio" name="tipo-carga" id="em-linha" (change)="validaTipoPlanilha()" [formControl]="tipoCargaFormControl" value="1">
+      <label class="m-0 ml-2" for="em-linha">Contribuições sociais em linhas</label>
+    </div>
+    <div class="d-flex">
+      <input type="radio" name="tipo-carga" id="em-colunas" (change)="validaTipoPlanilha()" [formControl]="tipoCargaFormControl" value="2">
+      <label class="m-0 ml-2" for="em-colunas">Contribuições sociais em colunas</label>
+    </div>
+  </div>
+
+  <div class="mt-2">
+    <b>Configurações da carga:</b>
+    <div class="d-flex mt-1">
+      <input type="radio" name="carga" id="carga-padrao" [formControl]="opcaoCargaFormControl" value="1">
+      <label *ngIf="typeForm != 'contribuicao'" class="m-0 ml-2" for="carga-padrao">Carga padrão</label>
+      <label *ngIf="typeForm == 'contribuicao'" class="m-0 ml-2" for="carga-padrao">Carregar os novos registros sem apagar os existentes</label>
+    </div>
+    <div class="d-flex">
+      <input type="radio" name="carga" id="apagar" [formControl]="opcaoCargaFormControl" value="2">
+      <label class="m-0 ml-2" for="apagar">Apagar todos os registros existentes e carregar os novos</label>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">
+    Cancelar
+  </button>
+  <button type="button" class="btn btn-primary" [disabled]="nomeArquivoFormControl.value == null || nomeArquivoFormControl.value == ''" (click)="incluirAnexo()">
+    Confirmar
+  </button>
+</div>

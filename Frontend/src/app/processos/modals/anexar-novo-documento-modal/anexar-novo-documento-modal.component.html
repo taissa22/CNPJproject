@@ -1,0 +1,32 @@
+<div class="pagina">
+  <div class="header">
+    <div class="header_row">
+      <h4 class="roxo-padrao">Anexar Novo Documento</h4>
+    </div>
+  </div>
+
+  <div class="content mt-3">
+    <div class="d-flex">
+      <div>
+        <button type="button" (click)="arquivo.click()" class="btn btn-primary mr-4"
+          style="width: 100px; display: flex; align-items: center; justify-content: center;float:right;">
+          Escolher Arquivo
+        </button>
+      </div>
+      <input type="file" style="display: none" (change)="aoAdicionarArquivo()" #arquivo accept=".zip" />
+      <input type="text" style="width:390px;" id="percentuais-atm" class="form-control"
+        placeholder="Nome do arquivo" [formControl]="nomeArquivoFormControl" readonly />
+    </div>
+    <div class="mt-3">
+      <label for="comentario"><b>Comentário:</b></label>
+      <textarea id="comentario" maxlength="999" rows="9" [formControl]="comentarioFormControl" (input)="contador()"></textarea>
+      <div for="comentario" style="text-align: end;">{{qtdComentario}}/999</div>
+    </div>
+  </div>
+
+  <div class="footer mt-3">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="!arquivoZip || qtdComentario == 0" (click)="incluirAnexo()">Anexar</button>
+  </div>
+
+</div>

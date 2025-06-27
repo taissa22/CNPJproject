@@ -1,0 +1,68 @@
+<style>
+  :host {
+    padding: 16px 24px;
+  }
+
+  h4 {
+    color: #786bb9;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 4px;
+  }
+
+  section.base-dropdown {
+    margin: 16px 0;
+  }
+
+  section.footer {
+    margin-top: 16px;
+  }
+</style>
+
+<ng-container [formGroup]="agendamentoFormGroup">
+
+  <h4>Novo Relatório ATM</h4>
+
+  <section class="base-dropdown">
+    <label class="col-form-label-sm" for="descricao-input">
+      <b>Base de Fechamento:</b>
+    </label>
+    <ng-select appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="false" [clearable]="false"
+      placeholder="Selecione" [formControl]="fechamentoFormControl">
+      <ng-option *ngFor="let f of fechamentos" [value]="f">
+        {{ f.mesAnoFechamento | date:'MM/yyyy' }} - {{ f.dataFechamento | date:'dd/MM/yyyy' }} - {{ f.numeroDeMeses }}
+        Meses {{ f.mensal ? '- Fechamento Mensal' : '' }}
+      </ng-option>
+    </ng-select>
+  </section>
+
+  <h4>Índices por UF para cálculo:</h4>
+
+  <sisjur-table #tb bodyRowsLimit="5" emptyMessage="Selecione uma base de fechamento">
+    <sisjur-table-header>
+      <sisjur-table-header-cell width="20">UF</sisjur-table-header-cell>
+      <sisjur-table-header-cell>Índice</sisjur-table-header-cell>
+    </sisjur-table-header>
+
+    <sisjur-table-row *ngFor="let indiceFormGroup of indicesFormArray.controls">
+      <sisjur-table-row-cell>{{indiceFormGroup.get('estado').value.id}}</sisjur-table-row-cell>
+      <sisjur-table-row-cell>
+        <ng-select appendTo="sisjur-table" appearance="outline" notFoundText="Nenhuma opção disponível"
+          [searchable]="false" [clearable]="false" fxFlex placeholder="Selecione"
+          [formControl]="indiceFormGroup.get('indice')" [compareWith]="indiceCompareFn">
+          <ng-option *ngFor="let indice of indices" [value]="indice">{{ indice.descricao }} ({{ indice.acumulado ?
+            'acumulado' : 'mensal' }})</ng-option>
+        </ng-select>
+      </sisjur-table-row-cell>
+    </sisjur-table-row>
+
+  </sisjur-table>
+
+  <section class="footer" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="agendamentoFormGroup.invalid"
+      (click)="agendar()">Agendar</button>
+  </section>
+
+</ng-container>

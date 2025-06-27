@@ -1,0 +1,84 @@
+.subtitulo {
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #786bb9;
+}
+
+h6 {
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: 0.12px;
+  text-align: left;
+  color: #222222;
+  padding: 5px;
+  margin: 0;
+  padding-left: 15px;
+}
+
+h6.tabela {
+  // border: 1px solid #d2d2da;
+  border-bottom: 0;
+}
+h6.tabela.r {
+  border-right: 0;
+}
+h6.tabela.l {
+  border-left: 0;
+}
+
+.modal-title {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.29;
+  letter-spacing: normal;
+  text-align: left;
+  color: #554d80;
+}
+
+button.close span {
+  font-size: 28.2px;
+  color: #707070;
+}
+
+.informacao {
+  border-top: 0;
+  padding: 3px;
+  margin: 0;
+  padding-left: 15px;
+}
+
+.informacao div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.barrinha {
+  border: 1px solid #d2d2da;
+  overflow-y: scroll;
+  height: 122px;
+}
+
+.tituloColuna {
+  padding-left: 0;
+}
+
+.notFound {
+  text-align: center;
+  padding: 4px;
+}
+
+.border{
+  border: 1px solid #d2d2da;
+}

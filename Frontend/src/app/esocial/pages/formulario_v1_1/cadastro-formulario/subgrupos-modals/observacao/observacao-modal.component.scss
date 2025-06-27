@@ -1,0 +1,37 @@
+.modal-header button {
+    color: gray;
+}
+
+.modal-title {
+    margin: auto;
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+::ng-deep .modal-observacao {
+    .modal-content {
+        min-width: 790px!important;
+        max-width: 790px!important;
+    }
+    .modal-lg {
+        min-width: 790px!important;
+        max-width: 790px!important;
+    }
+}
+
+.title {
+    padding: 0 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#obsProcessoDemanda {
+    height: 120px;
+    resize: none;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 7px;
+}

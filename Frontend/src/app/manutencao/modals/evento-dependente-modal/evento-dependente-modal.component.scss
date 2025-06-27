@@ -1,0 +1,24 @@
+.modal-title{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+::ng-deep {
+   .evento-dependente-modal{
+    .modal-dialog {
+        min-width: 900px!important;
+        max-width: 900px!important;        
+    }
+
+    .listbox-buttons {
+        padding: 2% !important;
+    }
+   }
+}
+
+.dualList {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+

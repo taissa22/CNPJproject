@@ -1,0 +1,156 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">{{ titulo }} Unicidade</h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row">
+      <div class="col-sm-6">
+        <span class="col-form-label-sm pb-0 mb-1">
+          <b>Matrícula Incorporada:</b>
+        </span>
+        <input
+          id="MatIncorp"
+          type="text"
+          class="form-control"
+          maxlength="30"
+          (change)="MatriculaChange()"
+          [formControl]="matriculaIncorporadaFormControl"
+        />
+      </div>
+      <div class="col-sm-6">
+        <span class="col-form-label-sm pb-0 mb-1">
+          <b>Data de Início:</b>
+        </span>
+        <div class="form-inline input-group input-date" id="component-data">
+          <input
+            type="text"
+            class="form-control form-control-sm input-date"
+            placeholder="DD/MM/AAAA"
+            rInputMask="99/99/9999"
+            [bsConfig]="{ showWeekNumbers: false }"
+            name="dataInicio"
+            id="dataInicio"
+            [formControl]="dataInicioFormControl"
+            bsDatepicker
+            #dataInicio="bsDatepicker"
+            placement="top-left top-right bottom-left bottom-right"
+            [ngbTooltip]="validacaoData"
+            [disableTooltip]="
+            desabilitaTooltip(dataInicioFormControl)"
+          />
+          <div class="input-group-append">
+            <button
+              type="button"
+              class="btn btn btn-outline-secondary calendar"
+              (click)="dataInicio.toggle()"
+              [attr.aria-expanded]="dataInicio.isOpen"
+              [disabled]="dataInicioFormControl.disabled"
+            >
+              <i class="fa-solid fa-calendar-days"></i>
+            </button>
+          </div>
+          <ng-template #validacaoData>
+            <span
+              *ngIf="
+                dataInicioFormControl.invalid &&
+                dataInicioFormControl.errors.required
+              "
+            >
+              Campo de preenchimento obrigatório se a 'Matrícula Incorporada'
+              não tiver sido informada.
+            </span>
+            <span
+              *ngIf="
+                dataInicioFormControl.invalid &&
+                dataInicioFormControl.errors.validDate
+              "
+            >
+              Data inválida
+            </span>
+            <span
+              *ngIf="
+                dataInicioFormControl.invalid &&
+                dataInicioFormControl.errors.bsDate &&
+                dataInicioFormControl.errors.bsDate.invalid
+              "
+            >
+              Data inválida
+            </span>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-sm-12">
+        <span><b>Código da Categoria:</b> </span>
+        <ng-select
+          class="form-control form-control-select"
+          id="codCategoria"
+          [items]="listaCodigoCategoria"
+          bindLabel="descricaoConcatenada"
+          bindValue="id"
+          placeholder="Selecione um item"
+          [formControl]="codigoCategoriaFormControl"
+          [ngbTooltip]="validaCodigoCategoria"
+          [disableTooltip]="
+          desabilitaTooltip(codigoCategoriaFormControl)"
+          [disabled]="!temPermissaoEsocialBlocoABCDEFHI"
+          [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI"
+        >
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+        <ng-template #validaCodigoCategoria>
+          <span
+            *ngIf="
+              codigoCategoriaFormControl.invalid &&
+              codigoCategoriaFormControl.errors.required
+            "
+          >
+            Campo de preenchimento obrigatório se a 'Matrícula Incorporada' não
+            tiver sido informada.
+          </span>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-link"
+      aria-label="Close"
+      (click)="close()"
+      *ngIf="temPermissaoEsocialBlocoABCDEFHI"
+    >
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="formGroup.invalid"
+      (click)="salvar()"
+      *ngIf="temPermissaoEsocialBlocoABCDEFHI"
+    >
+      Confirmar
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="formGroup.invalid"
+      (click)="close()"
+      *ngIf="!temPermissaoEsocialBlocoABCDEFHI"
+    >
+      Fechar
+    </button>
+  </div>
+</div>

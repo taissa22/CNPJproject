@@ -1,0 +1,91 @@
+<div bsModal #template="bs-modal" style="height: 1500;" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name1">
+  <div>
+    <div class="modal-content">
+      <div class="modal-header pb-1">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">{{titulo}}</h4>
+        <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+      </div>
+      <div class="modal-body pt-0">
+        <label class="pb-3 pt-2 subtitulo">
+          {{subTitulo}}
+        </label>
+
+        <h6 class="tituloColuna">
+          {{tituloReclamanetes}}
+        </h6>
+        <div >
+          <div class="d-flex">
+            <h6 class="col-4 tabela r">
+              Nome
+            </h6>
+            <h6 class="col-4 tabela l r">
+              CNPJ/CPF
+            </h6>
+            <h6 class="col-4 tabela l">
+              Carteira de Trabalho
+            </h6>
+          </div>
+          <div class=" barrinha" style="z-index: 1;" >
+            <div *ngFor="let reclamante of reclamantes" class="d-flex">
+            <div class=" col-4 informacao" [ngbTooltip]="reclamante['nomeParte'].length > 20? reclamante['nomeParte'] : '' "
+            tooltipClass='teste'>
+              <div >{{ reclamante['nomeParte'] }}</div>
+            </div>
+
+            <div class=" col-4 informacao" style="padding-left: 20px;">
+              <div>{{ reclamante['cpf'] | cpfCnpj}}</div>
+            </div>
+            <div class=" col-4 informacao" style="padding-left: 26px;">
+              <div>{{ reclamante['carteiradeTrabalho'] | pis }}</div>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <h6 class="pt-3 tituloColuna">
+          {{tituloReclamandas}}
+        </h6>
+        <div >
+          <div class="d-flex" >
+            <h6 class="col-4 tabela r" >
+              Nome
+            </h6>
+            <h6 class="col-4 tabela l r">
+              CNPJ/CPF
+            </h6>
+            <h6 class="col-4 tabela l ">
+              Carteira de Trabalho
+            </h6>
+          </div>
+
+            <div class=" barrinha" style="z-index: 1;" >
+              <div *ngFor="let reclamada of reclamadas" class="d-flex">
+              <div class=" col-4 informacao" [ngbTooltip]="reclamada['nomeParte'].length > 20? reclamada['nomeParte'] : '' "
+              tooltipClass='teste'>
+                <div >{{ reclamada['nomeParte'] }}</div>
+              </div>
+
+              <div class=" col-4 informacao" style="padding-left: 20px;">
+                <div>{{ reclamada['cgcParte'] | cpfCnpj}}</div>
+              </div>
+              <div class=" col-4 informacao" style="padding-left: 26px;">
+                <div>{{ reclamada['carteiradeTrabalho'] | pis }}</div>
+              </div>
+            </div>
+            </div>
+
+
+
+        </div>
+
+      </div>
+      <div>
+      </div>
+
+
+    </div>
+  </div>

@@ -1,0 +1,69 @@
+<div class="row" >
+    <div class="col" style="max-height:300px; overflow:auto">
+        <h6 class="text-center w-100 mt-2"> <span class="titulo-table" style="cursor: pointer;">OCULTAR HISTÓRICO <i
+                    class="fa fa-caret-up" aria-hidden="true"></i> </span> </h6>
+
+        <div class="row pb-2" *ngFor="let agendamento of agendamentos">
+            <div class="col-11 p-0">  
+                <div class="row  ">
+                    <div class="col-3 pr-0">
+                        <p class="texto-linha-table text-right pt-1" style="color:#000;font-size: 12px;">Nome do relatório:</p>
+                    </div>
+                    <div class="col">
+                        <p class="texto-linha-table pt-1 m-0" style="color: #999;">
+                            {{agendamento.nomeDoRelatorio}}</p>
+                    </div>
+                </div>
+                <div class="row  ">
+                    <div class="col-3 pr-0">
+                        <p class="texto-linha-table text-right pt-1">Descrição:</p>
+                    </div>
+                    <div class="col">
+                        <p class="texto-linha-table pt-1 m-0" style="color: #999;">
+                            {{agendamento.descricao}}</p>
+                    </div>
+                </div>
+                <div class="row  ">
+                    <div class="col-3 pr-0">
+                        <p class="texto-linha-table text-right pt-1">Criação:</p>
+                    </div>
+                    <div class="col">
+                        <p class="texto-linha-table pt-1 m-0" style="color: #999;">
+                            {{agendamento.datCriacao | date:"dd/MM/yyyy"}} por {{agendamento.usuario}}</p>
+                    </div>
+                    <div class="col">
+                        <p class="texto-linha-table text-right pt-1">Última edição:</p>
+                    </div>
+                    <div class="col-2">
+                        <span *ngIf="agendamento.datUltAlteracao"> {{agendamento.datUltAlteracao | date :
+                            "dd/MM/yyyy"}}</span>
+                        <span *ngIf="!agendamento.datUltAlteracao">-</span>
+                    </div>
+                </div>
+                <div class="row  ">
+                    <div class="col-3 pr-0">
+                        <p class="texto-linha-table text-right pt-1">Data da execução:</p>
+                    </div>
+                    <div class="col">
+                        <p class="texto-linha-table pt-1 m-0" style="color: #999;">
+                            <span *ngIf="agendamento.datUltExecucao">{{agendamento.datUltExecucao | date :
+                                "dd/MM/yyyy"}}</span>
+                            <span *ngIf="!agendamento.datUltExecucao">-</span>
+                        </p>
+                    </div>
+                    <div class="col">
+                        <p class="texto-linha-table text-right pt-1">Próxima execução:</p>
+                    </div>
+                    <div class="col-2">
+                        <span *ngIf="agendamento.dataProxExecucao">{{agendamento.dataProxExecucao | date :
+                            "dd/MM/yyyy"}}</span>
+                        <span *ngIf="!agendamento.dataProxExecucao">-</span>
+                    </div>
+                </div>
+                 
+            </div>
+        </div>
+        <p class="texto-linha-table w-100 mt-2 text-center" *ngIf="!agendamentos.length">Não há um histórico para esse
+            agendamento.</p>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+.cursorPointer {
+  cursor: pointer;
+}
+
+//verificar
+.borda-modal {
+  box-shadow: 5px 5px 5px #c3bee0;
+  border: 1px solid #e0daff; /*#cdc8ea*/
+}
+
+.areaConteudo{
+  cursor: pointer;
+}
+
+.lista-fechamento li {
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+//seta
+
+.alinhar-vertical {
+  writing-mode: vertical-rl;
+}
+
+i.seta {
+  font-size: 17.5px;
+  text-align: center;
+}

@@ -1,0 +1,355 @@
+<div style="margin-top: 24px">
+  <app-container-pagina
+    [titulo]="titulo"
+    [caminho]="breadcrumb"
+    [hasAdicionar]="false"
+    style="margin-top: 24px !important"
+  >
+    <!-- <main fxLayout="column"> -->
+    <div class="form-group col-md-12 text-right">
+      <button class="btn btn-primary" (click)="baixarAgendamentos()">
+        Baixar agendamentos
+      </button>
+    </div>
+    <fieldset class="container-form">
+      <legend>Critério de Pesquisa</legend>
+      <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+        <div class="form-row d-flex justify-content-between">
+          <!-- Tipo Processo -->
+          <div class="form-group col-md-2">
+            <label for="tipoProcesso">Tipo Processo:</label>
+            <select
+              class="form-control"
+              id="tipoProcesso"
+              formControlName="tipoProcesso"
+            >
+              <option value="0">Todos</option>
+              <option value="1">Cível Consumidor</option>
+              <option value="7">Juizado Especial</option>
+              <option value="9">Cível Estratégico</option>
+              <option value="18">PEX</option>
+            </select>
+          </div>
+
+          <!-- Processo (aligned to the right of the first row) -->
+          <div class="form-group col-md-5 offset-md-2">
+            <label for="processo">Processo:</label>
+            <div class="input-group col-11">
+              <select
+                class="form-control codigo-interno-select mr-2 col-3"
+                formControlName="buscaCampoProcesso"
+              >
+                <option value="1" disabled>Código interno</option>
+              </select>
+              <select
+                class="form-control condicao-select mr-2 col-3"
+                formControlName="condicaoProcesso"
+              >
+                <option value="1">Igual</option>
+              </select>
+              <input
+                type="text"
+                class="form-control codigo-interno-input col-4"
+                formControlName="codigoProcesso"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row d-flex justify-content-between">
+          <!-- Status Parcela -->
+          <div class="form-group col-md-6">
+            <!-- Largura ajustada -->
+            <div class="row">
+              <!-- Cria uma linha para os elementos -->
+
+              <!-- Status Parcela -->
+              <div class="col-md-6">
+                <!-- Coluna para "Status Parcela" -->
+                <label for="statusParcela">Status Parcela:</label>
+                <select
+                  class="form-control"
+                  id="statusParcela"
+                  formControlName="statusParcela"
+                >
+                  <option value="0">Todos</option>
+                  <option value="1">Agendada</option>
+                  <option value="2">Atrasada</option>
+                  <option value="9">Cancelado</option>
+                  <option value="10">Estornada</option>
+                  <option value="3">Excluída</option>
+                  <option value="6">Lote cancelado pelo usuário</option>
+                  <option value="7">Lote retornado com erro no SAP</option>
+                  <option value="5">Paga</option>
+                  <option value="4">Pagamento em tramitação</option>
+                  <option value="11">Processo Excluído</option>
+                </select>
+              </div>
+
+              <!-- Vencimento -->
+              <div class="col-md-6">
+                <label for="vencimento" class="label-vencimento"
+                  >Vencimento:</label
+                >
+                <div
+                  class="input-group datas-vencimento d-flex align-items-center"
+                >
+                  <!-- Adicionadas classes para flexbox -->
+                  <app-datas
+                    class="w-35"
+                    [dataInicio]="filterForm.get('vencimentoDe').value || ''"
+                    (retDataInicio)="
+                      filterForm.get('vencimentoDe').setValue($event)
+                    "
+                    [maxDate]="filterForm.get('vencimentoAte').value || ''"
+                  >
+                  </app-datas>
+
+                  <p class="mb-0 mx-2">até</p>
+
+                  <app-datas
+                    class="w-35"
+                    [dataInicio]="filterForm.get('vencimentoAte').value || ''"
+                    (retDataInicio)="
+                      filterForm.get('vencimentoAte').setValue($event)
+                    "
+                    [minDate]="filterForm.get('vencimentoDe').value || ''"
+                  >
+                  </app-datas>
+                </div>
+              </div>
+            </div>
+            <!-- Fim da linha -->
+          </div>
+
+          <!-- Pesquisa por (aligned to the right of the second row) -->
+          <div class="form-group col-md-5 offset-md-2">
+            <label for="pesquisaPor">Pesquisar por:</label>
+            <div class="input-group">
+              <select class="form-control col-3" formControlName="tipoPesquisa">
+                <option value="1">Autor</option>
+                2
+                <option value="2">Credor</option>
+                <option value="3">Beneficiário</option>
+              </select>
+              <input
+                type="text"
+                class="form-control input-nome-parte"
+                formControlName="nome"
+                placeholder="Nome ou parte do nome"
+              />
+              <input
+                type="text"
+                class="form-control input-documento"
+                formControlName="documento"
+                placeholder="Documento"
+                (input)="aplicarMascaraDocumento()"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row d-flex justify-content-between">
+          <!-- Carga -->
+          <div class="form-group col-md-6 offset-md-2">
+            <div class="row">
+              <div class="col-6">
+                <label for="carga">Carga:</label>
+                <input
+                  type="text"
+                  class="form-control carga"
+                  id="carga"
+                  formControlName="carga"
+                  placeholder="ID carga"
+                />
+              </div>
+
+              <div class="col-6" style="margin-left: -9px">
+                <label for="compromisso">Compromisso:</label>
+                <input
+                  type="text"
+                  class="form-control compromisso"
+                  id="compromisso"
+                  formControlName="compromisso"
+                  placeholder="ID compromisso"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-5 offset-md-2">
+            <label for="compromisso">Credito:</label>
+            <ng-select
+              [ngStyle]="{ fontSize: '11px' }"
+              [items]="classeCreditoDataSource"
+              bindLabel="descricao"
+              bindValue="id"
+              appearance="outline"
+              formControlName="classeCredito"
+              notFoundText="Nenhuma opção disponível"
+              [searchable]="true"
+              [clearable]="true"
+              clearAllText="Limpar"
+              [placeholder]="'Selecione a classe crédito'"
+            >
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12 text-right">
+            <button
+              class="btn transparent-button"
+              type="button"
+              (click)="clearFilters()"
+            >
+              Limpar filtros
+            </button>
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="setIsAgendar(true); onSubmit()"
+            >
+              Agendar exportação
+            </button>
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="setIsAgendar(false); onSubmit()"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </form>
+    </fieldset>
+
+    <h5 style="color: #786bb9">Compromissos encontrados ({{ total }})</h5>
+    <div *ngFor="let carga of cargas" class="compromisso-container mb-4">
+      <!-- Informações do Credor -->
+      <div class="credor-info d-flex justify-content-between">
+        <div class="left-info">
+          <p>
+            <strong
+              >Credor: {{ carga?.nomeCredor }} &nbsp;&nbsp;{{
+                aplicarMascara(carga?.docAutor)
+              }}
+              {{ classeCredito(carga) }}
+            </strong>
+          </p>
+          <p>
+            <strong>Processo:</strong>
+            {{
+              carga?.codTipoProcesso == 1
+                ? 'Cível Consumidor'
+                : carga?.codTipoProcesso == 7
+                ? 'Juizado Especial'
+                : carga?.codTipoProcesso == 9
+                ? 'Cível Estratégico'
+                : 'PEX'
+            }}
+            | Código Interno:
+            {{ carga?.codProcesso }}
+            | {{ carga?.statusProcesso }}
+          </p>
+        </div>
+        <div class="right-info">
+          <span class="carga-label" style="margin-right: 24px"
+            ><strong>ID Compromisso:</strong> {{ carga?.id }}</span
+          >
+          <span><strong>ID Carga:</strong> {{ carga?.codAgendCargaComp }}</span>
+          <br />
+          <div class="buscar-dados" style="margin-left: -9px">
+            <label style="display: flex">
+              <div
+                style="margin-left: 10px; margin-top: 4px"
+                [ngbTooltip]="tooltipDadosBancarios"
+                ngbTooltip="{{ tooltipDadosBancarios }}"
+                triggers="manual"
+                #t="ngbTooltip"
+                (click)="t.open()"
+                [autoClose]="true"
+              >
+                <i
+                  class="fas fa-search icone-busca mr-1"
+                  style="color: #6151ac"
+                ></i>
+              </div>
+              <span style="color: #6151ac">Ver dados bancários</span>
+            </label>
+            <ng-template #tooltipDadosBancarios>
+              <div style="padding: 5px" class="content-modal">
+                <div class="content-text text-left">
+                  <h3 style="text-align-last: center">Borderô</h3>
+                  <li>
+                    <strong>Beneficiário:</strong>
+                    {{ carga.borderoBeneficiario }}
+                  </li>
+                  <li><strong>CPF / CNPJ:</strong> {{ carga.borderoDoc }}</li>
+                  <li><strong>Banco: </strong>{{ carga.borderoBanco }}</li>
+                  <li><strong>DV Banco: </strong>{{ carga.borderoBancoDv }}</li>
+                  <li><strong>Agência:</strong> {{ carga.borderoAgencia }}</li>
+                  <li>
+                    <strong>DV Agência: </strong>{{ carga.borderoAgenciaDv }}
+                  </li>
+                  <li>
+                    <strong>Conta Corrente: </strong>{{ carga.borderoCc }}
+                  </li>
+                  <li>
+                    <strong>DV Conta Corrente:</strong> {{ carga.borderoCcDv }}
+                  </li>
+                  <li>
+                    <strong>Nome da Cidade: </strong>{{ carga.borderoCidade }}
+                  </li>
+                  <li>
+                    <strong>Histórico:</strong> {{ carga.borderoHistorico }}
+                  </li>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verifica se há parcelas e exibe a tabela correspondente -->
+      <div *ngIf="carga?.cargaCompromissoParcela?.length > 0; else noParcelas">
+        <!-- Tabela de parcelas -->
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="width: 10%">Parcela</th>
+              <th style="width: 20%">Data Vencimento</th>
+              <th style="width: 20%">Valor (R$)</th>
+              <th style="width: 25%">Status Parcela</th>
+              <th style="width: 25%">Número Pedido SAP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let parcela of carga.cargaCompromissoParcela">
+              <td>{{ parcela.nroParcela }}</td>
+              <td>{{ parcela.vencimento | date : 'dd/MM/yyyy' }}</td>
+              <td>{{ parcela.valor | currency : 'BRL' }}</td>
+              <td>
+                <span
+                  class="status-label"
+                  [ngClass]="getStatusClass(parcela.status)"
+                >
+                  {{ getStatusLabel(parcela.status) }}
+                </span>
+              </td>
+              <td>{{ parcela.numeroPedidoSAP || '-' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #noParcelas>
+        <p>Sem parcelas</p>
+      </ng-template>
+
+      <hr />
+    </div>
+
+    <!-- </main> -->
+  </app-container-pagina>
+</div>

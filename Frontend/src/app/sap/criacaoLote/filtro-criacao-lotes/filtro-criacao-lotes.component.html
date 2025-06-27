@@ -1,0 +1,41 @@
+<app-container-pagina [titulo]="'Criação de Lotes'" [caminho]="breadcrumb" [texto]="criarSaptxt">
+
+  <div class="container m-0 p-0">
+
+    <div class="container-fluid" style="margin: 0">
+      <div class="row">
+        <div class="col-xl-4 col-lg-3  col-sm-7 p-0">
+          <combo-box class="combo-abaixo" [opcoes]="tiposProcesso" (selectionChange)="onTypeSelect($event)"
+            [titulo]="'Selecione o tipo de processo'" [currentIndex]="tipoSelecionado" [icone]="false"
+            [label]="'Tipos de Processo'"></combo-box>
+        </div>
+        <div class="col-xl-4  col-lg-5 col-md-12  col-sm-12 p-0 d-flex justify-content-sm-start justify-content-lg-end"
+          >
+          <div>
+            <h1>Lançamentos criados entre:</h1>
+            <app-data-range (retDataInicio)="datepickerDataInicio($event)" (retDataFim)="datepickerDataFim($event)"
+              (rangeValido)="onRangeValido($event)" [dataInicio]="criacaoService.dataInicio"
+              [dataFim]="criacaoService.dataFim"></app-data-range>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-12  p-0 d-flex justify-content-sm-start justify-content-lg-end"
+         >
+          <div>
+            <h1 class="">Lançamentos com valor entre:</h1>
+            <app-number-range (rangeValido)="onNumeroValido($event)" [texto1]="criacaoService.valorInicial"
+              [texto2]="criacaoService.valorFinal" (retNumeroInicio)="criacaoService.valorInicial = $event"
+              (retNumeroFim)="criacaoService.valorFinal = $event" [maxlengthNumber] = "14"></app-number-range>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row" >
+      <div class="col-sm-12 pt-4 d-flex justify-content-lg-end">
+        <button class="btn btn-primary" [disabled]="!tipoSelecionado" (click)="paginaResult()">Apresentar Lotes
+          Disponíveis</button>
+      </div>
+    </div>
+  </div>
+
+</app-container-pagina>

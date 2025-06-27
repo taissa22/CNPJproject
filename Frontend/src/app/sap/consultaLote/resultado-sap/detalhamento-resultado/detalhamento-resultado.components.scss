@@ -1,0 +1,160 @@
+.cursorPointer {
+  cursor: pointer;
+}
+.bg-relatarios {
+  padding-bottom: 20px;
+}
+
+//verificar
+.borda-modal {
+  box-shadow: 5px 5px 5px #c3bee0;
+  border: 1px solid #e0daff; /*#cdc8ea*/
+}
+
+// sobre escrita
+
+.btn-voltar {
+  color: #786bb9;
+}
+
+/*** PADRÃO DE PÁGINAS ***/
+
+#inline-form {
+  width: 90%;
+}
+
+// modelos-lista
+
+.lista-fechamento li {
+  border-bottom: 1px solid #dbdbdb;
+  padding-top: 1rem;
+}
+h6 {
+  font-size: 14px;
+  color: #786bb9;
+}
+.lista-fechamento li p {
+  font-size: 8px;
+  color: rgb(12, 12, 12);
+  margin-bottom: 0;
+}
+
+.padding-bottom {
+  padding-bottom: 1rem;
+}
+
+// cores dos status
+
+.azul {
+  padding: 3px 10px;
+  background: #6dafe9;
+}
+.laranja {
+  padding: 3px 10px;
+  background: #e68723;
+}
+.verde {
+  padding: 3px 10px;
+  background: #090;
+}
+
+.verdeClaro {
+  padding: 3px 10px;
+  background: rgb(3, 209, 3);
+}
+
+.vermelho {
+  padding: 3px 10px;
+  background: #c00;
+}
+
+// icon size
+
+.iconsSize {
+  font-size: 15px;
+  width: 30px;
+  // color: $corRoxa;
+}
+
+// empresa abaixo da consulta
+.empresa {
+  // color: $corRoxa;
+}
+
+// numero do sap
+.numSap {
+  font-weight: bold;
+}
+
+//seta
+span.seta {
+  border: solid #554d80;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  width: 10px;
+  height: 10px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+// background
+
+.bg-selecionado {
+  background: #f0f1f7;
+}
+
+.bg-relatarios {
+  background: #fff;
+}
+
+.sm-parametros {
+  padding: 1rem 0 0;
+}
+
+.lista-fechamento li .sm-parametros h6 {
+  font-size: 111px;
+  color: #554d80;
+  padding: 15px 0;
+}
+
+.sm-parametros p span {
+  font-weight: bold;
+}
+
+// lançamentos e historico
+
+.roxo-claro h6 {
+  //height: 20px;
+  opacity: 0.85;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: left;
+  color: #554d80;
+  height: 32px;
+}
+
+.dados-detalhamento-lote {
+  text-align: center;
+  color: #9597a6;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.14px;
+  line-height: 1.4;
+}
+
+.btn-roxo {
+  display: inline-block;
+  font-size: 14px;
+  color: #786bb9;
+  float: right;
+}
+
+.lote-BB {
+  cursor: pointer;
+}

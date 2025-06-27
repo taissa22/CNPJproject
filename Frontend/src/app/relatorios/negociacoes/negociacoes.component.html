@@ -1,0 +1,83 @@
+<section class="container-breadcrumb d-flex">
+    <div>
+        <h3>Relatório de Negociação</h3>
+        <p class="m-0">{{breadcrumb}}</p>
+    </div>
+    <div class="ml-auto">
+        <button type="button" class="btn btn-primary" style="cursor: pointer;" (click)="incluir()">Novo Agendamento</button>
+    </div>
+</section>
+
+<div class="content">
+
+
+    <div class="busca-agendamentos">
+        <b class="mr-3">Agendamento no Período:</b>
+        <div class="datas">
+            <app-datas [dataInicio]="dataInicioAgendamentoFormControl.value" (retDataInicio)="dataInicioAgendamentoFormControl.setValue($event)" [maxDate]="dataFimAgendamentoFormControl.value"></app-datas>
+            <p class="mb-0 ml-2 mr-2">até</p>
+            <app-datas [dataInicio]="dataFimAgendamentoFormControl.value" (retDataInicio)="dataFimAgendamentoFormControl.setValue($event)" [minDate]="dataInicioAgendamentoFormControl.value"></app-datas>
+        </div>
+        <button type="button" class="btn btn-primary ml-4" style="cursor: pointer;" (click)="obterAgendametnosAsync()">Buscar</button>
+    </div>
+
+    <div class="reload">
+        <p class="roxo-padrao mb-0">Relatórios agendados / executados</p>
+        <p class="roxo-padrao mb-0 pointer" (click)="obterAgendametnosAsync()">
+            <i class="pl-2 fas fa-redo mr-2"></i>ATUALIZAR LISTA
+        </p>
+    </div>
+
+    <div class="grid">
+        <ng-container *ngIf="!agendamentos || totalAgendamentos == 0">
+            <span class="card-vazio"><b class="roxo-padrao">Nenhum agendamento encontrado.</b></span>
+        </ng-container>
+
+        <ng-container *ngIf="agendamentos && totalAgendamentos != 0">
+            <!-- FAZER LAÇO FOR AQUI -->
+            <ng-container *ngFor="let agendamento of agendamentos">
+                <div class="card-grid">
+                    <div class="card-content">
+                        <span>
+                            <p class="roxo-padrao" style="font-size: 14px; font-weight: 500;">{{agendamento.mensagemConfigExec}} - {{agendamento.mensagemPeriodoExec}}</p>
+                            <div class="card-status ml-auto" [ngStyle]="{ 'background-color': colorStatus(agendamento.status) }">
+                                {{agendamento.status}}
+                            </div>
+                        </span>
+
+                        <span>
+                            <p class="roxo-padrao" style="font-weight: 500;">{{agendamento.mensagemTipoProcesso}} - {{agendamento.mensagemStatusProcesso}}</p>
+                            <p class="ml-auto">{{agendamento.mensagemUsrDatSolicitante}}</p>
+                        </span>
+
+                        <span>{{agendamento.mensagemPeriodicidade}}</span>
+
+                        <span>
+
+                            <div class="botao-delete">
+                                <p class="roxo-padrao pointer m-0" (click)="excluir(agendamento.codAgendExecRelNegociacao)" *ngIf="agendamento.status == 'Agendado'">
+                                    <i class="fas fa-trash fa-lg"></i> Excluir
+                                </p>
+                            </div>
+                            <div class="botao-download" (click)="exportarRetorno(agendamento.codAgendExecRelNegociacao)">
+                                <p class="roxo-padrao pointer m-0" *ngIf="agendamento.status == 'Finalizado'">
+                                    <i class="fas fa-download fa-lg"></i> Baixar Relatório de Negociações
+                                </p>
+                            </div>
+
+                        </span>
+
+                    </div>
+                </div>
+            </ng-container>
+            <!-- TERMINA AQUI -->
+        </ng-container>
+    </div>
+
+    <ng-container *ngIf="agendamentos && totalAgendamentos != 0">
+        <div class="mt-3">
+            <sisjur-paginator [length]="totalAgendamentos" [MostrarQtdPorPagina]="false" [QtdFixaPorPagina]="5" (page)="obterAgendametnosAsync()"></sisjur-paginator>
+        </div>
+    </ng-container>
+
+</div>

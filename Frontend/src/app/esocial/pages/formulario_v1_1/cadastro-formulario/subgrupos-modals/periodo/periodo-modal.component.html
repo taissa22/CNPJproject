@@ -1,0 +1,287 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">{{ titulo }} Período</h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row">
+      <div class="col-sm-6 periodoRef">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo tooltip-data">
+          <b>Período de Referência:</b>
+          <i title="{{tooltipPeriodoRef}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <mes-ano-new [control]="PeriodoReferenciaFormControl" id="compIni" [required]="true"
+          [disabled]="consulta"></mes-ano-new>
+      </div>
+
+
+    </div>
+
+    <div class="row mt-3">
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo Inss Mensal:</b>
+          <i title="{{tooltipBaseCalcInssMen}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input type="text" class="form-control input-number" [tabIndex]="42"
+          [formControl]="bcContribuicaoPrevidenciariaFormControl"
+          [disableTooltip]="desabilitaTooltip(bcContribuicaoPrevidenciariaFormControl)"
+          [ngbTooltip]="validacaoBcContribuicaoPrevidenciaria" currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" maxLength='21' [disabled]="bcContribuicaoPrevidenciariaFormControl.disabled"
+          [class.disabled]="consulta" />
+
+        <ng-template #validacaoBcContribuicaoPrevidenciaria>
+          <span
+            *ngIf="bcContribuicaoPrevidenciariaFormControl.invalid && bcContribuicaoPrevidenciariaFormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+          <span
+          *ngIf="bcContribuicaoPrevidenciariaFormControl.invalid && bcContribuicaoPrevidenciariaFormControl.hasError('min')">
+            Deve ser maior ou igual 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo Inss 13º:</b>
+          <i title="{{tooltipBaseCalcInss13}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input class="form-control input-number" type="text" [tabIndex]="43"
+          [formControl]="bcContribuicaoPrevidenciaria13FormControl"
+          [disableTooltip]="desabilitaTooltip(bcContribuicaoPrevidenciaria13FormControl)"
+          [ngbTooltip]="validacaoBcContribuicaoPrevidenciaria13" currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" maxLength='21' [disabled]="consulta"
+          [class.disabled]="consulta" />
+
+        <ng-template #validacaoBcContribuicaoPrevidenciaria13>
+          <span
+            *ngIf="bcContribuicaoPrevidenciaria13FormControl.invalid && bcContribuicaoPrevidenciaria13FormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+          <span
+          *ngIf="bcContribuicaoPrevidenciaria13FormControl.invalid && bcContribuicaoPrevidenciaria13FormControl.hasError('min')">
+            Deve ser maior ou igual 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+
+
+    </div>
+
+    <div class="row mt-3">
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo FGTS:</b>
+          <i title="{{tooltipBaseCalcFgts}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input type="text" class="form-control input-number" [formControl]="bcremuneracaoFgtsSem13FormControl"
+          [tabIndex]="44"
+          [disableTooltip]="desabilitaTooltip(bcremuneracaoFgtsSem13FormControl)"
+          [ngbTooltip]="validacaoBcremuneracaoFgtsSem13" currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" maxLength='21' [disabled]="consulta"
+          [class.disabled]="consulta" />
+
+        <ng-template #validacaoBcremuneracaoFgtsSem13>
+          <span
+            *ngIf="bcremuneracaoFgtsSem13FormControl.invalid && bcremuneracaoFgtsSem13FormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+          <span *ngIf="bcremuneracaoFgtsSem13FormControl.invalid && bcremuneracaoFgtsSem13FormControl.hasError('min')">
+            Deve ser maior ou igual 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo FGTS 13º:</b>
+          <i title="{{tooltipBaseCalcFgts13}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input class="form-control input-number" type="text" [tabIndex]="45"
+          [formControl]="bcremuneracaoFgtsSobre13FormControl"
+          [disableTooltip]="desabilitaTooltip(bcremuneracaoFgtsSobre13FormControl)"
+          [ngbTooltip]="validacaoBcremuneracaoFgtsSobre13" currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" maxLength='21' [disabled]="consulta"
+          [class.disabled]="consulta" />
+
+        <ng-template #validacaoBcremuneracaoFgtsSobre13>
+          <span
+            *ngIf="bcremuneracaoFgtsSobre13FormControl.invalid && bcremuneracaoFgtsSobre13FormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+          <span
+            *ngIf="bcremuneracaoFgtsSobre13FormControl.invalid && bcremuneracaoFgtsSobre13FormControl.hasError('min')">
+            Deve ser maior ou igual 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+
+
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo FGTS GUIA:</b>
+          <i title="{{tooltipBaseCalcFgtsGuia}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input class="form-control input-number" type="text" [tabIndex]="46"
+          [formControl]="baseGerarGuiafgtsFormControl"
+          [disableTooltip]="desabilitaTooltip(baseGerarGuiafgtsFormControl)"
+          [ngbTooltip]="validacaoBaseGerarGuiafgts" currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" maxLength='21' [disabled]="consulta"
+          [class.disabled]="consulta"
+          (blur)="adicionaValidators()"/>
+
+        <ng-template #validacaoBaseGerarGuiafgts>
+          <span *ngIf="baseGerarGuiafgtsFormControl.invalid && baseGerarGuiafgtsFormControl.hasError('required')">
+            Caso algum dos campos referentes à base de cálculo de FGTS para geração da guia seja preenchido, todos passam a ser obrigatórios. São eles: Base Cálculo FGTS GUIA,
+            Base Cálculo FGTS 13º GUIA e FGTS Pago Direto Trabalhador
+          </span>
+          <span
+          *ngIf="baseGerarGuiafgtsFormControl.invalid && baseGerarGuiafgtsFormControl.hasError('min')">
+            Deve ser maior ou igual 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo FGTS 13º GUIA:</b>
+          <i title="{{tooltipBaseCalcFgts13Guia}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input type="text" class="form-control input-number" [tabIndex]="47"
+          [formControl]="baseGerarGuiafgtssobre13FormControl"
+          [disableTooltip]="desabilitaTooltip(baseGerarGuiafgtssobre13FormControl)"
+          [ngbTooltip]="validacaoBaseGerarGuiafgtssobre13" currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" maxLength='21' [disabled]="consulta"
+          [class.disabled]="consulta"
+          (blur)="adicionaValidators()"/>
+
+        <ng-template #validacaoBaseGerarGuiafgtssobre13>
+          <span
+            *ngIf="baseGerarGuiafgtssobre13FormControl.invalid && baseGerarGuiafgtssobre13FormControl.hasError('required')">
+            Caso algum dos campos referentes à base de cálculo de FGTS para geração da guia seja preenchido, todos passam a ser obrigatórios. São eles: Base Cálculo FGTS GUIA,
+            Base Cálculo FGTS 13º GUIA e FGTS Pago Direto Trabalhador
+          </span>
+          <span
+          *ngIf="baseGerarGuiafgtssobre13FormControl.invalid && baseGerarGuiafgtssobre13FormControl.hasError('min')">
+            Deve ser maior ou igual 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>FGTS Pago Direto Trabalhador:</b>
+          <i title="{{tooltipFgtsPgDirTrab}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <ng-select id="tipInscFixo" [tabIndex]="48" [formControl]="pagDiretoTrabalhadorFormControl" [items]="simNaoList"
+          bindLabel="descricao" bindValue="id" (blur)="adicionaValidators()"
+          [disableTooltip]="desabilitaTooltip(pagDiretoTrabalhadorFormControl)"
+          [ngbTooltip]="validacaoPagDiretoTrabalhador" [disabled]="consulta" [class.disabled]="consulta"></ng-select>
+        <ng-template #validacaoPagDiretoTrabalhador>
+          <span *ngIf="pagDiretoTrabalhadorFormControl.invalid && pagDiretoTrabalhadorFormControl.hasError('required')">
+            Caso algum dos campos referentes à base de cálculo de FGTS para geração da guia seja preenchido, todos passam a ser obrigatórios. São eles: Base Cálculo FGTS GUIA,
+            Base Cálculo FGTS 13º GUIA e FGTS Pago Direto Trabalhador
+          </span>
+        </ng-template>
+      </div>
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo INSS Mudança Categoria:</b>
+          <i title="{{tooltipInssMudCateg}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input type="text" class="form-control input-number" [tabIndex]="49" [formControl]="vrBcCPrevFormControl"
+          [disableTooltip]="desabilitaTooltip(vrBcCPrevFormControl)" (blur)="adicionaValidators()"
+          [ngbTooltip]="validacaoValorGFIP" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          maxLength='21' [disabled]="consulta" [class.disabled]="consulta" />
+
+        <ng-template #validacaoValorGFIP>
+          <span *ngIf="vrBcCPrevFormControl.invalid && vrBcCPrevFormControl.hasError('required')">
+            Caso um dos campos referentes a reconhecimento de mudança de categoria seja informado, os dois precisam ser preenchidos. São eles: Base Cálculo INSS Mudança Categoria e Categoria.
+          </span>
+          <span *ngIf="vrBcCPrevFormControl.invalid && vrBcCPrevFormControl.hasError('min')">
+            Deve ser maior que 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-sm-12">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo"> <b>Categoria:</b> <i title="{{tooltipCateg}}" class=" roxo-padrao fa fa-info-circle"></i> </label>
+        <ng-select id="tipInscFixo" [tabIndex]="50" [formControl]="codigoCategoriaFormControl" [items]="categoriaList"
+          bindLabel="descricaoConcatenada" bindValue="id" (blur)="adicionaValidators()"
+          [disableTooltip]="desabilitaTooltip(codigoCategoriaFormControl)"
+          [ngbTooltip]="validacaoCodigoCategoria" [disabled]="consulta" [class.disabled]="consulta">
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+        <ng-template #validacaoCodigoCategoria>
+          <span *ngIf="codigoCategoriaFormControl.invalid && codigoCategoriaFormControl.hasError('required')">
+            Caso um dos campos referentes a reconhecimento de mudança de categoria seja informado, os dois precisam ser preenchidos. São eles: Base Cálculo INSS Mudança Categoria e Categoria.
+          </span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-sm-12">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Grau de Exposição:</b>
+          <i title="{{tooltipGrauExp}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <ng-select id="tipInscFixo" [tabIndex]="51" [formControl]="grauExposicaoFormControl" [items]="grauExposicaoList"
+          bindLabel="descricaoConcatenada" bindValue="id"
+          [disableTooltip]="desabilitaTooltip(grauExposicaoFormControl)"
+          [ngbTooltip]="validacaoGrauExposicao" [disabled]="consulta" [class.disabled]="consulta">
+
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+
+        </ng-select>
+        <ng-template #validacaoGrauExposicao>
+          <span *ngIf="grauExposicaoFormControl.invalid && grauExposicaoFormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+
+  <div class="modal-footer">
+    <button *ngIf="!consulta" type="button" class="btn btn-link" aria-span="Close" (click)="close()">
+      Cancelar
+    </button>
+
+    <button *ngIf="!consulta" type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()">
+      Confirmar
+    </button>
+
+    <button *ngIf="consulta" type="button" class="btn btn-primary" aria-span="Close" (click)="close()">
+      Fechar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,438 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Tipo de Procedimento"
+  [breadcrump]="breadcrumb" [exibirAdicionar]="exibirTabela">
+  <div class="row">
+    <div class="col-12 py-3">
+      <p class="font-purple">
+        Selecione o Tipo de Processo desejado para exibir os Tipos de Procedimento.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3 pr-1">
+      <label class="col-form-label-sm" for="tipoProcesso">
+        <b>Tipo de Processo:</b>
+      </label>
+        <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        id="nome"
+        [items]="tiposProcesso"
+        bindLabel="nome"
+        bindValue="id"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="false"
+        [clearable]="false"
+        (change)="selecionarTipoProcesso($event)"
+        [placeholder]="'Selecione o tipo de processo'"></ng-select>
+    </div>
+    <div class="col-3 pr-1" *ngIf="exibirTabela">
+      <label class="col-form-label-sm" for="tipoProcesso" *ngIf="!estadoInicial">
+        <b>Descrição:</b>
+      </label>
+      <input type="text" class="form-control mr-3" id="descricao" placeholder="Digite a descrição ou parte do texto"
+        *ngIf="!estadoInicial" (keydown.enter)="buscar()" (input)="buscarDescricao = $event.target.value">
+    </div>
+    <div class="col-6 pr-1 d-flex align-items-end pb-1" *ngIf="exibirTabela" >
+      <button class="btn btn-primary btn-sm" *ngIf="!estadoInicial" (click)="buscar()">Buscar</button>
+    </div>
+
+    <!-- <input #searchField (keyup.enter)="search = searchField.value" type="text" id="nome" maxlength="400"
+        placeholder="Entre com a Descrição" class="form-control"> -->
+  </div>
+
+  <div *ngIf="exibirTabela">
+    <div class="col-md-12 pr-0" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" *ngIf="!estadoInicial">
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important;"></i>
+        Exportar
+      </button>
+    </div>
+    <!-- ADMINISTRATIVO -->
+    <div *ngIf="tipoProcessoSelecao === 3" class="tabelaAdministrativo">
+      <jur-table style="width: 100%;" [sortDirection]="'asc'" [sortColumn]="'descricao'" [dataSource]="dataSource">
+
+        <jur-column-template flex="6" headerName="Código" sortColumn="codigo" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.codigo }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="19" [title]="row.descricao" headerName="Descrição" sortColumn="descricao" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.descricao }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="6" [title]="row.indAtivo? 'Sim' : 'Não'" headerName="Ativo" sortColumn="indAtivo" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{row.indAtivo? 'Sim' : 'Não'}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="10" [title]="row.tipoDeProcesso? row.tipoDeProcesso.nome : ''" headerName="Tipo de Processo" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{row.tipoDeProcesso? row.tipoDeProcesso.nome : ""}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="10" [title]="row.indProvisionado? 'Sim' : 'Não'" headerName="É Provisionado?" sortColumn="provisionado" *jurRowData="let row">
+            <div class="dado-jurtable"><span>{{row.indProvisionado? 'Sim' : 'Não'}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="9" [title]="row.tipoParticipacao1? row.tipoParticipacao1.descricao : ''" headerName="1º Tipo de Participação" sortColumn="tipoParticipacao1" *jurRowData="let row">
+            <div class="dado-jurtable"><span>{{row.tipoParticipacao1? row.tipoParticipacao1.descricao : ''}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="6" [title]="row.indOrgao1? 'Sim' : 'Não'" headerName="É Órgão?" sortColumn="ehOrgao1" *jurRowData="let row">
+            <div class="dado-jurtable"><span>{{row.indOrgao1? 'Sim' : 'Não'}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="9" [title]="row.tipoParticipacao2? row.tipoParticipacao2.descricao : ''" headerName="2º Tipo de Participação" sortColumn="tipoParticipacao2" *jurRowData="let row">
+            <div class="dado-jurtable"><span>{{row.tipoParticipacao2? row.tipoParticipacao2.descricao : ''}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="6" [title]="row.indOrgao2? 'Sim' : 'Não'" headerName="É Órgão?" sortColumn="ehOrgao2" *jurRowData="let row">
+            <div class="dado-jurtable"><span>{{row.indOrgao2? 'Sim' : 'Não'}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="11" [title]="row.indPoloPassivoUnico? 'Sim' : 'Não'" headerName="É Polo Passivo Único?" sortColumn="poloPassivoUnico" *jurRowData="let row">
+            <div class="dado-jurtable"><span>{{row.indPoloPassivoUnico? 'Sim' : 'Não'}}</span></div>
+        </jur-column-template>
+
+
+        <jur-column-template *jurRowData="let row">
+          <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+        </jur-column-template>
+
+      </jur-table>
+    </div>
+
+
+    <!-- CÍVEL ADMINISTRATIVO E CRIMINAL ADMINISTRATIVO -->
+    <div *ngIf="tipoProcessoSelecao === 12 || tipoProcessoSelecao === 14">
+      <jur-table style="width: 100%;" [sortDirection]="'asc'" [sortColumn]="'descricao'" [dataSource]="dataSource">
+
+        <jur-column-template flex="10" headerName="Código" sortColumn="codigo" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.codigo }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="45" [title]="row.descricao" headerName="Descrição" sortColumn="descricao" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.descricao }}
+            </span>
+          </div>
+          <!-- <span class="tag" *ngIf="row.ehCalculoInicial">Cálculo Inicial</span> -->
+        </jur-column-template>
+
+        <jur-column-template flex="6" [title]="row.indAtivo? 'Sim' : 'Não'" headerName="Ativo" sortColumn="ativo" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{row.indAtivo? 'Sim' : 'Não'}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="20" [title]="row.tipoDeProcesso? row.tipoDeProcesso.nome : ''" headerName="Tipo de Processo" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{row.tipoDeProcesso? row.tipoDeProcesso.nome : ""}}</span></div>
+        </jur-column-template>
+
+
+        <jur-column-template *jurRowData="let row">
+          <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+        </jur-column-template>
+
+      </jur-table>
+    </div>
+
+
+        <!-- TRABALHISTA ADMINISTRATIVO E TRIBUTÁRIO ADMINISTRATIVO -->
+        <div *ngIf="tipoProcessoSelecao === 4 || tipoProcessoSelecao === 6">
+          <jur-table style="width: 100%;" [sortDirection]="'asc'" [sortColumn]="'descricao'" [dataSource]="dataSource">
+
+            <jur-column-template flex="10" headerName="Código" sortColumn="codigo" *jurRowData="let row">
+              <div class="dado-jurtable">
+                <span>
+                  {{ row.codigo }}
+                </span>
+              </div>
+            </jur-column-template>
+
+            <jur-column-template flex="25" [title]="row.descricao" headerName="Descrição" sortColumn="descricao" *jurRowData="let row">
+              <div class="dado-jurtable">
+                <span>
+                  {{ row.descricao }}
+                </span>
+              </div>
+            </jur-column-template>
+
+            <jur-column-template flex="6" [title]="row.indAtivo? 'Sim' : 'Não'" headerName="Ativo" sortColumn="ativo" *jurRowData="let row">
+              <div class="dado-jurtable"><span>{{row.indAtivo? 'Sim' : 'Não'}}</span></div>
+            </jur-column-template>
+
+            <jur-column-template flex="15" [title]="row.tipoDeProcesso? row.tipoDeProcesso.nome : ''" headerName="Tipo de Processo" *jurRowData="let row">
+              <div class="dado-jurtable"><span>{{row.tipoDeProcesso? row.tipoDeProcesso.nome : ""}}</span></div>
+            </jur-column-template>
+
+
+            <jur-column-template flex="15" [title]="row.tipoParticipacao1? row.tipoParticipacao1.descricao : ''" headerName="1º Tipo de Participação" sortColumn="tipoParticipacao1" *jurRowData="let row">
+              <div class="dado-jurtable"><span>{{row.tipoParticipacao1? row.tipoParticipacao1.descricao : ''}}</span></div>
+          </jur-column-template>
+
+
+            <jur-column-template flex="15" [title]="row.tipoParticipacao2? row.tipoParticipacao2.descricao : ''" headerName="2º Tipo de Participação" sortColumn="tipoParticipacao2" *jurRowData="let row">
+              <div class="dado-jurtable"><span>{{row.tipoParticipacao2? row.tipoParticipacao2.descricao : ''}}</span></div>
+          </jur-column-template>
+
+
+            <jur-column-template *jurRowData="let row">
+              <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
+                <button type="button" class="btn btn-icon" (click)="alterar(row)">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-icon" (click)="excluir(row)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </jur-column-template>
+
+          </jur-table>
+        </div>
+
+
+    <!-- <div *ngIf="tipoProcessoSelecao === 1">
+      <jur-table style="width: 100%;" [sortDirection]="'asc'" [sortColumn]="'descricao'" [dataSource]="dataSource">
+
+        <jur-column-template flex="10" headerName="Código" sortColumn="codigo" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.codigo }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="20" [title]="row.descricao" headerName="Descrição" sortColumn="descricao" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.descricao }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="10" headerName="Ativo" sortColumn="ativo" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.ativo? "Sim" : "Não" }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="15" [title]="row.tipoDeProcesso? row.tipoDeProcesso.nome : ''" headerName="Tipo de Processo" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{row.tipoDeProcesso? row.tipoDeProcesso.nome : ""}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="10" headerName="Cadastra Processo" sortColumn="cadastraProcesso" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{ row.cadastraProcesso? "Sim" : "Não" }}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="20" headerName="Prioritário na fila de cadastro de processo" sortColumn="prioritarioNaFila" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{ row.prioritarioFilaCadastroProcesso? "Sim" : "Não" }}</span></div>
+        </jur-column-template>
+
+
+        <jur-column-template *jurRowData="let row">
+          <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+        </jur-column-template>
+
+      </jur-table>
+    </div> -->
+
+    <!-- <div *ngIf="tipoProcessoSelecao === 7">
+      <jur-table style="width: 100%;" [sortDirection]="'asc'" [sortColumn]="'descricao'" [dataSource]="dataSource">
+
+        <jur-column-template flex="8" headerName="Código" sortColumn="codigo" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.codigo }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template [title]="row.descricao" flex="23" headerName="Descrição" sortColumn="descricao" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.descricao }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="8" headerName="Ativo" sortColumn="ativo" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.ativo? "Sim" : "Não" }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="14" [title]="row.tipoDeProcesso? row.tipoDeProcesso.nome : ''" headerName="Tipo de Processo" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{row.tipoDeProcesso? row.tipoDeProcesso.nome : ""}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="10" headerName="Cadastra Processo" sortColumn="cadastraProcesso" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{ row.cadastraProcesso? "Sim" : "Não" }}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="17" headerName="Prioritário na fila de cadastro de processo" sortColumn="prioritarioNaFila" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{ row.prioritarioFilaCadastroProcesso? "Sim" : "Não" }}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="13" headerName="Requer Data de Audiência / Prazo" sortColumn="RequerDataAudiencia" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{ row.requerDataAudienciaPrazo? "Sim" : "Não" }}</span></div>
+        </jur-column-template>
+
+        <jur-column-template *jurRowData="let row">
+          <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+        </jur-column-template>
+
+      </jur-table>
+    </div> -->
+
+
+    <!-- <div *ngIf="tipoProcessoSelecao === 17">
+      <jur-table style="width: 100%;" [sortDirection]="'asc'" [sortColumn]="'descricao'" [dataSource]="dataSource">
+
+        <jur-column-template flex="10" headerName="Código" sortColumn="codigo" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.codigo }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="20" [title]="row.descricao" headerName="Descrição" sortColumn="descricao" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.descricao }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="10" headerName="Ativo" sortColumn="ativo" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.ativo? "Sim" : "Não" }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="15" [title]="row.tipoDeProcesso? row.tipoDeProcesso.nome : ''" headerName="Tipo de Processo" sortColumn="tipoProcesso" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{row.tipoDeProcesso? row.tipoDeProcesso.nome : ""}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="15" headerName="Cadastra Processo" sortColumn="cadastraProcesso" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{ row.cadastraProcesso? "Sim" : "Não" }}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="15" headerName="Utilizado em Protocolo" sortColumn="UtilizadoProtocolo" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{ row.utilizadoEmProtocolo? "Sim" : "Não" }}</span></div>
+        </jur-column-template>
+
+        <jur-column-template *jurRowData="let row">
+          <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+        </jur-column-template>
+
+      </jur-table>
+    </div> -->
+
+    <!-- <div *ngIf="tipoProcessoSelecao === 14 || tipoProcessoSelecao === 15">
+      <jur-table style="width: 100%;" [sortDirection]="'asc'" [sortColumn]="'descricao'" [dataSource]="dataSource">
+
+        <jur-column-template flex="10" headerName="Código" sortColumn="codigo" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.codigo }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="35" [title]="row.descricao" headerName="Descrição" sortColumn="descricao" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.descricao }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="10" headerName="Ativo" sortColumn="ativo" *jurRowData="let row">
+          <div class="dado-jurtable">
+            <span>
+              {{ row.ativo? "Sim" : "Não" }}
+            </span>
+          </div>
+        </jur-column-template>
+
+        <jur-column-template flex="15" [title]="row.tipoDeProcesso? row.tipoDeProcesso.nome : ''" headerName="Tipo de Processo" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{row.tipoDeProcesso? row.tipoDeProcesso.nome : ""}}</span></div>
+        </jur-column-template>
+
+        <jur-column-template flex="15" headerName="Tipo de Prazo" sortColumn="TipoPrazo" *jurRowData="let row">
+          <div class="dado-jurtable"><span>{{ row.tipoDePrazo? row.tipoDePrazo.descricao : "" }}</span></div>
+        </jur-column-template>
+
+        <jur-column-template *jurRowData="let row">
+          <div fxLayout="row" fxLayoutAlign="end center" fxFlexFill>
+            <button type="button" class="btn btn-icon" (click)="alterar(row)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-icon" (click)="excluir(row)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+        </jur-column-template>
+
+      </jur-table>
+    </div> -->
+
+
+    <jur-paginator [length]="total"></jur-paginator>
+
+  </div>
+
+
+
+</app-manutencao-generica>

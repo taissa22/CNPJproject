@@ -1,0 +1,17 @@
+<div class="alert-card">
+    <div class="alert-icon">
+        <i class="fa-solid fa-triangle-exclamation" [ngStyle]="{'color':  cor}"></i>
+    </div>
+
+    <div class="alert-content">
+        <span class="d-flex mt-2">Existem {{quantidade}} <p class="red m-0 ml-1"> {{titulo}}</p></span>
+        <span class="d-flex mb-2"><b class="mr-1">{{status}} </b> há mais de <p class="red m-0 ml-1"> {{dias}} dias</p>!</span>
+    </div>
+
+    <div class="alert-action">
+        <button class="btn btn-secondary" [ngStyle]="{'background-color':  cor}" (click)="download()">
+          <i class="fas fa-arrow-down"></i>
+    </button>
+    </div>
+
+</div>

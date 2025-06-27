@@ -1,0 +1,56 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "AtmPexContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "AtmPexContext\\Data",
+   "OutputPath": "AtmPexContext\\Entities",
+   "ProjectRootNamespace": "Oi.Juridico.Contextos",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "Name": "JUR.ACA_USUARIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.INDICE",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AGEND_FECH_ATM_PEX",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ATM_INDICE_UF_PADRAO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AGEND_FECH_ATM_PEX_UF",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.FECHAMENTO_PEX_MEDIA",
+      "ObjectType": 0
+    }
+  ],
+   "UiHint": "JUR.SISJUR_DEV",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

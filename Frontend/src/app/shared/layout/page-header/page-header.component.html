@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-10">
+        <h1>{{ titulo }}</h1>
+        <h6>{{ caminho }}</h6>
+      </div>
+      <div class="col-md-2">
+        <a [routerLink]="rotaVoltar" *ngIf="rotaVoltar" class="btn-voltar">
+          <i class="fas fa-chevron-left"></i>
+          <i class="fas fa-chevron-left"></i>
+          <strong> Voltar</strong>
+        </a>
+        <a (click)="novo()" *ngIf="exibeBotaoIncluir" class="btn-incluir">
+          <i class="fas fa-plus-circle btn-add-icon p-1"></i>
+          <span>Incluir</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

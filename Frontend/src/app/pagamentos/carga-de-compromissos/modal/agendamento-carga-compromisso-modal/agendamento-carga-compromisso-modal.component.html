@@ -1,0 +1,26 @@
+<div class="container">
+
+  <span fxLayout="row" fxLayoutAlign="start center" class="title" style="display: flex;">
+    <h4 fxFlex>Agendar Carga de Compromissos RJ</h4>
+    <div
+    type="button"
+    class="roxo-padrao ml-auto"
+    (click)="activeModal.close(false)"
+    aria-label="Close">
+    <i class="fa-solid fa-xmark" style="font-size: 20px"></i>
+  </div>
+</span>
+
+<br />
+
+  <span fxLayout="row" fxLayoutAlign="start center" class="sub-title">
+    <h6>
+      Carregue a planilha com os compromissos, selecione a periodicidade de execução desejada,
+      informe o tipo de processo e clique em 'Agendar'.
+    
+    </h6>
+  </span>
+<br />
+  <painel-carga-de-compromissos (recarregarLista)="redefinirListagem()"></painel-carga-de-compromissos> 
+  
+</div>

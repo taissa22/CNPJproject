@@ -1,0 +1,128 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Objeto"
+  [breadcrump]="breadcrumb" [exibirAdicionar]="exibirTabela">
+  <br>
+  <div class="row">
+    <div class="col-12 py-3">
+    </div>
+  </div>
+  <div class="row" (keydown.enter)="buscarTabela()" style="margin-left: auto;">
+    <div class="d-flex pr-1 " >
+      <div style="width: 25rem;">
+        <label for="tipos-processo"> <b>Tipos de Processos:</b> </label>
+        <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        [items]="tiposProcesso"
+        bindLabel="descricao"
+        bindValue="id"
+        [formControl] = "tipoProcessoFormControl"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="false"
+        [clearable]="false"
+        (change)="selecionarTipoProcesso()"
+        [placeholder]="'Selecione o tipo de processo'"></ng-select>
+      </div>
+
+      <div class="ml-3" style="width: 25rem;" *ngIf="exibirTabela">
+        <label for="descricao"> <b>Descrição:</b>  </label>
+        <input type="search" (search)="onClearInputPesquisar()" class="form-control mr-2"
+          [formControl] = "buscarDescricaoFormControl"
+          placeholder="Entre com o texto da descrição ou parte dele"
+          maxlength="100">
+      </div>
+
+      <div class="ml-3" [ngStyle]="{ marginTop: '0.3rem' }" style="align-self: flex-end" *ngIf="exibirTabela">
+        <button type="button" class="btn btn-primary"  (click)="buscarTabela()">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 row" [class.ocultaElementos]= "!exibirTabela" >
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" >Objetos</b>
+    </div>
+
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf= "exibirTabela">
+    <sisjur-table (sort)="buscarTabela()" [ngSwitch]="tipoProcessoFormControl.value">
+      <ng-container *ngSwitchCase="6">
+
+        <sisjur-table-header> 
+            <sisjur-table-header-cell sort="id" width="5">Código</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="descricao" >Descrição</sisjur-table-header-cell>
+            <sisjur-table-header-cell width="20">Tipo de Processo</sisjur-table-header-cell>                                 
+            <sisjur-table-header-cell width="3"></sisjur-table-header-cell>                 
+            <sisjur-table-header-cell width="3"></sisjur-table-header-cell>   
+        </sisjur-table-header>
+
+        <sisjur-table-row *ngFor="let objeto of objetos;let i = index" >
+          <sisjur-table-row-cell>{{objeto.id}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <span [title]="objeto.descricao" class="text_ellipsis">{{objeto.descricao}}</span>
+          </sisjur-table-row-cell>         
+          <sisjur-table-row-cell>{{objeto.tipoProcesso.nome}}</sisjur-table-row-cell>
+
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="alterar(objeto)"> <i class="fa fa-edit"></i>  </button>            
+          </sisjur-table-row-cell>
+
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="excluir(objeto)"> <i class="fa fa-trash"></i> </button>            
+          </sisjur-table-row-cell>
+          
+        </sisjur-table-row>
+      </ng-container> 
+
+      <ng-container *ngSwitchCase="4">
+        <sisjur-table-header> 
+          <sisjur-table-header-cell sort="id" width="5">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="descricao" width="25">Descrição</sisjur-table-header-cell>        
+          <sisjur-table-header-cell sort="tributarioAdministrativo" width="10">Objeto Administrativo</sisjur-table-header-cell>        
+          <sisjur-table-header-cell sort="tributarioJudicial" width="7">Objeto Judicial</sisjur-table-header-cell>        
+          <sisjur-table-header-cell sort="grupo" width="10">Grupo de Objeto</sisjur-table-header-cell>        
+          <sisjur-table-header-cell sort="ativoTributarioAdminstrativo" width="10">Ativo Administrativo</sisjur-table-header-cell>           
+          <sisjur-table-header-cell sort="ativoTributarioJudicial" width="7">Ativo Judicial</sisjur-table-header-cell>      
+          <sisjur-table-header-cell with="20">Tipo de Processo</sisjur-table-header-cell>   
+          <sisjur-table-header-cell width="3" ></sisjur-table-header-cell>                 
+          <sisjur-table-header-cell width="3" ></sisjur-table-header-cell>                 
+        </sisjur-table-header>
+        <sisjur-table-row *ngFor="let objeto of objetos;let i = index" >
+          <sisjur-table-row-cell>{{objeto.id}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <span [title]="objeto.descricao" class="text_ellipsis">{{objeto.descricao}}</span>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{objeto.ehTributarioAdministrativo? "Sim" : "Não"}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{objeto.ehTributarioJudicial? "Sim" : "Não"}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <span [title]="objeto.grupoPedidoDescricao" class="text_ellipsis">
+             {{objeto.grupoPedidoDescricao ? objeto.grupoPedidoDescricao : "-"}}
+            </span>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{objeto.ativoTributarioAdminstrativo? "Sim" : "Não"}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{objeto.ativoTributarioJudicial? "Sim" : "Não"}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>Tributário</sisjur-table-row-cell>
+
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="alterar(objeto)"> <i class="fa fa-edit"></i>  </button>            
+          </sisjur-table-row-cell>
+          
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="excluir(objeto)"> <i class="fa fa-trash"></i> </button>
+          </sisjur-table-row-cell>    
+
+        </sisjur-table-row>                
+      </ng-container>       
+    </sisjur-table> 
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>  
+    </div>
+</div>
+
+</app-manutencao-generica>

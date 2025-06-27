@@ -1,0 +1,22 @@
+.btn-outline-primary {
+    border: 1px solid #786bb9;
+    border-radius: 5px;
+}
+.titulo-table {
+    color: #786bb9;
+    padding: 10px 0 10px 0;
+}
+.texto-linha-table {
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+.descricao-linha-table {
+    font-size: 10px;
+    color: #999;
+}
+  
+::ng-deep{ 
+    ngb-datepicker.dropdown-menu.show {
+        margin-bottom: -100px !important;
+    }
+}

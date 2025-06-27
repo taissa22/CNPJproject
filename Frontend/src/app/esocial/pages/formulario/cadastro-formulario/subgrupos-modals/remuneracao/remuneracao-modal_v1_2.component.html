@@ -1,0 +1,128 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">{{ titulo }} Remuneração</h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+
+    <div class="row">
+      <div class="col-sm-6">
+        <span class="col-form-label-sm pb-0 mb-1 tooltip-remuneracao tooltip-data-vigencia">
+          <b>Data de Vigência:</b>
+          <i title="{{tooltipDtVigencia}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </span>
+        <div class="form-inline input-group input-date" id="component-data">
+          <input type="text" class="form-control form-control-sm input-date" placeholder="DD/MM/AAAA"
+            rInputMask="99/99/9999" [bsConfig]="{ showWeekNumbers: false }" name="dataRemuneracao" id="dataRemuneracao"
+            [formControl]="dataRemuneracaoFormControl" bsDatepicker #dataRemuneracao="bsDatepicker"
+            placement="top-left top-right bottom-left bottom-right"
+            [disableTooltip]="desabilitaTooltip(dataRemuneracaoFormControl)"
+            [ngbTooltip]="validacaoData" [minDate]="dtMin" [maxDate]="dtMax" required />
+          <div class="input-group-append">
+            <button type="button" class="btn btn btn-outline-secondary calendar" (click)="dataRemuneracao.toggle()"
+              [attr.aria-expanded]="dataRemuneracao.isOpen" [disabled]="dataRemuneracaoFormControl.disabled">
+              <i class="fa-solid fa-calendar-days"></i>
+            </button>
+          </div>
+          <ng-template #validacaoData>
+            <span *ngIf="dataRemuneracaoFormControl.invalid &&dataRemuneracaoFormControl.errors.required">
+              Campo obrigatório
+            </span>
+            <span *ngIf="dataRemuneracaoFormControl.invalid &&dataRemuneracaoFormControl.errors.validDate">
+              Data inválida
+            </span>
+            <span
+              *ngIf="dataRemuneracaoFormControl.invalid &&dataRemuneracaoFormControl.errors.bsDate &&dataRemuneracaoFormControl.errors.bsDate.invalid">
+              Data inválida
+            </span>
+            <span *ngIf="dataRemuneracaoFormControl.invalid && dataRemuneracaoFormControl.errors.bsDate?.minDate">
+              A data informada deve ser maior ou igual a data de admissão.
+            </span>
+            <span *ngIf="dataRemuneracaoFormControl.invalid && dataRemuneracaoFormControl.errors.bsDate?.maxDate">
+              A data informada deve ser menor ou igual a data do desligamento.
+            </span>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-remuneracao">
+          <b>Salário Base do Trabalhador:</b>
+          <i title="{{tooltipSalBase}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input type="text" class="form-control input-number" [formControl]="valorSalaBaseFormControl" currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" maxLength='21'
+          [disableTooltip]="desabilitaTooltip(valorSalaBaseFormControl)"
+          [ngbTooltip]="valorSalaBase" />
+      </div>
+      <ng-template #valorSalaBase>
+        <span *ngIf="valorSalaBaseFormControl.invalid && valorSalaBaseFormControl.hasError('required')">
+          Campo obrigatório.
+        </span>
+        <span
+          *ngIf="valorSalaBaseFormControl.invalid && valorSalaBaseFormControl.hasError('min') || valorSalaBaseFormControl.hasError('max')">
+          Preencher com 0 (zero).
+        </span>
+      </ng-template>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-sm-12">
+        <span class="tooltip-remuneracao"><b>Unidade de Pagamento:</b> <i title="{{tooltipUniPag}}" class=" roxo-padrao fa fa-info-circle"></i>  </span>
+        <ng-select class="form-control form-control-select" [items]="listaUnidadePagamento" bindLabel="descricaoConcatenada" bindValue="id" placeholder="Selecione um item"
+          [formControl]="unidadePagamentoIdFormControl" (change)="validator()"
+          [disableTooltip]="desabilitaTooltip(unidadePagamentoIdFormControl)"
+          [ngbTooltip]="unidadePagamentoId"
+          [disabled]="!temPermissaoEsocialBlocoGK"
+          [class.disabled]="!temPermissaoEsocialBlocoGK"
+          >
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+        <ng-template #unidadePagamentoId>
+          <span *ngIf="unidadePagamentoIdFormControl.invalid && unidadePagamentoIdFormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-sm-12">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-remuneracao">
+          <b>Descrição Salário Variável:</b>
+          <i title="{{tooltipDescSal}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <textarea class="form-control" id="descricaoSalarioVariavelId" #desc (keyup)="calculaTamanho(desc.value)"
+          maxlength="999" rows="4" cols="50" [formControl]="descricaoSalarioVariavelIdFormControl"
+          [disableTooltip]="desabilitaTooltip(descricaoSalarioVariavelIdFormControl)"
+          [ngbTooltip]="validacaoDescricaoSalarioVariavelId"></ng-select>
+        ></textarea>
+        <span class="ml-auto">{{ totalCaracterDesc }}/999</span>
+      </div>
+      <ng-template #validacaoDescricaoSalarioVariavelId>
+        <span
+          *ngIf="descricaoSalarioVariavelIdFormControl.invalid && descricaoSalarioVariavelIdFormControl.hasError('required')">
+          Campo obrigatório.
+        </span>
+      </ng-template>
+    </div>
+  </form>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()" *ngIf="temPermissaoEsocialBlocoGK">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()" *ngIf="temPermissaoEsocialBlocoGK">
+      Confirmar
+    </button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="close()" *ngIf="!temPermissaoEsocialBlocoGK">
+      Fechar
+    </button>
+  </div>
+</div>

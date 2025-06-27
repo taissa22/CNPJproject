@@ -1,0 +1,39 @@
+<div class="container-modal">
+    <div class="title">
+        <h4 class="roxo-padrao mb-0">Processos Relacionados a não Retenção de Tributos ou a Depósitos Judiciais</h4>
+        <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
+        </div>
+    </div>
+
+    <div class="row cardInfo">
+        <div class="col-sm-1 mt-3">
+            <label class="col-form-label-sm pb-0 mb-1">
+      <b>ID:</b>
+      </label>
+              <p>{{codIrrf}}</p>
+          </div>
+          <div class="col-sm-4 mt-3">
+              <label class="col-form-label-sm pb-0 mb-1">
+        <b>Código Receita (CR) IRRF:</b>
+      </label>
+              <p>{{codReceita}}</p>
+          </div>
+          <div class="col-sm-4 mt-3">
+              <label class="col-form-label-sm pb-0 mb-1">
+        <b>Valor Correspondente (CR) IRRF - Rendimento Mensal:</b>
+      </label>
+              <p>{{valorIrrf | currency: "BRL":"R$ ":"1.2-2":"pt"}}</p>
+          </div>
+          <div class="col-sm-3 mt-3">
+            <label class="col-form-label-sm pb-0 mb-1">
+                <b>Valor Correspondente (CR) IRRF - 13º:</b>
+            </label>
+            <p>{{valorIrrf13 | currency: "BRL":"R$ ":"1.2-2":"pt"}}</p>
+        </div>
+      </div>
+      
+    <div style="padding: 0 1rem 1rem;">
+        <app-processos-dep-jud-modal_v1_2 [formularioId]="codF2501" [codIrrf]="codIrrf" [temPermissaoBlocoCeDeE]="temPermissaoBlocoCeDeE"></app-processos-dep-jud-modal_v1_2>
+    </div>
+</div>

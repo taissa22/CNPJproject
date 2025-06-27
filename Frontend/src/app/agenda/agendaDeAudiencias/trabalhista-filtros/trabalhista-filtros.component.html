@@ -1,0 +1,15 @@
+<section class="container-breadcrumb">
+    <h3>{{ tituloAgendaAudiencia }}</h3>
+    <p>{{ caminhoPaginaAgendaAudiencia }}</p>
+    <p class="filtroSapSelecao">{{ filtroAgendaAudiencia }}</p>
+  </section>
+
+  <app-cpn-filtro
+  [listaFiltro]="listaFiltro"
+  [button]="'Buscar'"
+  [enabled]="service.buscaInvalida"
+  [textNomeFiltro]="'Critérios de seleção dos processos a serem considerados'"
+  (funcbtnclear)="limparFiltro($event)"
+  [btnclear] = "true"
+  (funcBtn)="onClickbtn($event)"
+></app-cpn-filtro>

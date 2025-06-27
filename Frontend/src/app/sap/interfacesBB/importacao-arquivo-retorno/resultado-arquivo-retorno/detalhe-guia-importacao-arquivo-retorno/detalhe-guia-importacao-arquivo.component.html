@@ -1,0 +1,132 @@
+<app-container-pagina [titulo]="'Importação e Consulta do Arquivo de Retorno'"
+  [caminho]="'SAP > Interface BB > Importação e Consulta do Arquivo de Retorno'" textoRota="Voltar" rota="..">
+  <div class="header-container d-flex mt-4 justify-content-between align-items-end">
+    <span class="d-flex align-items-center tituloArqEncontrado">
+      Dados do Arquivo
+    </span>
+  </div>
+
+  <div class="container-fluid p-0 mt-3">
+    <div class="row ml-0">
+      <div class="p-0 col-12">
+        <div class="align-self-start title">
+          <b>
+            {{dadosArquivo.tipoProcesso}} - {{dadosArquivo.numeroLoteBB}} - {{dadosArquivo.status}}
+          </b>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-2 ml-0">
+      <div class="p-0 col-4">
+        <div class="align-self-start valores">Data da remessa:
+          {{dadosArquivo.dataRemessa}}
+        </div>
+      </div>
+      <div class="p-0 col-4">
+        <div class="align-self-start valores pad">Qtd de Registros do Arquivo:
+          {{dadosArquivo.quantidadeRegistrosArquivo | number:'1.0'}}</div>
+      </div>
+      <div class="p-0 col-4">
+        <div class="align-self-start valores pad">Valor Total da Remessa:
+          {{dadosArquivo.valorTotalRemessa
+              |  currency: "BRL":'':"1.2-2":"pt"}}
+        </div>
+      </div>
+    </div>
+    <div class="row pt-1 ml-0">
+      <div class="p-0 col-4">
+        <div class="align-self-start valores">Data Processamento da remessa:
+          {{dadosArquivo.dataProcessamentoRemessa}}</div>
+      </div>
+
+
+      <div class="p-0 col-4">
+        <div class="align-self-start valores pad">Qtd Registros Processados:
+          {{dadosArquivo.quantidadeRegistrosProcessados}}
+        </div>
+      </div>
+
+      <div class="p-0 col-4">
+        <div class="align-self-start valores pad">Valor Total Processado:
+          {{dadosArquivo.valorTotalGuiaProcessada |
+              currency: "BRL":'':"1.2-2":"pt"}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="header-container d-flex mt-4 justify-content-between align-items-end">
+    <span class="d-flex align-items-center tituloArqEncontrado">
+      Guias do Arquivo
+    </span>
+    <div class="col p-0" style="text-align: right;">
+
+      <button class="btn roxo-padrao" (click)="onClickExportar()">
+        <i class="fa fa-download"></i> Exportar
+      </button>
+    </div>
+  </div>
+
+  <div class="tabela-border">
+    <div class="row ml-0">
+      <div class="p-0 col-12 d-flex align-items-end justify-content-between">
+        <div class="align-self-start title">
+          GUIAS OK
+        </div>
+        <div class="imgguia roxo-padrao mr-2 d-flex align-items-center">
+          <i class="fas fa-image mr-1" style="font-size: 17px;"
+            [ngClass]="(ultimaGuiaSelecionada == null) ? 'desabilitado' : ''"></i>
+          <span style="font-size: 14px;" [ngClass]="(ultimaGuiaSelecionada == null) ? 'desabilitado' : ''"
+            (click)="abrirImagemGuia()"> Imagem da Guia</span>
+          <i [ngbTooltip]="'Selecione uma das guias e clique no link para consultar a imagem'"
+            tooltipClass="tooltip-width" class="fas fa-question-circle ml-1"
+            style="font-size: 16px; cursor: default;"></i>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+    <div class='overflow-scroll'>
+      <table class='table table-striped fonte-padrao'>
+        <th col nowrap *ngFor="let header of guiasHeader" style="border-top: none!important">
+          {{ header | GuiasOkAlias }}
+        </th>
+        <tr row nowrap class="table-item"
+         [ngClass]="item['selected'] ? 'table-item selected' : 'table-item'"
+
+          *ngFor="let item of guias; index as i" (click)="selectGuia(item, i)">
+          <td class="text-limit" nowrap *ngFor="let header of guiasHeader"
+          [ngClass]="header == 'valorLiquido' ? 'text-right' : '' "
+          >
+            <span [ngbTooltip]='(item[header] && item[header].length > 40) && item[header]'
+             >
+              {{
+                header == 'valorLiquido'?
+               ( item[header] | currency: "BRL":"":"1.2-2":"pt") :
+               item[header]
+               }} </span>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-6 infoTabela">
+          <span>Qtd. Lançamentos: {{infoTooltip.totalGuias  | number:'1.0'}} </span>
+        </div>
+        <div class="col-6 infoTabela">
+          <span currencyMask>Valor Total: {{dadosArquivo.valorTotalRemessa
+            |  currency: "BRL":'':"1.2-2":"pt"}} </span>
+        </div>
+
+
+      </div>
+    </div>
+
+
+  </div>
+
+</app-container-pagina>

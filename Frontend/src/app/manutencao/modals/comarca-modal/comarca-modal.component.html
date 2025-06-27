@@ -1,0 +1,101 @@
+<div class="modal-header pb-0">
+
+  <span class="modal-title pl-0">{{ operacaoTitulo}} Comarca</span>
+
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0 pb-0">
+  <div class="mb-3">
+    <div class="col-8 px-0 mt-3">
+      <label 
+        class="col-form-label-sm mb-1" 
+        for="descricao-input" 
+        style="line-height:12px;"> 
+        <b>Estado:</b> 
+      </label>
+      <ng-select 
+        [ngStyle]="{'fontSize': '11px','opacity': estadoIdFormControl.enabled ? 1 : 0.5}" 
+        [ngbTooltip]="estadoError"
+        [disableTooltip]="desabilitaTooltip(estadoIdFormControl)" 
+        [items]="estados" 
+        [formControl]="estadoIdFormControl"
+        bindLabel="descricao" 
+        (change)="aoMudarEstado()"
+        bindValue="id" appearance="outline"
+        notFoundText="Nenhuma opção disponível" 
+        [searchable]="true" 
+        [clearable]="true"
+        [placeholder]="'Selecione uma opção'">
+        <ng-template ng-option-tmp let-item="item">
+          <div title="{{item.descricao}}">{{item.descricao}}</div>
+        </ng-template>
+      </ng-select>
+      <ng-template #estadoError>
+        <span *ngIf="estadoIdFormControl.hasError('required')">
+          Campo obrigatório
+        </span>
+      </ng-template>
+    </div>
+
+    <div class="col-12 px-0 mt-2">
+      <label 
+        class="col-form-label-sm pb-0 mb-1" 
+        for="nome-input">
+        <b>Nome:</b>
+      </label>
+
+      <input 
+        type="text" 
+        id="nome-input" 
+        formControlName="nome" 
+        class="form-control" 
+        style="text-transform: uppercase;"
+        [ngbTooltip]="nomeError" 
+        [disableTooltip]="desabilitaTooltip(nomeFormControl)"
+        maxlength="30" />
+      <ng-template #nomeError>
+        <span *ngIf="nomeFormControl.hasError('required')">
+          Campo obrigatório
+        </span>
+        <span *ngIf="nomeFormControl.hasError('maxlength')">
+          O Limite é de 30 caracteres
+        </span>
+      </ng-template>
+
+    </div>
+
+
+
+    <div class="col-12 px-0 mt-3">
+
+      <label class="col-form-label-sm  mb-1" for="descricao-input" style="line-height:12px;">
+        <b>Comarca BB:</b>
+      </label>
+
+      <ng-select 
+        [ngStyle]="{'fontSize': '11px','opacity': comarcaBBIdFormControl.enabled ? 1 : 0.5}" 
+        [items]="comarcasBB" 
+        formControlName="comarcaBBId"
+        bindLabel="bindLabel" 
+        bindValue="id" 
+        appearance="outline" 
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true" 
+        [clearable]="true" 
+        [placeholder]="placeholderComarcaBB">
+        <ng-template ng-option-tmp let-item="item">
+          <div title="{{item.bindLabel}}">{{item.bindLabel}}</div>
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+</form>
+
+<div class="modal-footer pt-0">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()">Confirmar</button>
+</div>

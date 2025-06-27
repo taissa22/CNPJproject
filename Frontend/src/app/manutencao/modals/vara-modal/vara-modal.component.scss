@@ -1,0 +1,56 @@
+.modal-title{
+    font-size: 15px;
+}
+
+jur-column-template {
+      &.calculo-inicial {
+        font-weight: bold;
+      }
+      > span:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    
+.tag {
+      background-color: #988eca;
+      color: #fff;
+      padding: 4px 6px;
+      font-weight: normal;
+      border-radius: 2px;
+      line-height: 16px;
+      height: 24px;
+      margin: 5px;
+}
+
+::ng-deep{
+    .modal-content{
+        min-width:370px!important;
+        max-width:371px!important;
+    }
+    .modal-sm{
+        min-width:370px!important;
+        max-width:371px!important;
+    }
+}
+
+.modal-title{
+    font-weight: bold;
+}
+.modal-header button {
+    color: gray;
+  }
+
+  .modal-title {
+    margin: auto;
+  }
+
+  .btn-icon {
+    font-size: 18px;
+  }
+    
+  #vara:disabled{
+     background: #fff;
+     opacity: 0.5;
+  }

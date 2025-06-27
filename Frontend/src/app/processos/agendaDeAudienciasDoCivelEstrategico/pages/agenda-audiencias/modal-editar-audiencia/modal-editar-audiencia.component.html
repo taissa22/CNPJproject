@@ -1,0 +1,76 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel" style="width: 230px;">{{ titulo }}</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body py-0" [formGroup]="formulario">
+  <div class="row py-0">
+    <div class="col-md-12">
+      <p class="font-md font-purple align-center" style="font-size: 12px; text-transform: uppercase;">
+        <span>{{ entidade.processo.comarca.estado.id }} - {{ entidade.processo.comarca.nome }} -  {{ entidade.processo.vara.id }}ª {{ entidade.processo.tipoVara.nome }}</span><br />
+        <span>AUDIÊNCIA {{ entidade.tipoAudiencia.descricao }} - {{ entidade.dataAudiencia | date: 'dd/MM/yyyy HH:mm' }}</span>
+      </p>
+    </div>
+    <div class="col-md-12 py-1">
+      <label class="col-form-label-sm font-weight-bold" for="preposto">
+        Preposto:
+      </label>
+      <ng-select
+        [ngStyle]="{ fontSize: '11px' }"
+        id="preposto"
+        [items]="prepostos"
+        bindLabel="nome"
+        bindValue="id"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        [virtualScroll]="true"
+        [formControl]="prepostoFormControl"
+        placeholder="Selecione uma opção">
+      </ng-select>
+    </div>
+    <div class="col-md-12 py-1">
+      <label class="col-form-label-sm font-weight-bold" for="escritorio">
+        Escritório Audiência:
+      </label>
+      <ng-select
+        [ngStyle]="{ fontSize: '11px' }"
+        id="escritorio"
+        [items]="escritorios"
+        bindLabel="nome"
+        bindValue="id"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        [virtualScroll]="true"
+        [formControl]="escritorioFormControl"
+        (change)="obterAdvogadosDoEscritorio($event)"
+        placeholder="Selecione uma opção">
+      </ng-select>
+    </div>
+    <div class="col-md-12 py-1">
+      <label class="col-form-label-sm font-weight-bold" for="escritorio">
+        Advogado Escritório Audiência:
+      </label>
+      <ng-select
+        [ngStyle]="{ fontSize: '11px' }"
+        id="advogadoEscritorio"
+        [items]="advogadosEscritorio"
+        bindLabel="nome"
+        bindValue="id"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        [virtualScroll]="true"
+        [formControl]="advogadoEscritorioFormControl"
+        placeholder="Selecione uma opção">
+      </ng-select>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="activeModal.close('cancel')">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="atualizar()">Confirmar</button>
+</div>
+

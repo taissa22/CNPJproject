@@ -1,0 +1,76 @@
+<app-container-pagina [titulo]="'Estorno de Lançamentos Pagos no SAP'"
+  [caminho]="breadcrumb" textoRota="Voltar" rota="..">
+
+  <div class="container-fluid p-0 pt-5">
+    <div class="row d-flex justify-content-between align-items-center
+     pr-3 pl-3">
+      <h1 class="titulo m-0"> Dados do Processo</h1>
+      <div class="itens-icone d-flex">
+
+        <div (click)="onClickAbrirModalPedido()" class="pointer pr-2">
+          <i class="fas fa-list-ul pr-1" style="color: #786bb9;"></i>
+          Pedidos</div>
+        <div class="pl-3" (click)="onClickAbrirModalPartes()"  class="pointer">
+          <i class="fas fa-user-friends pr-1" style="color: #786bb9;">
+          </i> Partes</div>
+      </div>
+
+    </div>
+    <hr class="m-0 mt-1 mb-1">
+    <div class="row p-0">
+      <div class="col-7 d-flex align-items-center p-0 pl-3">
+        <div class="col-1 p-0">
+          <label class="pb-2">Processo:</label>
+          <label>Escritório:</label>
+        </div>
+        <div class="col-11 p-0 pl-2 labu ">
+          <label class=" pb-1 labelGrandona"
+          [ngbTooltip]="variavel.length > 91 ? tooltipText : '' ">
+            {{ processo.numeroProcesso }} - {{ processo.uf }} - {{ processo.nomeComarca }} - {{processo.vara}}ª VARA {{ processo.nomeTipoVara }}
+            - {{ processo.classificacaoHierarquica | uppercase }} -
+            <b>Código Interno</b>: {{ processo.codigoProcesso }}
+          </label> <br>
+          <label>
+            {{ processo.descricaoEscritorio }}
+          </label>
+        </div>
+      </div>
+      <div class="col-5 d-flex p-0 pl-1">
+        <div class="col-3 p-0 divtexto" style="text-align: end;">
+          <div class="pb-2">
+            Empresa:
+          </div>
+          <div>
+            Responsável Interno:
+          </div>
+        </div>
+        <div class="col-8 p-0 pl-3 labu" [ngClass]="processo.descricaoEmpresaDoGrupo">
+          <div class="pb-2">
+            {{processo.descricaoEmpresaDoGrupo}}
+          </div>
+          <div class="align-items-end ">
+            {{ processo.responsavelInterno }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-between align-items-center
+     pr-3 pl-3 pt-4">
+      <h1 class="titulo m-0">Lançamentos</h1>
+    </div>
+    <hr class="m-0 mt-1 mb-1">
+
+    <div>
+      <estorno-abas ></estorno-abas>
+    </div>
+  </div>
+
+  <ng-template #tooltipText>
+    <label >
+      {{ processo.numeroProcesso }} - {{ processo.uf }} - {{ processo.nomeComarca }} - {{processo.vara}}ª VARA {{ processo.nomeTipoVara }}
+      -
+      <b>Código Interno</b>: {{ processo.codigoProcesso }}
+    </label>
+  </ng-template>
+
+</app-container-pagina>

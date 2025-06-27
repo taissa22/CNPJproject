@@ -1,0 +1,304 @@
+button{ cursor: pointer; }
+
+section.container-breadcrumb{
+  margin-top: 30px;
+
+  h3{
+    color: #554D80;
+  }
+}
+
+#dataFechamento {
+  width: 780px;
+  strong {
+    color: #554D80;
+  }
+}
+.margin-top{
+  margin-top: 10px;
+}
+
+.texto_fechamento{
+  margin: 30px;
+  font-size: 15px;
+  color: #6f62b2;
+  font-weight: bold;
+  text-align: center;
+}
+.botao_download button {
+  font-size:13px;
+  border: none;
+  background: none;
+  padding-left: 0px;
+  margin-right: 10px;
+  cursor: pointer;
+
+  color: #6f62b2;
+
+  i{
+    margin-right: 8px;
+  }
+
+}
+
+section{
+  min-width: 85%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+}
+
+section.topo{
+  display: flex;
+  margin-bottom: 40px;
+
+  .grupo-data{
+    margin-right:10px;
+    position: relative;
+
+  }
+}
+
+label {
+  display: inline-block;
+  margin-top: 7px;
+  padding-right: 10px;
+  color: #555555;
+}
+
+div.vermais{
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+  height: 30px;
+}
+
+div.vermais button{
+  font-size: 12px;
+  line-height: 30px;
+  border: none;
+  background: none;
+  color: #6f62b2;
+}
+
+.secao_titulo{
+  position: absolute;
+  top: -22px;
+  left: 0px;
+  font-size: 15px;
+  font-weight: bold;
+  color:#554d80;
+}
+
+section.lower .quad {
+  position: relative;
+  position:relative;
+  margin-top: 10px;
+  border: solid 1px #e0daff;
+}
+
+.celula_exportacao{
+  width: 100%;
+  display: flex;
+  padding:10px;
+  border-bottom: solid 1px #e0daff;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.celula_esquerda .info{
+  color: #555555;
+  width: 70%;
+}
+
+.celula_esquerda .info2{
+  color: #555555;
+  width: 200px;
+}
+
+.dados_exportacao i, .dados_exportacao svg {
+  color:#554d80;
+}
+
+.export_date{
+  color:#554d80;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.celula_direita{
+  width: 30%;
+  min-width: 95px;
+
+  color: #555555;
+
+  div.naoexpurgar{
+    color: #555555;
+  }
+}
+
+
+.celula_direita>div{
+  margin-bottom: 5px;
+}
+
+.celula_direita div{
+  display: flex;
+  align-items: center;
+}
+
+/*novas classes*/
+.campobusca_file{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  cursor: pointer;
+  opacity:0;
+}
+
+.campobusca{
+  position: relative;
+  width: 340px;
+  white-space: nowrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.campobusca_exibe{
+  width: 237px;
+  margin: 0px;
+}
+
+.campobusca_botao{
+  width: 100px;
+  pointer-events: none;
+}
+
+/*diálogo da página*/
+.dialog_container{
+  display:none;
+}
+
+.dialog_container.visible{
+  display:flex;
+  position: fixed;
+  top:0px;
+  left:0px;
+  z-index:1000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.5);
+}
+
+div.dialog{
+  display:block;
+  width:355px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  background-color: white;
+  border: solid 1px gray;
+  padding: 15px;
+  height: 361px;
+  font-size:12px;
+  font-family: arial;
+}
+
+.dlg_container{
+  position: relative;
+  width: 100%;
+  height: 93%;
+  overflow: auto;
+}
+
+.dlg_titulo{
+  position: relative;
+  color:#554d80;
+  font-weight:bold;
+  letter-spacing: -0.32px;
+}
+
+.dlg_subtitulo{
+  position: relative;
+  margin-bottom: 15px;
+  letter-spacing: -0.4px;
+}
+
+.opcao_linha{
+  display:flex;
+  margin-bottom: 8px;
+  align-items: center;
+  padding-left: 5px;
+}
+
+.opcao_linha.linha_unica{
+  margin-bottom: 5px;
+  padding-left: 6px;
+}
+
+.checkboxes_grupo{
+  border: solid 1px gray;
+  padding-top: 5px;
+}
+
+.dlg_texto{
+  width: 340px;
+  padding-right:5px;
+  padding-left:5px;
+}
+
+.dlg_ordinais{
+  font-weight: bold;
+  width: 20px;
+}
+
+.botao_fechar{
+  display:flex;
+  justify-content: flex-end;
+}
+.dlg_fechar{
+  position: absolute;
+  position: relative;
+  background: none;
+  color:gray;
+  border: none;
+  top: 0px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.botoes_grupo{
+  margin-top: 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.botoes_grupo button{
+  margin-right: 5px;
+}
+
+.botoes_grupo button:last-of-type{
+  margin-right: 0px;
+}
+
+.margin-left{
+  margin-left: 5px;
+}
+// a borda vermelha quando insere uma data inválida.
+.prlnk-datepicker
+  div.input-group
+  input.form-control.erro.primeira-linha
+  + span.guarda-erro:before,
+.prlnk-datepicker
+  div.input-group
+  input.form-control.erro.primeira-linha
+  + span.guarda-erro:before {
+  bottom: -20px;
+}

@@ -1,0 +1,119 @@
+<div class="list-group">
+  <div class="list-group-item" *ngFor="let d of compromissos">
+    <div class="row">
+      <div class="col-8 pr-1">
+        <div class="row">
+          <div class="col-12 pr-1 pb-2">
+            <span class="mb-1 font-size-14 w300" style="color: #554d80">
+              {{ d.tipoProcessoDescription + ' - ' + d.configExecDescription }}
+            </span>
+          </div>
+
+          <div class="col-12 pr-1">
+            <span class="mt-2 font-size-12" style="color: #555555">
+              {{ d.mensagem }}
+            </span>
+            <br />
+            <p
+              class="mb-2 mt-1 font-size-12"
+              style="color: #555555"
+              *ngIf="d.obterDataFinalizacao"
+            >
+              Finalizado em {{ d.obterDataFinalizacao }}
+            </p>
+
+            <div class="row pt-1 pr-1">
+              <div class="col-3 pt-1 " *ngIf="d.status === 'Finalizado'">
+                <a
+                  [href]="downloadArquivosCarregados(d.id)"
+                  class="font-purple btn-link btn-text-cursor"
+                >
+                  <i class="fas fa-download pr-1"></i
+                  ><span class="font-size-14"
+                    ><small>Planilha Carregada</small></span
+                  >
+                </a>
+              </div>
+              <div class="col-3 pt-1 px-1" *ngIf="d.status === 'Finalizado'">
+                <a
+                  [href]="downloadResultaCarga(d.id)"
+                  class="font-purple btn-link btn-text-cursor"
+                >
+                  <i class="fas fa-download pr-1"></i
+                  ><span class="font-size-14"
+                    ><small>Resultado da Carga</small></span
+                  >
+                </a>
+              </div>
+              <div
+                class="col-12 pt-1"
+                *ngIf="d.status === 'Agendado' || d.status === 'Erro'"
+              >
+                <span
+                  (click)="excluirAgendamento(d.id)"
+                  class="font-purple btn-link btn-text-cursor"
+                >
+                  <i class="fas fa-trash pr-1"></i
+                  ><span class="font-size-14"
+                    ><small>Excluir Agendamento</small></span
+                  >
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4 pr-4">
+        <div class="row">
+          <div class="col-12 mb-1">
+            <span
+              class="float-right custom-badge"
+              [ngClass]="{
+                'custom-badge-finalizado': d.status === 'Finalizado',
+                'custom-badge-agendado': d.status === 'Agendado',
+                'custom-badge-processando': d.status === 'Processando',
+                'custom-badge-erro': d.status === 'Erro',
+                'custom-badge-cancelado': d.status === 'Cancelado'
+              }"
+            >
+              {{ d.status }}
+            </span>
+          </div>
+          <div class="col-12">
+            <span
+              class="float-right text-right font-size-12"
+              style="color: #555555"
+            >
+              Agendamento solicitado por {{ d.usrCodUsuario }}
+            </span>
+          </div>
+          <div class="col-12">
+            <span
+              class="float-right text-right font-size-12"
+              style="color: #555555"
+            >
+              em {{ d.obterDataAgendamento }}
+            </span>
+          </div>
+          <div class="col-12">
+            <span
+              class="float-right text-right font-size-12"
+              style="color: #555555"
+            >
+              (ID: {{ d.id }})
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-2">
+    <sisjur-paginator
+      [length]="totalCompromissos"
+      [pageSize]="tamanhoPagina"
+      (page)="obterMaisAgendamentos()"
+    ></sisjur-paginator>
+  </div>
+</div>

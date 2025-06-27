@@ -1,0 +1,44 @@
+<div class="container-fluid mt-2">
+  <form >
+    <div class="row ">
+      <div class="col-4 d-flex align-items-center">
+        <label class="p-0 m-0">Período de Data de Remessa:</label>
+      </div>
+      <div class="col-8">
+        <app-data-range
+        (retDataFim) = "atualizarData($event)"
+        (retDataInicio)= "service.dataRemessaInicio = $event"
+        [dataInicio]= "service.dataRemessaInicio"
+        [dataFim]="service.dataRemessaFim"
+        (rangeValido)="atualizarDataRemessaValido($event)"></app-data-range>
+      </div>
+    </div>
+    <div class="row mt-2 ">
+      <div class="col-4 d-flex align-items-center">
+        <label class="p-0 m-0">Número da Remessa:</label>
+      </div>
+      <div class="col-8">
+        <app-number-range [formatarParaReal]="false" [maxlengthNumber]="10"
+        (retNumeroFim)="atualizarRemessa($event)"
+        (retNumeroInicio)="service.numeroRemessaInicio = $event"
+        [texto1]="service.numeroRemessaInicio"
+        [texto2]="service.numeroRemessaFim"
+        (rangeValido)="atualizarNumeroRemessaValido($event)"></app-number-range>
+      </div>
+    </div>
+    <div class="row mt-2 ">
+      <div class="col-4 d-flex align-items-center">
+        <label class="p-0 m-0">Intervalo de Valores das Guias:</label>
+      </div>
+      <div class="col-8">
+        <app-number-range  [maxlengthNumber]="19"
+        (retNumeroFim)="atualizarIntervalo($event)"
+        (retNumeroInicio)="service.intervaloValoresGuiaInicio = $event"
+        [texto1]="service.intervaloValoresGuiaInicio"
+        [texto2]="service.intervaloValoresGuiaFim"
+        (rangeValido)="atualizarIntervaloGuiaValido($event)"></app-number-range>
+      </div>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,70 @@
+<div>
+    <div class="roxo-padrao btn-novo mt-1">
+        <div>
+            <h5 class="roxo-padrao title mb-0" style="width: 500px">
+                Processos
+            </h5>
+        </div>
+        <i class="fas fa-plus-circle ml-auto mr-1 fs-2" (click)="incluir()" *ngIf="temPermissaoBlocoCeDeE"></i>
+        <span class="fs-1" (click)="incluir()" *ngIf="temPermissaoBlocoCeDeE">Incluir</span>
+    </div>
+
+    <div style="margin-top: 5px">
+        <sisjur-table (sort)="buscarTabela()">
+            <ng-container>
+                <sisjur-table-header>
+                    <sisjur-table-header-cell width="2"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3">ID</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="30">Tipo de Processo</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="30">N° Processo</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="29">Código Indicativo Suspensão</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                </sisjur-table-header>
+
+                <ng-container *ngFor="let item of dataSource; let i = index">
+                    <sisjur-table-row>
+                        <sisjur-table-row-cell class="ml-0">
+                            <button type="button" class="btn pl-2" (click)="selecionarProcesso(item.idEsF2501Infoprocret);">
+                                <i class="fas fa-plus roxo-padrao mr-1" *ngIf="processoSelecionado != item.idEsF2501Infoprocret"></i>
+                                <i class="fas fa-minus roxo-padrao mr-1" *ngIf="processoSelecionado == item.idEsF2501Infoprocret"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.idEsF2501Infoprocret}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{converterTipoProcesso(item.infoprocretTpprocret)}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infoprocretNrprocret}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infoprocretCodsusp}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>
+
+                            <button type="button" class="btn btn-icon" (click)="consultar(item.idEsF2501Infoprocret)"  *ngIf="!temPermissaoBlocoCeDeE">
+                                <i class="fa fa-magnifying-glass"></i>
+                            </button>
+                            <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501Infoprocret)" *ngIf="temPermissaoBlocoCeDeE">
+                                <i class="fa fa-edit"></i>
+                            </button>                            
+                        </sisjur-table-row-cell>
+
+                        <sisjur-table-row-cell>
+                            <button type="button" class="btn btn-icon" (click)="excluir(item.idEsF2501Infoprocret)" *ngIf="temPermissaoBlocoCeDeE">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </sisjur-table-row-cell>
+
+                    </sisjur-table-row>
+
+                    <sisjur-table-row *ngIf="processoSelecionado == item.idEsF2501Infoprocret" [heightAuto]="true" background="#fff">
+                        <sisjur-table-row-cell width="100">
+                            <div class="pt-3 pb-3">
+                                <app-valores-dep-jud-modal_v1_2 [formularioId]="formularioId" [codInfoprocret]="item.idEsF2501Infoprocret" [temPermissaoBlocoCeDeE]="temPermissaoBlocoCeDeE"></app-valores-dep-jud-modal_v1_2>
+                            </div>
+                        </sisjur-table-row-cell>
+                    </sisjur-table-row>
+                </ng-container>
+
+            </ng-container>
+        </sisjur-table>
+        <div class="mt-4">
+            <sisjur-paginator [length]="total" (page)="buscarTabela()" [MostrarQtdPorPagina]="false" [QtdFixaPorPagina]="10"></sisjur-paginator>
+        </div>
+    </div>
+</div>

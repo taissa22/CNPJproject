@@ -1,0 +1,67 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">{{ titulo }}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body pt-0" [formGroup]="formulario">
+  <form>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="col-form-label-sm" for="cpf">
+          <b>CPF:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="cpf" name="cpf"
+          [textMask]="{ mask: mascaraCpf }"
+          [formControl]="cpfFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(cpfFormControl)"
+          [ngbTooltip]="validacaoCpf"/>
+        <ng-template #validacaoCpf>
+          <span *ngIf="cpfFormControl.invalid && cpfFormControl.errors.required">
+            Campo obrigatório
+          </span>
+          <span *ngIf="cpfFormControl.invalid && cpfFormControl.errors.maxlength">
+            A descrição não pode ter mais de 11 caracteres
+          </span>
+          <span *ngIf="formulario.get('cpf').getError('cpfNotValid')">
+            CPF incorreto. Favor informá-lo novamente
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="col-form-label-sm" for="nome">
+          <b>Nome:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="nome" name="nome"
+          maxlength="100"
+          [formControl]="nomeFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(nomeFormControl)"
+          [ngbTooltip]="validacaoNome"
+          maxlength="100"/>
+        <ng-template #validacaoNome>
+          <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.required">
+            Campo obrigatório
+          </span>
+          <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.maxlength">
+            O nome não pode ter mais de 100 caracteres
+          </span>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="activeModal.dismiss()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">Confirmar</button>
+</div>
+

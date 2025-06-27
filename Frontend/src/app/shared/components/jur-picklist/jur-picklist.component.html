@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col "  [ngStyle]="{'height': height+'px'}">
+        <h5 class="titulo-purple">{{titulo1}} ({{itensParaSelecaoCount}})</h5>
+        <div class="card card-listas" >
+            <div class="card-body p-0">
+                <ul class="list-group">
+                    <li class="list-group-item item-lista"
+                    [ngClass]="{'marcado': item.marcado}"
+                    (click)="item.marcado ? item.marcado = false : item.marcado = true"
+                    [hidden]="item.hide"
+                    *ngFor="let item of itensParaSelecao">
+                        {{item.descricao}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div #divBotoes class="col-1 p-0 div-botoes" [ngStyle]="{'height': height+'px'}">
+        <div class="row setas" [ngStyle]="{'margin-top': marginSetas+'px'}">
+            <div class="col-12 p-0" *ngIf="mostraSetaTodosOsItens"><h3 class="text-center" (click)="selecionarTodosOsItens()" >>></h3></div>
+            <div class="col-12 p-0"><h3 class="text-center" (click)="selecionarItensMarcados()" >></h3></div>
+            <div class="col-12 p-0"><h3 class="text-center" (click)="limparItensMarcados()" ><</h3></div>
+            <div class="col-12 p-0"><h3 class="text-center" (click)="limparItensSelecionados()" ><<</h3></div>
+        </div>
+    </div>
+    <div class="col" [ngStyle]="{'height': height+'px'}">
+        <h5 class="titulo-purple">{{titulo2}} ({{itensSelecionados.length}})</h5>
+        <div class="txt-principal">Principal</div>
+        <div class="card card-listas">
+            <div class="card-body p-0">
+                <ul class="list-group">
+                    <li class="list-group-item item-lista"
+                    [ngClass]="{'marcado': item.marcado}"
+                    
+                    *ngFor="let item of itensSelecionados">
+                        <div (click)="item.marcado ? item.marcado = false : item.marcado = true" style="width:100%">{{item.descricao}}</div>
+                        <div class="radiosItensSelecionados"><input type="radio" name="radioEscolhido" [checked]="item.principal == true" (click)="principal(item.id)" value="{{ item.id }}" /></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>

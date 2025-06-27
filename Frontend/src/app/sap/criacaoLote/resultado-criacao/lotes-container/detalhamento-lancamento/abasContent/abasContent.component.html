@@ -1,0 +1,99 @@
+<div class="container-fluid">
+  <div class="row tituloTab">
+    <div [ngClass]="ifLancamento ? 'col-6 p-0 ativo' : 'col-6 p-0'" (click)="definirLancamento(true)">
+      LANÇAMENTOS DISPONÍVEIS
+
+    </div>
+    <div [ngClass]="{'col-6':true, 'p-0': true, 'ativo': !ifLancamento, 'desativado': !ativarBordero }"
+      (click)=" ativarBordero ? definirLancamento(false) : '' ">
+      BORDERÔ
+    </div>
+  </div>
+
+  <div *ngIf="ifLancamento" class="row conteudoTab">
+    <app-tabela>
+      <th col>
+        <input type="checkbox"
+               (change)="onClickAllCheckbox()"
+               [value]="isAllCheckboxChecked"
+               [(ngModel)]="isAllCheckboxChecked"
+        >
+      </th>
+      <th col nowrap *ngFor="let colLancamento of headerLancamento">
+        {{ colLancamento | colLancamentoAlias }}
+      </th>
+      <tr row *ngFor="let lancamento of lancamentos">
+        <td>
+          <input type="checkbox"
+                 [(ngModel)]="lancamento.checked"
+                 value="lancamento.checked"
+                 (change)="onCheckBoxClick()"
+          >
+        </td>
+        <td nowrap *ngFor="let key of headerLancamento">
+          {{ key == 'valorLiquido'? (lancamento[key] | currency: "BRL":"":"1.2-2":"pt") : lancamento[key] }}
+        </td>
+      </tr>
+
+    </app-tabela>
+
+
+  </div>
+  <div *ngIf="ifLancamento" class="container">
+    <div class="row">
+
+      <div class="col-6 infoTabela">
+        <span>Total de Lançamentos Disponiveis: {{lancamentos? lancamentos.length : 0}}</span>
+      </div>
+      <div class="col-6 infoTabela">
+        <span currencyMask>Valor Total de Lançamentos: {{totalValorLiquidoTable |  currency: "BRL":"":"1.2-2":"pt"  }}</span>
+      </div>
+
+
+    </div>
+  </div>
+  <div *ngIf="!ifLancamento" class="row conteudoTab">
+    <div class="col-12 d-flex justify-content-end pb-1">
+      <i class="fas fa-plus-circle roxo-padrao fa-2x" (click)="openModal()"> </i>
+    </div>
+
+    <app-tabela style="width: 100%;">
+      <th col *ngFor="let coluna of listaColunasBordero">
+        {{ coluna.titulo }}
+      </th>
+      <tr row *ngFor="let bordero of listaValoresBordero; let i= index" id="{{i}}">
+        <input type="hidden" id="{{i}}" value="{{ bordero.seq_Bordero}}" />
+        <td>{{ bordero.nomeBeneficiario}} </td>
+        <td *ngIf="bordero.cpfBeneficiario">{{ bordero.cpfBeneficiario}} </td>
+        <td *ngIf="bordero.cnpjBeneficiario">{{ bordero.cnpjBeneficiario}} </td>
+        <td>{{ bordero.numeroBancoBeneficiario }} </td>
+        <td>{{ bordero.digitoBancoBeneficiario }} </td>
+        <td>{{ bordero.numeroAgenciaBeneficiario }} </td>
+        <td>{{ bordero.digitoAgenciaBeneficiario }} </td>
+        <td>{{ bordero.numeroContaCorrenteBeneficiario }} </td>
+        <td>{{ bordero.digitoContaCorrenteBeneficiario }} </td>
+        <td>{{ bordero.valor  |  currency: "BRL":"":"1.2-2":"pt"  }} </td>
+        <td>{{ bordero.cidadeBeneficiario}} </td>
+        <td>{{ bordero.comentario }} </td>
+        <td style="font-size:10px">
+          <i class="fas fa-edit roxo-padrao fa-2x mr-1" (click)="editarBordero(bordero)"></i>
+          <i class="fas fa-trash roxo-padrao fa-2x" (click)="excluirBordero(i)"></i>
+        </td>
+      </tr>
+    </app-tabela>
+
+  </div>
+  <div *ngIf="!ifLancamento" class="container">
+    <div class="row">
+
+      <div class="col-6 infoTabela">
+        <span>Total de Beneficiários: {{listaValoresBordero? listaValoresBordero.length : 0}}</span>
+      </div>
+      <div class="col-6 infoTabela">
+        <span >Total: {{totalValorBordero |  currency: "BRL":"":"1.2-2":"pt" }}</span>
+      </div>
+
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,235 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">{{ titulo }} Período de Base de Cálculo</h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row">
+      <div class="col-sm-6 periodoRef">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo tooltip-data">
+          <b>Período de Referência:</b>
+          <i title="{{tooltipPeriodoRef}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <mes-ano-new [control]="PeriodoReferenciaFormControl" id="compIni" [required]="true"
+          [disabled]="consulta" ></mes-ano-new>
+      </div>
+
+
+    </div>
+
+    <div class="divisoria">
+      <h5 class="roxo-padrao">Base de Cálculo</h5>
+    </div>
+
+    <div class="row mt-3">
+
+      <div class="col-sm-4">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo Inss Mensal:</b>
+          <i title="{{tooltipBaseCalcInssMen}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input type="text" class="form-control input-number" [tabIndex]="42"
+          [formControl]="bcContribuicaoPrevidenciariaFormControl"
+          [disableTooltip]="desabilitaTooltip(bcContribuicaoPrevidenciariaFormControl)"
+          [ngbTooltip]="validacaoBcContribuicaoPrevidenciaria" currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" maxLength='21' [disabled]="bcContribuicaoPrevidenciariaFormControl.disabled"
+          [class.disabled]="consulta" />
+
+        <ng-template #validacaoBcContribuicaoPrevidenciaria>
+          <span
+            *ngIf="bcContribuicaoPrevidenciariaFormControl.invalid && bcContribuicaoPrevidenciariaFormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+          <span
+          *ngIf="bcContribuicaoPrevidenciariaFormControl.invalid && bcContribuicaoPrevidenciariaFormControl.hasError('min')">
+            Deve ser maior ou igual 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+
+
+      <div class="col-sm-4">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo Inss 13º:</b>
+          <i title="{{tooltipBaseCalcInss13}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input class="form-control input-number" type="text" [tabIndex]="43"
+          [formControl]="bcContribuicaoPrevidenciaria13FormControl"
+          [disableTooltip]="desabilitaTooltip(bcContribuicaoPrevidenciaria13FormControl)"
+          [ngbTooltip]="validacaoBcContribuicaoPrevidenciaria13" currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" maxLength='21' [disabled]="consulta"
+          [class.disabled]="consulta" />
+
+        <ng-template #validacaoBcContribuicaoPrevidenciaria13>
+          <span
+          *ngIf="bcContribuicaoPrevidenciaria13FormControl.invalid && bcContribuicaoPrevidenciaria13FormControl.hasError('min')">
+            Deve ser maior ou igual 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+
+
+    </div>
+
+    <div class="divisoria">
+      <h5 class="roxo-padrao">Aposentadoria Especial (Agentes Nocivos)</h5>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-sm-12">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Grau de Exposição:</b>
+          <i title="{{tooltipGrauExp}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <ng-select id="tipInscFixo" [tabIndex]="51" [formControl]="grauExposicaoFormControl" [items]="grauExposicaoList"
+          bindLabel="descricaoConcatenada" bindValue="id"
+          [disableTooltip]="desabilitaTooltip(grauExposicaoFormControl)"
+          [ngbTooltip]="validacaoGrauExposicao" [disabled]="consulta" [class.disabled]="consulta">
+
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+
+        </ng-select>
+        <ng-template #validacaoGrauExposicao>
+          <span *ngIf="grauExposicaoFormControl.invalid && grauExposicaoFormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="divisoria">
+      <h5 class="roxo-padrao">Informações referentes a bases de cálculo de FGTS</h5>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-sm-4">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo ainda não declarada em SEFIP ou no eSocial:</b>          
+        </label>
+        <input type="text" class="form-control input-number" [tabIndex]="49" [formControl]="infoFGTSvrBcFGTSProcTrabFormControl"
+          [disableTooltip]="desabilitaTooltip(infoFGTSvrBcFGTSProcTrabFormControl)" (blur)="adicionaValidators()"  
+          [ngbTooltip]="validacaoinfoFGTSvrBcFGTSProcTrab" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          maxLength="21" [disabled]="consulta" [class.disabled]="consulta" />
+
+        <ng-template #validacaoinfoFGTSvrBcFGTSProcTrab>
+          <span *ngIf="infoFGTSvrBcFGTSProcTrabFormControl.invalid && infoFGTSvrBcFGTSProcTrabFormControl.hasError('required')">
+            Caso um dos campos referentes "Informações referentes a bases de cálculo de FGTS" esteja preenchido, o preenchimento deste campo se torna obrigatório.
+          </span>
+          <span *ngIf="infoFGTSvrBcFGTSProcTrabFormControl.invalid && infoFGTSvrBcFGTSProcTrabFormControl.hasError('min')">
+            Deve ser maior que 0 (zero)
+          </span>
+        </ng-template> 
+      </div>
+      <div class="col-sm-4">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo declarada apenas em SEFIP:</b>          
+        </label>
+        <input type="text" class="form-control input-number" [tabIndex]="49" [formControl]="infoFGTSvrBcFGTSSefipFormControl"
+          [disableTooltip]="desabilitaTooltip(infoFGTSvrBcFGTSSefipFormControl)" (blur)="adicionaValidators()"  
+          [ngbTooltip]="validacaoinfoFGTSvrBcFGTSSefip" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          maxLength="21" [disabled]="consulta" [class.disabled]="consulta" />
+
+       <ng-template #validacaoinfoFGTSvrBcFGTSSefip>
+          <span *ngIf="infoFGTSvrBcFGTSSefipFormControl.invalid && infoFGTSvrBcFGTSSefipFormControl.hasError('min')">
+            Deve ser maior que 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+      <div class="col-sm-4">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo declarada no eSocial e ainda não recolhida:</b>          
+        </label>
+        <input type="text" class="form-control input-number" [tabIndex]="49" [formControl]="infoFGTSvrBcFGTSDecAntFormControl"
+          [disableTooltip]="desabilitaTooltip(infoFGTSvrBcFGTSDecAntFormControl)" (blur)="adicionaValidators()" 
+          [ngbTooltip]="validacaoinfoFGTSvrBcFGTSDecAnt" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          maxLength="21" [disabled]="consulta" [class.disabled]="consulta" />
+
+        <ng-template #validacaoinfoFGTSvrBcFGTSDecAnt>
+          <span *ngIf="infoFGTSvrBcFGTSDecAntFormControl.invalid && infoFGTSvrBcFGTSDecAntFormControl.hasError('min')">
+            Deve ser maior que 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    
+    <div class="divisoria">
+      <h5 class="roxo-padrao">Base Cálculo INSS declaradas anteriormente (Mudança de Categoria)</h5>
+    </div>
+
+
+    <div class="row mt-3">    
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo"> <b>Categoria:</b> <i title="{{tooltipCateg}}" class=" roxo-padrao fa fa-info-circle"></i> </label>
+        <ng-select id="tipInscFixo" [tabIndex]="50" [formControl]="codigoCategoriaFormControl" [items]="categoriaList"
+          bindLabel="descricaoConcatenada" bindValue="id" (blur)="adicionaValidators()"
+          [disableTooltip]="desabilitaTooltip(codigoCategoriaFormControl)"
+          [ngbTooltip]="validacaoCodigoCategoria" [disabled]="consulta" [class.disabled]="consulta">
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+        <ng-template #validacaoCodigoCategoria>
+          <span *ngIf="codigoCategoriaFormControl.invalid && codigoCategoriaFormControl.hasError('required')">
+            Caso um dos campos referentes a reconhecimento de mudança de categoria seja informado, os dois precisam ser preenchidos. São eles: Base Cálculo INSS Mudança Categoria e Categoria.
+          </span>
+        </ng-template>
+      </div>
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1 tooltip-periodo">
+          <b>Base Cálculo INSS Mudança Categoria:</b>
+          <i title="{{tooltipInssMudCateg}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </label>
+        <input type="text" class="form-control input-number" [tabIndex]="49" [formControl]="vrBcCPrevFormControl"
+          [disableTooltip]="desabilitaTooltip(vrBcCPrevFormControl)" (blur)="adicionaValidators()"
+          [ngbTooltip]="validacaoValorGFIP" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          maxLength='21' [disabled]="consulta" [class.disabled]="consulta" />
+
+        <ng-template #validacaoValorGFIP>
+          <span *ngIf="vrBcCPrevFormControl.invalid && vrBcCPrevFormControl.hasError('required')">
+            Caso um dos campos referentes a reconhecimento de mudança de categoria seja informado, os dois precisam ser preenchidos. São eles: Base Cálculo INSS Mudança Categoria e Categoria.
+          </span>
+          <span *ngIf="vrBcCPrevFormControl.invalid && vrBcCPrevFormControl.hasError('min')">
+            Deve ser maior que 0 (zero)
+          </span>
+        </ng-template>
+      </div>
+      
+    </div>
+
+    <div class="divisoria">
+      <h5 class="roxo-padrao">Informações referentes ao Trabalho Intermitente</h5>
+    </div>
+
+
+    <div class="row mt-3">    
+
+      <app-info-interm [codIdePeriodo]="codIdePeriodo" [contratoId]="contratoId" [codF2500]="idF2500" [consulta]="consulta" [periodo]="mesperiodo" ></app-info-interm>
+      
+    </div>
+    
+  </form>
+
+  <div class="modal-footer">
+    <button *ngIf="!consulta" type="button" class="btn btn-link" aria-span="Close" (click)="close()">
+      Cancelar
+    </button>
+
+    <button *ngIf="!consulta" type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()">
+      Confirmar
+    </button>
+
+    <button *ngIf="consulta" type="button" class="btn btn-primary" aria-span="Close" (click)="close()">
+      Fechar
+    </button>
+  </div>
+</div>

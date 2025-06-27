@@ -1,0 +1,95 @@
+input[type='checkbox']{
+    margin-top: -3px;
+}
+
+.modal-title{
+    padding-left: 0px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+::ng-deep{
+    .indice-modal{
+        .modal-dialog{
+            justify-content: center;
+            min-width: 250px!important;
+            max-width: 250px!important;
+        }
+        
+        .modal-content{
+            width: 360px!important;       
+            min-width: 360px!important;
+            form{
+                width: 100%;
+            }
+        }
+    }
+
+    
+
+    bs-datepicker-container, bs-daterangepicker-container{
+        z-index: 20000;
+    }
+
+    ////
+
+    .btn-outline-secondary:not(:disabled):not(.disabled):active, 
+    .btn-outline-secondary:not(:disabled):not(.disabled).active, 
+    .show > .btn-outline-secondary.dropdown-toggle,
+    .btn-outline-secondary:active
+    {
+        background-color: transparent;
+        background: transparent;
+        border: none;
+        font-size: 15px !important;
+        transition: none;
+
+        i{
+            font-size: 15px;
+        }
+    }
+
+  
+
+    .grupo-input{
+        display: inline-flex;
+        width: 150px;
+    }
+    i{
+
+        
+        font-size: 15px;
+        
+        &::before{
+            // color:rgb(46, 89, 163);
+            color:#786bb9;
+        }
+    }
+    
+    button.btn.botao-calendario{
+        background-color: transparent;
+        border: none;
+        height: 30px;
+        width: 30px;
+    
+        &:hover, &:active, &:focus{
+            background-color: transparent;
+            border: none;
+        }
+    }
+
+    .btn-outline-secondary:active, .btn-outline-secondary:hover, .calendar:active{
+        background-color: transparent;
+        background: transparent;
+        border: none;
+        font-size: 15px !important;
+        transition: none;
+        
+    }
+
+    button.calendar{
+        border: none;
+    }
+    
+    
+}

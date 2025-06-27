@@ -1,0 +1,245 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">{{titulo}} Dependente</h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row mt-2">
+      <div class="col-sm-3">
+        <label for="cpfDependente"><b>CPF:</b></label>
+        <input
+          class="form-control"          
+          type="text"
+          id="cpfDependente"
+          tabindex="5"
+          [formControl]="infodepCpfdepFormControl"
+          [textMask]="{ mask: mascaraCpf }"
+          [disableTooltip]="desabilitaTooltip(infodepCpfdepFormControl)"
+          [ngbTooltip]="validacaoinfodepCpfdep"
+          [disabled]="!temPermissaoBlocoG"
+          [class.disabled]="!temPermissaoBlocoG"
+        />
+
+        <ng-template #validacaoinfodepCpfdep>
+          <span
+            *ngIf="
+              infodepCpfdepFormControl.invalid &&
+              infodepCpfdepFormControl.hasError('required')
+            "
+          >
+            CPF obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infodepCpfdepFormControl.invalid &&
+              infodepCpfdepFormControl.hasError('cpfNotValid')
+            "
+          >
+            CPF inválido.
+          </span>
+        </ng-template>
+      </div>
+      <div class="col-sm-3"></div>
+      <div class="col-sm-3">
+        <div class="d-flex" style="flex-direction: column">
+          <label for="dataNascTrabalhador"
+            ><b>Data de Nascimento:</b></label
+          >
+          <div
+            class="form-group"
+            [class.disabled]="infodepDtnasctoFormControl.disabled"
+          >
+            <div class="form-inline input-group input-date" id="component-data">
+              <input
+                type="text"
+                class="form-control form-control-sm input-date"
+                placeholder="DD/MM/AAAA"
+                rInputMask="99/99/9999"
+                [bsConfig]="{ showWeekNumbers: false }"
+                name="infodepDtnascto"
+                id="infodepDtnascto"
+                [formControl]="infodepDtnasctoFormControl"
+                bsDatepicker
+                [maxDate]="dataAtual"
+                [minDate]="dataNascimentoMinima"
+                #infodepDtnascto="bsDatepicker"
+                placement="top-left top-right bottom-left bottom-right"
+                [disableTooltip]="desabilitaTooltip(infodepDtnasctoFormControl)"
+                [ngbTooltip]="validacaoDataNascimento"
+                [disabled]="
+                  !temPermissaoBlocoG 
+                "
+                [class.disabled]="
+                  !temPermissaoBlocoG
+                "
+              />
+              <div class="input-group-append">
+                <button
+                  type="button"
+                  class="btn btn btn-outline-secondary calendar"
+                  (click)="infodepDtnascto.toggle()"
+                  [attr.aria-expanded]="infodepDtnascto.isOpen"
+                  [disabled]="infodepDtnasctoFormControl.disabled"
+                >
+                  <i class="fa-solid fa-calendar-days"></i>
+                </button>
+              </div>
+              <ng-template #validacaoDataNascimento>
+                <span
+                  *ngIf="
+                    infodepDtnasctoFormControl.invalid &&
+                    infodepDtnasctoFormControl.errors.validDate
+                  "
+                >
+                  Data inválida
+                </span>
+                <span
+                  *ngIf="
+                    infodepDtnasctoFormControl.invalid &&
+                    infodepDtnasctoFormControl.errors.bsDate &&
+                    infodepDtnasctoFormControl.errors.bsDate.invalid
+                  "
+                >
+                  Data inválida
+                </span>
+                <span
+                  *ngIf="
+                    infodepDtnasctoFormControl.invalid &&
+                    infodepDtnasctoFormControl.errors.bsDate?.minDate
+                  "
+                >
+                  A data informada deve ser maior do que 01/01/1890.
+                </span>
+                <span
+                  *ngIf="
+                    infodepDtnasctoFormControl.invalid &&
+                    infodepDtnasctoFormControl.errors.bsDate?.maxDate
+                  "
+                >
+                  A data informada deve ser menor ou igual a data atual.
+                </span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Nome:</b>
+        </label>
+        <input
+          class="form-control"
+          type="text"
+          maxlength="70"
+          class="form-control"     
+          [formControl]="infodepNomeFormControl"    
+          [disableTooltip]="desabilitaTooltip(infodepNomeFormControl)"
+          [ngbTooltip]="validacaoNome"
+          [disabled]="!temPermissaoBlocoG" 
+          [class.disabled]="!temPermissaoBlocoG"
+        />
+        <ng-template #validacaoNome>
+          <span *ngIf="infodepNomeFormControl.invalid && infodepNomeFormControl.hasError('minlength')">
+            Informe pelo menos 2 caracteres.
+          </span>
+        </ng-template>
+      </div>
+      <div class="d-flex col-sm-3 pr-3 pt-4">
+        
+        <div class="check">            
+            <input class="checkbox" type="checkbox" [formControl]="infodepDepirrfFormControl" value="S" id="dependenteIr" name="dependenteIr" 
+            [disabled]="!temPermissaoBlocoG" 
+            [class.disabled]="!temPermissaoBlocoG" (change)="infodepDepirrfChange()">
+        </div>
+        <label class="m-0 pl-0"><b>É dependente de IR</b></label>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-sm-6">
+        <span> <b>Tipo de Dependente:</b> </span>
+        <ng-select
+          class="form-control form-control-select"
+          [items]="listaTipoDependente"
+          bindLabel="descricaoConcatenada"
+          bindValue="id"
+          (change)="tipoDependenteChange()"
+          placeholder="Selecione um item"
+          [formControl]="infodepTpdepFormControl"
+          [ngbTooltip]="validacaoTpoDep"
+          [disableTooltip]="desabilitaTooltip(infodepTpdepFormControl)"
+          [disabled]="!this.temPermissaoBlocoG"
+          [class.disabled]="!temPermissaoBlocoG"
+        >
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>   
+        <ng-template #validacaoTpoDep>
+          <span *ngIf="infodepTpdepFormControl.invalid &&
+          infodepTpdepFormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+        </ng-template>
+        
+      </div>
+      <div class="col-sm-6">
+        <span>
+          <b>Descrição da Dependência:</b>
+        </span>
+        <textarea class="form-control" id="descricaoTipoDependente" #descricao (keyup)="calculaTamanho(descricao.value)" maxlength="100"
+          rows="4" cols="50" tabindex="4" 
+          [formControl]="infodepDescrdepFormControl" 
+          [ngbTooltip]="validacaoDescriao"
+          [disableTooltip]="desabilitaTooltip(infodepDescrdepFormControl)"
+          [disabled]="!temPermissaoBlocoG"
+          [class.disabled]="!temPermissaoBlocoG">
+        </textarea>
+        <span class="ml-auto">{{totalCaracterDescDep}}/100</span>
+        <ng-template #validacaoDescriao>
+          <span *ngIf="infodepDescrdepFormControl.hasError('required')">
+            O campo descrição da dependência é obrigatório quando o tipo de depêndencia informado é igual a 99 - Agregado/Outros.
+          </span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="modal-footer pr-0">
+      <button
+        type="button"
+        class="btn btn-link"
+        aria-label="Close"
+        (click)="close()"
+        *ngIf="temPermissaoBlocoG"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="formGroup.invalid"
+        (click)="salvar()"
+        *ngIf="temPermissaoBlocoG"
+      >
+        Confirmar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="formGroup.invalid"
+        (click)="close()"
+        *ngIf="!temPermissaoBlocoG"
+      >
+        Fechar
+      </button>
+    </div>
+  </form>
+</div>

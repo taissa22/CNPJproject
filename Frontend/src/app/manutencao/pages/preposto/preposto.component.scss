@@ -1,0 +1,56 @@
+
+::ng-deep{
+
+    .preposto-tooltip{
+
+        .tooltip-inner {
+            padding:10px;
+            padding-top:5px;
+            text-align: left;
+            border-radius: 0;
+            margin-bottom: 6px;
+            margin-left: 10px;
+            background-color: #fff;
+            color: #000;
+            min-width: 120px;
+            max-width: 210px !important;
+            border: solid 1px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);   
+    
+            span{
+                font-size: 12px;
+                display: block;
+                white-space: normal;
+            }
+            
+            > span:first-of-type{
+                margin-bottom: 5px;
+                font-size: 12px;
+            }
+
+            > span:last-of-type{
+                margin-bottom: 15px;
+                font-size: 12px;
+            }
+        }
+
+        .arrow::before {
+            border-color: transparent;
+        }
+    
+
+    }
+
+    // .tipo-vara-tooltip 
+    //     .arrow::before {
+    //         display: none !important;
+    //     }
+
+
+    // }
+
+    // .tipo-vara-tooltip .arrow::before {
+    //     border-color: transparent;
+    // }
+
+}

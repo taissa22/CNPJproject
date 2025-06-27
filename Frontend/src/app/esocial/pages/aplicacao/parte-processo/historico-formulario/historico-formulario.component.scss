@@ -1,0 +1,30 @@
+.gridForm {
+    margin: 0 3%;
+}
+
+.table-striped {
+    border: 1px solid lightgray;
+    width: 100%;
+}
+
+.table-striped thead {
+    padding: 0px 15px;
+    display: flex;
+}
+
+.table-striped thead tr th {
+    height: 35px;
+    font-size: 13px;
+    font-weight: 600;
+    color: black;
+}
+
+.content tr td {
+    height: 35px;
+    color: black;
+    padding: 0px 15px;
+}
+
+.intern-table-background {
+  background-color: white !important;
+}

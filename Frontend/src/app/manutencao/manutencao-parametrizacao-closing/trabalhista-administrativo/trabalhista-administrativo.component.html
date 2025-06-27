@@ -1,0 +1,107 @@
+<div [formGroup]="form" style="padding: 12px; padding-top: 12px;" >
+    <div class="borda-externa row" style="margin-bottom: 12px;">
+        <div class="col-4" style="justify-content: flex-start; display: grid;">
+            <div class="col">
+                <div class="fonte-padrao-negrito" style="padding-bottom: 5px;">Classificação Closing Default: </div>
+            </div>
+
+            <div class="d-flex justify-content-start">
+                <!-- Grupo Oi Móvel -->
+                <div class="col">
+                    <label for="">Móvel</label> <br>
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoClosing" [value]="1"
+                        (change)="alterarLista()" />
+                    <span>PRÉ</span><br>
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoClosing" [value]="2"
+                        (change)="alterarLista()" />
+                    <span>PÓS</span><br>
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoClosing" [value]="3"
+                        (change)="alterarLista()" />
+                    <span>HÍBRIDO</span><br>
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoClosing" [value]="4"
+                        (change)="alterarLista()" />
+                    <span>N/A</span>
+                </div>
+
+                <!-- Grupo Oi Fibra -->
+                <div class="col">
+                    <label for="">Fibra</label> <br>
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoClosingFibra" [value]="1" (change)="alterarLista()" />
+                    <span>PRÉ</span><br>
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoClosingFibra" [value]="2" (change)="alterarLista()" />
+                    <span>PÓS</span><br>
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoClosingFibra" [value]="3" (change)="alterarLista()" />
+                    <span>HÍBRIDO</span><br>
+                    <input type="radio" class="checkbox mr-2" formControlName="classificacaoClosingFibra" [value]="4" (change)="alterarLista()" />
+                    <span>N/A</span>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="fonte-padrao-negrito" style="padding-bottom: 5px;">Classificação "Híbrido" Ligada:</div>
+
+            <div class="d-flex justify-content-start">
+                <!-- Oi Móvel -->
+                <div class="d-flex flex-column align-items-start">
+                    <label for="">Móvel</label>
+                    <div class="d-flex flex-column">
+                        <div class="d-flex align-items-center mb-1">
+                            <input type="radio" class="checkbox mr-2" formControlName="classificacaoHibrido" value="S" (change)="alterarLista()" />
+                            <span>Sim</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <input type="radio" class="checkbox mr-2" formControlName="classificacaoHibrido" value="N" (change)="alterarLista()" />
+                            <span>Não</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Oi Fibra -->
+                <div class="d-flex flex-column align-items-start">
+                    <label for="">Fibra</label>
+                    <div class="d-flex flex-column">
+                        <div class="d-flex align-items-center mb-1">
+                            <input type="radio" class="checkbox mr-2" formControlName="classificacaoHibridoFibra" value="S" (change)="alterarLista()" />
+                            <span>Sim</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <input type="radio" class="checkbox mr-2" formControlName="classificacaoHibridoFibra" value="N" (change)="alterarLista()" />
+                            <span>Não</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="col">
+                <div class="fonte-padrao-negrito" style="padding-bottom: 5px;">% de Responsabilidade Oi Default:</div>
+            </div>
+            <div class="d-flex " style="margin-top: 0.3rem;">
+                <div class="col text-left">
+                    <input id="responsabilidadeMovel" type="text"
+                        style="width: 60px; text-align: center;"
+                        class="checkbox mr-2"
+                        formControlName="percentualResponsabilidade"
+                        (change)="alterarLista()"
+                        (blur)="VerificaZero($event)"
+                        appTwoDigitDecimaNumberDirective
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+        </div>
+        <br />
+
+        <div class="modal-footer" style="width: 100%; padding-top: 0px;">
+            <button type="button" class="btn btn-cancelar-oi roxo-padrao" [disabled]="verificaDesabilitado()" (click)="cancelar()" >
+                <span class="texto-btn-oi cancelar" >Cancelar</span>
+            </button>
+
+            <button type="button" class="btn btn-primary pull-right" [disabled]="verificaDesabilitado()" (click)="salvar()" >
+                <span class="texto-btn-oi confirmar">Salvar</span>
+            </button>
+        </div>
+    </div>
+</div>

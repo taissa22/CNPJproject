@@ -1,0 +1,37 @@
+<div class="form-group mes-ano" ngbDropdown #calendarPanel="ngbDropdown">
+    <div class="input-group mes-ano-input">
+    <input [id]="'data'+id" type="text" class="form-control" [ngClass]="{'erro': !validDate}" id="data" name="data" [(ngModel)]="dataTxt" [placeholder]="mask" #item (input)="change(item.value)" maxlength="7" (blur)="fixDate()" [disabled]="disabled">
+    <!-- <span *ngIf="dtInicio.erro" class="guarda-erro" title="{{dtInicio.msg}}"></span>   -->
+    <span *ngIf="!validDate" class="guarda-erro" [title]="errorMsg"></span>  
+    <div class="input-group-append">
+  
+    <button class="btn dropdown-toggle-split" ngbDropdownToggle [disabled]="disabled">
+      <!-- <div class="calendar" aria-hidden="true"></div> -->
+      <i class="fa-solid fa-calendar-days fa-lg"></i>
+    </button>
+    </div>
+    </div>
+    <div ngbDropdownMenu class="dropdown-menu" >
+      <div style="display: flex; border: 1px solid #dee2e6; margin: 10px; background-color: white; overflow: hidden; height: 90%; border-radius: 3px;">
+        <div class="row mes-ano-largura">
+        <button class="btn btn-link col-4 mes-ano-topo" (click)="addYear($event,-1)">
+          <span class="ngb-dp-navigation-arrow left"></span>
+        </button>
+        <button *ngIf="!isyear" class="btn btn-link col-4 mes-ano-topo" (click)="showYear($event,true)">{{data.year}}</button>
+        <button *ngIf="isyear" class="btn btn-link col-4 mes-ano-topo" (click)="showYear($event,false)">{{incr+1}}-{{incr+10}}</button>
+        <button class="btn btn-link col-4 mes-ano-topo" (click)="addYear($event,+1)">
+          <span class="ngb-dp-navigation-arrow right"></span>
+        </button>
+        <div class="months-buttons">
+          <div *ngFor="let month of months; let i = index; let first = first; let last = last" class="card-div" (click)="selectYearMonth($event,i)" >
+            <div [ngClass]="{'select': !isyear?(i+1)==data.month:(i+incr)==data.year,'outrange':isyear && (first || last)}" class="card-body">
+              <span class="outter" *ngIf="!isyear" ngbDropdownToggle><span>{{month}}</span></span>
+              <span class="outter" *ngIf="isyear"><span>{{i+incr}}</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+

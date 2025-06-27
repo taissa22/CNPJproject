@@ -1,0 +1,40 @@
+.content-xl {
+    display: flex;
+    align-items: center;
+}
+
+.label-xl {
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: auto;
+}
+
+.progress-xl {
+    width: 25rem;
+}
+
+.progress-bar-xl {
+    width: max-content;
+    height: 1rem;
+}
+
+.content-sm {
+    display: flex;
+    align-items: center;
+}
+
+.label-sm {
+    font-size: 13px;
+    font-weight: 300;
+    margin-right: auto;
+}
+
+.progress-sm {
+    width: 13rem !important;
+    height: 0.5rem !important;
+}
+
+.progress-bar-sm {
+    width: max-content;
+    height: 0.5rem;
+}

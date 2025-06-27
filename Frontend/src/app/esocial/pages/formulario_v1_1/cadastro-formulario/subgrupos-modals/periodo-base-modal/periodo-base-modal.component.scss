@@ -1,0 +1,52 @@
+.modal-header button {
+    color: gray;
+}
+
+.modal-title {
+    margin: auto;
+}
+
+.btn-icon {
+    font-size: 18px;
+}
+
+.container-modal {
+    padding: 1.2rem 0.5rem;
+}
+
+.modal-footer {
+    padding-bottom: 0;
+}
+
+.title {
+    padding: 0 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.periodoRef {
+    display: flex;
+    flex-direction: column;
+}
+
+::ng-deep {
+
+    bs-datepicker-container,
+    bs-daterangepicker-container {
+        z-index: 20000;
+    }
+}
+
+::ng-deep .modal-periodo-base  {
+  
+    .modal-content {
+        min-width: 740px !important;
+        max-width: 740px !important;
+    }
+    
+    .modal-lg {
+        min-width: 740px !important;
+        max-width: 740px !important;
+    }
+    }

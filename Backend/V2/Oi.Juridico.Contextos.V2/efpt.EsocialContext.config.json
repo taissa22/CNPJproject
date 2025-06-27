@@ -1,0 +1,359 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "ESocialDbContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "ESocialContext\\Data",
+   "OutputPath": "ESocialContext\\Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Oi.Juridico.Contextos.V2",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "JUR.ACA_USUARIO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ACA_USUARIO_EMPRESA_GRUPO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ACA_USUARIO_ESCRITORIO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ANDAMENTO_PROCESSO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.CBO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.COMARCA",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_ACOMP_EXEC_FORMULARIOS",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_ACOMPANHAMENTO_EXECUTOR",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_DASHBOARD",
+         "ObjectType": 0
+      },
+      {
+         "ExcludedColumns": [
+            "DIR_XML_ENVIO_FPW",
+            "DIR_XML_RETORNO_SISJUR",
+            "DIR_XML_RETORNO_FPW"
+         ],
+         "Name": "JUR.ES_EMPRESA_AGRUPADORA",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2500",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2500_ABONO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2500_DEPENDENTE",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2500_IDEPERIODO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2500_INFOCONTRATO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2500_INFOINTERM",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2500_MUDCATEGATIV",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2500_OBSERVACOES",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2500_REMUNERACAO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2500_UNICCONTR",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_BENEFPEN",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_CALCTRIB",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_DEDDEPEN",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_DEDSUSP",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_IDEADV",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_INFOCRCONTRIB",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_INFOCRIRRF",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_INFODEP",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_INFOPROCRET",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_INFOVALORES",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_F2501_PENALIM",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_INCONSISTENCIAS_F2500_F2501",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_PARTE_PROCESSO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_TABELA_01",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_TABELA_02",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_TABELA_05",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_TABELA_07",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_TABELA_19",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_TABELA_29",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_TABELA_CR_IRRF",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_TABELA_REPERC_PROC",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_TABELA_TIPO_CONTRATO_TSVE",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ES_TIPO_CONTRATO_PROC_JUD",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ESTADO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.EVENTO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.MUNICIPIO_IBGE",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.PARTE",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.PARTE_PROCESSO",
+         "ObjectType": 0
+      },
+      {
+         "ExcludedColumns": [
+            "IND_PRIORITARIA",
+            "NRO_PASTA",
+            "COD_RISCO_PERDA",
+            "DAT_BASE_MULTA",
+            "DSC_FIANCA",
+            "DSC_HIPOTECA",
+            "DSC_DEPOSITO_CAUCAO",
+            "DSC_PENHORA",
+            "DAT_FINALIZACAO",
+            "DAT_CONTRATACAO",
+            "COD_TIPO_CONTRATACAO",
+            "IND_CHECADO",
+            "DAT_CHECADO",
+            "COD_USUARIO_ULT_ALTERACAO",
+            "IND_USUARIO_INTERNET",
+            "COD_USUARIO_INTERNET",
+            "SEQ_PAGAMENTO",
+            "SEQ_VALOR",
+            "SEQ_OBSERVACAO",
+            "SEQ_AUDIENCIA",
+            "SEQ_ANDAMENTO",
+            "SEQ_FASE",
+            "SEQ_PRAZO",
+            "SEQ_VALOR_OBJETO",
+            "SEQ_PAG_OBJETO",
+            "SEQ_MOVIMENTACAO",
+            "SEQ_PENDENCIA",
+            "PER_REDUCAO",
+            "VAL_MULTA_PREV",
+            "COD_RISCO_PERDA_PREV",
+            "DAT_VENC_MULTA",
+            "VAL_MULTA_INICIAL",
+            "VAL_MULTA_POS_PAGAMENTO",
+            "SEQ_LINHA",
+            "SEQ_LANCAMENTO",
+            "DAT_ENVIO_ESCRITORIO",
+            "VAL_CAUSA_EM_SM",
+            "OBS_EXCLUSAO",
+            "SEQ_SERVICO",
+            "SEQ_CONTATO",
+            "SEQ_APURACAO",
+            "SEQ_APURACAO_CDEBITO",
+            "SEQ_APURACAO_REPARO",
+            "SEQ_APURACAO_BLOQUEIO",
+            "SEQ_APURACAO_CCONTA",
+            "SEQ_APURACAO_MPULSO",
+            "SEQ_APURACAO_CCOBRANCA",
+            "SEQ_APURACAO_PCREDITO",
+            "END_PAGINA_CONSULTA",
+            "COD_DOCUMENTO_DIGITALIZADO",
+            "IND_EMPRESA_CREDORA_DEVEDORA",
+            "QTE_SALARIO_MINIMO_INICIAL",
+            "QTE_SALARIO_MINIMO_ATUAL",
+            "IND_VALIDADO",
+            "DATA_PUBLICACAO_MULTA",
+            "IND_SIMPLIFICADO",
+            "NUM_CAF",
+            "IND_CONSIDERAR_PROVISAO",
+            "DATA_ULT_ATU_ESCRITORIO",
+            "DATA_EXC_LOGICA",
+            "IND_APURACAO",
+            "DATA_APURACAO",
+            "DATA_FATO_GERADOR",
+            "OBS_FATO_GERADOR",
+            "COMENTARIO_ALT_ESCRITORIO",
+            "COD_CRITICIDADE",
+            "IND_ESTRATIFICADO",
+            "COD_FAROL",
+            "ID_ULT_MOVIMENTACAO_PASTA",
+            "IND_MIGRADO",
+            "DESC_APURACAO_CONTRATO",
+            "IND_TRIBUTARIO_PRINCIPAL",
+            "DAT_ENVIO_VALIDACAO",
+            "DAT_VALIDACAO",
+            "IND_NRO_PROCESSO_DIVERGENTE",
+            "IND_COMARCA_DIVERGENTE",
+            "IND_JUIZADO_VARA_DIVERGENTE",
+            "IND_EMPRESA_GRUPO_DIVERGENTE",
+            "IND_DAT_AUDIENCIA_DIVERGENTE",
+            "IND_HORA_AUDIENCIA_DIVERGENTE",
+            "IND_ESCRITORIO_DIVERGENTE",
+            "DAT_ULT_FINALIZACAO",
+            "DAT_ULT_FINALIZACAO_CONTABIL",
+            "SEQ_DESDOBRAMENTO",
+            "SEQ_COMPROMISSO",
+            "IND_CONSIDERA_CALCULO_MEDIA",
+            "DAT_CONCILIACAO",
+            "IND_AUTOR_INF_SERVICO_PRESTADO",
+            "PRE_POS",
+            "IND_MEDIACAO",
+            "COD_PRESCRICAO",
+            "VAL_SALDO_BASE_PROV_MEDIACAO",
+            "COD_CLASSIFICACAO_CLOSING",
+            "PER_RESPONS_OI",
+            "IND_HAIRCUT"
+         ],
+         "Name": "JUR.PROCESSO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.PROFISSIONAL",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.TIPO_VARA",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.VARA",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.VERSAO_SERVIDOR_MODULO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.V_ES_ACOMPANHAMENTO",
+         "ObjectType": 3
+      }
+   ],
+   "UiHint": "SISJUR_DEV",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": true,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

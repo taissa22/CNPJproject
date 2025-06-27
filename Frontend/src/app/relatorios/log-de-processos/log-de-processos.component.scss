@@ -1,0 +1,88 @@
+h3 {
+    color:  #554D80;
+}
+p {
+    font-size: 14px;
+}
+.lista-de-agendamentos{
+    color:  #554D80;
+    font-weight: bold;
+    font-size: 16px;
+}
+.cabecalho-lista{
+
+    label{
+        margin-top: 18px;
+        font-size: 12px;
+        font-weight: bold;
+        opacity: 0.8;
+    }
+    p{
+        font-size: 12px;
+        margin-top: 5px
+    }
+}
+.input-date{
+    width: 79%;
+    float: left;
+}
+.data-ini{
+    margin-left: 4%;
+}
+.atualizar{
+    color:  #7b67f1;
+    margin-top: 22px;
+    font-size: 14px  !important;
+    cursor: pointer;
+}
+.aviso-item{
+    color: #7b67f1;
+    font-size: 12px;
+}
+.item{
+    p{
+        font-size: 12px;
+    }
+    span{
+        color: #7b67f1;
+    }
+    h3{
+        span{
+            color: #fff;
+        }
+    }
+}
+.paginator{
+    margin-right: 15px;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.iconeAtualizar{
+    width: 12px;
+    margin: 2px;
+    margin-bottom: 4px;
+}
+.colorized {
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: left;
+    white-space: normal;
+}
+.calendario-data{
+    font-size: 1.6em;
+    margin-top: 5px;
+}
+
+::ng-deep {
+
+    ngb-datepicker .ngb-dp-arrow{
+       background: #6151ac;
+
+    }
+}

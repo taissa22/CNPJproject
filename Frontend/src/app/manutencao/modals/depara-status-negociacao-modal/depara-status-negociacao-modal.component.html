@@ -1,0 +1,75 @@
+<div class="modal-header">
+    <span *ngIf="!deparaStatusNegociacao" class="modal-title pl-0"> Incluir DE x PARA de Status de Negociação</span>
+    <span *ngIf="deparaStatusNegociacao" class="modal-title pl-0">Alterar DE x PARA de Status de Negociação</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+<div>
+    <label class="modal-body"><b>TIPO DE PROCESSO: </b>{{tipoProcessoDescricao}}</label>
+</div>
+<form [formGroup]="formGroup" class="modal-body">
+    <div>
+        <b class="roxo-padrao" style="font-size: 15px;">DE</b>
+    </div>
+    <div class="row pt-4">
+        <div style="width:20px"></div>
+        <div class="col-md-9">
+            <label class="col-form-label-sm"> <b>Status APP:</b> </label>
+            <ng-select [ngStyle]="{'fontSize': '11px'}" [items]="statusAPP" bindLabel="descricao" bindValue="id" [formControl]="statusAPPFormControl" appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="false" [placeholder]="'Selecione o Status APP'"
+                [disableTooltip]="desabilitaTooltip(statusAPPFormControl)" [ngbTooltip]="validacaoStaus">
+                <ng-template ng-option-tmp let-item="item">
+                    <div title="{{item.descricao}}">{{item.descricao}}</div>
+                </ng-template>
+                <ng-template #validacaoStaus>
+                    <span *ngIf="statusAPPFormControl.invalid && statusAPPFormControl.errors.required">
+            Campo obrigatório
+          </span>
+                </ng-template>
+            </ng-select>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div style="width:20px"></div>
+        <div class="col-md-9">
+            <label class="col-form-label-sm"> <b>Substatus APP:</b> </label>
+            <ng-select [ngStyle]="{'fontSize': '11px'}" [items]="substatusAPP" bindLabel="descricao" bindValue="id" [formControl]="substatusAPPFormControl" appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="false" [placeholder]="'Selecione o Substatus APP'"
+                [disableTooltip]="desabilitaTooltip(substatusAPPFormControl)" [ngbTooltip]="validacaoSubStaus">
+                <ng-template ng-option-tmp let-item="item">
+                    <div title="{{item.descricao}}">{{item.descricao}}</div>
+                </ng-template>
+                <ng-template #validacaoSubStaus>
+                    <span *ngIf="substatusAPPFormControl.invalid && substatusAPPFormControl.errors.required">
+            Campo obrigatório
+          </span>
+                </ng-template>
+            </ng-select>
+        </div>
+    </div>
+    <br/>
+    <div>
+        <b class="roxo-padrao" style="font-size: 15px;">PARA</b>
+    </div>
+    <div class="row pt-4">
+        <div style="width:20px"></div>
+        <div class="col-md-9">
+            <label class="col-form-label-sm"> <b>Status SISJUR:</b> </label>
+            <ng-select [ngStyle]="{'fontSize': '11px'}" [items]="statusSisjur" bindLabel="descricao" bindValue="id" [formControl]="statusSisjurFormControl" appearance="outline" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="false" [placeholder]="'Selecione o Status SISJUR'"
+                [disableTooltip]="desabilitaTooltip(statusSisjurFormControl)" [ngbTooltip]="validacaoStausSisjur">
+                <ng-template ng-option-tmp let-item="item">
+                    <div title="{{item.descricao}}">{{item.descricao}}</div>
+                </ng-template>
+                <ng-template #validacaoStausSisjur>
+                    <span *ngIf="statusSisjurFormControl.invalid && statusSisjurFormControl.errors.required">
+            Campo obrigatório
+          </span>
+                </ng-template>
+            </ng-select>
+        </div>
+    </div>
+</form>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>

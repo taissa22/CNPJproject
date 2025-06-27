@@ -1,0 +1,90 @@
+<div class="row" >
+    <div class="col-11 p-0">
+
+        <div class="row ">
+            <div class="col-3">
+
+            </div>
+            <div class="col">
+                <h6 class="titulo-table pl-2">Detalhes do agendamento</h6>
+            </div>
+        </div>
+        <div class="row  ">
+            <div class="col-3 pr-0">
+                <p class="texto-linha-table text-right pt-1" style="color:#000">Nome do relatório:</p>
+            </div>
+            <div class="col">
+                <p class="texto-linha-table pt-1 m-0" style="color: #999;">
+                    {{agendamento.nomeDoRelatorio}}</p>
+            </div>
+        </div>
+        <div class="row  ">
+            <div class="col-3 pr-0">
+                <p class="texto-linha-table text-right pt-1">Descrição:</p>
+            </div>
+            <div class="col">
+                <p class="texto-linha-table pt-1 m-0" style="color: #999;">
+                    {{agendamento.descricao}}</p>
+            </div>
+        </div>
+        <div class="row  ">
+            <div class="col-3 pr-0">
+                <p class="texto-linha-table text-right pt-1">Criação:</p>
+            </div>
+            <div class="col">
+                <p class="texto-linha-table pt-1 m-0" style="color: #999;">
+                    {{agendamento.dataCriacao | date: "dd/MM/yyyy"}} por {{agendamento.usuario}}</p>
+            </div>
+            <div class="col">
+                <p class="texto-linha-table text-right pt-1">Última edição:</p>
+            </div>
+            <div class="col-2">
+                <span *ngIf="agendamento.datUltAlteracao"> {{agendamento.datUltAlteracao | date :
+                    "dd/MM/yyyy"}}</span>
+                <span *ngIf="!agendamento.datUltAlteracao">-</span>
+            </div>
+        </div>
+        <div class="row  ">
+            <div class="col-3 pr-0">
+                <p class="texto-linha-table text-right pt-1">Última execução:</p>
+            </div>
+            <div class="col">
+                <p class="texto-linha-table pt-1 m-0" style="color: #999;">
+                    <span *ngIf="agendamento.datUltExecucao">{{agendamento.datUltExecucao | date :
+                        "dd/MM/yyyy"}}</span>
+                    <span *ngIf="!agendamento.datUltExecucao">-</span>
+                </p>
+            </div>
+            <div class="col">
+                <p class="texto-linha-table text-right pt-1">Próxima execução:</p>
+            </div>
+            <div class="col-2">
+                <span *ngIf="agendamento.dataProxExecucao">{{agendamento.dataProxExecucao | date :
+                    "dd/MM/yyyy"}}</span>
+                <span *ngIf="!agendamento.dataProxExecucao">-</span>
+            </div>
+        </div>
+        <div class="row  ">
+            <div class="col-3 pr-0">
+                <p class="texto-linha-table text-right pt-1 pl-3">Duração da última execução:</p>
+            </div>
+            <div class="col">
+                <p class="texto-linha-table pt-1 m-0" style="color: #999;">
+                    {{agendamento.duracaoExecucao}}</p>
+            </div>
+        </div>
+        <div class="row mt-4 ">
+            <div class="col">
+                <button class="btn  btn-primary float-right"
+                    (click)="agendamento.openEdit = true;agendamento.openDetalhes=false"
+                    style="border-radius: 2.5px;  padding: 4px 7px;">
+                    Editar Agendamento</button>
+                <button class="btn  btn-link float-right mr-2"
+                    (click)="agendamento.openDetalhes = false"
+                    style="border-radius: 2.5px; padding: 4px 7px;">
+                    Ocultar</button>
+            </div>
+        </div>
+
+    </div>
+</div>

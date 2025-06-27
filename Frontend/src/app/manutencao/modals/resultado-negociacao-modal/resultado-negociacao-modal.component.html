@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <span class="modal-title pl-0">{{operacao}} de Resultado de Negociação</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+<form [formGroup]="formGroup" class="modal-body">
+
+  <div class="col p-0">
+    <label for="nome"> <b>Descrição:</b>  </label>
+    <div class="d-flex" style="align-items: center">
+      <input type="text" class="form-control mr-2" id="nome" maxlength="100" [formControl]="dscResultadoNegociacaoFormControl" [disableTooltip]="desabilitaTooltip(dscResultadoNegociacaoFormControl)" [ngbTooltip]="validacaoNome">
+      <input type="checkbox" name="indAtivo" class="ml-1 mr-2" id="indAtivo" [checked]="indAtivoFormControl.value" [formControl]="indAtivoFormControl">Ativo
+      <ng-template #validacaoNome>
+        <span *ngIf="dscResultadoNegociacaoFormControl.invalid && dscResultadoNegociacaoFormControl.errors.required">
+          Campo obrigatório
+        </span>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="col p-0 mt-3 d-flex" style="align-items: center">
+    <label for="nome" style="width:125px"> <b>Tipo de Negociação:</b>  </label>
+    <input type="checkbox" class="mr-1" name="indNegociacao" id="indNegociacao" (click)="validaCheck(1)" [formControl]="indNegociacaoFormControl">Ilha de Negociação / Reversão
+    <input type="checkbox" class="mr-1 ml-4" name="indPosSentenca" id="indPosSentenca" (click)="validaCheck(2)" [formControl]="indPosSentencaFormControl">Pós Sentença / Solução Procon
+  </div>
+
+  <div class="col p-0 mt-3 d-flex" style="align-items: center">
+    <label for="nome" style="width:125px"> <b>Tipo Resultado:</b>  </label>
+    <input type="radio" class="mr-1" name="tpResultado" id="tpResultado" value="1" [checked]="codTipoResultadoFormControl.value == 1" [formControl]="codTipoResultadoFormControl">Motivo sem acordo
+    <input type="radio" class="mr-1 ml-4" name="tpResultado" id="tpResultado" value="2" [checked]="codTipoResultadoFormControl.value == 2" [formControl]="codTipoResultadoFormControl">Opção de acordo
+  </div>
+
+</form>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="save()">Confirmar</button>
+</div>

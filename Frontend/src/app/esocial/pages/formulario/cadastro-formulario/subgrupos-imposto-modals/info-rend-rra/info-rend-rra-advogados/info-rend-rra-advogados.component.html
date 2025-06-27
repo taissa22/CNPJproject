@@ -1,0 +1,43 @@
+<div class="pb-4">
+    <div class="roxo-padrao btn-novo mt-1" *ngIf="temPermissaoBlocoCeDeE">
+        <i class="fas fa-plus-circle ml-auto mr-1 fs-2" (click)="incluir()"></i>
+        <span class="fs-1" (click)="incluir()">Incluir</span>
+    </div>
+    <div style="margin-top: 8px;">
+        <sisjur-table (sort)="buscarTabela()">
+            <ng-container>
+                <sisjur-table-header>
+                    <sisjur-table-header-cell width="32">CPF/CNPJ</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="30">Número de Inscrição</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="30">Valor da Despesa com o Advogado</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="4"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="4"></sisjur-table-header-cell>
+                </sisjur-table-header>
+                <ng-container *ngFor="let item of dataSource let i = index">
+                    <sisjur-table-row>
+                        <sisjur-table-row-cell>{{item.ideadvTpinsc == 2 ? 'CPF' : 'CNPJ'}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell><span title="{{item.ideadvNrinsc}}" *ngIf="item.ideadvTpinsc == 2">{{item.ideadvNrinsc | cpf}}</span>
+                                               <span title="{{item.ideadvNrinsc}}" *ngIf="item.ideadvTpinsc != 2">{{item.ideadvNrinsc | cnpj}}</span> 
+                        </sisjur-table-row-cell>
+                        <sisjur-table-row-cell>
+                            {{item.ideadvVlradv | currency: "BRL":"R$ ":"1.2-2":"pt"}}
+                        </sisjur-table-row-cell>
+                        <sisjur-table-row-cell>
+                            <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501Ideadv)" *ngIf="!temPermissaoBlocoCeDeE"> <i class="fa fa-magnifying-glass"></i> </button>
+                            <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501Ideadv)" *ngIf="temPermissaoBlocoCeDeE"> <i class="fa fa-edit"></i> </button>
+                        </sisjur-table-row-cell>
+                        <sisjur-table-row-cell>
+                            <button type="button" class="btn btn-icon" (click)="excluir(item.idEsF2501Ideadv, item.ideadvNrinsc)" *ngIf="temPermissaoBlocoCeDeE"> <i
+                  class="fa fa-trash"></i> </button>
+                        </sisjur-table-row-cell>
+                    </sisjur-table-row>
+
+                </ng-container>
+
+            </ng-container>
+        </sisjur-table>
+        <div class="mt-2">
+            <sisjur-paginator [length]="total" [MostrarQtdPorPagina]="false" [QtdFixaPorPagina]="10" (page)="buscarTabela()"></sisjur-paginator>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<!-- Formata a data para valor em real -->
+<div class="filters-box-items" *ngIf="formatarParaReal">
+  <div class="form-inline prlnk-datepicker">
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control someinput" [ngClass]="
+                 {
+                 'erro': valorInicial.erro
+                 }" [(ngModel)]="texto1" (blur)="retornarNumero()" placeholder="0,00" currencyMask
+          [options]="{ prefix: '', thousands: '.', decimal: ',' }" [maxLength]='maxlengthNumber'>
+        <span *ngIf="valorInicial.erro" class="guarda-erro" title="{{valorInicial.msg}}"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Não Formata a data para valor em real 
+  <div class="filters-box-items" *ngIf="!formatarParaReal">
+    <div class="form-inline prlnk-datepicker">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control someinput" [ngClass]="
+                 {
+                 'erro': valorInicial.erro
+                 }" [(ngModel)]="texto1" (blur)="validarNumero()" [maxLength]='maxlengthNumber' numbersOnly>
+          <span *ngIf="valorInicial.erro" class="guarda-erro" title="{{valorInicial.msg}}"></span>
+        </div>
+      </div>
+    </div> -->
+
+</div>

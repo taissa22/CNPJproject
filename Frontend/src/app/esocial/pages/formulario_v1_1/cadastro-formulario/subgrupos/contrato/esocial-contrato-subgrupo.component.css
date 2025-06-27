@@ -1,0 +1,23 @@
+.quadro {
+    border-top: 1px solid #ccc;
+    width: -webkit-fill-available;
+}
+
+.title {
+    margin-left: 1.2rem;
+    background-color: white;
+    text-align: center;
+    margin-top: -10px;
+    width: 500px;
+}
+
+.sub-contrato {
+    padding: 5px 15px !important;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px -2px !important;
+    border-radius: 2px !important;
+    margin: 8px 6px !important;
+}
+
+.botao-info {
+    cursor: pointer;
+}

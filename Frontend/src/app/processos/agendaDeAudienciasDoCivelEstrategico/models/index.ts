@@ -1,0 +1,14 @@
+export { EmpresaDoGrupo } from './empresa-do-grupo.model';
+export { Pedido } from './pedido.model';
+export { Comarca } from './comarca.model';
+export { Vara } from './vara.model';
+export { Escritorio } from './escritorio.model';
+export { AdvogadoEscritorio } from './advogado-escritorio.model';
+export { ResponsavelInterno } from './responsavel-interno.model';
+export { ComplementoAreaEnvolvida } from './complemento-area-envolvida.model';
+export { FatoGerador } from './fato-gerador.model';
+export { TipoAudiencia } from './tipo-audiencia.model';
+export { Parte } from './parte.model';
+export { TipoPrazo } from './tipo-prazo.model';
+export { TipoVara } from './tipo-vara.model';
+export { Processo } from './processo.model';

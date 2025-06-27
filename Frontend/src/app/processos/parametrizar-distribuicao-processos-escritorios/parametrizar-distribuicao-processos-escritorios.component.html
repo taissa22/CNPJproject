@@ -1,0 +1,172 @@
+<div class="row" style="width: 100%;">
+  <div class="page">
+    <div class="row" class="mt-4" style="margin-left: auto">
+      <section class="container-breadcrumb ml-0">
+        <div>
+          <h3>Parametrização para Distribuição de Processos aos Escritórios</h3>
+          <p>{{breadcrumb}}</p>
+        </div>
+        <span *ngIf="!apenasConsultarParamDistribuEscrit" class="iconsHover mr-2 d-flex" style="cursor: pointer"
+          (click)="novaParametrizacao()">
+          <i class="fas roxo-padrao fa-plus-circle roxo-padrao fa-sm" style="font-size: 20px; color: white;"
+            id="adicionar-icon"></i>
+          <span style="color:#6151ac; font-size: 13px; margin-left: 5px;">
+            Nova Parametrização
+          </span>
+        </span>
+      </section>
+      <div class="mt-3" style="color: #6151ac;">
+        Abaixo, a lista de distribuições parametrizadas. Você também poderá utilizar os filtros para encontrar registros
+        específicos.
+      </div>
+
+      <div class="d-flex pr-1 mt-4">
+        <div style="display: flex; flex-wrap: wrap; width: 90%;">
+
+          <div style="width: 26%">
+            <span><b>Natureza:</b></span>
+            <ng-select [items]="naturezaList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+              placeholder="Selecione a Natureza" [(ngModel)]="naturezaSelecionada"
+              (ngModelChange)="buscarVara(comarcaSelecionada, naturezaSelecionada)">
+            </ng-select>
+          </div>
+
+          <div style="width: 10%; margin-left: 1%;">
+            <span><b>UF:</b></span>
+            <ng-select [items]="ufList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+              placeholder="Selecione a UF" [(ngModel)]="ufSelecionada"
+              (ngModelChange)="fazerBuscaComarca(ufSelecionada)">
+            </ng-select>
+          </div>
+
+          <div style="width: 20%;margin-left: 1%;" class="comarcaSelect">
+            <span><b>Comarca:</b></span>
+            <ng-select [items]="comarcaList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+              placeholder="Selecione a Comarca" [(ngModel)]="comarcaSelecionada"
+              (ngModelChange)="buscarVara(comarcaSelecionada, naturezaSelecionada)">
+            </ng-select>
+          </div>
+
+          <div style="width: 19%;margin-left: 1%;" class="varaSelect">
+            <span><b>Vara:</b></span>
+            <ng-select [items]="varaList" bindLabel="nome" [clearable]="false" placeholder="Selecione a Vara"
+              [(ngModel)]="varaSelecionada">
+            </ng-select>
+          </div>
+
+          <div style="width: 42%;margin-top: 1%;">
+            <span><b>Escritório:</b></span>
+            <ng-select [items]="escritorioList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+              placeholder="Selecione o Escritório" [(ngModel)]="escritorioSelecionada">
+            </ng-select>
+          </div>
+
+          <div style="width: 35%;margin-left: 1%; margin-top: 1%;">
+            <span><b>Emp. Centralizadora:</b></span>
+            <ng-select [items]="empCentList" bindLabel="nome" bindValue="codigo" [clearable]="false"
+              placeholder="Selecione a Empresa Centralizadora" [(ngModel)]="empCentSelecionada">
+            </ng-select>
+          </div>
+
+        </div>
+
+        <div style="display: flex; align-items: flex-end;">
+          <button type="button" class="btn btn-link" (click)="limparBusca()">Limpar filtros</button>
+          <button type="button" class="btn btn-primary ml-2" (click)="buscarDistribuicao()">Buscar</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mt-4 mb-2 row">
+      <div class="col-sm-6" style="align-self: flex-end;">
+        <b class="roxo-padrao" style="font-size: 15px;">Lista de Distribuição</b>
+      </div>
+      <div class="col-sm-6" style="text-align: right;">
+        <button *ngIf="!apenasConsultarParamDistribuEscrit" class="btn btn-roxo p-0 mr-4"
+          style="font-family: sans-serif;" (click)="downloadLog()">
+          <i class="fas roxo-padrao fa-download pr-1 "
+            style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+          Exportar Log
+        </button>
+        <button class="btn btn-roxo p-0" style="font-family: sans-serif;" (click)="downloadLista()">
+          <i class="fas roxo-padrao fa-download pr-1 "
+            style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+          Exportar Lista
+        </button>
+      </div>
+    </div>
+    <div class="row" style="padding-left: 15px; padding-right: 15px;">
+      <div style="width: 100%">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr style="height: 38px">
+              <th scope="col" class="font-weight-bold" style="width: 3%;"></th>
+              <th class="font-weight-bold" *ngFor="let col of colunas" style="padding-bottom: 8px;"
+                [ngStyle]="{'width': col.largura, 'cursor': (col.ordernar ? 'pointer' : 'initial')}"
+                [sortable]="col.data" (sort)="ordenar(col.data)" title="{{ col.titulo }}">
+                <span>
+                  <span>{{ col.titulo }}&nbsp;</span>
+                  <span *ngIf="col.ordernar">
+                    <i class="fas roxo-padrao ml-1 fa-arrows-alt-v" *ngIf="col.data != ordenacaoColuna"></i>
+                    <i class="fas roxo-padrao ml-1 fa-long-arrow-alt-up"
+                      *ngIf="col.data == ordenacaoColuna && ordenacaoDirecao == 'asc'"></i>
+                    <i class="fas roxo-padrao ml-1 fa-long-arrow-alt-down"
+                      *ngIf="col.data == ordenacaoColuna && ordenacaoDirecao == 'desc'"></i>
+                  </span>
+                </span>
+              </th>
+              <th *ngIf="!apenasConsultarParamDistribuEscrit" scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="text-align: center;" *ngIf="dadosDistribuicao == undefined">
+              <td colspan="10">Nenhum dado retornado</td>
+            </tr>
+            <ng-container *ngFor="let item of dadosDistribuicao; let i = index;">
+              <tr>
+                <td>
+                  <button type="button" class="btn pt-2" (click)="selecionarDistribuicao(i);">
+                    <i style="font-size: 12px" class="fas roxo-padrao fa-plus pt-1"
+                      *ngIf="distribuicaoSelecionada != i"></i>
+                    <i style="font-size: 12px" class="fas roxo-padrao fa-minus pt-1"
+                      *ngIf="distribuicaoSelecionada == i"></i>
+                  </button>
+                </td>
+                <td style="padding-top: 10px" title="{{item.codigo}}">{{item.codigo}}</td>
+                <td style="padding-top: 10px" title="{{item.dscTipoProcesso}}">{{item.dscTipoProcesso}}</td>
+                <td style="padding-top: 10px" title="{{item.codEstado}}">{{item.codEstado}}</td>
+                <td style="padding-top: 10px" title="{{item.nomComarca}}">{{item.nomComarca}}</td>
+                <td style="padding-top: 10px" title="{{item.nomTipoVara}}">{{item.nomTipoVara}}</td>
+                <td style="padding-top: 10px" title="{{item.nomEmpresaCentralizadora}}">
+                  {{item.nomEmpresaCentralizadora}}</td>
+                <td style="padding-top: 10px" title="{{item.status}}">{{item.status}}</td>
+                <td *ngIf="!apenasConsultarParamDistribuEscrit" title="" class="btn-conteiner pt-1 pr-3">
+                  <div class="pt-1" style="display: flex;margin-top: 5%;justify-content: center;">
+                    <div>
+                      <i class="fas fa-paperclip roxo-padrao fa-sm" (click)="alterarAnexo(item.codigo)"></i>
+                    </div>
+                    <div class="ml-3 mr-3">
+                      <i style="cursor:pointer; font-size: 16px;" class="fas roxo-padrao fa-edit fa-sm"
+                        (click)="alterardistribuicao(item)"></i>
+                    </div>
+                    <div>
+                      <i class="fas roxo-padrao fa-trash fa-sm" style="cursor:pointer; font-size: 16px;"
+                        (click)="removerDistribuicao(item.codigo)"></i>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="distribuicaoSelecionada == i" class="table-escritorio">
+                <td colspan="12" style="padding: 15px">
+                  <parametrizar-escritorio [distribuicao]="item"></parametrizar-escritorio>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <sisjur-paginator class="mt-3" [length]="totalRegistros" (page)="buscarDistribuicao()"></sisjur-paginator>
+  </div>
+</div>

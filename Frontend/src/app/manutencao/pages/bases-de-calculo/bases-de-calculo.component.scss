@@ -1,0 +1,26 @@
+jur-column-template {
+  &.calculo-inicial {
+    font-weight: bold;
+  }
+  > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.tag {
+  background-color: #988eca;
+  color: #fff;
+  padding: 4px 6px;
+  font-weight: normal;
+  border-radius: 2px;
+  line-height: 16px;
+  height: 24px;
+  margin: 5px 12px;
+}
+
+.btn-roxo{
+  color: #786bb9;
+  font-family: Roboto, sans-serif;
+}

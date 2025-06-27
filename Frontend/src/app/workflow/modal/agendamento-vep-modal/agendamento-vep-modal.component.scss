@@ -1,0 +1,49 @@
+.container {
+  padding: 2rem;
+}
+
+.title h4 {
+  color: #786bb9;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.sub-title {
+  padding: 1.2rem 0;
+
+  h6{
+    color: #786bb9;
+  }
+}
+
+.fa-info-circle{
+  color: #555555;
+}
+
+.radio{
+  align-items: center;
+}
+
+.periocidade-selects{
+  min-height: 157px  !important;
+}
+
+::ng-deep bs-datepicker-container {
+  z-index: 20000 !important;
+}
+
+::ng-deep .modal-agend-vep  {
+  .modal-content {
+    min-width: 291px !important;
+    min-height: 291px !important;
+    max-width: 571px !important;
+    margin-bottom: 18rem !important;
+  }
+  .modal-sm {
+    min-height: 291px !important;
+    min-width: 291px !important;
+    max-width: 571px !important;
+    margin-bottom: 18rem !important;
+  }
+}

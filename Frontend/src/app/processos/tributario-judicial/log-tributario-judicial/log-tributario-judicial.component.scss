@@ -1,0 +1,51 @@
+@import '../../relatorio-log.scss';
+
+@mixin icone ($imagem) {
+  background-image: url('../../../../assets/img/icones-menu-log-civel-consumidor/'+$imagem);
+}
+
+
+// ícones - status "normal"
+div[ng-reflect-klass="btMenuLog"] div.logIcon, .btMenuLog div.logIcon {
+
+  &.dadosGerais { @include icone('ico_docum.png');}
+  &.partes { @include icone('users01.png');}
+  &.andamentos { @include icone('ico_time_glass01.png');}
+  &.observacoes { @include icone('ico_talk_text.png');}
+  &.audiencias { @include icone('ico_hall.png');}
+  &.prazos { @include icone('ico_clock.png');}
+  &.lancamentos { @include icone('ico_money02.png');}
+  &.comp-pagamentos { @include icone('ico_composicao_pagamentos.png');}
+  &.objetos { @include icone('ico_objetos.png');}
+  &.decisoes-objetos { @include icone('ico_decisoes.png');}
+  &.valores-objeto { @include icone('ico_money01.png');}
+  &.pendencias { @include icone('ico_pendencias.png');}
+  &.processos-incidentes { @include icone('ico_processos_incidentes.png');}
+ 
+}
+
+// ícones - status "selecionado"
+div[ng-reflect-klass="btMenuLog"].selected div.logIcon, .btMenuLog.selected div.logIcon {
+
+  &.dadosGerais { @include icone('ico_docum_w.png');}
+  &.partes { @include icone('users01_w.png');}
+  &.andamentos { @include icone('ico_time_glass01_w.png');}
+  &.observacoes { @include icone('ico_talk_text_w.png');}
+  &.audiencias { @include icone('ico_hall_w.png');}
+  &.prazos { @include icone('ico_clock_w.png');}
+  &.lancamentos { @include icone('ico_money02_w.png');}
+  &.comp-pagamentos { @include icone('ico_composicao_pagamentos_w.png');}
+  &.objetos { @include icone('ico_objetos_w.png');}
+  &.decisoes-objetos { @include icone('ico_decisoes_w.png');}
+  &.valores-objeto { @include icone('ico_money01_w.png');}
+  &.pendencias { @include icone('ico_pendencias_w.png');}
+  &.processos-incidentes { @include icone('ico_processos_incidentes_w.png');}
+}
+
+// controlar quebra de linha dentro da variável (com /n) nos casos específicos de multilinhas
+div.logIcon.comp-pagamentos+div.multiline,
+div.logIcon.decisoes-objetos+div.multiline,
+div.logIcon.valores-objeto+div.multiline
+{
+  white-space: pre-wrap;
+}

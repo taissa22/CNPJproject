@@ -1,0 +1,6 @@
+<input
+  [class]="class"
+  type="text"
+  [placeholder]="label"
+  (keyup)="debounce.next($event.target.value)"
+/>

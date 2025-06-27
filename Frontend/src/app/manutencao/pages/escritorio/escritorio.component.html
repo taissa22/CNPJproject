@@ -1,0 +1,162 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Escritório"
+  [breadcrump]="breadcrumb" [exibirAdicionar]="true">
+  <br>
+  <div class="row">
+    <div class="col-12 py-3">
+    </div>
+  </div>
+  <div class="row" (keydown.enter)="buscarTabela()" style="margin-left: auto;">
+      <div style="width :157px">
+        <label for="estado"> <b>Estado:</b> </label>
+        <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        [items]="estados"
+        bindLabel="nome"
+        bindValue="id"
+        [formControl] = "estadoFormControl"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        [placeholder]="'Selecione um Estado'"></ng-select>
+      </div>
+
+      <div style="margin-left: 10px; width: 214px" >
+        <label for="areatuacao"> <b>Área de Atuação:</b> </label>
+        <ng-select
+        [ngStyle]="{'fontSize': '11px'}"
+        [items]="tiposProcesso"
+        bindLabel="descricao"
+        bindValue="id"
+        [formControl] = "areaAtuacaoFormControl"
+        appearance="outline"
+        notFoundText="Nenhuma opção disponível"
+        [searchable]="true"
+        [clearable]="true"
+        [placeholder]="'Selecione uma Área de Atuação'"></ng-select>
+      </div>
+
+      <div style="margin-left: 10px; width: 240px;">
+        <label for="descricao"> <b>Descrição:</b>  </label>
+        <input type="search"
+          (search)="onClearInputPesquisar()"
+          class="form-control mr-2"
+          style="text-transform:uppercase"
+          [formControl] = "buscarDescricaoFormControl"
+          placeholder="Entre com o texto ou parte dele"
+          maxlength="100">
+
+
+      </div>
+  <div style="margin-top: 21px; margin-left: 10px; width: 240px ">
+            <button type="button" class="btn btn-primary"  (click)="buscarTabela()">Buscar</button>
+          </div>
+  </div>
+
+  <div class="mt-4 row"  >
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" >Escritórios</b>
+    </div>
+
+    <div class="col-sm-12" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar Escritórios
+      </button>
+
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportaradvogado()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar Advogados do Escritório
+      </button>
+
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportaratuacao()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar Estado de Atuação do Escritório
+      </button>
+
+    </div>
+  </div>
+
+  <div >
+    <sisjur-table (sort)="buscarTabela()"  >
+      <ng-container  >
+
+        <sisjur-table-header>
+            <sisjur-table-header-cell sort="id" width="10">Tipo Pessoa</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="Nome" width="60">Nome</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="CPFCPNJ" width="15">CNPJ/CPF</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="Ativo" width="15">Status</sisjur-table-header-cell>
+            <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+            <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+            <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+
+        <sisjur-table-row *ngFor="let item of escritorios let i = index" >
+          <sisjur-table-row-cell>{{item.tipoPessoaId == "J" ? "Jurídica" : "Física"}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <span [title]="item.nome" class="text_ellipsis">{{item.nome}}</span>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item.tipoPessoaId == "F" ? item.CPF : item.CNPJ}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{item.ativo ? "Ativo" : "Inativo"}}</sisjur-table-row-cell>
+
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon"   [ngbTooltip]="detalhes"> <i class="fa fa-info-circle"></i>
+              <ng-template #detalhes >
+                <table>
+                  <tr>
+                    <td style="text-align: left; padding-top: 0px;">
+                      <tr><label> <b>Área de Atuação:</b></label></tr>
+                      <tr><label *ngIf="item.indAreaRegulatoria">Administrativo     <br></label></tr>
+                      <tr><label *ngIf="item.indAreaCivelAdministrativo"> Cível Administrativo  <br></label></tr>
+                      <tr><label *ngIf="item.indAreaCivel">Cível Consumidor     <br></label></tr>
+                      <tr><label *ngIf="item.civelEstrategico">Cível Estratégico    <br></label></tr>
+                      <tr><label *ngIf="item.indAreaCriminalAdministrativo">Críminal Administrativo    <br></label></tr>
+                      <tr><label *ngIf="item.indAreaCriminalJudicial">Críminal Judicial    <br></label></tr>
+                      <tr><label *ngIf="item.indAreaJuizado">Juizado Especial Cível <br></label></tr>
+                      <tr><label *ngIf="item.indAreaPEX">Pex <br></label></tr>
+                      <tr><label *ngIf="item.indAreaProcon">Procon <br></label></tr>
+                      <tr><label *ngIf="item.indAreaTrabalhista">Trabalhista    <br></label></tr>
+                      <tr><label *ngIf="item.indAreaTributaria">Tributária    <br></label></tr>
+                    </td>
+
+
+                    <td style="text-align: left; padding-left: 20px;">
+                      <tr><label><b>Endereço: </b> {{item.endereco}} </label></tr>
+                      <tr><label><b>Cidade:</b> {{item.cidade}} </label></tr>
+                      <tr><label><b>Bairro:</b> {{item.bairro}} </label></tr>
+                      <tr><label><b>Cep:</b> {{item.cep}} </label></tr>
+                      <tr><label><b>Telefone:</b> {{(item.TelefoneDDD)  + item.Telefone}} </label></tr>
+                      <tr><label><b>Email:</b> {{item.email}} </label></tr>
+
+                    </td>
+                  </tr>
+
+                </table>
+              </ng-template>
+            </button>
+
+
+          </sisjur-table-row-cell>
+
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="alterar(item)"> <i class="fa fa-edit"></i>  </button>
+          </sisjur-table-row-cell>
+
+          <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="excluir(item)"> <i class="fa fa-trash"></i> </button>
+          </sisjur-table-row-cell>
+
+
+
+
+        </sisjur-table-row>
+      </ng-container>
+
+
+    </sisjur-table>
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+</div>
+
+</app-manutencao-generica>

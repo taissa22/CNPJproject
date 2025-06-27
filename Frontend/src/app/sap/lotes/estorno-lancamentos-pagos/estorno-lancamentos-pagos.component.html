@@ -1,0 +1,85 @@
+<app-container-pagina [titulo]="'Estorno de Lançamentos Pagos no SAP'"
+  [caminho]="breadcrumb"
+  [texto]="'Selecione o tipo de processo e o número para localizar os processos onde os lançamentos estão cadastrados.'">
+  <form>
+    <div class="row">
+      <div class="col-sm-2">
+        <combo-box
+         (selectionChange)="onChangeComboboxTipoProcesso($event)"
+         [opcoes]="comboBoxTipoProcesso"
+         [label]="'Tipo de Processo:'"
+         id="comboTipoProcesso"
+         [classe]="'fornecedor'"
+         >
+        </combo-box>
+      </div>
+      <div class="col-sm-2">
+        <combo-box
+        (selectionChange)="onChangeComboboxProcesso($event)"
+        [opcoes]="[{ id: 1, descricao: 'Código Interno' },
+                  { id: 2, descricao: 'Número do Processo' }]"
+        [label]="'Processo:'"
+        id="comboProcesso"
+        [classe]="'fornecedor'"
+         >
+        </combo-box>
+      </div>
+      <div class="col-sm-4 input-group d-flex align-items-center">
+        <i class="fas fa-info-circle roxo-padrao fa-lg pt-4 pr-1"
+          [ngbTooltip]="'O usuário precisa digitar o código interno ou número do processo integralmente para realizar a busca.'"></i>
+        <input *ngIf="numProcesso" type="search" [disabled]='processo == 0' maxlength="50" [(ngModel)]="valorNumero"
+          class="form-control align-bottom" name="identificacao" />
+        <input *ngIf="codigoInterno" type="search" [disabled]='processo == 0' maxlength="8" [(ngModel)]="valorNumero"
+          class="form-control align-bottom" name="identificacao" numbersOnly />
+      </div>
+      <div class="col-sm-3">
+        <button [disabled]="!isBuscarEnabled" type="submit" (click)="onClickBuscarProcessos()"
+          class="btn btn-primary align-btn-bottom" style="position:absolute; bottom: 0;">
+          Buscar Processos
+        </button>
+      </div>
+    </div>
+  </form>
+  <label class="pt-5 p-0" *ngIf="processosLocalizados.length == 0 && realizouBusca">
+    <b>Nenhum resultado encontrado</b></label>
+  <div class="pt-5 p-0" *ngIf="processosLocalizados.length > 0">
+    <h5 style="color: #5c4da4"><b>Processos Localizados</b></h5>
+    <div class='container p-0 m-0'>
+      <app-card-container class="p-0" (clicked)="onCardClick(i)"
+        *ngFor="let processoLocalizado of processosLocalizados; index as i">
+        <div class="corpoCardContainer d-flex" style="
+                width: 100%;">
+          <div class="col-2">
+            <div class="align-self-start"><b>Nº do Processo</b></div>
+            <div class="align-self-end mt-2">{{ processoLocalizado.numeroProcesso }}</div>
+          </div>
+          <div class="col-2">
+            <div class="align-self-start"><b>Código Interno</b></div>
+            <div class="align-self-end mt-2">{{ processoLocalizado.codigoProcesso }}</div>
+          </div>
+          <div class="col-2">
+            <div class="align-self-start"><b>Classificação Hierárquica</b></div>
+            <div class="align-self-end mt-2">{{ processoLocalizado.classificacaoHierarquica }}</div>
+          </div>
+          <div class="col-2">
+            <div class="align-self-start"><b>Estado/Comarca</b></div>
+            <div class="align-self-end mt-2 informacao" tooltipClass='text-nowrap'
+              [ngbTooltip]="(processoLocalizado.uf + ' - ' + processoLocalizado.nomeComarca).length > 30 ?  processoLocalizado.uf + ' - ' + processoLocalizado.nomeComarca : ''  ">
+              {{ processoLocalizado.uf }} - {{ processoLocalizado.nomeComarca }}</div>
+          </div>
+          <div class="col-2">
+            <div class="align-self-start"><b>Vara/Tipo da Vara</b></div>
+            <div class="align-self-end mt-2">{{processoLocalizado.vara}}ª VARA {{ processoLocalizado.nomeTipoVara }}
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="align-self-start"><b>Empresa do Grupo</b></div>
+            <div class="align-self-end ellipsis-overflow mt-2 informacao" tooltipClass='text-nowrap'
+              [ngbTooltip]="processoLocalizado.descricaoEmpresaDoGrupo.length > 23 ? processoLocalizado.descricaoEmpresaDoGrupo : ''">
+              {{ processoLocalizado.descricaoEmpresaDoGrupo }}</div>
+          </div>
+        </div>
+      </app-card-container>
+    </div>
+  </div>
+</app-container-pagina>

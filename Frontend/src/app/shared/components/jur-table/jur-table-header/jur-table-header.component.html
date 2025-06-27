@@ -1,0 +1,39 @@
+<thead>
+  <tr>
+    <ng-container *ngFor="let c of columns">
+      <th *ngIf="!c.sortColumn; else hasSortColumn" [fxFlex]="c.flex">
+        <div style="position:relative; width: 100%; height:100%; overflow: hidden;" fxFlex="nogrow">
+          <span style="position:absolute; left: 0px; top: 0px;" title={{c.columnName}}>
+            <span>{{c.columnName}}</span>
+          </span>
+        </div>
+      </th>
+
+      <ng-template #hasSortColumn>
+        <th class="sortable" [fxFlex]="c.flex" (click)="onSort(c.sortColumn)">
+          <!-- <span fxFlex="nogrow">{{ c.columnName }} </span> -->
+          <div style="position:relative; width: 100%; height:100%; overflow: hidden;" fxFlex="nogrow">
+            <span style="position:absolute; left: 0px; top: 0px;" title={{c.columnName}}>
+              <span>
+                {{c.columnName}}
+                <i *ngIf="c.sortColumn !== sortColumn; else sortThisColumn" class="fas fa-arrows-alt-v"></i>
+              </span>
+            </span>
+            
+          </div>
+          <!-- <i *ngIf="c.sortColumn !== sortColumn; else sortThisColumn" class="fas fa-arrows-alt-v"></i> -->
+
+          <ng-template #sortThisColumn>
+            <ng-container [ngSwitch]="sortDirection">
+              <i *ngSwitchCase="'asc'" class="fas fa-long-arrow-alt-up"></i>
+              <i *ngSwitchCase="'desc'" class="fas fa-long-arrow-alt-down"></i>
+              <i *ngSwitchDefault class="fas fa-arrows-alt-v"></i>
+            </ng-container>
+          </ng-template>
+
+        </th>
+      </ng-template>
+
+    </ng-container>
+  </tr>
+</thead>

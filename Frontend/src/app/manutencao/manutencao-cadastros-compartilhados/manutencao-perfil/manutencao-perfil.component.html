@@ -1,0 +1,319 @@
+<app-container-pagina
+[titulo]="titulo"
+[caminho]="caminho"
+[hasAdicionar]="false"
+[textoRota]="'Voltar'"
+(voltou)="voltar()"
+>
+<div *ngIf="permissoesAssociadasVazio" class="aviso"><h3>Nenhuma permissão foi associada</h3></div>
+<div *ngIf="usuariosAssossiadosVazio" class="aviso"><h3>Nenhum usuário foi associado</h3></div>
+<div *ngIf="permissoesDisponiveisVazio" class="avisoTodos"><h3>Todas as permissões foram associadas</h3></div>
+<div *ngIf="usuariosDisponiveisVazio" class="avisoTodos"><h3>Todos os usuários foram associados</h3></div>
+<div>
+  <a class="rota" (click)="voltar()" style="padding-top: 25px;"><i class="fa fa-angle-double-left"></i> Voltar</a>
+</div>
+  <div class="mb-3" style="overflow: hidden;">
+  <div class="pull-left">
+    <h1></h1>
+    <h6 style="font-size: 12px; color: #555555;"></h6>
+  </div>
+</div>
+<div>
+  <div class="container-fluid pb-3 p-0">
+    <div class="row pb-3">
+      <div class="col-5">
+        <div class="row pb-2">
+          <div class="col-3"><label class="label">Nome:</label></div>
+          <div class="col-9">
+            <input id="nome" maxlength="30" type="search" [(ngModel)]="perfil.nomeId" onblur="this.value = this.value.trim()" class="form-control maiuscula" [disabled]="disable" placeholder="Entre com o nome do novo perfil"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-1"></div>
+      <div class="col-6">
+        <div class="row pb-4">
+          <div class="col-3">
+            <label class="label">Status:</label>
+          </div>
+          <div class="col-3">
+            <div class="custom-control custom-radio">
+              <input [disabled]="!ehPerfilWeb" type="radio" id="ativo" name="status" [value]="true" class="custom-control-input" [(ngModel)]="perfil.ativo">
+              <label class="custom-control-label" for="ativo">Ativo</label>
+          </div>
+          </div>
+          <div class="col-3">
+            <div class="custom-control custom-radio">
+              <input [disabled]="!ehPerfilWeb" type="radio" id="inativo" name="status" [value]="false" class="custom-control-input" [(ngModel)]="perfil.ativo">
+              <label class="custom-control-label" for="inativo">Inativo</label>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row pb-3">
+      <div class="col-5">
+        <div class="row pb-2">
+          <div class="col-3"><label class="label">Descrição:</label></div>
+          <div class="col-9">
+            <input [disabled]="!ehPerfilWeb" id="descricao" type="search" [(ngModel)]="perfil.descricao" onblur="this.value = this.value.trim()" class="form-control" placeholder="Insira uma descrição"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-1"></div>
+      <div class="col-6">
+        <div class="row pb-4">
+          <div class="col-3">
+            <label class="label">
+              Tipo Usuário:
+            </label>
+          </div>
+          <div class="col-3 align-items-center">
+            <div class="custom-control custom-radio">
+              <input [disabled]="!ehPerfilWeb" type="radio" id="adiministrativo" name="tipoUsuario" class="custom-control-input" value="3" [(ngModel)]="perfil.tipoUsuario">
+              <label class="custom-control-label" for="adiministrativo">Administrativo</label>
+          </div>
+          </div>
+          <div class="col-3">
+            <div class="custom-control custom-radio">
+              <input [disabled]="!ehPerfilWeb" type="radio" id="interno" name="tipoUsuario" class="custom-control-input" value="2" [(ngModel)]="perfil.tipoUsuario">
+              <label class="custom-control-label" for="interno">Interno</label>
+          </div>
+          </div>
+          <div class="col-3">
+            <div class="custom-control custom-radio">
+              <input type="radio" id="escritorio" name="tipoUsuario" class="custom-control-input" value="1" [(ngModel)]="perfil.tipoUsuario">
+              <label class="custom-control-label" for="escritorio">Escritório</label>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row pb-3">
+      <div class="col-5">
+        <div class="row pb-2">
+          <div class="col-3"><label class="label">Gestor default:</label></div>
+          <div class="col-9">
+            <ng-select
+                [ngStyle]="{'fontSize': '11px'}"
+                id="gestores"
+                [items]="listaGestores"
+                bindLabel="value"
+                bindValue="key"
+                appearance="outline"
+                notFoundText="Nenhuma opção disponível"
+                [searchable]="true"
+                [clearable]="true"
+                [disabled]="!ehPerfilWeb"
+                (change)="ajustarDropdownAoSelecionar($event)"
+                [(ngModel)]="gestorSelecionadoId"
+                placeholder="Selecione um Gestor"
+                >
+          </ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-1">
+      </div>
+      <div class="col-6">
+        <div class="row pb-4">
+          <div class="col-3">
+            <label class="label">
+              Perfil Web:
+            </label>
+          </div>
+          <div class="col-3">
+            <div class="custom-control custom-radio">
+              <input [disabled]="!ehPerfilWeb" type="radio" id="sim" name="perfilWeb" class="custom-control-input" [value]="true" [(ngModel)]="perfil.perfilWeb">
+              <label class="custom-control-label" for="sim">Sim</label>
+          </div>
+          </div>
+          <div class="col-3">
+            <div class="custom-control custom-radio">
+              <input [disabled]="!ehPerfilWeb" type="radio" id="nao" name="perfilWeb" class="custom-control-input" [value]="false" [(ngModel)]="perfil.perfilWeb">
+              <label class="custom-control-label" for="nao">Não</label>
+          </div>
+          </div>
+
+          <div class="col-3 custom-control">
+            <div class="row pb-2">
+              <div class="col-5 align-items-center">
+                <label class="font-weight-bold">Restrito:</label>
+              </div>
+              <div class="col-auto d-flex justify-content-center" >
+                <input [disabled]="!ehPerfilWeb" type="checkbox" id="restrito" class="check" [(ngModel)]="perfil.restrito" >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="border">
+    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active h3" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" (click)="ajustarAviso(true)">Permissões</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link h3" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" (click)="ajustarAviso(false)">Usuários</a>
+      </li>
+
+    </ul>
+    <div class="tab-content border" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="container-fluid pb-3 p-0">
+          <div class="row">
+            <div class="col-5">
+              <div class="row pb-2">
+              <div class="col-1"></div>
+              <div class="col-11"><br><br><span class="info">Localize e selecione as permissões que deseja associar ao perfíl.</span>
+              </div>
+            </div>
+          </div>
+            <div class="col-2"></div>
+            <div class="col-5"></div>
+          </div>
+          <div class="container-box">
+            <div class="cell-A"><label class="label1 label-busca">Buscar permissões disponíveis:</label></div>
+            <div class="cell-B"><span class="count-disponivel">Disponíveis: {{permissoesNaoSelecionadasCount}} </span></div>
+            <div class="cell-C"><label class="label1 label-busca">Buscar permissões associadas:</label></div>
+            <div class="cell-D"><button class="btn btn-roxo download exportar"  (click)="exportar(true)">
+              <i class="fas fa-download"></i>
+              Exportar
+            </button>
+          </div>
+            <div class="cell-E"><span class="count-direita">Associadas: {{permissoesSelecionadasCount}} </span></div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="row pb-2">
+              <div class="col-1"></div>
+              <div class="col-11"><br>
+                <!-- <label class="label1 label-busca-esquerda">Buscar permissões disponíveis:</label> -->
+
+                <!-- <span class="count-disponivel">Disponíveis: {{permissoesNaoSelecionadasCount}} </span> -->
+                <app-search-dual-list (onTyping)="filterPermissoesNaoSelecionados = $event" [label]="'Entre com a descrição ou o caminho de menu'" [class]="'form-control input-filter-disponivel'"></app-search-dual-list>
+              </div>
+            </div>
+          </div>
+
+            <div class="col-auto"></div>
+            <div class="col">
+              <div class="row pb-1">
+                <div class="col-11"><br>
+                  <!-- <label class="label1 label-busca">Buscar permissões associadas:</label> -->
+                    <!-- <button class="btn btn-roxo download exportar"  (click)="exportar(true)">
+                      <i class="fas fa-download"></i>
+                      Exportar
+                    </button> -->
+                    <!-- <span class="count-direita">Associadas: {{permissoesSelecionadasCount}} </span> -->
+              </div>
+            </div>
+            <div class="row pb-1">
+              <div class="col-11">
+                <app-search-dual-list
+                (onTyping)="filterPermissoesSelecionados=$event"
+                [label]="'Entre com a descrição ou o caminho de menu'"
+                [class]="'form-control input-filter-associado'">
+              </app-search-dual-list>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col dualList">
+            <app-dual-list id="dual-perfil" [label] = "'Permissões'"
+            [dualList]="listaPermissoes| filterDualList: filterPermissoesNaoSelecionados: filterPermissoesSelecionados"
+            (listaSelecionados) = "mostrarPermissoesSelecionadas($event)"
+            [habilitaSelecionadas] = "true">
+            </app-dual-list>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="container-fluid pb-3 p-0">
+          <div class="row">
+            <div class="col-5">
+              <div class="row pb-2">
+              <div class="col-1"></div>
+              <div class="col-11"><br><br><span class="info">Localize e selecione os usuários que deseja associar ao perfíl.</span>
+              </div>
+            </div>
+          </div>
+            <div class="col-2"></div>
+            <div class="col-5"></div>
+          </div>
+          <div class="container-box">
+            <div class="cell-A"><label class="label1 label-busca">Buscar usuários disponíveis:</label></div>
+            <div class="cell-B"><span class="count-disponivel">Disponíveis: {{usuariosNaoSelecionadasCount}} </span></div>
+            <div class="cell-C"><label class="label1 label-busca">Buscar usuários associados:</label></div>
+            <div class="cell-D"><button class="btn btn-roxo download exportar"  (click)="exportar(false)">
+              <i class="fas fa-download"></i>
+              Exportar
+            </button></div>
+            <div class="cell-E">
+              <span class="count-direita">Associadas: {{usuariosSelecionadasCount}} </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="row pb-2">
+              <div class="col-1"></div>
+            	<div class="col-11"><br>
+                <!-- <label class="label1 label-busca-esquerda">Buscar usuários disponíveis:</label> -->
+                <!-- <button class="btn btn-roxo download-hide">
+                  <i class="fas fa-download"></i>
+                  Exportar
+                </button> -->
+                <!-- <span class="count-disponivel">Disponíveis: {{usuariosNaoSelecionadasCount}} </span> -->
+                <app-search-dual-list
+                (onTyping)="filterUsuariosNaoSelecionados = $event"
+                [label]="'Entre com o nome ou o código de usu&aacute;rio'"
+                [class]="'form-control input-filter-disp-user'">
+              </app-search-dual-list>
+              </div>
+            </div>
+          </div>
+            <div class="col-direita"></div>
+            <div class="col">
+              <div class="row pb-1">
+                <div class="col-11"><br>
+                  <!-- <label class="label1 label-busca">Buscar usuários associados:</label> -->
+                  <!-- <button class="btn btn-roxo download exportar"  (click)="exportar(false)">
+                    <i class="fas fa-download"></i>
+                    Exportar
+                  </button> -->
+                  <!-- <span class="count-direita">Associados: {{usuariosSelecionadasCount}} </span> -->
+                  <app-search-dual-list
+                  (onTyping)="filterUsuariosSelecionados = $event"
+                  [label]="'Entre com o nome ou o código de usu&aacute;rio'"
+                  [class]="'form-control input-filter-asso-user'">
+                </app-search-dual-list>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col dualList">
+            <app-dual-list id="dual-usuario" [label] = "'Usuários'"
+            [dualList]="listaUsuarios|filterDualList:filterUsuariosNaoSelecionados:filterUsuariosSelecionados"
+            (listaSelecionados) = "mostrarUsuariosSelecionados($event)"
+            [habilitaSelecionadas] = "false" >
+            </app-dual-list>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-3 pb-4">
+      <div class="col-12 d-flex justify-content-end">
+        <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="cancelar()">
+          Cancelar
+        </button>
+        <button [disabled]="!ehPerfilWeb" class="btn btn-primary" (click)="salvar()">Salvar</button>
+      </div>
+    </div>
+</div>
+</app-container-pagina>
+

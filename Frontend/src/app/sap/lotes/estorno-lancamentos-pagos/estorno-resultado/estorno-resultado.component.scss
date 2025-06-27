@@ -1,0 +1,63 @@
+.titulo{
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #554d80;
+}
+
+.itens-icone{
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #554d80;
+}
+
+label,  .divtexto div{
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #555555;
+
+}
+
+.vazio{
+  height: 100%;
+  padding-bottom: 4px !important;
+  display: flex;
+  align-items: flex-end;
+}
+
+div.labu label{
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #555555;
+}
+
+
+.pointer{
+  cursor: pointer;
+}
+
+.labelGrandona{
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow:ellipsis !important;
+  max-width: 582px !important;
+}

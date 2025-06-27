@@ -1,0 +1,851 @@
+<form [formGroup]="formularioContrato">
+  <!-- QUADRO E -->
+  <div class="quadro mt-4 mb-5">
+    <div>
+      <h4 class="roxo-padrao title mb-0" style="width: 230px">
+        Vínculo e Desligamento (E)
+      </h4>
+    </div>
+
+    <div class="grid-quadro">
+      <div style="width: 47%">
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="tipRegimeTrab" class="tooltip-insc"><b>Tipo de Regime Trabalhista: </b><i title="{{tooltipTipoRegime}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <ng-select class="form-control form-control-select" style="width: 34rem" id="tipRegimeTrab" [tabIndex]="14"
+            [formControl]="infovincTpregtrabFormControl" [items]="tipoRegimeTrabalhistaList" bindLabel="descricao"
+            bindValue="id" (change)="ajustaTipoRegime(); validar();" [disableTooltip]="desabilitaTooltip(infovincTpregtrabFormControl)" [ngbTooltip]="validacaoTpRegimeTrab" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"></ng-select>
+          <ng-template #validacaoTpRegimeTrab>
+            <span *ngIf="
+                infovincTpregtrabFormControl.invalid &&
+                infovincTpregtrabFormControl.hasError('required')&&
+                (
+                  (!infovincTpregprevFormControl.value  || (infovincTpregprevFormControl.value && infovincTpregprevFormControl.value == '')) &&
+                  (!infovincDtadmFormControl.value || (infovincDtadmFormControl.value && infovincDtadmFormControl.value == ''))
+                )
+              ">
+              Campo obrigatório.
+            </span>
+            <span *ngIf="
+                infovincTpregtrabFormControl.invalid &&
+                infovincTpregtrabFormControl.hasError('required') &&
+                ((infovincTpregprevFormControl.value  && infovincTpregprevFormControl.value != '') || (infovincDtadmFormControl.value && infovincDtadmFormControl.value != ''))
+              ">
+              Para informar dados sobre o grupo Informações sobre o vínculo trabalhista, é obrigatório preencher os campos: Tipo de Regime Trabalhista, Tipo de Regime Previdenciário e Data de Admissão.
+            </span>
+            <span *ngIf="
+                infovincTpregtrabFormControl.invalid &&
+                infovincTpregtrabFormControl.hasError('tipoInvalido')
+              ">
+              Quando o campo 'Código da Categoria' do (Bloco D), for igual a
+              104, informe CLT para o Tipo de Regime Trabalhista.
+            </span>
+          </ng-template>
+        </div>
+
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="dtAdm" class="tooltip-data-bloco-e tooltip-data-adm"><b>Data de Admissão: </b><i title="{{tooltipDataAdmissao}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <div class="form-group" [class.disabled]="infovincDtadmFormControl.disabled">
+            <div class="form-inline input-group input-date" id="component-data">
+              <input type="text" class="form-control form-control-sm input-date" placeholder="DD/MM/AAAA"
+                rInputMask="99/99/9999" #infovincDtadm="bsDatepicker" [bsConfig]="{ showWeekNumbers: false }"
+                name="infovincDtadm" id="infovincDtadm" [formControl]="infovincDtadmFormControl" bsDatepicker
+                [maxDate]="dataAtual" [minDate]="dataMinimaAdmissao"
+                placement="top-left top-right bottom-left bottom-right" [disableTooltip]="desabilitaTooltip(infovincDtadmFormControl)" [required]="dataAdmissaoRequired" [ngbTooltip]="validacaoDataAdmissao"  (blur)="validar()"
+                [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" />
+              <div class="input-group-append">
+                <button type="button" class="btn btn btn-outline-secondary calendar" (click)="infovincDtadm.toggle()"
+                  [attr.aria-expanded]="infovincDtadm.isOpen" [disabled]="infovincDtadmFormControl.disabled">
+                  <i class="fa-solid fa-calendar-days"></i>
+                </button>
+              </div>
+              <ng-template #validacaoDataAdmissao>
+                <span *ngIf="
+                    infovincDtadmFormControl.invalid &&
+                    infovincDtadmFormControl.hasError('required')
+                  ">
+                  Campo obrigatório.
+                </span>
+                <span *ngIf="
+                    infovincDtadmFormControl.invalid &&
+                    infovincDtadmFormControl.hasError('required') &&
+                    ((infovincTpregprevFormControl.value  && infovincTpregprevFormControl.value != '') || (infovincTpregtrabFormControl.value && infovincTpregtrabFormControl.value != ''))
+                  ">
+                  Para informar dados sobre o grupo Informações sobre o vínculo trabalhista, é obrigatório preencher os campos: Tipo de Regime Trabalhista, Tipo de Regime Previdenciário e Data de Admissão.
+                </span>
+                <span *ngIf="
+                    infovincDtadmFormControl.invalid &&
+                    infovincDtadmFormControl.errors.validDate
+                  ">
+                  Data inválida
+                </span>
+                <span *ngIf="
+                    infovincDtadmFormControl.invalid &&
+                    infovincDtadmFormControl.errors.bsDate &&
+                    infovincDtadmFormControl.errors.bsDate.invalid
+                  ">
+                  Data inválida
+                </span>
+                <span *ngIf="
+                    infovincDtadmFormControl.invalid &&
+                    infovincDtadmFormControl.errors.bsDate?.maxDate
+                  ">
+                  A "Data de Admissão" deve ser menor ou igual a data atual.
+                </span>
+                <span *ngIf="
+                    infovincDtadmFormControl.invalid &&
+                    infovincDtadmFormControl.errors.bsDate?.minDate
+                  ">
+                  A "Data de Admissão" deve ser maior que a "Data de Nascimento" do
+                  trabalhador (Bloco A) caso informada.
+                </span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="tipInscSucVinculo" class="tooltip-insc"><b>Tipo de Inscrição da Sucessão do Vínculo: </b><i title="{{tooltipTpInscSucVinc}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <ng-select class="form-control form-control-select" style="width: 34rem" id="tipInscSucVinculo" [tabIndex]="18"
+            [formControl]="sucessaovincTpinscFormControl" [items]="tipoInscricaoSucessaoVinculoList"
+            bindLabel="descricao" bindValue="id"  (change)="validar();
+            changeInscricao(
+              sucessaovincTpinscFormControl,
+              sucessaovincNrinscFormControl,
+              'successao'
+            );" [disableTooltip]="desabilitaTooltip(sucessaovincTpinscFormControl)" [ngbTooltip]="validacaoTpSucVinc" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"></ng-select>
+          <ng-template #validacaoTpSucVinc>
+            <span *ngIf="
+                sucessaovincTpinscFormControl.invalid &&
+                sucessaovincTpinscFormControl.hasError('erroTipoCGC')
+              ">
+              Só informe "5 - CGC" para este campo se a Data da Transferência for igual ou menor a 30/06/1999.
+            </span>
+
+            <span *ngIf="
+                sucessaovincTpinscFormControl.invalid &&
+                sucessaovincTpinscFormControl.hasError('erroTipoCEI')
+              ">
+              Só informe CEI para este campo, se a Data da Transferência for
+              menor ou igual a 31/12/2011
+            </span>
+            <span *ngIf="
+                sucessaovincTpinscFormControl.invalid &&
+                sucessaovincTpinscFormControl.hasError('required')
+                && (!sucessaovincMatricantFormControl.value || (sucessaovincMatricantFormControl.value && sucessaovincMatricantFormControl.value == ''))
+              ">
+              Para informar dados sobre a Sucessão de Vínculos Trabalhistas, é obrigatório preencher os campos:
+              Tipo da Inscrição, Número da Inscrição e a Data de Transferência.
+            </span>
+            <span *ngIf="
+                sucessaovincTpinscFormControl.invalid &&
+                sucessaovincTpinscFormControl.hasError('required')
+                && sucessaovincMatricantFormControl.value &&  sucessaovincMatricantFormControl.value != ''
+              ">
+              Ao informar o campo "Matrícula Anterior",  é obrigatório preencher os campos: Tipo da Inscrição,
+              Número da Inscrição e a Data de Transferência.
+            </span>
+          </ng-template>
+
+          <!-- COLOCAR NO SELECT ACIMA NA HR DE VALIDAR (change)=" changeInscricao( sucessaovincTpinscFormControl, sucessaovincNrinscFormControl, 'sucessao' )" -->
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="matriculaAnte" class="tooltip-insc"><b>Matrícula Anterior: </b><i title="{{tooltipMatAnterior}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <input class="form-control" style="width: 34rem" type="text" id="matriculaAnte" tabindex="20" maxlength="30"
+            [formControl]="sucessaovincMatricantFormControl" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" (change)="validar();"/>
+          <!-- COLOCAR NO INPUT ACIMA NA HR DE VALIDAR oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" -->
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="tipContrato" class="tooltip-insc"><b>Tipo de Contrato: </b> <i title="{{tooltipTipoContrato}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <ng-select class="form-control form-control-select" style="width: 34rem" id="tipContrato" [tabIndex]="22"
+            [formControl]="duracaoTpcontrFormControl" [items]="tipoContratoList" bindLabel="descricao" bindValue="id"
+            (change)="desabilitaCamposDuracaoContrato(); validar();" [disableTooltip]="desabilitaTooltip(duracaoTpcontrFormControl)" [ngbTooltip]="validacaotipoContrato" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"></ng-select>
+          <ng-template #validacaotipoContrato>
+            <span *ngIf="
+                duracaoTpcontrFormControl.invalid &&
+                duracaoTpcontrFormControl.hasError('required') &&
+                this.infovincTpregtrabFormControl.value &&this.infovincTpregtrabFormControl.value == 1
+              ">
+              O campo 'Tipo de Contrato' (Bloco E) deve ser informado se o  'Tipo de Regime Trabalhista' for igual a "1-CLT".
+            </span>
+            <span *ngIf="
+                duracaoTpcontrFormControl.invalid &&
+                duracaoTpcontrFormControl.hasError('required') &&
+                (this.duracaoDttermFormControl.value)
+              ">
+              Ao informar a data de término no Bloco E, o tipo de contrato deve ser preenchido.
+            </span>
+          </ng-template>
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="contPrazoDeterContClausuAssecu" class="tooltip-insc"><b>Contrato por Prazo Determinado Contém Cláusula
+              Assecuratória: </b> <i title="{{tooltipContratoPorPrazo}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <ng-select class="form-control form-control-select" style="width: 34rem" id="contPrazoDeterContClausuAssecuSim"
+            [tabIndex]="22" [formControl]="duracaoClauassecFormControl" [items]="simNaoList" bindLabel="descricao"
+            bindValue="id" [disableTooltip]="desabilitaTooltip(duracaoClauassecFormControl)" [ngbTooltip]="validacaoClausula" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"></ng-select>
+
+          <ng-template #validacaoClausula>
+            <span *ngIf="
+                duracaoClauassecFormControl.invalid &&
+                duracaoClauassecFormControl.hasError('required')
+              ">
+              O campo 'Contrato por Prazo Determinado Contém Cláusula Assecuratória' deve ser informado se o campo 'Tipo de Contrato' (Bloco E) for igual a
+              "2-Prazo determinado, definido em dias" ou "3-Prazo determinado, vinculado a ocorrência de um fato".
+            </span>
+          </ng-template>
+        </div>
+        <div class="d-flex mt-3" style="flex-direction: column">
+          <label for="dtDesligamento" class="tooltip-data-bloco-e tooltip-data-transf"><b>Data do Desligamento: </b><i title="{{tooltipDataDesligamento}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+
+          <div class="form-group">
+            <div class="form-inline input-group input-date" id="component-data">
+              <input type="text" class="form-control form-control-sm input-date" placeholder="DD/MM/AAAA"
+                rInputMask="99/99/9999" [bsConfig]="{ showWeekNumbers: false }" name="infodesligDtdeslig"
+                id="infodesligDtdeslig" [formControl]="infodesligDtdesligFormControl" bsDatepicker
+                [maxDate]="dataMaximaDesligamento" [minDate]="this.infovincDtadmFormControl.value" #infodesligDtdeslig="bsDatepicker"
+                placement="top-left top-right bottom-left bottom-right" [disableTooltip]="desabilitaTooltip(infodesligDtdesligFormControl)" [ngbTooltip]="validacaoDataDesligamento" [required]="dataDesligamentoRequired"
+                [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" />
+              <div class="input-group-append">
+                <button type="button" class="btn btn btn-outline-secondary calendar"
+                  (click)="infodesligDtdeslig.toggle()" [attr.aria-expanded]="infodesligDtdeslig.isOpen"
+                  [disabled]="infodesligDtdesligFormControl.disabled">
+                  <i class="fa-solid fa-calendar-days"></i>
+                </button>
+              </div>
+              <ng-template #validacaoDataDesligamento>
+                <span *ngIf="
+                    infodesligDtdesligFormControl.invalid &&
+                    infodesligDtdesligFormControl.hasError('required')
+                  ">
+                  Campo obrigatório
+                </span>
+                <span *ngIf="
+                    infodesligDtdesligFormControl.invalid &&
+                    infodesligDtdesligFormControl.errors.validDate
+                  ">
+                  Data inválida
+                </span>
+                <span *ngIf="
+                    infodesligDtdesligFormControl.invalid &&
+                    infodesligDtdesligFormControl.errors.bsDate &&
+                    infodesligDtdesligFormControl.errors.bsDate.invalid
+                  ">
+                  Data inválida
+                </span>
+                <span *ngIf="
+                    infodesligDtdesligFormControl.invalid &&
+                    infodesligDtdesligFormControl.errors.bsDate?.maxDate
+                  ">
+                  Data deve ser menor que a data atual (data do envio do evento)
+                  acrescida de 10 dias corridos.
+                </span>
+
+                <span *ngIf="
+                    infodesligDtdesligFormControl.invalid &&
+                    infodesligDtdesligFormControl.errors.bsDate?.minDate
+                  ">
+                  Data deve ser maior ou igual a Data de Admissão.
+                </span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="dtProjTerminoAPI" class="tooltip-data-bloco-e tooltip-data-projetada"><b>Data Projetada para o Término do Aviso Prévio Indenizado: </b><i title="{{tooltipDataProjetada}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+
+          <div class="form-group">
+            <div class="form-inline input-group input-date" id="component-data">
+              <input type="text" class="form-control form-control-sm input-date" placeholder="DD/MM/AAAA"
+                rInputMask="99/99/9999" [bsConfig]="{ showWeekNumbers: false }" name="data" id="data"
+                [formControl]="infodesligDtprojfimapiFormControl" bsDatepicker
+                [minDate]="this.infodesligDtdesligFormControl.value" #infodesligDtprojfimapi="bsDatepicker"
+                placement="top-left top-right bottom-left bottom-right" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+                [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+                [disableTooltip]="desabilitaTooltip(infodesligDtprojfimapiFormControl)" [ngbTooltip]="validacaoDataProjetada"/>
+              <div class="input-group-append">
+                <button type="button" class="btn btn btn-outline-secondary calendar" (click)="infodesligDtprojfimapi.toggle()"
+                  [attr.aria-expanded]="infodesligDtprojfimapi.isOpen" [disabled]="infodesligDtprojfimapiFormControl.disabled">
+                  <i class="fa-solid fa-calendar-days"></i>
+                </button>
+              </div>
+              <ng-template #validacaoDataProjetada>
+                <span *ngIf="
+                    infodesligDtprojfimapiFormControl.invalid &&
+                    infodesligDtprojfimapiFormControl.hasError('required')
+                  ">
+                  Campo obrigatório
+                </span>
+                <span *ngIf="
+                    infodesligDtprojfimapiFormControl.invalid &&
+                    infodesligDtprojfimapiFormControl.errors.validDate
+                  ">
+                  Data inválida
+                </span>
+                <span *ngIf="
+                    infodesligDtprojfimapiFormControl.invalid &&
+                    infodesligDtprojfimapiFormControl.errors.bsDate &&
+                    infodesligDtprojfimapiFormControl.errors.bsDate.invalid
+                  ">
+                  Data inválida
+                </span>
+
+                <span *ngIf="
+                    infodesligDtprojfimapiFormControl.invalid &&
+                    infodesligDtprojfimapiFormControl.errors.bsDate?.minDate
+                  ">
+                  Se esta Data for informada, deve ser maior ou igual a Data do
+                  Desligamento.
+                </span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="width: 47%">
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="tipRegimeProvidenciario" class="tooltip-insc"><b>Tipo de Regime Previdenciário: </b> <i title="{{tooltipTipoRegimePrev}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <ng-select class="form-control form-control-select" style="width: 34rem" id="tipRegimeProvidenciario" (change)="validar()"
+            [tabIndex]="15" [formControl]="infovincTpregprevFormControl" [items]="tipoRegimePrevidenciarioList"
+            bindLabel="descricao" bindValue="id" [disableTooltip]="desabilitaTooltip(infovincTpregprevFormControl)" [ngbTooltip]="validacaoTpRegimePrev" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"></ng-select>
+          <ng-template #validacaoTpRegimePrev>
+            <span *ngIf="
+                infovincTpregprevFormControl.invalid &&
+                infovincTpregprevFormControl.hasError('required')&&
+                ((!infovincTpregtrabFormControl.value  || infovincTpregtrabFormControl.value == '') && (!infovincDtadmFormControl.value || infovincDtadmFormControl.value == ''))
+              ">
+              Campo obrigatório.
+            </span>
+            <span *ngIf="
+                infovincTpregprevFormControl.invalid &&
+                infovincTpregprevFormControl.hasError('required') &&
+                ((infovincTpregtrabFormControl.value  && infovincTpregtrabFormControl.value != '') || (infovincDtadmFormControl.value && infovincDtadmFormControl.value != ''))
+              ">
+              Para informar dados sobre o grupo Informações sobre o vínculo trabalhista, é obrigatório preencher os campos: Tipo de Regime Trabalhista, Tipo de Regime Previdenciário e Data de Admissão.
+            </span>
+          </ng-template>
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="tipContratoTempParc" class="tooltip-insc"><b>Tipo de Contrato em Tempo Parcial:</b><i title="{{tooltipTpContTemParc}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <ng-select class="form-control form-control-select" style="width: 34rem" id="tipContratoTempParc"
+            [tabIndex]="17" [formControl]="infovincTmpparcFormControl" [items]="tipoContratoTempoParcialList"
+            bindLabel="descricao" bindValue="id" (change)="validar()" [disableTooltip]="desabilitaTooltip(infovincTmpparcFormControl)" [ngbTooltip]="validacaotempoParcial" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)">
+          </ng-select>
+          <ng-template #validacaotempoParcial>
+            <span *ngIf="
+                infovincTmpparcFormControl.invalid &&
+                infovincTmpparcFormControl.hasError('tipoInvalido')
+              ">
+              Este campo só deve ser preenchido se o Regime trabalhista
+              informado, for CLT.
+            </span>
+          </ng-template>
+        </div>
+
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="nInscSucVinc" class="tooltip-insc"><b>Número de Inscrição da Sucessão do Vínculo: </b><i title="{{tooltipNumInscSucVinc}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <input class="form-control" style="width: 34.2rem" type="text" id="nInscSucVinc" tabindex="19"
+            [formControl]="sucessaovincNrinscFormControl" [textMask]=" { mask: mascaraNrIncSuccesVinc } "
+            [disableTooltip]="desabilitaTooltip(sucessaovincNrinscFormControl)" [ngbTooltip]="validacaoNroInsc" (change)="validar()" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" />
+
+          <ng-template #validacaoNroInsc>
+            <span *ngIf="
+                sucessaovincNrinscFormControl.invalid &&
+                sucessaovincNrinscFormControl.hasError('required')
+                && (!sucessaovincMatricantFormControl.value || (sucessaovincMatricantFormControl.value && sucessaovincMatricantFormControl.value == ''))
+              ">
+              Para informar dados sobre a Sucessão de Vínculos Trabalhistas, é obrigatório preencher os campos:
+              Tipo da Inscrição, Número da Inscrição e a Data de Transferência.
+            </span>
+
+            <span *ngIf="
+                sucessaovincNrinscFormControl.invalid &&
+                sucessaovincNrinscFormControl.hasError('cnpjNotValid')
+              ">
+              CNPJ Inválido.
+            </span>
+
+            <span *ngIf="
+                sucessaovincNrinscFormControl.invalid &&
+                sucessaovincNrinscFormControl.hasError('cpfNotValid')
+              ">
+              CPF Inválido.
+            </span>
+
+            <span *ngIf="
+                sucessaovincTpinscFormControl.value &&
+                sucessaovincTpinscFormControl.value == 1 &&
+                sucessaovincNrinscFormControl.invalid &&
+                sucessaovincNrinscFormControl.hasError('patern')
+              ">
+              CNPJ Inválido
+            </span>
+            <span *ngIf="
+                sucessaovincTpinscFormControl.value &&
+                sucessaovincTpinscFormControl.value == 2 &&
+                sucessaovincNrinscFormControl.invalid &&
+                sucessaovincNrinscFormControl.hasError('patern')
+              ">
+              CPF Inválido
+            </span>
+            <span *ngIf="
+                sucessaovincTpinscFormControl.value &&
+                sucessaovincTpinscFormControl.value == 5 &&
+                sucessaovincNrinscFormControl.invalid &&
+                sucessaovincNrinscFormControl.hasError('patern')
+              ">
+              CGC Inválido
+            </span>
+            <span *ngIf="
+                sucessaovincTpinscFormControl.value &&
+                sucessaovincTpinscFormControl.value == 6 &&
+                sucessaovincNrinscFormControl.invalid &&
+                sucessaovincNrinscFormControl.hasError('patern')
+              ">
+              CEI Inválido
+            </span>
+            <span *ngIf="
+                sucessaovincNrinscFormControl.invalid &&
+                sucessaovincNrinscFormControl.hasError('patern')
+              ">
+              Número de Inscrição Inválido
+            </span>
+            <span *ngIf="
+              sucessaovincNrinscFormControl.invalid &&
+              sucessaovincTpinscFormControl.hasError('required')
+                && sucessaovincMatricantFormControl.value &&  sucessaovincMatricantFormControl.value != ''
+              ">
+              Ao informar o campo "Matrícula Anterior",  é obrigatório preencher os campos: Tipo da Inscrição,
+              Número da Inscrição e a Data de Transferência.
+            </span>
+
+
+          </ng-template>
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="dtTransf" class="tooltip-data-bloco-e tooltip-data-transf"><b>Data de Transferência: </b> <i title="{{tooltipDataTransf}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <div class="form-group" [class.disabled]="sucessaovincDttransfFormControl.disabled">
+            <div class="form-inline input-group input-date" id="component-data">
+              <input type="text" class="form-control form-control-sm input-date" placeholder="DD/MM/AAAA"
+                rInputMask="99/99/9999" [bsConfig]="{ showWeekNumbers: false }" name="sucessaovincDttransf"
+                id="sucessaovincDttransf" [formControl]="sucessaovincDttransfFormControl" bsDatepicker
+                [maxDate]="dataAtual" [minDate]="this.infovincDtadmFormControl.value"
+                [required]="dataTransferenciaRequired" #sucessaovincDttransf="bsDatepicker"
+                placement="top-left top-right bottom-left bottom-right" [disableTooltip]="desabilitaTooltip(sucessaovincDttransfFormControl)" (bsValueChange)="validar($event, 'transferencia')" [ngbTooltip]="validacaodataTrans"
+                [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" />
+
+              <div class="input-group-append">
+                <button type="button" class="btn btn btn-outline-secondary calendar"
+                  (click)="sucessaovincDttransf.toggle()" [attr.aria-expanded]="sucessaovincDttransf.isOpen"
+                  [disabled]="sucessaovincDttransfFormControl.disabled">
+                  <i class="fa-solid fa-calendar-days"></i>
+                </button>
+              </div>
+              <ng-template #validacaodataTrans>
+                <span *ngIf="
+                    sucessaovincDttransfFormControl.invalid &&
+                    sucessaovincDttransfFormControl.errors.validDate
+                  ">
+                  Data inválida
+                </span>
+                <span *ngIf="
+                    sucessaovincDttransfFormControl.invalid &&
+                    sucessaovincDttransfFormControl.errors.bsDate &&
+                    sucessaovincDttransfFormControl.errors.bsDate.invalid
+                  ">
+                  Data inválida
+                </span>
+
+                <span *ngIf="
+                    sucessaovincDttransfFormControl.invalid &&
+                    sucessaovincDttransfFormControl.errors.bsDate?.minDate
+                  ">
+                  A "Data de Transferência" deve ser maior que a "Data de Admissão" do trabalhador.
+                </span>
+
+                <span *ngIf="
+                    sucessaovincDttransfFormControl.invalid &&
+                    sucessaovincDttransfFormControl.errors.bsDate?.maxDate
+                  ">
+                  A "Data de Transferência" deve ser menor que a data atual.
+                </span>
+
+                <span *ngIf="
+                    sucessaovincDttransfFormControl.invalid &&
+                    sucessaovincDttransfFormControl.hasError('required')
+                    && (!sucessaovincMatricantFormControl.value || (sucessaovincMatricantFormControl.value && sucessaovincMatricantFormControl.value == ''))
+                  ">
+                  Para informar dados sobre a Sucessão de Vínculos Trabalhistas, é obrigatório preencher os campos:
+                  Tipo da Inscrição, Número da Inscrição e a Data de Transferência.
+                </span>
+                <span *ngIf="
+                sucessaovincDttransfFormControl.invalid &&
+                sucessaovincTpinscFormControl.hasError('required')
+                && sucessaovincMatricantFormControl.value &&  sucessaovincMatricantFormControl.value != ''
+              ">
+              Ao informar o campo "Matrícula Anterior",  é obrigatório preencher os campos: Tipo da Inscrição,
+              Número da Inscrição e a Data de Transferência.
+            </span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="dtTermino" class="tooltip-data-bloco-e tooltip-data-adm"><b>Data de Término: </b> <i title="{{tooltipDataTermino}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+
+          <div class="form-group" [class.disabled]="duracaoDttermFormControl.disabled">
+            <div class="form-inline input-group input-date" id="component-data">
+              <input type="text" class="form-control form-control-sm input-date" placeholder="DD/MM/AAAA"
+                rInputMask="99/99/9999" [bsConfig]="{ showWeekNumbers: false }" name="duracaoDtterm" id="duracaoDtterm"
+                [formControl]="duracaoDttermFormControl" bsDatepicker #duracaoDtterm="bsDatepicker"
+                placement="top-left top-right bottom-left bottom-right" [required]="dataTerminoRequired"
+                [disableTooltip]="desabilitaTooltip(duracaoDttermFormControl)" [ngbTooltip]="validacaoDataTermino" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+                [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)" />
+              <div class="input-group-append">
+                <button type="button" class="btn btn btn-outline-secondary calendar" (click)="duracaoDtterm.toggle()"
+                  [attr.aria-expanded]="duracaoDtterm.isOpen" [disabled]="duracaoDttermFormControl.disabled">
+                  <i class="fa-solid fa-calendar-days"></i>
+                </button>
+              </div>
+              <ng-template #validacaoDataTermino>
+                <span *ngIf="
+                    duracaoDttermFormControl.invalid &&
+                    duracaoDttermFormControl.errors.validDate
+                  ">
+                  Data inválida
+                </span>
+                <span *ngIf="
+                    duracaoDttermFormControl.invalid &&
+                    duracaoDttermFormControl.errors.bsDate &&
+                    duracaoDttermFormControl.errors.bsDate.invalid
+                  ">
+                  Data inválida
+                </span>
+                <span *ngIf="
+                    duracaoDttermFormControl.invalid &&
+                    duracaoDttermFormControl.hasError('minDate')
+                  ">
+                  A "Data de Término" deve ser maior ou igual que a "Data de
+                  Admissão/Transferência"
+                </span>
+                <span *ngIf="
+                    duracaoDttermFormControl.invalid &&
+                    duracaoDttermFormControl.hasError('required') &&
+                    (this.duracaoTpcontrFormControl.value && this.duracaoTpcontrFormControl.value == 2)
+                  ">
+                  O campo 'Data de Término' (Bloco E) deverá ser preenchido, se no 'Tipo de Contrato' (Bloco E) tiver sido informado '2-Prazo determinado, definido em dias'.
+                </span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="objDetContratPrazoDet" class="tooltip-data-bloco-e"><b>Objeto Determinante da Contratação por Prazo Determinado: </b> <i title="{{tooltipObjetoDeterminante}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <textarea class="form-control" id="objDetContratPrazoDet" #obj maxlength="255" rows="4" cols="50"
+            tabindex="26" [formControl]="duracaoObjdetFormControl" [disableTooltip]="desabilitaTooltip(duracaoObjdetFormControl)" [ngbTooltip]="validacaoDeterminante" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"></textarea>
+
+          <ng-template #validacaoDeterminante>
+            <span *ngIf="
+                duracaoObjdetFormControl.invalid &&
+                duracaoObjdetFormControl.hasError('required')
+              ">
+              O campo 'Objeto Determinante da Contratação por Prazo Determinado' deve ser informado, se o campo 'Tipo de Contrato' (Bloco E) for igual a "3-Prazo determinado, vinculado a ocorrência de um fato".
+            </span>
+          </ng-template>
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="motDesligamento" class="tooltip-insc"><b>Motivo do Desligamento: </b><i title="{{tooltipMotivoDesligamento}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <ng-select class="form-control form-control-select" style="width: 34rem" id="motDesligamento" [tabIndex]="28"
+            [formControl]="infodesligMtvdesligFormControl" [items]="motivoDesligamentoList"
+            bindLabel="descricaoConcatenada" bindValue="id"
+            [disableTooltip]="desabilitaTooltip(infodesligMtvdesligFormControl)"
+            [ngbTooltip]="validacaoMotivoDesligamento" [disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI || (finalizadoEscritorio && !temPermissaoEnviarEsocial)">
+            <ng-template ng-option-tmp let-item="item">
+              <div title="{{ item.descricaoConcatenada }}">
+                {{ item.descricaoConcatenada }}
+              </div>
+            </ng-template>
+          </ng-select>
+          <ng-template #validacaoMotivoDesligamento>
+            <span
+              *ngIf=" infodesligMtvdesligFormControl.invalid && infodesligMtvdesligFormControl.hasError('required')">
+              Campo obrigatório.
+            </span>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUADRO F -->
+  <div class="quadro mt-4 mb-5">
+    <div>
+      <h4 class="roxo-padrao title mb-0" style="width: 150px">
+        Observações (F)
+      </h4>
+    </div>
+    <div>
+      <app-esocial-observacao-subgrupo class="grid" [formularioId]="idFormulario" [contratoId]="idContrato" (aoAbrirPopup)="aoAbrirPopup.emit()"
+        [temPermissaoEsocialBlocoABCDEFHI]="temPermissaoEsocialBlocoABCDEFHI && (!finalizadoEscritorio || (finalizadoEscritorio && temPermissaoEnviarEsocial))"></app-esocial-observacao-subgrupo>
+    </div>
+  </div>
+
+  <!-- QUADRO G -->
+  <div class="quadro mt-4 mb-5">
+    <div>
+      <h4 class="roxo-padrao title mb-0" style="width: 160px">
+        Remuneração (G)
+      </h4>
+    </div>
+    <div>
+      <app-esocial-remuneracao-subgrupo class="grid" [formularioId]="idFormulario" [contratoId]="idContrato" (aoAbrirPopup)="aoAbrirPopup.emit()"
+        [dtMin]="infovincDtadmFormControl.value" [dtMax]="infodesligDtdesligFormControl.value"
+        [temPermissaoEsocialBlocoGK]="temPermissaoEsocialBlocoGK && (!finalizadoContador || (finalizadoContador && temPermissaoEnviarEsocial))"></app-esocial-remuneracao-subgrupo>
+    </div>
+  </div>
+
+  <!-- QUADRO H -->
+  <div class="quadro mt-4 mb-5">
+    <div>
+      <h4 class="roxo-padrao title mb-0" style="width: 450px">
+        Mudança de categoria e/ou natureza da atividade (H)
+      </h4>
+    </div>
+    <div>
+      <app-esocial-categoria-subgrupo class="grid" [formularioId]="idFormulario" [contratoId]="idContrato" (aoAbrirPopup)="aoAbrirPopup.emit()"
+        [temPermissaoEsocialBlocoABCDEFHI]="temPermissaoEsocialBlocoABCDEFHI && (!finalizadoEscritorio || (finalizadoEscritorio && temPermissaoEnviarEsocial))"></app-esocial-categoria-subgrupo>
+    </div>
+  </div>
+
+  <!-- QUADRO I -->
+  <div class="quadro mt-4 mb-5">
+    <div>
+      <h4 class="roxo-padrao title mb-0" style="width: 215px">
+        Unicidade contratual (I)
+      </h4>
+    </div>
+    <div>
+      <app-esocial-unicidade-subgrupo class="grid" [formularioId]="idFormulario" [contratoId]="idContrato" (aoAbrirPopup)="aoAbrirPopup.emit()"
+        [temPermissaoEsocialBlocoABCDEFHI]="temPermissaoEsocialBlocoABCDEFHI && (!finalizadoEscritorio || (finalizadoEscritorio && temPermissaoEnviarEsocial))"></app-esocial-unicidade-subgrupo>
+    </div>
+  </div>
+
+  <!-- QUADRO J -->
+  <div class="quadro mt-4 mb-5">
+    <div>
+      <h4 class="roxo-padrao title mb-0" style="width: 290px">
+        Estabelecimento responsável (J)
+      </h4>
+    </div>
+    <div class="grid-quadro">
+      <div style="width: 47%">
+        <div class="d-flex mt-2" style="flex-direction: column">
+          <label for="tipInscFixo" class="tooltip-insc"><b>Tipo e Número de Inscrição:</b><i title="{{tooltipTpInsc}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <div style="display: flex;">
+            <div style="width: 8rem; display: flex; align-items: center;">
+              <ng-select class="form-control form-control-select" style="width: 8rem" id="tipInscFixo" [tabIndex]="30"
+                [formControl]="ideestabTpinscFormControl" [items]="tipoInscricaoList" bindLabel="descricao" bindValue="id"
+                (change)="changeInscricao(ideestabTpinscFormControl,ideestabNrinscFormControl,'estabelecimento')"
+                [disableTooltip]="desabilitaTooltip(ideestabTpinscFormControl)"
+                [ngbTooltip]="validacaoideestabTpinsc" [disabled]="!temPermissaoEsocialBlocoJDadosEstabelecimento || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+                [class.disabled]="!temPermissaoEsocialBlocoJDadosEstabelecimento || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"></ng-select>
+            </div>
+            <div style="width: 25rem; display: flex; align-items: center; margin-left: 1rem;">
+              <input style="width: 25rem" type="text" class="form-control" id="nInsc" tabindex="31"
+            [formControl]="ideestabNrinscFormControl" [textMask]="{ mask: mascaraNrIncEstabelecimento }"
+            [disableTooltip]="desabilitaTooltip(ideestabNrinscFormControl)"
+            [ngbTooltip]="validacaoideestabNrinsc" [disabled]="!temPermissaoEsocialBlocoJDadosEstabelecimento || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoJDadosEstabelecimento || (finalizadoEscritorio && !temPermissaoEnviarEsocial)"/>
+            </div>
+          </div>
+          <ng-template #validacaoideestabNrinsc>
+            <span *ngIf="ideestabNrinscFormControl.invalid &&ideestabNrinscFormControl.hasError('required')">
+              Campo obrigatório.
+            </span>
+          </ng-template>
+          <ng-template #validacaoideestabTpinsc>
+            <span *ngIf="ideestabTpinscFormControl.invalid &&ideestabTpinscFormControl.hasError('required')">
+              Campo obrigatório.
+            </span>
+            <span
+              *ngIf="ideestabTpinscFormControl.invalid &&ideestabTpinscFormControl.hasError('ideempregadorTpinscInvalidoCNPJ')">
+              Valor informado deve ser ou CNPJ ou CNO enquanto o campo Tipo de Inscrição do Empregador for CNPJ.
+            </span>
+            <span
+              *ngIf="ideestabTpinscFormControl.invalid &&ideestabTpinscFormControl.hasError('ideempregadorTpinscInvalidoCPF')">
+              Valor informado deve ser ou CAEPF ou CNO enquanto o campo Tipo de Inscrição do Empregador for CPF.
+            </span>
+          </ng-template>
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+              <label for="compIni"  class="tooltip-data-bloco-e tooltip-data-transf"><b>Competência Inicial:</b> <i title="{{tooltipCompIni}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+              <mes-ano-new [control]="infovlrCompiniFormControl" id="compIni" [maxDate]="infovlrCompfimFormControl.value"
+                [msgMaxDate]="mensagemDataCompetenciaInicial" [required]="true" [disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"
+                [class.disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"></mes-ano-new>
+        </div>
+        <div class="d-flex mt-3" style="flex-direction: column; ">
+          <label for="valTotVerbaRemu" class="tooltip-insc"><b>Valor Total das Verbas Remuneratórias:</b><i title="{{tooltipVerbRemu}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <input style="width: 34rem" type="text" class="form-control input-number" id="valTotVerbaRemu" tabIndex="35"
+            [formControl]="infovlrVrremunFormControl" maxlength="21" currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }"
+            [disableTooltip]="desabilitaTooltip(infovlrVrremunFormControl)"
+            [ngbTooltip]="validacaoinfovlrVrremun" [disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"/>
+          <ng-template #validacaoinfovlrVrremun>
+            <span *ngIf="infovlrVrremunFormControl.invalid && infovlrVrremunFormControl.hasError('required')">
+              Campo obrigatório.
+            </span>
+            <span
+              *ngIf="infovlrVrremunFormControl.invalid && infovlrVrremunFormControl.hasError('infovlrVrremunGreaterThan0Invalid')">
+              Valor informado deve ser maior que 0 (zero) enquanto o campo Repercussão do Processo for Decisão com
+              pagamento.
+            </span>
+            <span
+              *ngIf="infovlrVrremunFormControl.invalid && infovlrVrremunFormControl.hasError('infovlrVrremunEquals0Invalid')">
+              Valor informado deve ser igual a 0 (zero) enquanto o campo Repercussão do Processo for Decisão sem
+              pagamento.
+            </span>
+          </ng-template>
+        </div>
+        <div class="d-flex mt-3" style="flex-direction: column; " >
+          <label for="valProjAPI13" class="tooltip-insc"><b>Valor da Projeção do Aviso Prévio Indenizado Sobre o 13º
+              Salário:</b><i title="{{tooltipProjAvisoPrev}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <input style="width: 34rem" type="text" id="valProjAPI13" class="form-control input-number" tabIndex="37"
+            [formControl]="infovlrVr13apiFormControl" maxlength="21" currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }"
+            [disableTooltip]="desabilitaTooltip(infovlrVr13apiFormControl)"
+            [ngbTooltip]="validainfovlrVr13apiFormControl" [disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"/>
+        </div>
+        <ng-template #validainfovlrVr13apiFormControl>
+          <span *ngIf="infovlrVr13apiFormControl.invalid && infovlrVr13apiFormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+          <span *ngIf="infovlrVr13apiFormControl.invalid && infovlrVr13apiFormControl.hasError('min')">
+            Deve ser maior ou igual a 0.
+          </span>
+        </ng-template>
+
+        <div class="d-flex mt-3" style="flex-direction: column; " >
+          <label for="multaRecFGTSComGuia" class="tooltip-insc"><b>Multa Rescisória do FGTS para Geração de Guia:</b><i title="{{tooltipmultaRecFGTSComGuia}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <input id="infovlrVrbaseindenfgts" tabIndex="39" style="width: 34rem;" type="text"
+            class="form-control input-number" [formControl]="infovlrVrbaseindenfgtsFormControl" maxlength="21"
+            currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }"
+            [disableTooltip]="desabilitaTooltip(infovlrVrbaseindenfgtsFormControl)"
+            [ngbTooltip]="validainfovlrVrbaseindenfgtsFormControl" (blur)="habilitaMultaRescisoria(); validar();" [disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"/>
+        </div>
+        <ng-template #validainfovlrVrbaseindenfgtsFormControl>
+          <span
+            *ngIf="infovlrVrbaseindenfgtsFormControl.invalid && infovlrVrbaseindenfgtsFormControl.hasError('required')">
+            Campo obrigatório.
+          </span>
+        </ng-template>
+
+      </div>
+      <div style="width: 47%">
+        <div class="d-flex mt-2" style="flex-direction: column;">
+          <label for="repercProc"  class="tooltip-insc"><b>Repercussão do Processo:</b><i title="{{tooltipReperProc}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <ng-select class="form-control form-control-select" style="width: 34rem" id="repercProc" [tabIndex]="34"
+            [formControl]="infovlrRepercprocFormControl" [items]="repercussaoProcessoList" bindLabel="descricao"
+            bindValue="id" (change)="repercProcInvalido()"
+            [disableTooltip]="desabilitaTooltip(infovlrRepercprocFormControl)"
+            [ngbTooltip]="validacaoinfovlrRepercproc" [disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"></ng-select>
+          <ng-template #validacaoinfovlrRepercproc>
+            <span *ngIf="infovlrRepercprocFormControl.invalid && infovlrRepercprocFormControl.hasError('required')">
+              Campo obrigatório.
+            </span>
+          </ng-template>
+        </div>
+        <div class="d-flex mt-2" style="flex-direction: column">
+              <label for="compFim" class="tooltip-data-bloco-e tooltip-data-transf"><b>Competência Final:</b><i title="{{tooltipCompFim}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+            <mes-ano-new [control]="infovlrCompfimFormControl" id="compIni" [msgMinDate]="mensagemDataCompetenciaFinal"
+              [minDate]="infovlrCompiniFormControl.value" [required]="true" [disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"
+              [class.disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"></mes-ano-new>
+        </div>
+
+        <div class="d-flex mt-3" style="flex-direction: column; ">
+          <label for="valAPIEmpre" class="tooltip-insc"><b>Valor do Aviso Prévio Indenizado Pago ao Empregado:</b><i title="{{tooltipAvisoPrev}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <input class="form-control input-number" style="width: 34rem" type="text" id="valAPIEmpre" tabIndex="36"
+            [formControl]="infovlrVrapiFormControl" maxlength="21" currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }"
+            [disableTooltip]="desabilitaTooltip(infovlrVrapiFormControl)"
+            [ngbTooltip]="validaInfovlrVrapiFormControl" (bsValueChange)="validar()" [disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"/>
+        </div>
+        <ng-template #validaInfovlrVrapiFormControl>
+          <span *ngIf="
+                infovlrVrapiFormControl.invalid &&
+                infovlrVrapiFormControl.hasError('required')
+              ">
+            Campo obrigatório.
+          </span>
+          <span *ngIf="infovlrVrapiFormControl.invalid && infovlrVrapiFormControl.hasError('min')">
+            Deve ser maior ou igual a 0.
+          </span>
+        </ng-template>
+
+        <div class="d-flex mt-2" style="flex-direction: column; ">
+          <label for="valTotVerbaIndSeremPagTrab" class="tooltip-insc"><b>Valor Total das Demais Verbas Indenizatórias a Serem Pagas ao
+              Trabalhador:</b><i title="{{tooltipvalTotVerbaIndSeremPagTrab}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <input style="width: 34rem" type="text" class="form-control input-number" id="valTotVerbaIndSeremPagTrab"
+            tabIndex="38" [formControl]="infovlrVrindenFormControl" maxlength="21" currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }"
+            [disableTooltip]="desabilitaTooltip(infovlrVrindenFormControl)"
+            [ngbTooltip]="validainfovlrVrindenFormControl" [disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"/>
+
+          <ng-template #validainfovlrVrindenFormControl>
+            <span *ngIf="infovlrVrindenFormControl.invalid && infovlrVrindenFormControl.hasError('required')">
+              Campo obrigatório.
+            </span>
+            <span *ngIf="infovlrVrindenFormControl.invalid && infovlrVrindenFormControl.hasError('min')">
+              Deve ser maior ou igual a 0.
+            </span>
+          </ng-template>
+        </div>
+
+        <div class="d-flex mt-3" style="flex-direction: column;" >
+          <label for="multaRecFGTSDiretTrabDecAut" class="tooltip-insc"><b>Multa Rescisória do FGTS Paga Diretamente para o Trabalhador
+              Mediante a Decisão/Autorização:</b><i title="{{tooltipMultaRecFGTSDiretTrabDecAut}}" class=" roxo-padrao fa fa-info-circle"></i></label>
+          <ng-select class="form-control form-control-select" style="width: 34rem" id="multaRecFGTSDiretTrabDecAut"
+            [tabIndex]="40" [formControl]="infovlrPagdiretorescFormControl" [items]="simNaoList" bindLabel="descricao"
+            bindValue="id"
+            [disableTooltip]="desabilitaTooltip(infovlrPagdiretorescFormControl)"
+            [ngbTooltip]="validacaoinfovlrPagdiretoresc" [disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"
+            [class.disabled]="!temPermissaoEsocialBlocoJValores || (finalizadoContador && !temPermissaoEnviarEsocial)"></ng-select>
+          <ng-template #validacaoinfovlrPagdiretoresc>
+            <span
+              *ngIf="infovlrPagdiretorescFormControl.invalid && infovlrPagdiretorescFormControl.hasError('required')">
+              Campo de preenchimento obrigatório se o campo 'Multa Rescisória do FGTS para Geração de Guia' for informado.
+            </span>
+          </ng-template>
+        </div>
+    </div>
+
+    </div>
+  </div>
+
+  <!-- QUADRO K -->
+  <div class="quadro mt-4">
+    <div>
+      <h4 class="roxo-padrao title mb-0" style="width: 500px">
+        Bases de Cálculo de Contribuição Previdenciária e FGTS (K)
+      </h4>
+    </div>
+    <div>
+      <app-esocial-periodo-subgrupo class="grid" [formularioId]="idFormulario" [contratoId]="idContrato" (aoAbrirPopup)="aoAbrirPopup.emit()"
+        [temPermissaoEsocialBlocoGK]="temPermissaoEsocialBlocoGK && (!finalizadoContador || (finalizadoContador && temPermissaoEnviarEsocial))">
+      </app-esocial-periodo-subgrupo>
+    </div>
+  </div>
+</form>

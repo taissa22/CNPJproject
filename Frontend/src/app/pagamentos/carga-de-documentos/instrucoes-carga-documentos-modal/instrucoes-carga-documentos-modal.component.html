@@ -1,0 +1,81 @@
+<div class="modal-header">
+  <span class="modal-title modal-custom-font-size w700 font-12" id="modal-instrucoes">
+    {{ titulo }}
+  </span>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="cancelar()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body font-grey">
+  <div class="row">
+    <div class="col-1 pr-1">1º</div>   
+    <div class="col-11 pl-0">
+      <span>
+        Os arquivos físicos que serão anexados aos processos deverão ser copiados para uma pasta específica no NAS configurada no parâmetro jurídico: <strong>SERV_CARGA_DOCUMENTOS</strong>.        
+      </span>      
+    </div>    
+  </div>
+  <div class="row pt-3">
+    <div class="col-1 pr-1">
+      2º
+    </div>
+    <div class="col-11 pl-0">
+      <span [ngStyle]="{ fontSize: '12px' }">
+        Clique em "<strong>Baixar arquivos padrão</strong>" para baixar os
+        modelos de arquivos corretos que devem ser utilizados na carga dos
+        comprovantes. Você não precisa utilizá-los, mas serão úteis para
+        conferir se os seus arquivos estão de acordo com o esperado pelo
+        sistema.
+      </span>
+    </div>
+  </div>
+  <div class="row pt-3">
+    <div class="col-1 pr-1">3º</div>
+    <div class="col-11 pl-0">
+      <span [ngStyle]="{ fontSize: '12px' }">
+        Antes de importar o arquivo, o sistema irá realizar algumas verificações
+        para garantir que a carga dos comprovantes ocorra com sucesso:
+        <blockquote class="pt-3 pl-3">
+          <strong>* Extensão dos arquivos:</strong> O sistema só aceitará a
+          importação de arquivos CSV;
+        </blockquote>
+        <blockquote class="pl-3">
+          <strong>* Tamanho dos arquivos:</strong> Será permitida a importação
+          de arquivos com até {{tamanhoMaximoArquivoAnexo}}MB;
+        </blockquote>
+        <blockquote class="pl-3">
+          <strong>* Arquivo vazio:</strong> Se o arquivo CSV estiver vazio, o
+          sistema irá alertá-lo para que verifique antes de realizar o
+          agendamento da carga dos comprovantes.
+        </blockquote>
+        <blockquote class="pl-3">
+          <strong>* Layout do arquivo:</strong> O sistema irá validar se a planilha
+           importada possui mesma quantidade que a planilha padrão.
+        </blockquote>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1 pr-1">4º</div>
+    <div class="col-11 pl-0">
+      <span [ngStyle]="{ fontSize: '12px' }">
+        A planilha deverá conter 3 colunas, sendo:
+        <blockquote class="pt-3 pl-3">
+          <strong>* Código:</strong> Informar o código interno do processo;
+        </blockquote>
+        <blockquote class="pl-3">
+          <strong>* Código tipo de documento:</strong> Deverá ser inserido o código do tipo de documento;
+        </blockquote>
+        <blockquote class="pl-3">
+          <strong>* Caminho/Nome do documento:</strong> Na coluna em questão deverá ser informado o nome do documento com o seu caminho completo.<br />
+          Ex.: Users\Exemplo\Documentos\documento.csv
+        </blockquote>
+      </span>
+    </div>
+  </div>  
+</div>

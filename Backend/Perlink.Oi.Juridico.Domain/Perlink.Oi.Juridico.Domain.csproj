@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RuntimeFrameworkVersion>2.2.0</RuntimeFrameworkVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ControleDeAcesso\Factory\**" />
+    <Compile Remove="ControleDeAcesso\Interface\Factory\**" />
+    <Compile Remove="ControleDeAcesso\Interface\Repository\Log\**" />
+    <Compile Remove="ControleDeAcesso\Interface\Service\Log\**" />
+    <EmbeddedResource Remove="ControleDeAcesso\Factory\**" />
+    <EmbeddedResource Remove="ControleDeAcesso\Interface\Factory\**" />
+    <EmbeddedResource Remove="ControleDeAcesso\Interface\Repository\Log\**" />
+    <EmbeddedResource Remove="ControleDeAcesso\Interface\Service\Log\**" />
+    <None Remove="ControleDeAcesso\Factory\**" />
+    <None Remove="ControleDeAcesso\Interface\Factory\**" />
+    <None Remove="ControleDeAcesso\Interface\Repository\Log\**" />
+    <None Remove="ControleDeAcesso\Interface\Service\Log\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Compartilhado\Interface\Service\ITipoProcessoService - Cópia.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ByteSize" Version="1.3.0" />
+    <PackageReference Include="ClosedXML" Version="0.94.2" />
+    <PackageReference Include="CsvHelper" Version="12.1.2" />
+    <PackageReference Include="Flunt" Version="1.0.5" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.1.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Perlink.Oi.Juridico.Infra\Perlink.Oi.Juridico.Infra.csproj" />
+    <ProjectReference Include="..\Shared\Shared.Application\Shared.Application.csproj" />
+    <ProjectReference Include="..\Shared\Shared.Domain\Shared.Domain.csproj" />
+    <ProjectReference Include="..\Shared\Shared.Tools\Shared.Tools.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApuracaoOutliers\Enum\" />
+    <Folder Include="ApuracaoOutliers\Interface\Repository\" />
+    <Folder Include="ControleDeAcesso\Entity\Log\" />
+    <Folder Include="ControleDeAcesso\Service\Log\" />
+    <Folder Include="Fechamento\Interface\" />
+    <Folder Include="Fechamento\DTO\" />
+    <Folder Include="Fechamento\Enum\" />
+    <Folder Include="Fechamento\Service\" />
+    <Folder Include="Manutencao\JurosCorrecaoProcesso\Enum\" />
+    <Folder Include="Logs\Enum\" />
+    <Folder Include="Manutencao\Enum\" />
+  </ItemGroup>
+
+</Project>

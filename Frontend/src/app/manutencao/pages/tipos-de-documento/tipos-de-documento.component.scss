@@ -1,0 +1,25 @@
+.btn-roxo{
+    color: #786bb9;
+    font-family: Roboto, sans-serif;
+}
+
+
+div.dado-jurtable{
+    position:relative;
+    width:100%;
+    height:100%;
+
+    span{
+        position:absolute; 
+        left: 0px; 
+        top:0px; 
+        width: 100%; 
+        height:100%; 
+        overflow:hidden; 
+        text-overflow:ellipsis;
+    }
+}
+
+// .combo-sap h1{
+//     display:none !important;
+// }

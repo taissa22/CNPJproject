@@ -1,0 +1,114 @@
+
+<header fxLayout="row" fxLayoutAlign="start center">
+  <span fxFlex>
+    <h1>Relatório de Movimentações Cível Consumidor</h1>
+    <h3>Relatórios > Contingência > Cível Consumidor > Movimentações</h3>
+  </span>
+  <button class="btn btn-primary" (click)="novoAgendamento()">Novo Agendamento</button>
+</header>
+
+<main fxLayout="column">
+  <span class="mr-auto" style="display: flex; align-items: center; padding-bottom: 10px;">
+    <b style="width: 160px;">Agendamentos no Período: </b>
+    <app-data-range 
+      [dataInicio] = "dataExecucaoIni"
+      [dataFim] = "dataExecucaoFim"
+      (retDataFim) = "dataExecucaoFim = $event"
+      (retDataInicio) =  "dataExecucaoIni = $event"
+      >
+    </app-data-range>
+    <button style="margin-left: 10px;" type="button" class="btn btn-primary" (click)="obterAgendamentos(dataExecucaoIni, dataExecucaoFim, 0)">Buscar</button>
+  </span>
+
+  <span fxLayout="row" fxLayoutAlign="start center" class="title">
+    <h4 fxFlex>Relatórios agendados / executados</h4>
+    <button class="btn btn-small" (click)="refresh()">
+      <i class="fas fa-redo-alt"></i>
+      <span>ATUALIZAR LISTA</span>
+    </button>
+  </span>
+
+  <section class="panel-container" fxLayout="column">
+
+    <section class="panel" fxLayout="column" *ngFor="let a of movimentos">
+      <div fxLayout="row">
+        <section class="info pr-2" fxFlex [ngSwitch]="a.status">
+
+         <div *ngIf ="a.status === 4 " >
+            <h5>Fechamento inicial: Não encontrado</h5>          
+         </div>
+         <div *ngIf ="a.status === 0 || a.status === 1 || a.status === 2 || a.status === 3 ">
+             <h5>Fechamento inicial: {{ a.iniDataFechamento | date:'dd/MM/yyyy' }} - {{ a.iniNumMesesMediaHistorica}} meses <i *ngIf="a.iniIndFechamentoParcial" class="fa fa-exclamation-circle fa-lg" style="color: #ffd100;"  aria-hidden="true" title="Fechamento parcial"></i></h5>          
+             <h6>{{a.iniEmpresas}}</h6>
+             <h6>
+               Fechamento Mensal: {{ a.iniIndicadorFechamentoMensal == 'S' ? 'Sim' : 'Não'}}
+             </h6>
+             <h6>Haircut de {{ !a.iniPercentualHaircut ? 0 : a.iniPercentualHaircut }}% aplicado</h6>
+         </div>
+
+        </section>
+
+        <section class="info pr-2" fxFlex [ngSwitch]="a.status">
+          <h5>Fechamento Final: {{ a.fimDataFechamento | date:'dd/MM/yyyy' }} - {{ a.fimNumMesesMediaHistorica }} meses <i *ngIf="a.fimIndFechamentoParcial" class="fa fa-exclamation-circle fa-lg" style="color: #ffd100;"  aria-hidden="true" title="Fechamento parcial"></i></h5>          
+          <h6>{{a.fimEmpresas}}</h6>
+          <h6>
+            Fechamento Mensal: {{ a.fimIndicadorFechamentoMensal == 'S' ? 'Sim' : 'Não'}}  
+          </h6>
+          <h6>Haircut de {{ !a.fimPercentualHaircut ? 0 : a.fimPercentualHaircut}}% aplicado</h6>
+        </section>
+
+        <section class="status" [ngSwitch]="a.status" fxFlex="25">
+          <span *ngSwitchCase="0" [style.background-color]="'#3270A7'">Agendado</span>
+          <span *ngSwitchCase="1" [style.background-color]="'#FF8C00'">Processando</span>
+          <span *ngSwitchCase="2" [style.background-color]="'#19A519'">Finalizado</span>
+          <span *ngSwitchCase="3" [style.background-color]="'#F80000'">Erro</span>
+          <span *ngSwitchCase="4" [style.background-color]="'#A10303'">Agendamento não realizado</span>
+
+          <p>Agendamento solicitado por {{ a.usuarioId }}</p>
+          <p>em {{ a.datAgendamento | date:'dd/MM/yyyy HH:mm' }}</p>
+          <p *ngSwitchCase="2">Finalizado em {{ a.datFimExecucao | date:'dd/MM/yyyy HH:mm' }}</p>
+          <p>(ID {{ a.id }})</p>
+        </section>
+      </div>
+      <div>
+        <section class="info" fxFlex [ngSwitch]="a.status">
+          <h5 *ngSwitchCase="0" class="mt-2">Este agendamento será processado em breve. Por favor, aguarde.</h5>
+          <h5 *ngSwitchCase="1" class="mt-2">Execução iniciada em {{ a.datInicioExecucao | date:'dd/MM/yyyy HH:mm' }}</h5>
+          <h5 *ngSwitchCase="3" class="mt-2">Ocorreu um erro técnico no processamento deste relatório. Aguarde alguns minutos e tente novamente. <br>
+            Se o erro persistir, por favor, abra um chamado para a equipe técnica.</h5>
+          <h5 *ngSwitchCase="4" class="mt-2">Relatório automático não agendado, pois o fechamento inicial não foi encontrado.  
+             Necessário regerar a posição de contingência inicial.</h5>
+    
+          <div [ngSwitch]="a.status">
+            <section class="excluir" fxLayout="row" *ngIf ="a.status === 0 || a.status === 4" >
+              <button class="btn btn-small"  (click)="removerAgendamento(a.id)">
+                <i class="fas fa-trash"></i>
+                <span>Excluir</span>
+              </button>
+            </section>
+            <section class="download" fxLayout="row" *ngSwitchCase="2">
+              <button class="btn btn-small" (click)="downloadRelatorio(a.id)">
+                <i class="fas fa-download"></i>
+                <span>Relatório de Movimentações</span>
+              </button>
+            </section>
+          </div>
+        </section>
+      </div>
+    </section>
+  </section>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+    <span style="font-weight: 600;">Total de registros: {{ totalmovimentos }} - Itens por página 5 </span>
+    <app-paginacao-buttons
+    class="ml-auto"
+    [pageMax]="quantidadePagina" 
+    [totalRegistro]="totalmovimentos" 
+    [currentPage]="pagina"
+    (onPageSelect)="atualizarPaginaInicial($event)"
+    (onClickNextPage)="atualizarPaginaInicial($event)"
+    >
+    </app-paginacao-buttons>
+  </div>
+
+</main>

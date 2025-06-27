@@ -1,0 +1,115 @@
+<div class="pb-4">
+    <div class="roxo-padrao btn-novo mt-1" *ngIf="temPermissaoBlocoCeDeE">
+        <div class="ml-auto mr-4" style="display: flex;align-items: center;">
+            <i class="fas fa-cloud-upload-alt ml-auto mr-2 fs-2" style="font-size: 28px; cursor: pointer" (click)="carregarBloco()"></i>
+            <span class="fs-1" style="cursor: pointer" (click)="carregarBloco()">Carregar em Bloco</span>
+        </div>
+        <i class="fas fa-plus-circle mr-1 fs-2" (click)="incluir()"></i>
+        <span class="fs-1" (click)="incluir()">Incluir um Registro</span>
+    </div>
+    <div style="margin-top: 25px;">
+        <div class="d-flex">
+            <button class="btn btn-link ml-auto p-0 mr-4" style="cursor: pointer; text-decoration: none;" (click)="exportar()" *ngIf="temDados">
+      <i class="fas fa-download pr-1" style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+      Exportar</button>
+        </div>
+        <sisjur-table (sort)="buscarTabela()">
+            <ng-container>
+                <sisjur-table-header>
+                    <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="4">ID</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="43">Código Receita (CR) IRRF</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="42">Valor Correspondente (CR) IRRF - Rendimento Mensal</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="25">Valor Correspondente (CR) IRRF - 13º</sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="4"></sisjur-table-header-cell>
+                    <sisjur-table-header-cell width="4" *ngIf="temPermissaoBlocoCeDeE"></sisjur-table-header-cell>
+                </sisjur-table-header>
+                <ng-container *ngFor="let item of dataSource let i = index">
+                    <sisjur-table-row>
+                        <sisjur-table-row-cell class="ml-0">
+                            <button type="button" class="btn" (click)="selecionarImposto(item.idEsF2501Infocrirrf);">
+                            <i class="fas fa-plus roxo-padrao mr-1" *ngIf="impostoSelecionado != item.idEsF2501Infocrirrf"></i>
+                            <i class="fas fa-minus roxo-padrao mr-1" *ngIf="impostoSelecionado == item.idEsF2501Infocrirrf"></i>
+                          </button>
+                        </sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.idEsF2501Infocrirrf}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell><span title="{{item.descricaoTpcr}}">{{item.descricaoTpcr}}</span></sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infocrcontribVrcr | currency: "BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>{{item.infocrcontribVrcr13 | currency: "BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+                        <sisjur-table-row-cell>
+                            <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501Infocrirrf)" *ngIf="!temPermissaoBlocoCeDeE"> <i
+                  class="fa fa-magnifying-glass"></i> </button>
+                            <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501Infocrirrf)" *ngIf="temPermissaoBlocoCeDeE"> <i
+                    class="fa fa-edit"></i> </button>
+                        </sisjur-table-row-cell>
+                        <sisjur-table-row-cell *ngIf="temPermissaoBlocoCeDeE">
+                            <button type="button" class="btn btn-icon" (click)="excluir(item.idEsF2501Infocrirrf, item.descricaoTpcr)"> <i
+                  class="fa fa-trash"></i> </button>
+                        </sisjur-table-row-cell>
+                    </sisjur-table-row>
+
+                    <sisjur-table-row *ngIf="impostoSelecionado == item.idEsF2501Infocrirrf" [heightAuto]="true" background="#fff">
+                        <sisjur-table-row-cell width="100">
+                            <div style="position: relative;" class="esfera" style="width: 100%;">
+                                <tr class="info-complementar ml-3">
+                                    <b>Informações Complementares - Rendimentos Tributáveis e Deduções/Isenções</b>
+                                    <span class="ml-auto d-flex">
+                                      <button type="button" class="btn btn-icon editar" *ngIf="temPermissaoBlocoCeDeE" (click)="alterarInfoDeducoesIsencoes(item.idEsF2501Infocrirrf, item.descricaoTpcr, item.infocrcontribVrcr, item.infocrcontribVrcr13)"> <i
+                                        class="fa fa-edit"></i></button>
+                                      <button type="button" class="btn btn-icon consultar" *ngIf="!temPermissaoBlocoCeDeE" (click)="consultarInfoDeducoesIsencoes(item.idEsF2501Infocrirrf, item.descricaoTpcr, item.infocrcontribVrcr, item.infocrcontribVrcr13)"> <i
+                                        class="fa fa-magnifying-glass"></i></button>
+                                    </span>
+                                </tr>
+                                <hr class="mt-1 mb-1 ml-3 mr-4">
+                                <tr class="info-complementar ml-3">
+                                    <b>Informações Complementares - Rendimentos Recebidos Acumuladamente RRA</b>
+                                    <span class="ml-auto d-flex">
+                                      <button type="button" class="btn btn-icon editar" *ngIf="temPermissaoBlocoCeDeE" (click)="alterarInfoRendRRA(item.idEsF2501Infocrirrf, item.descricaoTpcr, item.infocrcontribVrcr, item.infocrcontribVrcr13)"> <i
+                                        class="fa fa-edit"></i> </button>
+                                        <button type="button" class="btn btn-icon consultar" *ngIf="!temPermissaoBlocoCeDeE" (click)="consultarInfoRendRRA(item.idEsF2501Infocrirrf, item.descricaoTpcr, item.infocrcontribVrcr, item.infocrcontribVrcr13)"> <i
+                                          class="fa fa-magnifying-glass"></i></button>
+                                    </span>
+                                </tr>
+                                <hr class="mt-1 mb-1 ml-3 mr-4">
+                                <tr class="info-complementar ml-3">
+                                    <b>Dedução do Rendimento Tributável - Dependentes</b>
+                                    <span class="ml-auto d-flex">
+                                      <button type="button" class="btn btn-icon editar" *ngIf="temPermissaoBlocoCeDeE" (click)="alterarDedDepen(item.idEsF2501Infocrirrf, item.descricaoTpcr, item.infocrcontribVrcr, item.infocrcontribVrcr13)"> <i
+                                        class="fa fa-edit"></i> </button>
+                                      <button type="button" class="btn btn-icon consultar" *ngIf="!temPermissaoBlocoCeDeE" (click)="consultarDedDepen(item.idEsF2501Infocrirrf, item.descricaoTpcr, item.infocrcontribVrcr, item.infocrcontribVrcr13)"> <i
+                                        class="fa fa-magnifying-glass"></i></button>
+                                    </span>
+                                </tr>
+                                <hr class="mt-1 mb-1 ml-3 mr-4">
+                                <tr class="info-complementar ml-3">
+                                    <b>Pensão Alimentícia - Beneficiários</b>
+                                    <span class="ml-auto d-flex">
+                                      <button type="button" class="btn btn-icon editar" *ngIf="temPermissaoBlocoCeDeE" (click)="alterarPenAlim(item.idEsF2501Infocrirrf, item.descricaoTpcr, item.infocrcontribVrcr, item.infocrcontribVrcr13)"> <i
+                                        class="fa fa-edit"></i> </button>
+                                      <button type="button" class="btn btn-icon consultar" *ngIf="!temPermissaoBlocoCeDeE" (click)="consultarPenAlim(item.idEsF2501Infocrirrf, item.descricaoTpcr, item.infocrcontribVrcr, item.infocrcontribVrcr13)"> <i
+                                        class="fa fa-magnifying-glass"></i></button>
+                                    </span>
+                                </tr>
+                                <hr class="mt-1 mb-1 ml-3 mr-4">
+                                <tr class="info-complementar ml-3">
+                                    <b>Processos Relacionados a não Retenção de Tributos ou a Depósitos Judiciais</b>
+                                    <span class="ml-auto d-flex">
+                                      <button type="button" class="btn btn-icon editar" *ngIf="temPermissaoBlocoCeDeE" (click)="alterarDepositosJuduciais(item.idEsF2501Infocrirrf, item.descricaoTpcr, item.infocrcontribVrcr, item.infocrcontribVrcr13)"> <i
+                                        class="fa fa-edit"></i> </button>
+                                      <button type="button" class="btn btn-icon consultar" *ngIf="!temPermissaoBlocoCeDeE" (click)="consultarDepositosJuduciais(item.idEsF2501Infocrirrf, item.descricaoTpcr, item.infocrcontribVrcr, item.infocrcontribVrcr13)"> <i
+                                        class="fa fa-magnifying-glass"></i></button>
+                                    </span>
+                                </tr>
+                            </div>
+                        </sisjur-table-row-cell>
+                    </sisjur-table-row>
+
+                </ng-container>
+
+            </ng-container>
+        </sisjur-table>
+        <div class="mt-2">
+            <sisjur-paginator [length]="total" [MostrarQtdPorPagina]="false" [QtdFixaPorPagina]="10" (page)="buscarTabela()"></sisjur-paginator>
+        </div>
+    </div>
+</div>

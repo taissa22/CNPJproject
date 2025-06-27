@@ -1,0 +1,107 @@
+<div class="container-breadcrumb">
+  <div class="header">
+    <h3 class="title">Agendar / Solicitar Fechamento de Contingência</h3>    
+    <span style="color: #555;">{{breadcrumb}}</span>
+    <div class="d-flex justify-content-between" style="margin-top: 15px;">
+      <div class="options">
+        <span>Mostrar</span>
+        <ng-select [items]="dropdownList"
+               bindLabel="item_text"
+               bindValue="item_id"
+               [closeOnSelect]="false"
+               placeholder="Selecione o Fechamento"
+               appendTo="body"
+               multiple="true"
+               [(ngModel)]="selectedItems"
+               style="min-width: 590px; max-width:590px; margin-left: 15px"
+               >
+        </ng-select>
+        <div class="btn btn-primary" (click)="fazerBusca()">Buscar</div>
+      </div>
+      <div class="novoAgendamento">
+        <div class="novo btn-primary" (click)="modal(false)">Novo<i class="fas fa-plus-circle"></i></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="table">
+    <table class="table-striped">
+      <thead>
+        <tr>
+          <th class="optheader" style="width: 9%;">Tipo Fechamento 
+            <app-botao-ordenacao [isActive]="fechamento" (stateChange)="onChangeOrdenacao('Fechamento', $event)">
+            </app-botao-ordenacao>
+        </th>
+          <th class="optheader" style="width: 20%;">Empresas Centralizadoras
+            <app-botao-ordenacao [isActive]="empresa" (stateChange)="onChangeOrdenacao('Empresas', $event)">
+            </app-botao-ordenacao>
+          </th>
+          <th class="optheader" style="width: 27%;">Solicitação de Execução
+            <app-botao-ordenacao [isActive]="descricao" (stateChange)="onChangeOrdenacao('Descricao', $event)">
+            </app-botao-ordenacao>
+          </th>
+          <th class="optheader">Próxima Execução
+            <app-botao-ordenacao [isActive]="proxExecucao" (stateChange)="onChangeOrdenacao('ProxExecucao', $event)">
+            </app-botao-ordenacao>
+          </th>
+          <th class="optheader">Usuário
+            <app-botao-ordenacao [isActive]="usuario" (stateChange)="onChangeOrdenacao('Usuario', $event)">
+            </app-botao-ordenacao>
+          </th>
+          <th class="optheader" style="width: 10%;">Data Solicitação
+            <app-botao-ordenacao [isActive]="solicitacao" (stateChange)="onChangeOrdenacao('Solicitacao', $event)">
+            </app-botao-ordenacao>
+          </th>
+          <th class="optheader"></th>
+        </tr>
+      </thead>
+      <tbody class="content">
+        <ng-container *ngIf="fechamentos.length == 0">
+          <tr>
+            <div style="width: 600%;background-color: #f4f4fe;padding: 3px;">
+              Nenhum registro encontrado
+            </div>
+          </tr>
+        </ng-container>
+        <ng-container *ngFor="let fechamento of fechamentos;">
+          <tr>
+            <td class="t-content" title="{{fechamento.tipoFechamento}}">{{fechamento.tipoFechamento}}</td>
+
+            <td class="t-content" style="min-width: 318px; max-width: 318px; white-space: nowrap;"
+              title="{{fechamento.empresasTooltip}}">
+              {{fechamento.empresas}}
+            </td>
+            <td class="t-content" title="{{fechamento.solicitacaoExecucao}}">{{fechamento.solicitacaoExecucao}}</td>
+            <td class="t-content" title="{{fechamento.proximaExecucao}}">{{fechamento.proximaExecucao}}</td>
+            <td class="t-content" title="{{fechamento.nomeUsuario}}">{{fechamento.nomeUsuario}}</td>
+            <td class="t-content" title="{{fechamento.dataSolicitacao | date:'dd/MM/yyyy hh:mm:ss'}}">{{fechamento.dataSolicitacao | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+            <td class="t-content" style="border-right: none; text-align: center;">
+              <i style="margin-left: 0px; font-size: 15px; cursor: pointer;" class="fas fa-edit roxo-padrao"
+                (click)="modal(true, fechamento)"></i>
+              <i style="margin-left: 5px; font-size: 15px; cursor: pointer;" class="fas fa-trash roxo-padrao"
+                (click)="excluirFechamento(fechamento.id)"></i>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <table class="col-12 footer">
+      <tr>
+        <td style="border-right: 1px solid #bbb99d; width: 50px;">
+          <i style="margin-top: 6px; font-size: 15px; cursor: pointer;" class="fas fa-redo-alt" (click)="fazerBusca()"></i>
+        </td>
+        <td class="d-flex">
+          <span style="font-weight: 600;">
+            <p style="margin-top: 5px; margin-bottom: 0;">Total de registros: {{ totalFechamentos }} - Itens por página
+              10</p>
+          </span>
+          <app-paginacao-buttons class="ml-auto paginacao" [pageMax]="quantidadePagina"
+            [totalRegistro]="totalFechamentos" [currentPage]="pagina" (onPageSelect)="atualizarPaginaInicial($event)"
+            (onClickNextPage)="atualizarPaginaInicial($event)">
+          </app-paginacao-buttons>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+.box-vigencia {
+  position: absolute;
+  margin-top: -12px;
+}
+::ng-deep .table-sm th:first-of-type,
+::ng-deep .table-sm td:first-of-type {
+  padding-left: 15px !important;
+}
+
+::ng-deep tr,
+tr {
+  height: 40px;
+
+  td i {
+    visibility: hidden;
+    user-select: none;
+  }
+}
+
+::ng-deep {
+  app-manutencao-generica table tbody td span {
+    display: flex;
+    position: absolute;
+    padding-top: 8px;
+  }
+
+  app-manutencao-generica table thead th span {
+    display: flex;
+    position: absolute;
+    margin-top: -26px;
+
+    i {
+      margin-left: -8px;
+    }
+  }
+
+  app-manutencao-generica {
+    position: relative;
+
+    .pagina {
+      margin-top: 30px !important;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+﻿{
+  "CodeGenerationMode": 2,
+  "ContextClassName": "ResultadoNegociacaoDbContext",
+  "ContextNamespace": null,
+  "DefaultDacpacSchema": null,
+  "FilterSchemas": false,
+  "IncludeConnectionString": false,
+  "ModelNamespace": null,
+  "OutputContextPath": "ResultadoNegociacaoContext\\Data",
+  "OutputPath": "ResultadoNegociacaoContext\\Entities",
+  "PreserveCasingWithRegex": true,
+  "ProjectRootNamespace": "Oi.Juridico.Contextos.V2",
+  "Schemas": null,
+  "SelectedHandlebarsLanguage": 0,
+  "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "Name": "JUR.RESULTADO_NEGOCIACAO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.LOG_RESULTADO_NEGOCIACAO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.RESULTADO_CTT_MTV",
+      "ObjectType": 0
+    }
+  ],
+  "UiHint": "SISJUR_DEV",
+  "UseBoolPropertiesWithoutDefaultSql": false,
+  "UseDatabaseNames": false,
+  "UseDbContextSplitting": true,
+  "UseFluentApiOnly": true,
+  "UseHandleBars": false,
+  "UseHierarchyId": false,
+  "UseInflector": false,
+  "UseLegacyPluralizer": false,
+  "UseManyToManyEntity": true,
+  "UseNoConstructor": false,
+  "UseNoDefaultConstructor": true,
+  "UseNoNavigations": false,
+  "UseNoObjectFilter": false,
+  "UseNodaTime": false,
+  "UseNullableReferences": false,
+  "UseSchemaFolders": false,
+  "UseSpatial": false,
+  "UseT4": false
+}

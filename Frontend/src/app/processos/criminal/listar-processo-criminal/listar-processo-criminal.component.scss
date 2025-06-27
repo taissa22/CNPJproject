@@ -1,0 +1,53 @@
+.listagem{
+    margin-top: 15px;
+    margin-right: -195px;
+    margin-left: -227px;
+}
+
+.processosListados{
+    border: 1px solid #f0f0f0;
+    align-items: center;
+}
+
+.btn{
+    cursor: pointer;
+}
+
+.parametrosConsulta{
+    position: absolute;
+    top: 136px;
+    display: block;
+    padding: 8px;
+    z-index: 1;
+    overflow: hidden;
+    width: 305px;
+    
+    margin-left: 25%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.table{
+    border: 1px solid #f0f0f0;
+}
+
+.headerTable{
+    width: 18%;
+}
+
+.bodyTable{
+    padding: 6px;
+    padding-left: 12.9px;
+}
+
+.btnLink{
+    cursor: pointer;
+    color: #786BB9 !important;
+}
+
+.icons{
+    cursor: pointer;
+    color: #786BB9 !important;
+    font-size: 15px;
+}

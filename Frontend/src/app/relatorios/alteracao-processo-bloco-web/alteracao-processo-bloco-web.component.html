@@ -1,0 +1,330 @@
+<!-- janela de instruções abaixo - adicionar classe "visible" para exibir -->
+<div [ngClass]="this.clickAqui ? 'instrucoes_container visible' : 'instrucoes_container'">
+    <div class="instrucoes">
+
+        <div class="instr_titulo">
+            Siga as instruções abaixo para a alteração em bloco de processos
+            <button (click)="fecharInstrucoes()" class="instr_fechar">X</button>
+        </div>
+
+        <div class="instr_container">
+            <div class="instr_linha">
+                <div class="instr_ordinais">1°</div>
+                <div class="instr_texto">Clique em <strong>"Baixar planilhas padrão"</strong> para baixar os modelos de
+                    arquivos corretos que devem ser utilizado para alteração em bloco de cada um dos tipos de processo;
+                </div>
+            </div>
+
+            <div class="instr_linha">
+                <div class="instr_ordinais">2°</div>
+                <div class="instr_texto">A alteração em bloco é realizada separadamente para cada tipo de
+                    processo, então, abra a planilha padrão do tipo de processo no qual
+                    deseja realizar a alteração e verifique os exemplos de como os
+                    campos precisam estar preenchidos para que o sistema entenda o
+                    que deve ser alterado nos processos. Isso é muito importante, pois os
+                    valores preenchidos em cada célula, devem ser exatamente iguais
+                    aos exemplos da planilha padrão;</div>
+            </div>
+
+            <div class="instr_linha">
+                <div class="instr_ordinais">3°</div>
+                <div class="instr_texto">Abaixo vamos explicar cada uma das colunas do arquivo, para reforçar cada regra
+                    e garantir que sua alteração seja realizada com sucesso:
+                    <span class="instr_recuo">
+                        <p><strong>
+                                <br>
+                                * Código Interno:</strong> Aqui você deve informar o código interno do
+                            processo a ser alterado;</p>
+
+                        <p><strong>* Pré ou Pós RJ:</strong> Essa coluna altera se o processo é pré ou pós
+                            recuperação judicial. Deve ser preenchida com os valores <strong>PRE</strong>,
+                            <strong>POS</strong>, <strong>A DEFINIR</strong> ou <strong>AMBOS</strong>
+                            (esta opção apenas para tipo de processo Cível Consumidor e Cível Estratégico), sem acentuação e em caixa alta;
+                        </p>
+
+                        <p><strong>* Influencia a Contingência (somente para JEC, PEX e Cível Consumidor):</strong> Essa coluna só
+                            existe para a alteração em bloco de processos JEC, PEX e Cível Consumidor, então, não
+                            utilize uma planilha com essa coluna para a alteração de outros
+                            tipos de processo. Deve ser preenchida com os valores <strong>SIM</strong> ou
+                            <strong>NAO</strong>, sem acentuação e em caixa alta.
+                        </p>
+
+                        <p><strong>* Data Finalização Contábil (somente para PEX):</strong> Essa coluna só existe para a
+                            alteração
+                            em bloco de processos PEX, então, não utilize uma planilha com essa coluna para a alteração
+                            de outros tipos de processo.
+                            Informar uma data no formato dd/mm/yyyy que seja menor ou igual a hoje para finalizar
+                            contabilmente o processo ou escrever
+                            REATIVAR para a reativação contábil. O processo só poderá ser finalizado contabilmente se o
+                            saldo de garantias for zero, exceto se houver indicação SIM para a finalização contábil de
+                            processos com saldo negativo (ver descrição da coluna abaixo). Processos com saldo positivo
+                            nunca serão finalizados contabilmente.</p>
+
+                        <p><strong>* Finalização Contábil com
+                                Saldo de Garantias Negativo (somente para PEX):</strong> Essa coluna só existe para a
+                            alteração em
+                            bloco de processos PEX e deve ser preenchida apenas para processos a serem finalizados
+                            contabilmente e somente se houver a intenção de finalizá-los mesmo que seus saldos de
+                            garantias sejam menores do que zero. Neste caso, preencher a célula com SIM. Se esta coluna estiver vazia ou preenchida com NAO, o processo só será finalizado contabilmente se o saldo de garantias for igual a zero.</p>
+
+                        <p><strong>* Data Finalização Jurídica (somente para PEX):</strong> Essa coluna só existe
+                            para a alteração em bloco de processos PEX, então, não utilize uma planilha com essa coluna
+                            para a alteração de outros tipos de processo. Informar uma data no formato dd/mm/yyyy que
+                            seja
+                            menor ou igual a hoje para finalizar juridicamente o processo ou escrever REATIVAR para a
+                            reativação jurídica.</p>
+
+                        <p><strong>* Mediação (somente para PEX):</strong>  Essa coluna só existe para a alteração em bloco de processos PEX,
+                            então, não utilize uma planilha com essa coluna para a alteração
+                            de outros tipos de processo. Deve ser preenchida com os valores <strong>SIM</strong> ou
+                            <strong>NAO</strong>, sem acentuação e em caixa alta.
+                        </p>
+
+                        <p><strong>* Classificação Closing Móvel (somente para os processos abaixo):</strong> Essa coluna só existe para a alteração em bloco
+                            de processos Cível Estratégico, Cível Consumidor e Juizado Especial, então, não utilize uma planilha com essa coluna para a
+                            alteração de outros tipos de processo. No Cível Estratégico deve ser preenchido com os valores PRE, POS ou N/A, no Cível Consumidor
+                            deve ser preenchido com os valores PRE, POS, HIBRIDO, A DEFINIR ou N/A, no Juizado Especial deve ser preenchido com os valores PRE,
+                            POS, HIBRIDO, A DEFINIR ou N/A, sem acentuação e em caixa alta.</p>
+
+                        <p><strong>* Classificação Closing Fibra (somente para os processos abaixo):</strong> Essa coluna só existe para a alteração em bloco de
+                            processos Cível Estratégico, Cível Consumidor e Juizado Especial, então, não utilize uma planilha com essa coluna para a alteração
+                            de outros tipos de processo. No Cível Estratégico deve ser preenchido com os valores PRE, POS ou N/A, no Cível Consumidor deve ser preenchido
+                            com os valores PRE, POS, HIBRIDO, A DEFINIR ou N/A, no Juizado Especial deve ser preenchido com os valores PRE, POS, HIBRIDO, A DEFINIR ou N/A
+                            sem acentuação e em caixa alta.</p>
+
+                        <p><strong>* % de Responsabilidade Oi (somente para os processos abaixo):</strong> Essa coluna só existe para a alteração em bloco
+                            dos processos Cível Consumidor e Juizado Especial, então, não utilize uma planilha com essa coluna para alteração de outros
+                            tipos de processo. Para ambos os tipos de processo essa coluna só deve ser preenchida para alteração quando o processo estiver
+                            sendo alterado para HÍBRIDO e nesses casos, se preenchido, o % de Responsabilidade Oi deve ser maior que 0 e menor que 100.
+                            Em casos onde o processo for alterado para HÍBRIDO e essa coluna não for preenchida, o sistema irá alterar o processo para
+                            HÍBRIDO e irá salvar o % de Responsabilidade Oi padrão parametrizado no SISJUR.
+                            Para a alteração em bloco dessa informação, a coluna Classificação Closing Móvel ou Classificação Closing Fibra da planilha deve ser preenchida com o valor Hibrido,
+                            mesmo que o processo a ser alterado já esteja classificado como Híbrido.</p>
+
+                        <P><strong>Haircut (somente para Cível Estratégico):</strong> Essa coluna só existe para a alteração em bloco de processos Cíveis Estratégicos,
+                            então, não utilize uma planilha com essa coluna para a alteração de outros tipos de processo. Deve ser preenchida com os valores SIM ou NAO,
+                            em caixa alta e sem acento.</P>
+
+                        <p><strong>Importante:</strong> A ordem das colunas deve ser mantida, não sendo permitida a
+                            exclusão de qualquer uma delas. Caso o dado da coluna não precise ser modificado, as
+                            informações devem ser deixadas em branco.</p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="instr_linha">
+                <div class="instr_ordinais">4°</div>
+                <div class="instr_texto">Selecione o tipo de processo no campo <strong>"Tipo de Processo"</strong> para
+                    habilitar as opções de agendamento e em seguida faça o upload da
+                    sua planilha. Após fazer o upload, clique em <strong>"Agendar Alteração"</strong> e
+                    o seu agendamento será salvo e exibido na seção <strong>"Alterações
+                        agendadas / Executadas"</strong>;</div>
+            </div>
+
+            <div class="instr_linha">
+                <div class="instr_ordinais">5°</div>
+                <div class="instr_texto">Pronto, seu agendamento foi realizado com sucesso, agora é só aguardar que o
+                    sistema irá executá-lo e ao final disponibilizará um arquivo com o resultado da alteração.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- topo da pagina -->
+<section class="container-breadcrumb">
+    <h3>{{ tituloPagina }}</h3>
+    <p>{{ caminhoPagina }}</p>
+    <p class="filtroSapSelecao"></p>
+    <combo-box [opcoes]="tiposProcessosComPermissao" (selectionChange)="camposDisponiveisAlteracao($event)"
+        [titulo]="'Selecione o tipo de processo'" [currentIndex]="tipoSelecionado.value" [icone]="false"
+        [classe]="'flutuante-direita'" [label]="'Tipo de Processo'">
+    </combo-box>
+</section>
+
+<!-- Download e Upload -->
+<section class="upper">
+
+    <div class="quad">
+        <div class="secao_titulo">Campos disponíveis para alteração</div>
+        <div *ngIf="this.msg" class="aviso_nenhum_tipo_selecionado">Nenhum tipo de processo selecionado</div>
+        <!--treeview-->
+        <div class="tv_treeview">
+
+            <div class="tv_conteudo" *ngIf="!this.msg">
+                <div class="tv_espacotopo"></div>
+
+
+                <div class="tv_linha"
+                    *ngIf="this.colunasAlteradas || this.colunasAlteradasJec|| this.colunasAlteradasPex || this.colunasAlteradasCC || this.colunasAlteradasCE">
+                    Processos Pré RJ e Pós RJ
+                    <div class="tv_traco"></div>
+                    <svg class='tv_seta'>
+                        <polygon points='0,0 0,8 8,4' style='fill:inherit;' /></svg>
+                </div>
+                <div class="tv_linha" *ngIf="this.colunasAlteradasJec || this.colunasAlteradasPex || this.colunasAlteradasCC">
+                    Influencia a Contingência
+                    <div class="tv_traco"></div>
+                    <svg class="tv_seta">
+                        <polygon points='0,0 0,8 8,4' style='fill:inherit;' />
+                    </svg>
+                </div>
+
+                <div class="tv_linha" *ngIf="this.colunasAlteradasCE || this.colunasAlteradasCC || this.colunasAlteradasJec">
+                    Classificação Closing Móvel
+                    <div class="tv_traco"></div>
+                    <svg class='tv_seta'>
+                        <polygon points='0,0 0,8 8,4' style='fill:inherit;' />
+                    </svg>
+                </div>
+                <div class="tv_linha" *ngIf="this.colunasAlteradasCE || this.colunasAlteradasCC || this.colunasAlteradasJec">
+                    Classificação Closing Fibra
+                    <div class="tv_traco"></div>
+                    <svg class='tv_seta'>
+                        <polygon points='0,0 0,8 8,4' style='fill:inherit;' />
+                    </svg>
+                </div>
+                <div class="tv_linha" *ngIf="this.colunasAlteradasCC || this.colunasAlteradasJec">
+                    % de Responsabilidade Oi
+                    <div class="tv_traco"></div>
+                    <svg class='tv_seta'>
+                        <polygon points='0,0 0,8 8,4' style='fill:inherit;' />
+                    </svg>
+                </div>
+                <div class="tv_linha" *ngIf="this.finalizacao">
+                    Finalização Jurídica
+                    <div class="tv_traco"></div>
+                    <svg class='tv_seta'>
+                        <polygon points='0,0 0,8 8,4' style='fill:inherit;' />
+                    </svg>
+                </div>
+                <div class="tv_linha" *ngIf="this.finalizacao">
+                    Finalização Contábil
+                    <div class="tv_traco"></div>
+                    <svg class='tv_seta'>
+                        <polygon points='0,0 0,8 8,4' style='fill:inherit;' />
+                    </svg>
+                </div>
+                <div class="tv_linha" *ngIf="this.finalizacao">
+                    Finalização Contábil com Saldo de Garantias Negativo
+                    <div class="tv_traco"></div>
+                    <svg class="tv_seta">
+                        <polygon points='0,0 0,8 8,4' style='fill:inherit;' />
+                    </svg>
+                </div>
+                <div class="tv_linha" *ngIf="this.colunasAlteradasmediacao">
+                    Mediação
+                    <div class="tv_traco"></div>
+                    <svg class="tv_seta">
+                        <polygon points='0,0 0,8 8,4' style='fill:inherit;' />
+                    </svg>
+                </div>
+                <div class="tv_linha" *ngIf="this.colunasAlteradasCE">
+                    Haircut
+                    <div class="tv_traco"></div>
+                    <svg class='tv_seta'>
+                        <polygon points='0,0 0,8 8,4' style='fill:inherit;' /></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quad">
+        <div class="secao_titulo">Agendar alteração em bloco</div>
+        <div class="labelUpload">Arquivo de processos a serem alterados</div>
+
+
+        <div class="campobusca">
+            <input type="text" class="campobusca_exibe" value="{{this.nomeArquivo}}" disabled>
+            <input type="file" #file id="file" class=" btn btn-primary campobusca_file"
+                (change)="pegarArquivo(file.files)" [disabled]="!this.uploadHabilitado">
+            <button class="campobusca_botao btn-small btn-primary" [disabled]="!this.uploadHabilitado">
+                <i class="fa fa-folder fa-lg"></i>Selecionar
+            </button>
+        </div>
+
+        <div class="labelUpload" style="font-size:10px">
+            Carregue uma planilha .csv, de até 10Mb que esteja no modelo padrão<br />
+            O nome do arquivo deve ter no máximo 70 caracteres
+        </div>
+        <div class="botao_baixar_planilha" style="margin-top: 15px;">
+            <i class="fa fa-download"></i>
+            <a href="assets/alteracao-processo-bloco-web/PlanilhasPadrao.zip">
+                BAIXAR PLANILHA PADRÃO
+            </a>
+        </div>
+        <button class="botao_instrucoes" (click)="abrirInstrucoes()"><i
+                class="fas fa-question-circle cursor"></i>Instruções para
+            alteração</button>
+        <button class="btn btn-primary botao_agendar" [disabled]="!this.agendarAlteracao"
+            (click)="fazerUploadArquivo()">Agendar Alteração</button>
+    </div>
+</section>
+
+<!-- Lista de agendados -->
+<section class="lower">
+    <div class="quad">
+        <div class="secao_titulo">Alterações agendadas / executadas</div>
+        <div class="botoes_topodireita">
+            <button (click)="atualizarLista()"><i class="pl-2 fas fa-redo"></i>ATUALIZAR LISTA</button>
+        </div>
+
+        <!--célula a ser replicada-->
+        <div class="celula_processos" *ngFor="let agendamento of listaAgendamentos index as i">
+            <div class="celula_esquerda">
+                <div *ngIf="agendamento.status == 0" class="descricao_processos">
+                    Esta alteração em bloco será processada em breve. Por favor, aguarde.
+                </div>
+
+                <div *ngIf="agendamento.status == 1" class="descricao_processos">
+                    Está alteração em bloco está sendo processada!
+                </div>
+
+                <div *ngIf="agendamento.status == 2" class="descricao_processos">
+                    {{agendamento.processosAtualizados}} Processos alterados e {{agendamento.processosComErro}} não
+                    alterados -
+                    <span *ngIf="agendamento.codigoTipoProcesso === 1"> Cível Consumidor </span>
+                    <span *ngIf="agendamento.codigoTipoProcesso === 2"> Trabalhista </span>
+                    <span *ngIf="agendamento.codigoTipoProcesso === 3"> Administrativo </span>
+                    <span *ngIf="agendamento.codigoTipoProcesso === 9"> Cível Estratégico </span>
+                    <span *ngIf="agendamento.codigoTipoProcesso === 7"> Juizado Especial </span>
+                    <span *ngIf="agendamento.codigoTipoProcesso === 18"> PEX </span>
+                    <span *ngIf="agendamento.codigoTipoProcesso === 5"> Tributário Judicial </span>
+                    <div class="statusFinalizado">Finalizado em {{agendamento.dataExecucao | date:"dd/MM/yyyy HH:mm"}}
+                    </div>
+                </div>
+
+                <div *ngIf="agendamento.status == 3" class="descricao_processos">
+                    Ocorreu um erro ao tentar processar a alteração em bloco dos processos. Por favor, faça um novo
+                    agendamento.
+                </div>
+
+                <div class="botoes_processos">
+                    <button (click)="downloadPlanilhaCarregada(agendamento.id)">
+                        <i class="fa fa-download"></i>Planilha Carregada
+                    </button>
+                    <button *ngIf="agendamento.status == 0 || agendamento.status == 3 "
+                        (click)="deletarPlanilhaAgendada(agendamento.id)">
+                        <i class="fa fa-trash"></i>Excluir Agendamento
+                    </button>
+                    <button *ngIf="agendamento.status == 2" (click)="downloadPlanilhaResultado(agendamento.id)">
+                        <i class="fa fa-download"></i>Resultado Alteração
+                    </button>
+                </div>
+            </div>
+
+            <div class="celula_direita">
+                <div class="status_processo"
+                    [ngStyle]="{'background': verificarCorStatusAgendamento(agendamento.status)}">
+                    <div *ngIf="agendamento.status == 0"> Agendado </div>
+                    <div *ngIf="agendamento.status == 1"> Processando </div>
+                    <div *ngIf="agendamento.status == 2"> Finalizado </div>
+                    <div *ngIf="agendamento.status == 3"> Erro </div>
+                </div>
+                <div class="data_agendamento_processo">Agendado por {{agendamento.nomeUsuario }} em <br>
+                    {{agendamento.dataCadastro | date:"dd/MM/yyyy HH:mm"}} </div>
+            </div>
+        </div>
+
+        <div class="vermais" *ngIf="this.vermais"><button (click)="verMais()">VER MAIS</button></div>
+    </div>
+</section>

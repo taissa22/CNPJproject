@@ -1,0 +1,27 @@
+
+#container-filtro {
+  border: 1px solid #dbdbdb;
+  margin: 0px;
+  border-radius: 2px;
+
+  form {
+    width: 100% !important;
+
+    .divChkSepararEmpresa {
+      padding-top: 22px;
+      font-weight: bold;
+    }
+
+    .chkMarginLeft {
+      margin-left: 20px;
+    }
+  }
+}
+
+.col-form-label-sm {
+  font-size: 1rem !important;
+}
+
+.input-group-append{
+  z-index: 0;
+}

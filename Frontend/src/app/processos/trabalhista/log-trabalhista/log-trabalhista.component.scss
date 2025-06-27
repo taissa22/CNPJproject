@@ -1,0 +1,104 @@
+@import '../../relatorio-log.scss';
+@mixin icone ($imagem) {
+    background-image: url('../../../../assets/img/icones-menu-log-civel-consumidor/'+$imagem);
+}
+
+// ícones - status "normal"
+div[ng-reflect-klass="btMenuLog"] div.logIcon,
+.btMenuLog div.logIcon {
+    &.dadosGerais {
+        @include icone('ico_docum.png');
+    }
+    &.pedidos {
+        @include icone('ico_talk_void.png');
+    }
+    &.partes {
+        @include icone('users01.png');
+    }
+    &.valores-reclamantes {
+        @include icone('ico_valores_reclam_pedidos.png');
+    }
+    &.andamentos {
+        @include icone('ico_time_glass01.png');
+    }
+    &.decisoes-reclamantes {
+        @include icone('ico_decisoes_reclam_pedidos.png');
+    }
+    &.observacoes {
+        @include icone('ico_talk_text.png');
+    }
+    &.audiencias {
+        @include icone('ico_hall.png');
+    }
+    &.prazos {
+        @include icone('ico_clock.png');
+    }
+    &.lancamentos {
+        @include icone('ico_money02.png');
+    }
+    &.lotes {
+        @include icone('ico_card.png');
+    }
+    &.dirf {
+        @include icone('ico_dirf.png');
+    }
+    &.gfip {
+        @include icone('ico_gfip.png');
+    }
+    &.audiencia-prepostos {
+        @include icone('ico_audiencia_prepostos.png');
+    }
+}
+
+// ícones - status "selecionado"
+div[ng-reflect-klass="btMenuLog"].selected div.logIcon,
+.btMenuLog.selected div.logIcon {
+    &.dadosGerais {
+        @include icone('ico_docum_w.png');
+    }
+    &.pedidos {
+        @include icone('ico_talk_void_w.png');
+    }
+    &.partes {
+        @include icone('users01_w.png');
+    }
+    &.valores-reclamantes {
+        @include icone('ico_valores_reclam_pedidos_w.png');
+    }
+    &.andamentos {
+        @include icone('ico_time_glass01_w.png');
+    }
+    &.decisoes-reclamantes {
+        @include icone('ico_decisoes_reclam_pedidos_w.png');
+    }
+    &.observacoes {
+        @include icone('ico_talk_text_w.png');
+    }
+    &.audiencias {
+        @include icone('ico_hall_w.png');
+    }
+    &.prazos {
+        @include icone('ico_clock_w.png');
+    }
+    &.lancamentos {
+        @include icone('ico_money02_w.png');
+    }
+    &.lotes {
+        @include icone('ico_card_w.png');
+    }
+    &.dirf {
+        @include icone('ico_dirf_w.png');
+    }
+    &.gfip {
+        @include icone('ico_gfip_w.png');
+    }
+    &.audiencia-prepostos {
+        @include icone('ico_audiencia_prepostos_w.png');
+    }
+}
+
+// controlar quebra de linha dentro da variável (com /n) nos casos específicos de multilinhas
+div.logIcon.valores-reclamantes+div.multiline,
+div.logIcon.decisoes-reclamantes+div.multiline {
+    white-space: pre-wrap;
+}

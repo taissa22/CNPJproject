@@ -1,0 +1,3 @@
+<label for="textArea" class="label">{{labelTextArea}} </label>
+<textarea id="textArea" [(ngModel)]="texto"(blur)="retornarTexto()"
+[maxLength]="limitCaracteres" class="isResize ? '' : textArea"></textarea>

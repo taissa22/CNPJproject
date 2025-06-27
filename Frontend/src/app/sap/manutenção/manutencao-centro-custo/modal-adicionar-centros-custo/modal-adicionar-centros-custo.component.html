@@ -1,0 +1,59 @@
+
+
+<div bsModal #template="bs-modal" style="height: 1500;" tabindex="-1" role="dialog"
+aria-labelledby="dialog-sizes-name1" [config]="{backdrop: 'static'}">
+<div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left p-0">{{titulo}} Centro de Custo</h4>
+      <button type="button" class="close pull-right" (click)="bsModalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body height-fix">
+      <form [formGroup]="registerForm">
+        <div class="form-row">
+          <div class="col-8">
+            <label class="fonte-padrao-negrito" for="descricaoCentroCusto">Descrição do Centro de Custo:</label> <br>
+            <input id="descricaoCentroCusto" type="search" class="width form-control" maxlength="100"
+            formControlName="descricaoCentroCusto"
+            [ngClass]="{'is-invalid': registerForm.get('descricaoCentroCusto').errors && registerForm.get('descricaoCentroCusto').touched}"
+            [ngbTooltip]="validacaoTextos('descricaoCentroCusto', 'Descrição do Centro de Custo', true)"
+            tooltipClass="erroTooltip" StartWithSpace>
+
+          </div>
+          <div class="col-2 d-flex checkbox">
+            <input id="ativo" type="checkbox" formControlName="indicaAtivo" >
+            <label for="ativo" class="fonte-padrao-negrito m-0 p-0 pl-1">Ativo</label>
+          </div>
+
+
+        </div>
+        <div class="form-row mb-3">
+          <div class="col-5">
+            <label class="fonte-padrao-negrito" for="centroCustoSAP">Centro Custo SAP:</label> <br>
+            <input id="centroCustoSAP" type="search" class="width form-control"  maxlength="10" formControlName="centroCustoSAP"
+            [ngClass]="{'is-invalid': registerForm.get('centroCustoSAP').errors && registerForm.get('centroCustoSAP').touched}"
+            [ngbTooltip]="validacaoTextos('centroCustoSAP', 'Centro Custo SAP', false)"
+            tooltipClass="erroTooltip" StartWithSpace>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-cancelar-oi roxo-padrao" (click)="bsModalRef.hide()"><span class="texto-btn-oi cancelar">
+          Cancelar </span></button>
+
+      <button type="button" class="btn btn-primary" (click)="salvarAlteracao()" [ngClass]="!registerForm.valid ? 'btn-primary-disabled' : '' "
+      [disabled]="!registerForm.valid" ><span
+          class="texto-btn-oi confirmar"> Confirmar </span></button>
+    </div>
+  </div>
+  <div>
+  </div>
+
+
+</div>
+</div>

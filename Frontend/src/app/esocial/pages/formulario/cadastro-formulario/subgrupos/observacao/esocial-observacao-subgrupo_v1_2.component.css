@@ -1,0 +1,19 @@
+.text-limit-table {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.btn-novo {
+  display: flex;
+  align-items: center;
+}
+
+fs-1 {
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.fs-2 {
+  font-size: 28px;
+  cursor: pointer;
+}

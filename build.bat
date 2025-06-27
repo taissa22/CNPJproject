@@ -1,0 +1,2 @@
+cd .\devops
+dotnet run

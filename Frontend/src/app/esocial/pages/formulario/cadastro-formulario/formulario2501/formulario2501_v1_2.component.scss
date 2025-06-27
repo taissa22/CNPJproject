@@ -1,0 +1,175 @@
+.container-breadcrumb {
+    min-width: 85%;
+    max-width: 600px;
+    position: fixed !important;
+    margin-left: 136px !important;
+    margin-top: 10px !important;
+}
+
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cabecalho div {
+    font-size: 14px;
+    cursor: pointer;
+    i {
+        cursor: pointer;
+        font-size: 14px;
+    }
+}
+
+.container-formulario {
+    padding: 2rem 15rem
+}
+
+
+.header {
+    border-bottom: 2.5px solid whitesmoke;
+    padding-top: 1.5rem !important;
+    min-width: 85%;
+    position: sticky !important;
+    top: 0;
+    z-index: 111;
+    background-color: white;
+}
+.header-f2501 {
+    font-style: bold !important;
+    margin: 0;
+}
+.card-head {
+    padding: 0.8rem 1.5rem;
+    background-color: whitesmoke;
+    border: 1px solid whitesmoke;
+    border-radius: 10px;
+}
+
+.grid-cadastro {
+    position: absolute;
+    width: 100%;
+}
+
+.title {
+    margin-left: 1.2rem;
+    background-color: white;
+    text-align: center;
+    margin-top: -10px;
+}
+
+.grid-quadro {
+    padding: 0.8rem 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.grid{
+    width: -webkit-fill-available;
+}
+
+input {
+    height: 30px;
+    border: 1px solid #ccc;
+    padding: 7px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#obsProcessoDemanda {
+    border: 1px solid #ccc;
+    height: 9rem;
+    resize: none;
+    padding: 7px;
+}
+
+.input-date {
+    width: 100px !important;
+    text-align: center;
+}
+
+.limparFormulario{
+    text-decoration: underline;
+    cursor: pointer;
+    font-style: italic;
+}
+
+.btn-download-manual {
+  padding-top: 8px !important;
+}
+
+.status-finalizacoes {
+  display: flex;
+  align-items: center !important;
+}
+
+.svg-check {
+  background-color: black;
+  border-radius: 50%;
+  padding: 0.75px;
+  margin-left: 3px;
+}
+
+
+::ng-deep {
+    // div.swal2-popup {
+    //     width: 35em !important;
+    //     // flex-direction: column;
+    //     // justify-content: flex-start;
+    //     // display: flex;
+    // }
+
+    .tooltip-download-manual {
+      top: 8px !important;
+    }
+
+    .tooltip-download-manual .tooltip-inner {
+        display: flex;
+        text-align: left !important;
+        justify-content: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        padding: 8px;
+    }
+
+    .tooltip-download-manual ul {
+        margin-left: 25px !important;
+    }
+
+    .tooltip-download-manual li {
+        list-style-type: circle !important;
+    }
+}
+
+.form-control-select {
+    padding: 0;
+    border: none;
+}
+
+.tooltip-insc{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 30.2rem;
+}
+
+.header-numero-versao {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.versao-esocial {
+    font-size: 1rem !important;
+    font-weight: normal !important;
+}
+
+.btn-recibo{
+    font-size: 16px;
+}

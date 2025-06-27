@@ -1,0 +1,71 @@
+<div class="container-fluid p-0 limitador">
+  <ng-container *ngFor="let lote of lotes; index as i">
+    <div *ngIf="lote.totalLancamneto">
+      <app-container-expansivel-new
+      [bordaExist]="false"
+      [ngStyle]="{color: '#000000'}"
+      [isOpen]="lote.isOpen"
+      (openSignal)="onLoteOpen( i)"
+      [id]="lote.codigoEmpresaGrupo">
+        <div class="contentEsquerda">
+          <div class="d-flex flex-wrap coluna p-0">
+            <div class="col-12 p-0 pb-2 titulo">
+              {{ lote.descricaoEmpresaGrupo}}
+            </div>
+            <div class="container pl-3">
+              <div class="row">
+                <div class="" style="float: left; width: 105px;  margin-right: 10px;">
+                  <div class="colunas">Estado da Comarca:</div>
+                  <div class="colunas">Centro de Custo:</div>
+                </div>
+                <div class="" style="float: left; width: 108px;  margin-right: 30px;">
+                  <div class="valores">{{lote.uf}}</div>
+                  <div class="valores">{{lote.descricaoCentroCusto}}</div>
+                </div>
+                <div class="" style="float: left; width: 63px; margin-right: 10px;">
+                  <div class="colunas">Fornecedor:</div>
+                  <div class="colunas">Centro Sap:</div>
+                </div>
+                <div class="" style="float: left; width: 194px;  margin-right: 30px;">
+                  <div class="valores">{{lote.descricaoFornecedor}}</div>
+                  <div class="valores">{{lote.centroSAP}}</div>
+                </div>
+                <div class="" style="float: left; width: 111px; margin-right: 10px;">
+                  <div class="colunas">Forma de Pagamento:</div>
+                </div>
+                <div class="" style="float: left; width: 152px;">
+                  <div class="valores">{{lote.descricaoFormaPagamento}}</div>
+                </div>
+                <br clear="all" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contentDireita d-flex align-lotes-center pr-1" style="height: 100%;">
+          <div class="container-fluid">
+            <div class="row ">
+              <div class="  campoWarning" style="text-align: right;  ">
+                <i class="fas fa-exclamation-circle warning"></i>
+                <ng-container [ngSwitch]="lote.totalLancamneto">
+                  <span *ngSwitchCase="1">
+                    1 lançamento disponível
+                  </span>
+                  <span *ngSwitchDefault>
+                    {{lote.totalLancamneto }} lançamentos disponíveis
+                  </span>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contentConteudo " style="height: 100%;" *ngIf="lote.isOpen">
+          <detalhamento-lancamento
+          [existeBordero]="lote.formaPagamentoUsaBordero"
+          [loteValido]="lote.loteValido">
+          </detalhamento-lancamento>
+        </div>
+      </app-container-expansivel-new>
+      <hr style="padding: 0; margin: 0;">
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,198 @@
+/**
+ *********************************************
+ * Prototype of styles for horizontal CSS-menu
+ * @data 25.01.2010
+ *********************************************
+ * (X)HTML-scheme:
+ *  <div id="menu">
+ *      <ul class="menu">
+ *          <li><a href="#" class="parent"><span>level 1</span></a>
+ *              <div><ul>
+ *                  <li><a href="#" class="parent"><span>level 2</span></a>
+ *                      <div><ul><li><a href="#"><span>level 3</span></a></li></ul></div>
+ *                  </li>
+ *              </ul></div>
+ *          </li>
+ *          <li class="last"><a href="#"><span>level 1</span></a></li>
+ *      </ul>
+ *  </div>
+ *********************************************
+ */
+
+//teste
+
+//  .teste{
+//   -webkit-transiton: height 0.2s; -moz-transition: height 0.2s; -ms-transition: height 0.2s;
+//   -o-transition: height 0.2s; -transition: height 0.2s;
+//  }
+
+/* menu::base */
+#menu2 {
+  z-index: 100000;
+  height: 43px;
+  background: url(../../../../assets/img/menu/header_active.gif) right top
+    repeat-x;
+  cursor: default;
+}
+#menu2 .menu2 {
+  position: absolute;
+}
+#menu2 * {
+  list-style: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+#menu2 a {
+  display: block;
+  padding: 15px 14px 14px 14px;
+  white-space: nowrap;
+}
+#menu2 li {
+  float: left;
+}
+#menu2 li li {
+  float: none;
+  *float: left;
+  *width: auto;
+}
+.pai > a{
+  padding-top: 18px !important;
+    padding-bottom: 8px !important;
+}
+
+#menu2 li >  div {
+  max-height: 0px;
+  position: absolute;
+  width: auto;
+  background: #423e55;
+  z-index: 9;
+  //visibility: hidden;
+  overflow: hidden;
+  -webkit-transiton: max-height 0.2s, visibility 0s;
+  -moz-transition: max-height 0.2s, visibility 0s;
+   -ms-transition: max-height 0.2s, visibility 0s;
+   -o-transition: max-height 0.2s, visibility 0s;
+   transition: max-height 0.2s, visibility 0s;
+}
+
+
+#menu2 div div {
+  background: #423e55;
+  margin: -25px 0 0 -1px;
+  *margin: -25px 0 0 1px;
+  left: 100%;
+}
+#menu2 div div div {
+  margin: -25px 0 0 -1px;
+  *margin: -25px 0 0 2px;
+  left: 100%;
+}
+
+/* menu::special styles */
+/* menu::level 1 */
+#menu2 a {
+  text-decoration: none;
+  color: #ffffff; /*1*/
+  position: relative;
+  z-index: 77;
+}
+#menu2 a:hover {
+  background: url(../../../../assets/img/menu/header.gif) left -43px repeat-x;
+  color: #000;
+}
+
+#menu2 li:hover > div {
+  max-height: 530px;
+ // visibility: visible;
+  overflow: visible;
+  z-index: 10;
+}
+
+#menu2 a:hover span {
+  color: #000;
+}
+#menu2 li.current a {
+  background: transparent url(../../../../assets/img/menu/header_active.gif)
+    repeat-x;
+  color: #3c4955;
+}
+#menu2 li.current span {
+  color: #fff;
+}
+#menu2 > ul > li:hover > a {
+  background: url(../../../../assets/img/menu/header.gif) left -43px repeat-x;
+  color: #cacfd3;
+}
+#menu2 > ul > li:hover > a span {
+  color: #000;
+}
+#menu2 span {
+  font: 12px Tahoma, Arial, Verdana, sans-serif;
+  text-decoration: none;
+  color: #fff;
+}
+#menu2 li {
+  padding: 0 1px;
+  border-right: 1px dotted white;
+
+}
+/* menu::level >= 2 */
+#menu2 ul ul {
+  width: auto;
+  display: block;
+}
+#menu2 li li {
+  display: block;
+  background: #423e55;
+  border-bottom: 1px dotted #000;
+  margin-left: 1px;
+}
+
+#menu2 li li a {
+  position: static;
+  background: #423e55;
+  white-space: nowrap;
+  text-align: center;
+  color: #fff;
+  padding: 0;
+  text-transform: none;
+  width: 100%;
+}
+
+#menu2 li.current li a {
+  background: none;
+  color: #fff;
+}
+#menu2 li.current li span {
+  color: #fff;
+}
+#menu2 li li a:hover {
+  background: #4a3f7b;
+}
+
+#menu2 li li a span {
+  color: #fff;
+  line-height: 15px;
+  padding: 5px 10px;
+  display: block;
+  font-size: 12px;
+}
+#menu2 li li a:hover span {
+  color: #ffffff;
+}
+#menu2 li li a.parent span.seta {
+  padding-right: 19px;
+  background: transparent url(../../../../assets/img/menu/arrow.gif) no-repeat
+    scroll right 50%;
+  z-index: 10;
+}
+
+#menu2 li li span {
+  display: block;
+  text-transform: none;
+  padding: 0px 25px 0px 0px;
+  font-size: 11px;
+  letter-spacing: 0;
+  text-align: left;
+}

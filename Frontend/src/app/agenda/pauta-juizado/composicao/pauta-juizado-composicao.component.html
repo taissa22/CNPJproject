@@ -1,0 +1,234 @@
+<section class="container-breadcrumb">
+  <div class="row mt-4 position-relative">
+    <div>
+      <h3>Pesquisa de Pauta de Juizado Especial</h3>
+    </div>
+    <a class="float-right voltar" (click)="voltar(false)"
+      ><img src="assets/icons/deselect_all.png" /> Voltar</a
+    >
+  </div>
+  <p class="row mb-4">{{ breadcrumb }}</p>
+
+  <div
+    class="row pt-1 pb-1 align-items-center"
+    id="container-paginacao-superior"
+  >
+    <ng-container>
+      <div class="col-md-2"><label>Data: </label>{{ pautaDataAudiencia }}</div>
+      <div class="col-md-6 div-vara">
+        <label>{{ this.urlPorJuizado == 'S' ? 'Vara' : 'Grupo' }}: </label
+        ><span>{{ pautaJuizado }}</span> -
+        {{ this.dadosAudiencia.length }} Audiência(s)
+      </div>
+      <div class="col-md-4">
+        <sisjur-paginator
+          [length]="pautaTotal"
+          [pageSize]="this.pautaPageSize"
+          (page)="listarPauta()"
+        >
+        </sisjur-paginator>
+      </div>
+    </ng-container>
+  </div>
+
+  <div
+    class="row pt-5"
+    style="align-content: end; display: flex; justify-content: end"
+  >
+    <span style="float: right; padding-top: 7px; padding-right: 6px"
+      >Atualizar a alocação de todas as páginas com:
+    </span>
+
+    <ng-select
+      style="margin-right: 9px; width: 250px"
+      id="id"
+      [items]="opcoesAlocacao"
+      bindLabel="nome"
+      bindValue="id"
+      notFoundText="Nenhuma opção disponível"
+      [searchable]="true"
+      [clearable]="false"
+      [virtualScroll]="true"
+      [formControl]="opcaoAlocaoTodasPaginas"
+      placeholder="Selecione a Alocação"
+    >
+    </ng-select>
+
+    <i
+      class="roxo-padrao fa-regular fa-square-check"
+      style="font-size: 25px"
+      (click)="alterarTodasPaginas()"
+    ></i>
+    <i
+      class="roxo-padrao fa-regular fa-rectangle-xmark ml-2"
+      style="font-size: 25px"
+      (click)="desfazerAlteracaoTodasPaginas()"
+    ></i>
+  </div>
+
+  <div class="row pt-5">
+    <div class="col-md-3 pl-0">
+      <h5 class="titulo-purple">Composição da Pauta de Audiência</h5>
+    </div>
+    <div class="col-md-9 pr-0 text-right mensagem-purple">
+      Todas as audiências com alocação "Terceirizado Escritório" ou "Automática
+      pelo App Preposto" não estão disponiveis para seleção de preposto próprio
+    </div>
+  </div>
+  <div class="row">
+    <div class="width-full">
+      <sisjur-table>
+        <ng-container>
+          <sisjur-table-header height="60px">
+            <sisjur-table-header-cell width="5">Hora</sisjur-table-header-cell>
+            <sisjur-table-header-cell width="5">Tipo</sisjur-table-header-cell>
+            <sisjur-table-header-cell width="20"
+              >Juizado</sisjur-table-header-cell
+            >
+            <sisjur-table-header-cell width="20"
+              >Nº Processo<br />Empresa do Grupo</sisjur-table-header-cell
+            >
+            <sisjur-table-header-cell width="10"
+              >Assunto</sisjur-table-header-cell
+            >
+            <sisjur-table-header-cell width="16"
+              >Pedidos</sisjur-table-header-cell
+            >
+            <sisjur-table-header-cell width="8"
+              >Valor da<br />Causa</sisjur-table-header-cell
+            >
+            <sisjur-table-header-cell width="16" style="margin-bottom: 24px;">
+              <!-- <span style="flex-direction: column; display: flex; margin: auto">Terceirizado
+                 <input
+                   type="checkbox"
+                   name="marcarTodas"
+                   id="marcarTodas"
+                   (click)="marcarTodas()"
+                   style="margin-top: 1.5px"
+               /></span> -->
+               <div class="select-interno-header">
+                 <span style="width: 100%; display: block!important; margin-top: auto;justify-content: center" class="d-flex">Alocação
+                   <ng-select
+                   [ngStyle]="{'min-width': '216px', 'overflow':'visible'}"
+                   appendTo=".select-interno-header"
+                   id="id"
+                   [items]="opcoesAlocacao"
+                   bindLabel="nome"
+                   bindValue="id"
+                   notFoundText="Nenhuma opção disponível"
+                   [searchable]="true"
+                   [clearable]="false"
+                   placeholder="Selecione a Alocação"
+                   [formControl]="opcaoAlocaoTodosGrid"
+                   (change)="marcarTodas()"
+                    >  </ng-select>
+                   </span>
+               </div>
+             </sisjur-table-header-cell>
+          </sisjur-table-header>
+          <sisjur-table-row *ngFor="let item of dadosAudiencia; let i = index">
+            <sisjur-table-row-cell>{{ item.hora }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{ item.tipo }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell
+              >{{ item.codEstado + ' - ' + item.nomComarca }}<br />{{
+                item.codVara + 'º JUIZADO - ' + item.nomTipoVara
+              }}</sisjur-table-row-cell
+            >
+            <sisjur-table-row-cell
+              ><a
+                target="_blank"
+                href="{{
+                  currentUrl
+                }}/processo/juizado_especial/processo.aspx?codProcesso={{
+                  item.codProcesso
+                }}&v=imprimir&amp;codTipoProcesso="
+                >{{ item.nroProcessoCartorio }}<br />{{ item.nomParte }}</a
+              >
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{ item.assunto }} </sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <span style="word-break: break-word">
+                <ng-container *ngFor="let pedido of item.pedido.split('@@@')">
+                  {{ pedido }}<br />
+                </ng-container>
+              </span>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{ item.valorCausa }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <div class="select-interno-grid" >
+                <span style="justify-content: center; width: 100%" class="d-flex">
+                    <ng-select
+                    [ngStyle]="{'min-width': '216px'}"
+                    appendTo=".select-interno-grid"
+                    [(ngModel)]="item.alocacaoTipo"
+                    id="select-alocacao-tipo"
+                    [items]="opcoesAlocacao"
+                    bindLabel="nome"
+                    bindValue="id"
+                    notFoundText="Nenhuma opção disponível"
+                    [searchable]="true"
+                    [clearable]="false"
+                    placeholder="Selecione a Alocação"
+                    (change)="atualizaTodosTerceirizado()"
+                     >  </ng-select>
+
+
+                    </span>
+              </div>
+                </sisjur-table-row-cell>
+          </sisjur-table-row>
+        </ng-container>
+      </sisjur-table>
+    </div>
+  </div>
+
+  <div class="row pt-5">
+    <div class="divChkApenasPrepostoUFJuizado width-full">
+      <input
+        type="checkbox"
+        [formControl]="apenasPrepostoNaoAlocadoNaData"
+        class="mb-2"
+        id="apenasPrepostoNaoAlocadoNaData"
+        (click)="listarPrepostosNaoAlocados()"
+      /><label class="m-0 p-0 pl-1 mb-1"
+        ><b
+          >Apenas prepostos que ainda não estejam alocados em nenhum juizado na
+          data {{ pautaDataAudiencia }}</b
+        ></label
+      >
+    </div>
+  </div>
+
+  <br />
+
+  <div class="row pt-2">
+    <div class="width-full">
+      <jur-picklist
+        #colunasSelect
+        [titulo1]="'Prepostos'"
+        [manterOrdenacao]="false"
+        [titulo2]="'Prepostos Alocados'"
+        [itensParaSelecao]="colunas"
+        (itens)="this.colunasSelecionadas = $event"
+        [height]="this.picklistAltura"
+        [mostraSetaTodosOsItens]="false"
+        [numeroMaximoSelecionados]="this.numeroMaximoPrepostosSelecionados"
+      >
+      </jur-picklist>
+    </div>
+  </div>
+
+  <div class="row mb-4 mt-4 float-right">
+    <a class="btn btn-link float-right" (click)="voltar(true)">Nova Pesquisa</a>
+    <button
+      class="btn btn-primary float-right mr-3"
+      [disabled]="pageCurrent == pautaTotal"
+      (click)="salvarAvancar()"
+    >
+      Salvar e Avançar
+    </button>
+    <button class="btn btn-primary float-right" (click)="salvar()">
+      Salvar
+    </button>
+  </div>
+</section>

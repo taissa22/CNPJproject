@@ -1,0 +1,9 @@
+<div class="symbol">
+    <div class="container-left">
+        <div class="linha-superior" [ngStyle]="primeiro ? {'border-left':'none'}: {'border-left':'1px #aaa solid'}"></div>
+        <div class="linha-inferior" [ngStyle]="ultimo ? {'border-left':'none'}: {'border-left':'1px #aaa solid'}"></div>
+    </div>
+    <div class="container-right d-flex align-items-center justify-content-center">
+        <div class="circulo" [ngStyle]="selecionado ? {'border':'2px #fff solid'}: {'border':'2px #aaa solid'}" ></div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="index-modal">
+  <div class="header p-0">
+    <h4 class="modal-title p-0">{{titulo}} de Solicitante</h4>
+    <button type="button" class="btn btn-icon" (click)="fechar()">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+  <div class="col content p-0 pt-3">
+    <form [formGroup]="solicitanteForm">
+      <div>
+        <label for="nome"><b>Nome:</b></label>
+        <input type="text" class="form-control" name="nome" id="nome" 
+        maxlength="100"
+        [formControl]="nomeFormControl" 
+        [disableTooltip]="nomeFormControl.valid || nomeFormControl.untouched" 
+        [ngbTooltip]="nomeRequired">
+        <ng-template #nomeRequired>
+          <span *ngIf="nomeFormControl.errors.required">Campo obrigatório</span>
+        </ng-template>
+      </div>
+      <div class="pt-2">
+        <label for="email"><b>E-mail:</b></label>
+        <input type="text" class="form-control text-lowercase" name="email" id="email"
+        maxlength="250"
+        [formControl]="emailFormControl" 
+        [disableTooltip]="emailFormControl.valid || emailFormControl.untouched" 
+        [ngbTooltip]="emailRequired">
+        <ng-template #emailRequired>
+          <span *ngIf="emailFormControl.errors.required">Campo obrigatório</span>
+          <span *ngIf="emailFormControl.hasError('customEmail')">Deve ser um E-mail válido.</span>
+        </ng-template>
+      </div>
+    </form>
+  </div>
+  <div class="footer pt-3 p-0">
+    <button type="button" class="btn btn-link ml-auto mr-0" aria-label="Close" (click)="fechar()">Cancelar</button>
+    <button
+    [disabled]="solicitanteForm.invalid"
+    type="button" class="btn btn-primary" (click)="salvar()">Confirmar</button>
+  </div>
+</div>

@@ -1,0 +1,345 @@
+// header {
+//   margin-left: auto;
+//   margin-right: auto;
+//   width: 1024px;
+//   max-width: calc(100% - 32px);
+//   font-weight: normal;
+//   margin-top: 1.6rem;
+//   margin-bottom: 3.2rem;
+// }
+
+// header h1 {
+//   color: #786bb9;
+//   font-size: 2rem;
+//   font-weight: 500;
+//   margin: 0;
+// }
+
+// header h3 {
+//   color: #555555;
+//   font-size: 1.2rem;
+//   font-weight: normal;
+//   margin: 0;
+// }
+
+label {
+  font-weight: 500;
+}
+
+legend {
+  color: #786bb9;
+}
+
+main {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1024px;
+  max-width: calc(100% - 32px);
+}
+
+main .title h4 {
+  color: #786bb9;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.btn:not(.btn-primary) {
+  color: #786bb9;
+}
+
+.btn i {
+  height: 1em;
+  width: 1em;
+  font-size: 1em;
+  margin: 0.4rem;
+  text-align: center;
+}
+
+.btn-small,
+.btn-small * {
+  font-size: 1rem;
+}
+
+section.panel-container {
+  border: 1px solid #dee2e6;
+}
+
+section.panel {
+  border-bottom: 1px solid #dee2e6;
+  padding: 12px;
+}
+
+section.panel:last-child {
+  border: none;
+  padding: 6px;
+}
+
+section.panel .info h5 {
+  color: #786bb9;
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin: 0;
+  margin-bottom: 0.4rem;
+}
+
+section.panel .info h6 {
+  color: #555555;
+  font-size: 1.1rem;
+  font-weight: normal;
+  margin: 0;
+  margin-bottom: 0.4rem;
+}
+
+section.download .btn:first-child {
+  padding-left: 0;
+}
+
+section.panel .status {
+  text-align: right;
+}
+
+section.panel .status span {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: normal;
+  display: inline-block;
+  padding: 0 1.2rem;
+  margin: 0;
+  margin-bottom: 0.4rem;
+  border-radius: 4px;
+}
+
+section.panel .status p {
+  color: #555555;
+  font-size: 1.1rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+.container-form {
+  padding: 20px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  position: relative;
+  margin-bottom: 20px;
+  margin-top: 25px;
+
+  legend {
+    font-size: 1.2rem;
+    padding: 0 10px;
+    margin-bottom: 10px;
+    width: auto; /* Faz com que o tamanho do título seja ajustável */
+    font-weight: bold;
+  }
+
+  .input-group-prepend .input-group-text {
+    background-color: white;
+    border: none;
+    color: #6f42c1; /* Cor do texto "até" */
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  button {
+    margin-left: 10px;
+  }
+}
+
+input#carga {
+  width: 70px;
+  margin-right: 5px;
+}
+
+input#compromisso {
+  width: 107px;
+}
+
+.input-group.datas-vencimento {
+  width: 215px;
+  margin-left: -11px;
+}
+
+input.form-control.input-documento {
+  width: 15px !important;
+  margin-left: 5px !important;
+}
+
+input.form-control.input-nome-parte {
+  margin-left: 5px !important;
+}
+
+.compromisso-container {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.credor-info {
+  margin-bottom: 20px;
+}
+
+.credor-info .left-info p,
+.credor-info .right-info p {
+  margin: 0;
+}
+
+.link-ver-dados {
+  color: #6c63ff;
+  text-decoration: underline;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: none !important;
+}
+.table-bordered {
+  border: none !important;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.table th {
+  background-color: none;
+}
+
+tr {
+  border-bottom: 1px solid #5555;
+}
+
+th {
+  color: #786bb9;
+}
+
+.status-label {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.pago {
+  background-color: #28a745;
+  color: white;
+}
+
+.em-tramitacao {
+  background-color: #ffc107;
+  color: white;
+}
+
+.agendada {
+  background-color: #007bff;
+  color: white;
+}
+
+.excluida {
+  background-color: #6c757d;
+  color: white;
+}
+
+div.input-group input.form-control {
+  width: 90px !important;
+}
+
+.transparent-button {
+  background: transparent !important; /* Remove o background */
+  border: none; /* Remove a borda, se necessário */
+  color: inherit; /* Mantém a cor do texto como no tema */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+/* Status geral */
+.status-label {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: white;
+}
+
+/* Cores específicas dos status */
+.status-agendado {
+  background-color: #77aedf;
+}
+
+.status-tramitacao {
+  background-color: #ff8c00;
+}
+
+.status-pago {
+  background-color: #19a519;
+}
+
+.status-excluida {
+  background-color: #9597a6;
+}
+
+.status-atrasado {
+  background-color: #f25858;
+}
+
+.status-lote-cancelado-usuario {
+  background-color: #7d7d7d;
+}
+.status-lote-erro-sap {
+  background-color: rgb(255, 140, 0);
+}
+.status-cancelado {
+  background-color: #7d7d7d;
+}
+.estornada {
+  background-color: #ee3662;
+}
+
+.status-vencimento-parcela {
+  background-color: #f5a7007e;
+}
+
+.status-erro-processo-excluido {
+  background-color: #f10b42;
+}
+
+.buscar-dados {
+  // display: flex; /* Usar flexbox para alinhar os elementos */
+  align-items: center; /* Centralizar verticalmente */
+}
+
+.link-ver-dados {
+  border: none;
+  background: none;
+  margin-left: 1px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #786bb9;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.link-ver-dados:hover {
+  text-decoration: underline; /* Exemplo de efeito ao passar o mouse */
+}
+
+.form-row.compromissos-carga {
+  margin-left: -1px;
+}
+
+label.label-vencimento {
+  margin-left: -11px;
+}
+
+/*LAST ADJUSTEDS*/
+
+select#tipoProcesso {
+  width: 138px;
+}
+
+.codigo-interno-select {
+  padding-left: 1px;
+  padding-right: 1px;
+}

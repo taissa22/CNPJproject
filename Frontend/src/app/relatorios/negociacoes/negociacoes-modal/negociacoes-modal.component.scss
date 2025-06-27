@@ -1,0 +1,46 @@
+.modal-container {
+    padding: 1rem 1.5rem;
+}
+
+.btn-close {
+    display: flex;
+    align-items: center;
+}
+
+.opts-processo {
+    display: flex;
+}
+
+.configs {
+    display: flex;
+}
+
+.config-exec {
+    width: 40%;
+}
+
+.periodo-negociacoes {
+    width: 60%;
+}
+
+.chk-processo {
+    width: 14px;
+    height: 14px;
+}
+
+::ng-deep .modal-negociacoes {
+    .modal-content {
+        min-width: 559px !important;
+        max-width: 560px !important;
+    }
+    .modal-lg {
+        min-width: 559px !important;
+        max-width: 560px !important;
+    }
+}
+
+::ng-deep {
+    ngb-tooltip-window {
+        margin-bottom: 5px !important;
+    }
+}

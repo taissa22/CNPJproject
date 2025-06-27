@@ -1,0 +1,48 @@
+.pagina {
+    padding: 10px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+}
+
+.header_row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+}
+
+.content_row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.grid {
+    min-height: 250px;
+    border: 1px solid #ccc;
+}
+
+sisjur-table {
+    max-width: 100% !important;
+    table-layout: fixed;
+}
+
+.data_row {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // max-width: 242px;
+}
+
+.disabled {
+    color: #554d808a !important
+}

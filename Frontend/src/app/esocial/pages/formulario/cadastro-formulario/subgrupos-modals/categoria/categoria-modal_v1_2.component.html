@@ -1,0 +1,150 @@
+<div class="modal-header">
+  <span *ngIf="!categoria" class="modal-title pl-0"> Incluir Categoria</span>
+  <span *ngIf="categoria && temPermissaoEsocialBlocoABCDEFHI" class="modal-title pl-0">Alterar Categoria</span>
+  <span *ngIf="categoria && !temPermissaoEsocialBlocoABCDEFHI" class="modal-title pl-0">Consultar Categoria</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+  <div class="row mb-3" style="display: contents">
+    <div class="row mt-2">
+      <div class="col-sm-12">
+        <label class="pb-0 mb-1 tooltip-categoria"> <b>Categoria:</b> <i title="{{tooltipCategoria}}" class=" roxo-padrao fa fa-info-circle"></i>  </label>
+        <ng-select
+          class="form-control form-control-select"
+          [items]="listaCategoria"
+          bindLabel="descricaoConcatenada"
+          bindValue="id"
+          placeholder="Selecione um item"
+          [formControl]="codigoCategoriaFormControl"
+          [disabled]="!temPermissaoEsocialBlocoABCDEFHI"
+          [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI"
+        >
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-6">
+        <span class="col-form-label-sm pb-0 mb-1 tooltip-categoria">
+          <b>Natureza da Atividade:</b>
+          <i title="{{tooltipNatAtividade}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </span>
+
+        <ng-select
+          class="form-control form-control-select"
+          [items]="listaNaturezaAtividade"
+          bindLabel="descricao"
+          bindValue="id"
+          placeholder="Selecione um item"
+          [formControl]="naturezaAtividadeFormControl"
+          [disabled]="!temPermissaoEsocialBlocoABCDEFHI"
+          [class.disabled]="!temPermissaoEsocialBlocoABCDEFHI"
+        >
+        </ng-select>
+      </div>
+
+      <div class="col-sm-6">
+        <span class="col-form-label-sm pb-0 mb-1 tooltip-categoria tooltip-data-mudanca">
+          <b>Data de Mudança de Categoria:</b>
+          <i title="{{tooltipDataMundanca}}" class=" roxo-padrao fa fa-info-circle"></i> 
+        </span>
+        <div
+          class="form-group"
+          [class.disabled]="dataMudancaCategoriaFormControl.disabled"
+        >
+          <div class="form-inline input-group input-date" id="component-data">
+            <input
+              type="text"
+              class="form-control form-control-sm input-date"
+              placeholder="DD/MM/AAAA"
+              rInputMask="99/99/9999"
+              [bsConfig]="{ showWeekNumbers: false }"
+              name="dataMudancaCategoria"
+              id="dataMudancaCategoria"
+              [formControl]="dataMudancaCategoriaFormControl"
+              bsDatepicker
+              #dataMudancaCategoria="bsDatepicker"
+              placement="top-left top-right bottom-left bottom-right"
+            />
+            <div class="input-group-append">
+              <button
+                type="button"
+                class="btn btn btn-outline-secondary calendar"
+                (click)="dataMudancaCategoria.toggle()"
+                [attr.aria-expanded]="dataMudancaCategoria.isOpen"
+                [disabled]="dataMudancaCategoriaFormControl.disabled"
+              >
+                <i class="fa-solid fa-calendar-days"></i>
+              </button>
+            </div>
+            <ng-template #validacaoData>
+              <span
+                *ngIf="
+                  dataMudancaCategoriaFormControl.invalid &&
+                  dataMudancaCategoriaFormControl.errors.required
+                "
+              >
+                Campo obrigatório
+              </span>
+              <span
+                *ngIf="
+                  dataMudancaCategoriaFormControl.invalid &&
+                  dataMudancaCategoriaFormControl.errors.validDate
+                "
+              >
+                Data inválida
+              </span>
+              <span
+                *ngIf="
+                  dataMudancaCategoriaFormControl.invalid &&
+                  dataMudancaCategoriaFormControl.errors.bsDate &&
+                  dataMudancaCategoriaFormControl.errors.bsDate.invalid
+                "
+              >
+                Data inválida
+              </span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-link"
+    aria-label="Close"
+    (click)="close()"
+    *ngIf="temPermissaoEsocialBlocoABCDEFHI"
+  >
+    Cancelar
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary"
+    [disabled]="formGroup.invalid"
+    (click)="salvar()"
+    *ngIf="temPermissaoEsocialBlocoABCDEFHI"
+  >
+    Confirmar
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    [disabled]="formGroup.invalid"
+    (click)="close()"
+    *ngIf="!temPermissaoEsocialBlocoABCDEFHI"
+  >
+    Fechar
+  </button>
+</div>

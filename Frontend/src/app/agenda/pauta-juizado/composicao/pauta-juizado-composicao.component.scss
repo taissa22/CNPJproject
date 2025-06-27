@@ -1,0 +1,97 @@
+.container-breadcrumb {
+  .alert-primary {
+    padding: 5px 14px;
+  }
+}
+
+.select-interno-grid {
+  position:absolute;
+}
+
+.select-interno-header {
+  position:relative;
+}
+
+
+#container-paginacao-superior {
+  background-color: #786BB9;
+  color: #FFF;
+  border-radius: 2px;
+
+  div {
+    font-size: 13px;
+
+    label {
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-right: 4px;
+    }
+  }
+
+  .div-vara span {
+    text-transform: uppercase;
+  }
+
+  ::ng-deep{
+    sisjur-paginator {
+      span.total, ng-select {
+        display: none !important;
+      }
+
+      button {
+        color: #FFF;
+        opacity: 1;
+        padding: 2px;
+      }
+
+      button.btn.index {
+        max-width: 32px !important;
+        max-height: 28px;
+        min-width: 32px !important;
+        min-height: 28px;
+      }
+
+      button.btn.index.active{
+        background-color: #9f91e3 !important;
+      }
+    }
+
+  }
+}
+
+.voltar {
+  position: absolute;
+  right: 0;
+  top: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  img {
+    position: absolute;
+    right: 22px;
+    top: -8px;
+  }
+
+  span {
+    font-size: 16px;
+    margin-top: 2px;
+    display: inline-block;
+  }
+}
+
+.width-full {
+  width: 100%;
+}
+
+.mensagem-purple {
+  color: #554d80;
+  font-weight: bold;
+}
+
+.btn-link {
+  cursor: pointer;
+}
+
+.input-group-append{
+  z-index: 0;
+}

@@ -1,0 +1,119 @@
+﻿{
+   "CodeGenerationMode": 3,
+   "ContextClassName": "AtmCCContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "AtmCCContext\\Data",
+   "OutputPath": "AtmCCContext\\Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Oi.Juridico.Contextos.V2",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "JUR.ACA_USUARIO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.AGEND_RELAT_ATM_CC_INDICE_UF",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.AGEND_RELATORIO_ATM_CC",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ATM_INDICE_UF_PADRAO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.EMPRESAS_CENTRALIZADORAS",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.ESTADO",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.FECH_CIVEL_CONS_MEDIA",
+         "ObjectType": 0
+      },
+      {
+         "ExcludedColumns": [
+            "NUM_PROCESSO",
+            "COD_ESTADO",
+            "COD_COMARCA",
+            "NOM_COMARCA",
+            "COD_VARA",
+            "COD_TIPO_VARA",
+            "NOM_TIPO_VARA",
+            "COD_PARTE_EMPRESA",
+            "IND_CONSIDERAR_PROVISAO",
+            "DATA_FINALIZACAO_CONTABIL",
+            "DATA_CADASTRO",
+            "COD_ASSUNTO",
+            "DSC_ASSUNTO",
+            "COD_GRUPO_EMP_CONTABIL_SAP",
+            "NOM_GRUPO_EMP_CONTABIL_SAP",
+            "VALOR_PAGO",
+            "PRE_POS",
+            "NOM_SEGMENTO",
+            "NOM_SERVICO",
+            "NOM_PRODUTO",
+            "NOM_MACRO_PROCESSO",
+            "NOM_MOTIVO",
+            "NOM_SUB_MOTIVO",
+            "NOM_ELO_AUTOMATICO",
+            "ID_AREA_ENVOLVIDA",
+            "NOM_DIRETORIA",
+            "NOM_GERENCIA_NIVEL_1",
+            "NOM_GERENCIA_NIVEL_2",
+            "COD_TIPO_CALCULO_CONTINGENCIA",
+            "IND_EMP_RECUPERANDA",
+            "COD_GRUPO_EMPRESA_DINAMICO",
+            "NOM_GRUPO_EMPRESA_DINAMICO",
+            "DSC_MOTIVO_NAO_CONSIDERADO",
+            "COD_CLASSIFICACAO_CLOSING",
+            "PER_RESPONS_OI",
+            "DAT_DISTRIBUICAO"
+         ],
+         "Name": "JUR.FECH_CIVEL_CONS_MEDIA_BASE",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.INDICE",
+         "ObjectType": 0
+      },
+      {
+         "Name": "JUR.SOLIC_FECHAMENTO_CONT",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": true,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

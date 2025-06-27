@@ -1,0 +1,70 @@
+<style>
+  .modal-header button {
+    color: gray;
+  }
+
+  .modal-title {
+    margin: auto;
+  }
+
+  .btn-icon {
+    font-size: 18px;
+  }
+</style>
+
+<div class="modal-header">
+  <span class="modal-title pl-0">{{titulo}}</span>
+  <button type="button" id="close-button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<form [formGroup]="formGroup" class="modal-body pt-0">
+
+  <div >
+    <label class="col-form-label-sm fonte-padrao" for="descricao-input">
+      <b>Nome</b>
+    </label>
+    <input type="text" id="nome-input" #input [value]="input.value.toUpperCase()" maxlength="66" case [formControl]="nomeFormControl" class="form-control" style="height: 20px;"
+     [disableTooltip]="nomeFormControl.valid || nomeFormControl.untouched" [ngbTooltip]="descricaoError" >  
+    <ng-template #descricaoError>
+      <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.required">
+        Campo obrigatório    
+      </span>
+
+      <span *ngIf="nomeFormControl.invalid && nomeFormControl.errors.maxlength">
+        A descrição não pode ter mais de 66 caracteres
+      </span>
+      
+    </ng-template>
+  </div>
+
+
+  <div class="row d-flex mt-3 align-items-left ">
+    <div class="col-8">        
+      <input type="checkbox" id="mensal-checkbox" [formControl]="corrigePrincipalFormControl" style="margin-top: 1px;">
+      <label class="col-form-label-sm fonte-padrao" for="descricao-input">&nbsp;Corrige Principal   </label>
+    </div>
+  </div>
+
+  <div class="row d-flex mt-2 align-items-left"> 
+    <div class="col-8">
+      <input type="checkbox" id="multa-checkbox" [formControl]="corrigeMultaFormControl" style="margin-top: 1px;">
+      <label class="col-form-label-sm fonte-padrao" for="descricao-input" >&nbsp;Corrige Multas </label>
+    </div>
+  </div>
+
+  <div class="row d-flex mt-2 align-items-left">
+    <div class="col-8">      
+      <input type="checkbox" id="juros-input" [formControl]="corrigeJurosFormControl" style="margin-top: 1px;">
+      <label class="col-form-label-sm fonte-padrao" for="descricao-input">&nbsp;Corrige Juros  </label>
+    </div>
+  </div>
+
+
+</form>
+
+<div class="modal-footer">
+  <button type="button" id="cancelar-button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" id="confirmar-button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>

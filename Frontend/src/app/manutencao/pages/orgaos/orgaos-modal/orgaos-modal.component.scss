@@ -1,0 +1,12 @@
+.input-name {
+  text-transform:uppercase;
+}
+
+::ng-deep {
+  .orgao-modal{
+    .modal-dialog {
+    min-width: 900px !important;
+    max-width: 900px !important;
+    }
+  }
+}

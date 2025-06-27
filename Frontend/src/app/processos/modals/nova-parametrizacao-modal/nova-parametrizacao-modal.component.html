@@ -1,0 +1,160 @@
+<div class="modal-body">
+  <div class="pb-0">
+    <span class="modal-title pl-0">Parametrizar Distribuição de Processos para Escritórios</span>
+    <button type="button" class="btn btn-icon ml-auto" (click)="close()">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+
+  <div class="pt-3 row_anexo">
+    <p class="subTitle mb-0">Parametrize um ou mais escritórios para uma ou mais chaves de distribuição.</p>
+    <div class="ml-auto">
+      <button class="btn btn-secondary btn-circle" (click)="alterarAnexo()"><i
+          class="fas fa-paperclip fa-rotate-45"></i></button>
+      <label class="ml-2 mb-0 roxo-padrao roxo-padrao" for="anexar" id="label_anexo"
+        (click)="alterarAnexo()">Anexos</label>
+    </div>
+  </div>
+
+  <div class="customTab">
+    <ngb-tabset [destroyOnHide]="false" [activeId]="true">
+      <ngb-tab class="parametros-distribuicao">
+        <ng-template ngbTabTitle>
+          <span class="ngb-tab-title" style="font-size: 16px">
+            <i class="fas fa-file mr-2" style="font-size: 16px"></i>
+            Parâmetros de Distribuição</span>
+        </ng-template>
+        <ng-template ngbTabContent>
+          <ng-container *ngTemplateOutlet="tlDistribuicao"></ng-container>
+        </ng-template>
+      </ngb-tab>
+
+      <ngb-tab class="escritorio">
+        <ng-template ngbTabTitle>
+          <span class="ngb-tab-title" style="font-size: 16px">
+            <i class="fas fa-balance-scale mr-2" style="font-size: 16px"></i>
+            Escritórios</span>
+        </ng-template>
+        <ng-template ngbTabContent>
+          <ng-container *ngTemplateOutlet="tlEscritorio"></ng-container>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="validarParametrizacao()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Templates -->
+
+<ng-template #tlDistribuicao>
+  <span class="d-flex pt-4">
+    <i class="fas fa-plus-circle roxo-padrao ml-auto" style="font-size: 25px; margin-top: -14px; cursor: pointer; background-color: white;
+    padding-left: 10px;" id="adicionar-icon" (click)="adicionarDistribuicao()"></i>
+  </span>
+  <div class="pt-4">
+    <div class="tab-dist pt-2">
+      <ng-container *ngFor="let item of novaDistribuicao; let i = index">
+        <div style="margin-right: 10px;">
+          <div class="d-flex">
+            <div style="width: 20%;">
+              <b>Natureza:</b>
+              <ng-select [name]="'row_' + i" [items]="optList[i].naturezaList" bindLabel="nome" bindValue="codigo"
+                [clearable]="false" [(ngModel)]="item.natureza" (change)="clearListEscritorios(i)" (ngModelChange)="obterVara(item.comarca, i, item.natureza)">
+              </ng-select>
+            </div>
+            <div style="width: 8%; margin-left: 1%;">
+              <b>UF:</b>
+              <ng-select [name]="'row_' + i" [items]="optList[i].ufList" bindLabel="nome" bindValue="codigo"
+                [clearable]="false" [(ngModel)]="item.uf" (ngModelChange)="fazerBuscaComarca(item.uf, i)">
+              </ng-select>
+            </div>
+            <div style="width: 20%;margin-left: 1%;">
+              <b>Comarca:</b>
+              <ng-select [name]="'row_' + i" [items]="optList[i].comarcaList" bindLabel="nome" bindValue="codigo"
+                [clearable]="false" [(ngModel)]="item.comarca" (ngModelChange)="obterVara(item.comarca, i, item.natureza)">
+              </ng-select>
+            </div>
+            <div style="width: 20%;margin-left: 1%;">
+              <b>Vara:</b>
+              <ng-select [name]="'row_' + i" [items]="optList[i].varaList" bindLabel="nome" [clearable]="false"
+                [(ngModel)]="item.vara">
+              </ng-select>
+            </div>
+            <div style="width: 28%;margin-left: 1%;">
+              <b>Emp. Centralizadora:</b>
+              <ng-select [name]="'row_' + i" [items]="optList[i].empCentList" bindLabel="nome" bindValue="codigo"
+                [clearable]="false" [(ngModel)]="item.empresa">
+              </ng-select>
+            </div>
+
+            <div class="ml-3">
+              <i class="fas fa-trash roxo-padrao fa-2x" style="margin-top: 25px; font-size: 15px; cursor: pointer;"
+                (click)="removerDistribuicao(item)"></i>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #tlEscritorio>
+  <span class="d-flex">
+    <i class="fas fa-plus-circle roxo-padrao ml-auto" style="font-size: 25px; margin-top: -14px; cursor: pointer; background-color: white;
+    padding-left: 10px;" id="adicionar-icon" (click)="adicionarEscritorio()"></i>
+  </span>
+  <div class="pt-4">
+    <div style="text-align: end">
+      <button type="button" class="btn btn-link distribuir-percentual pr-0" (click)="distribuirPercentual()">Distribuir
+        % Processos</button>
+    </div>
+    <div class="drag-boundary pt-2" cdkDropList (cdkDropListDropped)="drop($event)">
+      <ng-container *ngFor="let item of novoEscritorio; let i = index">
+        <div class="drag-box" cdkDragBoundary=".drag-boundary" cdkDrag>
+          <div class="d-flex">
+            <div style="width: 50%">
+              <b>Escritório:</b>
+              <ng-select [name]="'row_esc_' + i" [items]="escritorioList" bindLabel="nome" bindValue="codigo"
+                [clearable]="false" placeholder="Selecione o Escritório" [(ngModel)]="item.escritorio">
+              </ng-select>
+            </div>
+            <div style="display: flex; flex-direction: column; margin-left: 20px">
+              <b>% Processos:</b>
+              <input type="text" [name]="'row_esc_' + i" class="percProcesso" percentNumberDirective #percProcessoNovo
+                value="percProcessoNovo.value" [(ngModel)]="item.percProcesso">
+            </div>
+            <div style="display: flex; flex-direction: column; margin-left: 20px">
+              <b>Prioridade:</b>
+              <input style="width: 45px;" [disabled]="true" type="text" [name]="'row_esc_' + i" class="percProcesso"
+                value="{{1 + i}}">
+            </div>
+          </div>
+          <div class="d-flex mt-4">
+            <div style="width: 50%">
+              <b>Solicitante:</b>
+              <ng-select [name]="'row_esc_' + i" [items]="solicitanteList" bindLabel="nome" bindValue="codigo"
+                [clearable]="false" placeholder="Selecione o Solicitante" [(ngModel)]="item.solicitante">
+              </ng-select>
+            </div>
+            <div style="margin-left: 20px;">
+              <b>Data da vigência:</b>
+              <app-data-range [dataInicio]="item.dataIni" [dataFim]="item.dataFim" (retDataFim)="item.dataFim = $event"
+                (retDataInicio)="item.dataIni = $event">
+              </app-data-range>
+            </div>
+            <div class="ml-5">
+              <i class="fas fa-trash roxo-padrao fa-2x" style="margin-top: -15px; font-size: 15px; cursor: pointer;"
+                (click)="removerEscritorio(item)"></i>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

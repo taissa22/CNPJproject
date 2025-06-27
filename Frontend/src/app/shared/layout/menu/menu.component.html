@@ -1,0 +1,65 @@
+<div id="menu2">
+  <ul class="menu2">
+    <ng-container *ngFor="let item of xmlItems; trackBy: trackByFunction">
+      <li class="pai" *ngIf="hasRole(item.permissoes)">
+        <a class="parent" (click)="
+      item.url != 'javascript:' ?
+      acessarRota(item.titulo, item.url) : ''">
+          <span>{{item.titulo}}</span>
+        </a>
+        <div class="filho1">
+          <ul class="teste">
+            <ng-container *ngFor="let filho of item.filhos; trackBy: trackByFunction">
+              <li *ngIf="hasRole(filho.permissoes)">
+                <a class="parent " (click)="
+            filho.url != 'javascript:' ?
+            acessarRota(item.titulo, filho.url) : ''">
+                  <span [ngClass]="filho.filhos.length > 0 ?'seta' : ''">{{filho.titulo}}</span></a>
+                <div class="filho2">
+                  <ul>
+                    <ng-container *ngFor="let filho2 of filho.filhos; trackBy: trackByFunction">
+                      <li *ngIf="hasRole(filho2.permissoes)">
+                        <a (click)="
+                  filho2.url != 'javascript:' ?
+                  acessarRota(item.titulo,filho2.url) : ''" class="parent ">
+                          <span [ngClass]="filho2.filhos.length > 0 ? 'seta' : ''">{{filho2.titulo}}</span>
+                        </a>
+                        <div class="filho3">
+                          <ul>
+                            <ng-container *ngFor="let filho3 of filho2.filhos; trackBy: trackByFunction">
+                              <li *ngIf="hasRole(filho3.permissoes)">
+                                <a class="parent " (click)="
+                      filho3.url != 'javascript:' ?
+                      acessarRota(filho3.titulo,filho3.url) : ''">
+                                  <span
+                                  [ngClass]="filho3.filhos.length > 0 ? 'seta' : ''">{{filho3.titulo}}</span>
+                                </a>
+                                <div class="filho4">
+                                  <ul>
+                                    <ng-container *ngFor="let filho4 of filho3.filhos; trackBy: trackByFunction">
+                                      <li *ngIf="hasRole(filho4.permissoes)">
+                                        <a (click)="filho4.url != 'javascript:' ?
+                                        acessarRota(filho4.titulo,filho4.url) : ''">
+                                          <span>{{filho4.titulo}}</span>
+                                        </a>
+                                      </li>
+                                    </ng-container>
+                                  </ul>
+                                </div>
+                              </li>
+                            </ng-container>
+                          </ul>
+                        </div>
+                      </li>
+                    </ng-container>
+                  </ul>
+
+                </div>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>

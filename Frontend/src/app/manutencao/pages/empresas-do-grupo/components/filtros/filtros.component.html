@@ -1,0 +1,33 @@
+<div>
+  <div class="row pt-3">
+    <div class="col-md-12">
+      <p class="font-purple">
+        Os filtros abaixo não são obrigatórios, mas podem ser utilizados para encontrar empresas do grupo específicas.
+      </p>
+    </div>
+  </div>
+  <div class="row pt-3">
+    <div class="col-md-4 pr-1">
+      <label for="nome" class="col-form-label-sm">Nome:</label>
+      <input type="text" id="nome" [formControl]="nomeFormControl" (keyup.enter)="obterValoresDoFiltro()" maxlength="400" class="form-control">
+    </div>
+    <div class="col-md-2 px-1">
+      <label for="cpf-cnpj" class="col-form-label-sm">CNPJ:</label>
+      <input
+        type="text"
+        [textMask]="{ mask: mascaraCnpj }"
+        id="cnpj"
+        [formControl]="cnpjFormControl"
+        (keyup.enter)="obterValoresDoFiltro()"
+        class="form-control">
+    </div>
+    <div class="col-md-2 px-1">
+      <label for="carteira-trabalho" class="col-form-label-sm">Centro SAP:</label>
+      <input type="text" id="carteira-trabalho" [formControl]="centroSapFormControl" (keyup.enter)="obterValoresDoFiltro()" class="form-control" maxlength="4">
+    </div>
+    <div class="col-md-2 pl-1" [ngStyle]="{ paddingTop: '1.8rem' }">
+      <button type="button" class="btn btn-primary" (click)="obterValoresDoFiltro()">Buscar</button>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>

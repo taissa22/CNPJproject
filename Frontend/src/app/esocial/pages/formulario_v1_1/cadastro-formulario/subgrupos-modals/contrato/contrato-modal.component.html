@@ -1,0 +1,456 @@
+<div class="modal-header">
+  <span class="modal-title pl-0">{{titulo}}</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<div style="max-width: 560px">
+  <form [formGroup]="formGroup" class="modal-body p-0">
+    <div class="row ml-auto mt-2 pb-2">
+      <div class="col-sm-12 pr-4">
+        <span class="tooltip-info-ent"> <b>Tipo de Contrato:</b><i title="{{tooltipTipContr}}" class=" roxo-padrao fa fa-info-circle"></i> </span>
+        <ng-select [items]="tipoContratoLista" bindLabel="descricaoConcatenada" bindValue="id"
+          placeholder="Selecione um item" [formControl]="tipoContratoFormControl" [disableTooltip]="
+          desabilitaTooltip(tipoContratoFormControl)" [ngbTooltip]="validacaoTipoContrato" (change)="ajustaValidators()" [disabled]="consulta"
+          [class.disabled]="consulta">
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <ng-template #validacaoTipoContrato>
+        <span *ngIf="
+            tipoContratoFormControl.invalid &&
+            tipoContratoFormControl.hasError('required')
+          ">
+          Campo obrigatório.
+        </span>
+      </ng-template>
+    </div>
+
+    <div class="row ml-auto mt-2 pb-2">
+      <div class="col-sm-6">
+        <span class="tooltip-info-ent"><b class="ml-1">Possui Inf. Evento Admissão/Início:</b> <i title="{{tooltipIndContr}}" class=" roxo-padrao fa fa-info-circle"></i></span>
+        <ng-select [items]="listaSimNao" bindLabel="descricao" bindValue="id" placeholder="Selecione um item"
+          [formControl]="possuiInformacaoContribuicaoFormControl" [disableTooltip]="
+          desabilitaTooltip(possuiInformacaoContribuicaoFormControl)
+          " [ngbTooltip]="validacaoIndContrato" (change)="ajustaValidators()" [disabled]="consulta"
+          [class.disabled]="consulta">
+        </ng-select>
+        <ng-template #validacaoIndContrato>
+          <span *ngIf="
+              possuiInformacaoContribuicaoFormControl.invalid &&
+              possuiInformacaoContribuicaoFormControl.hasError('required')
+            ">
+            Campo obrigatório.
+          </span>
+        </ng-template>
+      </div>
+
+      <div class="col-sm-4">
+        <span class="col-form-label-sm pb-0 mb-1 tooltip-info-ent">
+          <b>Data de Admissão Original:</b>
+          <i title="{{tooltipDtAdmOriginal}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </span>
+        <div class="form-group" [class.disabled]="dataAdmissaoOriginalFormControl.disabled">
+          <div class="form-inline input-group input-date" id="component-data-adm-original">
+            <input type="text" class="form-control form-control-sm input-date" placeholder="DD/MM/AAAA"
+              rInputMask="99/99/9999" [bsConfig]="{ showWeekNumbers: false }" name="dataAdmissaoOriginal"
+              id="dataAdmissaoOriginal" [formControl]="dataAdmissaoOriginalFormControl"
+              [maxDate]="dataMaximaAdmissaoOriginal" bsDatepicker #dataAdmissaoOriginal="bsDatepicker"
+              placement="top-left top-right bottom-left bottom-right" [disableTooltip]="
+              desabilitaTooltip(dataAdmissaoOriginalFormControl)"
+              [ngbTooltip]="validacaoDataAdmOrginal" [required]="validaDataAdmissaoOriginal" />
+            <div class="input-group-append">
+              <button type="button" class="btn btn btn-outline-secondary calendar"
+                (click)="dataAdmissaoOriginal.toggle()" [attr.aria-expanded]="dataAdmissaoOriginal.isOpen"
+                [disabled]="dataAdmissaoOriginalFormControl.disabled">
+                <i class="fa-solid fa-calendar-days"></i>
+              </button>
+            </div>
+            <ng-template #validacaoDataAdmOrginal>
+              <span *ngIf="
+                  dataAdmissaoOriginalFormControl.invalid &&
+                  dataAdmissaoOriginalFormControl.errors.bsDate?.maxDate
+                ">
+                Data de Admissão deve ser menor que a atual.
+              </span>
+              <span *ngIf="
+                  dataAdmissaoOriginalFormControl.invalid &&
+                  dataAdmissaoOriginalFormControl.hasError('validDate')
+                ">
+                Data inválida
+              </span>
+              <span *ngIf="
+                  dataAdmissaoOriginalFormControl.invalid &&
+                  dataAdmissaoOriginalFormControl.errors.bsDate &&
+                  dataAdmissaoOriginalFormControl.errors.bsDate.invalid
+                ">
+                Data inválida
+              </span>
+              <span *ngIf="
+                  dataAdmissaoOriginalFormControl.invalid &&
+                  dataAdmissaoOriginalFormControl.hasError('required')
+                ">
+                Campo obrigatório se o "Tipo de Contrato" for 2 ou 4.
+              </span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+
+    <div class="row ml-auto mt-2 pb-2">
+      <div class="col-sm-6 pr-3">
+        <span class="tooltip-info-ent"> <b>Reintegração:</b> <i title="{{tooltipReintegracao}}" class=" roxo-padrao fa fa-info-circle"></i></span>
+        <ng-select [items]="listaSimNao" bindLabel="descricao" bindValue="id" placeholder="Selecione um item"
+          [formControl]="reintegracaoEmpregadoFormControl" [disableTooltip]="
+          desabilitaTooltip(reintegracaoEmpregadoFormControl)" [ngbTooltip]="validacaoReintegracao" [disabled]="consulta" [class.disabled]="consulta">
+        </ng-select>
+        <ng-template #validacaoReintegracao>
+          <span *ngIf="
+              reintegracaoEmpregadoFormControl.invalid &&
+              reintegracaoEmpregadoFormControl.hasError('required')
+            ">
+            Campo obrigatório se o "Tipo de Contrato" for diferente de 6 e se o
+            campo "Possui inf Evento Admissão/Início" for "Sim".
+          </span>
+        </ng-template>
+      </div>
+
+      <div class="col-sm-6 pr-4">
+        <span class="tooltip-info-ent"> <b>Categoria Diferente Contrato: </b> <i title="{{tooltipCateDifCont}}" class=" roxo-padrao fa fa-info-circle"></i></span>
+        <ng-select [items]="listaSimNao" bindLabel="descricao" bindValue="id" placeholder="Selecione um item"
+          [formControl]="categoriaDiferenteCadastradaFormControl" [disableTooltip]="
+          desabilitaTooltip(categoriaDiferenteCadastradaFormControl)" [ngbTooltip]="validacaoCategoriaDiferentre" [disabled]="consulta" [class.disabled]="consulta">
+        </ng-select>
+      </div>
+      <ng-template #validacaoCategoriaDiferentre>
+        <span *ngIf="
+            categoriaDiferenteCadastradaFormControl.invalid &&
+            categoriaDiferenteCadastradaFormControl.hasError('required')
+          ">
+          Campo obrigatório.
+        </span>
+      </ng-template>
+    </div>
+
+    <div class="row ml-auto mt-2 pb-2">
+      <div class="col-sm-6 pr-3">
+        <span class="tooltip-info-ent"> <b>Natureza Diferente Contrato: </b> <i title="{{tooltipNatDifCont}}" class=" roxo-padrao fa fa-info-circle"></i></span>
+        <ng-select [items]="listaSimNao" bindLabel="descricao" bindValue="id" placeholder="Selecione um item"
+          [formControl]="naturezaDiferenteCadastradaFormControl" [disableTooltip]="
+          desabilitaTooltip(naturezaDiferenteCadastradaFormControl)" [ngbTooltip]="validacaoNaturezaDiferente" [disabled]="consulta" [class.disabled]="consulta">
+        </ng-select>
+        <ng-template #validacaoNaturezaDiferente>
+          <span *ngIf="
+              naturezaDiferenteCadastradaFormControl.invalid &&
+              naturezaDiferenteCadastradaFormControl.hasError('required')
+            ">
+            Campo obrigatório.
+          </span>
+        </ng-template>
+      </div>
+
+      <div class="col-sm-6 pr-4">
+        <span class="pb-0 mb-1 tooltip-info-ent" style="margin-top: 5px">
+          <b>Motivo Desligamento Diferente Contrato:</b>
+          <i title="{{tooltipMotDeslDifCont}}" class=" roxo-padrao fa fa-info-circle"></i>
+        </span>
+
+        <ng-select [items]="listaSimNao" bindLabel="descricao" bindValue="id" placeholder="Selecione um item"
+          [formControl]="motivoDesligamentoDiferenteContratoFormControl" [disableTooltip]="
+          desabilitaTooltip(motivoDesligamentoDiferenteContratoFormControl)" [ngbTooltip]="validacaoMotivoDiferente" [disabled]="consulta" [class.disabled]="consulta">
+        </ng-select>
+        <ng-template #validacaoMotivoDiferente>
+          <span *ngIf="
+              motivoDesligamentoDiferenteContratoFormControl.invalid &&
+              motivoDesligamentoDiferenteContratoFormControl.hasError(
+                'required'
+              )
+            ">
+            Campo obrigatório.
+          </span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="row ml-auto mt-2 pb-2">
+      <div class="col-sm-6 pr-3">
+        <span class="tooltip-info-ent"> <b>Unicidade Contratual:</b> <i title="{{tooltipUnidContrat}}" class=" roxo-padrao fa fa-info-circle"></i></span>
+        <ng-select [items]="listaSimNao" bindLabel="descricao" bindValue="id" placeholder="Selecione um item"
+          [formControl]="unicidadeContratualFormControl" [disabled]="consulta" [class.disabled]="consulta">
+        </ng-select>
+      </div>
+
+      <div class="col-sm-6 pr-4">
+        <span class="pb-0 mb-1 tooltip-info-ent imput-matricula"> <b>Matrícula:</b>  <i title="{{tooltipMatricula}}" class=" roxo-padrao fa fa-info-circle"></i> </span>
+        <div class="d-flex">
+          <input type="search" class="form-control imput-matricula" maxlength="30" [formControl]="matriculaFormControl"
+            (change)="ajustaValidators()" [disableTooltip]="desabilitaTooltip(matriculaFormControl)" [ngbTooltip]="validacaoMatricula"
+          [disabled]="consulta" [class.disabled]="consulta" />
+          <button *ngIf="exibirGerarFicticia" class="btn btn-link" style="cursor: pointer; text-decoration: none;"
+          (click)="gerarMatriculaTerceiro()">
+          Gerar fictícia</button>
+            <ng-template #validacaoMatricula>
+              <span *ngIf="matriculaFormControl.invalid &&
+                            matriculaFormControl.hasError('required')
+                ">
+                Deve ser criado uma matrícula para o trabalhador,
+                quando o campo “Indicativo se o contrato possui informação
+                no evento de admissão ou início” for igual a "Não".
+              </span>
+            </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <div class="row ml-auto mt-2 pb-2">
+      <div class="col-sm-12">
+        <span> <b>Categoria:</b> </span>
+        <ng-select [items]="listaCategoria" bindLabel="descricaoConcatenada" bindValue="id"
+          placeholder="Selecione um item" [formControl]="codigoCategoriaFormControl" [disableTooltip]="
+          desabilitaTooltip(codigoCategoriaFormControl)" [ngbTooltip]="validacaoCodCategoria" (change)="ajustaValidators()" [disabled]="consulta"
+          [class.disabled]="consulta">
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <ng-template #validacaoCodCategoria>
+        <span *ngIf="
+            codigoCategoriaFormControl.invalid &&
+            codigoCategoriaFormControl.hasError('required')
+          ">
+          Campo obrigatório se o campo "Possui inf Evento Admissão/Início" for
+          "Não" ou se o campo "Matrícula" não tiver sido preenchido.
+        </span>
+      </ng-template>
+    </div>
+
+    <div class="row ml-auto mt-2 pb-2">
+      <div class="col-sm-12">
+        <span> <b>Código CBO:</b> </span>
+        <ng-select [items]="listaCBO" bindLabel="descricaoConcatenada" bindValue="id" placeholder="Selecione um item"
+          [formControl]="codigoCboFormControl" [disableTooltip]="
+          desabilitaTooltip(codigoCboFormControl)" [ngbTooltip]="validaCodigoCBO" [disabled]="consulta" [class.disabled]="consulta">
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <ng-template #validaCodigoCBO>
+        <span *ngIf="
+            codigoCboFormControl.invalid &&
+            codigoCboFormControl.hasError('required')
+          ">
+          Campo de preenchimento obrigatório se o campo 'Possui inf Evento
+          Admissão/Início' estiver preenchido com 'Não' e se a Categoria for
+          diferente de 901, 903 ou 904.
+        </span>
+      </ng-template>
+    </div>
+
+    <div class="row ml-auto mt-2 pb-2">
+      <div class="col-sm-6">
+        <span> <b>Natureza da Atividade:</b> </span>
+        <ng-select [items]="listaNaturezaAtividade" bindLabel="descricaoConcatenada" bindValue="id"
+          placeholder="Selecione um item" (change)="ajustaValidators()" [formControl]="naturezaAtividadeFormControl"
+          [disableTooltip]="
+          desabilitaTooltip(naturezaAtividadeFormControl)" [ngbTooltip]="validacaoNaturezaAtividade" [disabled]="consulta" [class.disabled]="consulta">
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <ng-template #validacaoNaturezaAtividade>
+        <span *ngIf="
+          naturezaAtividadeFormControl.invalid &&
+          naturezaAtividadeFormControl.hasError('required')
+          ">
+          Campo obrigatório se o campo "Possui inf Evento Admissão/Início" estiver preenchido com "Não" e a "Categoria"
+          informada
+          for relativa a "Empregado", "Agente Público", "Avulso" ou igual a 401, 731, 734 ou 738.
+        </span>
+        <span *ngIf="
+        naturezaAtividadeFormControl.invalid &&
+        naturezaAtividadeFormControl.hasError('preenchimentoProibido')
+        ">
+          Não preencha este campo se a Categoria for igual a 721, 722, 771 ou 901.
+        </span>
+        <span *ngIf="
+        naturezaAtividadeFormControl.invalid &&
+        naturezaAtividadeFormControl.hasError('preenchimentoProibido104')
+        ">
+          Se a Categoria for igual a 104, a Natureza de Atividade deve ser "Trabalho urbano".
+        </span>
+        <span *ngIf="
+        naturezaAtividadeFormControl.invalid &&
+        naturezaAtividadeFormControl.hasError('preenchimentoProibido102')
+        ">
+          Se a Categoria for igual a 102, a Natureza de Atividade deve ser "Trabalho rural".
+        </span>
+      </ng-template>
+    </div>
+
+
+    <div class="row ml-auto mt-2 pb-2">
+      <div class="col-sm-4 pr-3">
+        <span class="col-form-label-sm pb-0 mb-1">
+          <b>Data de Início de TSVE:</b>
+        </span>
+        <div class="form-group" [class.disabled]="dataInicioContratoFormControl.disabled">
+          <div class="form-inline input-group input-date" id="component-data">
+            <input type="text" class="form-control form-control-sm input-date" placeholder="DD/MM/AAAA"
+              rInputMask="99/99/9999" [bsConfig]="{ showWeekNumbers: false }" name="dataInicioContrato"
+              id="dataInicioContrato" [formControl]="dataInicioContratoFormControl" bsDatepicker
+              #dataInicioContrato="bsDatepicker" placement="top-left top-right bottom-left bottom-right"
+              (bsValueChange)="ajustaDataTermindoTSVE($event)" [required]="validaDataInicioTSVE" [maxDate]="dataAtual"
+              [disableTooltip]="
+              desabilitaTooltip(dataInicioContratoFormControl)" [ngbTooltip]="validacaoDataInicioTSVE" />
+            <div class="input-group-append">
+              <button type="button" class="btn btn btn-outline-secondary calendar" (click)="dataInicioContrato.toggle()"
+                [attr.aria-expanded]="dataInicioContrato.isOpen" [disabled]="dataInicioContratoFormControl.disabled">
+                <i class="fa-solid fa-calendar-days"></i>
+              </button>
+            </div>
+            <ng-template #validacaoDataInicioTSVE>
+              <span *ngIf="
+                  dataInicioContratoFormControl.invalid &&
+                  dataInicioContratoFormControl.errors.validDate
+                ">
+                Data de Início de TSVE inválida.
+              </span>
+              <span *ngIf="
+                  dataInicioContratoFormControl.invalid &&
+                  dataInicioContratoFormControl.errors.bsDate &&
+                  dataInicioContratoFormControl.errors.bsDate.invalid
+                ">
+                Data de Início de TSVE inválida.
+              </span>
+              <span *ngIf="
+                  dataInicioContratoFormControl.invalid &&
+                  dataInicioContratoFormControl.hasError('required')
+                ">
+                A Data de Início de TSVE deve ser informada se o Tipo de Contrato for igual a "6-Trabalhador sem vínculo de emprego/estatutário (TSVE),
+                sem reconhecimento de vínculo empregatício" e se o campo "Possui inf Evento de admissão/Início" estiver preenchido com "Não" ou se "Matrícula" não estiver preenchida.
+              </span>
+              <span *ngIf="
+                  dataInicioContratoFormControl.invalid &&
+                  dataInicioContratoFormControl.errors.bsDate?.maxDate
+                ">
+                A Data de Início de TSVE deve ser menor que a atual.
+              </span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-2"></div>
+
+      <div class="col-sm-4 pr-4">
+        <span class="col-form-label-sm pb-0 mb-1">
+          <b>Data do término de TSVE:</b>
+        </span>
+        <div class="form-group" [class.disabled]="dataTerminoContratoFormControl.disabled">
+          <div class="form-inline input-group input-date" id="component-data">
+            <input type="text" class="form-control form-control-sm input-date" placeholder="DD/MM/AAAA"
+              rInputMask="99/99/9999" [bsConfig]="{ showWeekNumbers: false }" name="dataTerminoContrato"
+              id="dataTerminoContrato" [formControl]="dataTerminoContratoFormControl" bsDatepicker
+              #dataTerminoContrato="bsDatepicker" placement="top-left top-right bottom-left bottom-right"
+              [maxDate]="dataMaximaTerminoTSVE" [minDate]="dataInicioContratoFormControl.value"
+              [disabled]="dataTerminoContratoFormControl.disabled" (bsValueChange)="ajustaMotivoTerminidoTSVE($event)"
+              [disableTooltip]="
+              desabilitaTooltip(dataTerminoContratoFormControl)" [ngbTooltip]="validacaoDataTerminoTSVE" />
+            <div class="input-group-append">
+              <button type="button" class="btn btn btn-outline-secondary calendar"
+                (click)="dataTerminoContrato.toggle()" [attr.aria-expanded]="dataTerminoContrato.isOpen"
+                [disabled]="dataTerminoContratoFormControl.disabled">
+                <i class="fa-solid fa-calendar-days"></i>
+              </button>
+            </div>
+            <ng-template #validacaoDataTerminoTSVE>
+              <span *ngIf="
+                  dataTerminoContratoFormControl.invalid &&
+                  dataTerminoContratoFormControl.errors.validDate
+                ">
+                Data inválida
+              </span>
+              <span *ngIf="
+                  dataTerminoContratoFormControl.invalid &&
+                  dataTerminoContratoFormControl.errors.bsDate &&
+                  dataTerminoContratoFormControl.errors.bsDate.invalid
+                ">
+                Data inválida
+              </span>
+              <span *ngIf="
+                  dataTerminoContratoFormControl.invalid &&
+                  dataTerminoContratoFormControl.errors.bsDate?.minDate
+                ">
+                A data informada deve ser maior do que a "Data de Início de
+                TSVE"
+              </span>
+              <span *ngIf="
+                  dataTerminoContratoFormControl.invalid &&
+                  dataTerminoContratoFormControl.errors.bsDate?.maxDate
+                ">
+                A data informada deve ser menor ou igual a data atual acrescida
+                de 10 (dez) dias.
+              </span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row ml-auto mt-2 pb-2">
+      <div class="col-sm-12">
+        <span class="tooltip-info-ent"> <b>Motivo do Término de TSVE (Diretor):</b> <i title="{{tooltipMotivoTermino}}" class=" roxo-padrao fa fa-info-circle"></i></span>
+        <ng-select [ngClass]="motivoDesligamentoFormControl.disabled ? 'disabled' : ''"
+          [items]="listaMotivoDesligamento" bindLabel="descricaoConcatenada" bindValue="id"
+          placeholder="Selecione um item" [formControl]="motivoDesligamentoFormControl" [disableTooltip]="
+          desabilitaTooltip(motivoDesligamentoFormControl)" [ngbTooltip]="validaMotivoDesligamento" [disabled]="motivoDesligamentoFormControl.disabled">
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+      </div>
+      <ng-template #validaMotivoDesligamento>
+        <span *ngIf="
+            motivoDesligamentoFormControl.invalid &&
+            motivoDesligamentoFormControl.hasError('required')
+          ">
+          Campo obrigatório se a "Data do Término de TSVE" tiver sido preenchida
+          e se o código "Categoria" selecionada for igual a 721.
+        </span>
+      </ng-template>
+    </div>
+  </form>
+
+  <div class="modal-footer">
+    <button *ngIf="!consulta" type="button" class="btn btn-link" aria-span="Close" (click)="close()">
+      Cancelar
+    </button>
+
+    <button *ngIf="!consulta" type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="salvar()">
+      Confirmar
+    </button>
+
+    <button *ngIf="consulta" type="button" class="btn btn-primary" aria-span="Close" (click)="close()">
+      Fechar
+    </button>
+
+  </div>
+</div>

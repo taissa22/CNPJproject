@@ -1,0 +1,157 @@
+<div class="container-modal">
+    <div class="title">
+        <h4 class="roxo-padrao mb-0">Informações Complementares - Rendimentos Recebidos Acumuladamente RRA</h4>
+        <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
+        </div>
+    </div>
+
+    <div class="row cardInfo">
+        <div class="col-sm-1 mt-3">
+            <label class="col-form-label-sm pb-0 mb-1">
+      <b>ID:</b>
+    </label>
+            <p>{{codIrrf}}</p>
+        </div>
+        <div class="col-sm-4 mt-3">
+            <label class="col-form-label-sm pb-0 mb-1">
+      <b>Código Receita (CR) IRRF:</b>
+    </label>
+            <p>{{codReceita}}</p>
+        </div>
+        <div class="col-sm-4 mt-3">
+            <label class="col-form-label-sm pb-0 mb-1">
+      <b>Valor Correspondente (CR) IRRF - Rendimento Mensal:</b>
+    </label>
+            <p>{{valorIrrf | currency: "BRL":"R$ ":"1.2-2":"pt"}}</p>
+        </div>
+        <div class="col-sm-3 mt-3">
+            <label class="col-form-label-sm pb-0 mb-1">
+            <b>Valor Correspondente (CR) IRRF - 13º:</b>
+        </label>
+            <p>{{valorIrrf13 | currency: "BRL":"R$ ":"1.2-2":"pt"}}</p>
+        </div>
+    </div>
+
+    <ng-container *ngTemplateOutlet="tplRRA"></ng-container>
+
+    <div style="margin: 0 1rem 1rem; border-top: 1px solid #ccc;">
+        <h4 class="roxo-padrao titulo-adv">Advogados</h4>
+
+        <app-info-rend-rra-advogados [codF2501]="codF2501" [codIrrf]="codIrrf" [temPermissaoBlocoCeDeE]="temPermissaoBlocoCeDeE"></app-info-rend-rra-advogados>
+
+    </div>
+
+    <div class="modal-footer pr-0">
+        <button type="button" class="btn btn-link" aria-label="Close" (click)="close()" *ngIf="temPermissaoBlocoCeDeE">
+        Cancelar
+    </button>
+        <button type="button" class="btn btn-primary" (click)="salvar()" *ngIf="temPermissaoBlocoCeDeE">
+        Confirmar
+    </button>
+        <button type="button" class="btn btn-primary" (click)="close()" *ngIf="!temPermissaoBlocoCeDeE">
+        Fechar
+    </button>
+    </div>
+</div>
+
+<ng-template #tplRRA>
+    <form [formGroup]="formGroup">
+        <div class="d-flex main">
+            <div class="cols-rra">
+                <label for="descricao" class="col-form-label-sm pb-0 mb-1" style="display: flex; align-items: flex-start; font-size: 13px; flex-wrap: wrap; resize: none;">
+          <b class="mb-2">Descrição dos Rendimentos Recebidos Acumuladamente RRA:</b>
+          <textarea (input)="countDesc()" name="descricao" id="descricao" cols="30" rows="9" (blur)="adicionaValidators(); validaDescricaoRRA()"
+            class="form-control ml-auto descricao" maxlength="50" [formControl]="inforraDescrraFormControl"
+            [disableTooltip]="desabilitaTooltip(inforraDescrraFormControl)" [ngbTooltip]="validacaoDescricao" 
+            [disabled]="!temPermissaoBlocoCeDeE" [class.disabled]="!temPermissaoBlocoCeDeE"></textarea>
+           <ng-template #validacaoDescricao>
+               <span *ngIf="
+                   inforraDescrraFormControl.invalid &&
+                   inforraDescrraFormControl.hasError('required')
+                 ">
+                 Campo obrigatório.
+               </span>
+               <span *ngIf="
+                   inforraDescrraFormControl.invalid &&
+                   inforraDescrraFormControl.hasError('campoObrigatorioRRA')
+                 ">
+                 Campo obrigatório caso o código da receita seja 188951 - IRRF - RRA.
+               </span>
+           </ng-template>
+          <br>
+          <p class="ml-auto">{{descCount}}/50</p>
+        </label>
+
+            </div>
+
+            <div class="cols-rra">
+
+                <div class="col-sm-8">
+                    <label class="col-form-label-sm pb-0 mb-1">
+            <b>N° Meses RRA:</b>
+          </label>
+                    <input type="text"  maxlength="5"  class="form-control" (input)="removerNaoNumericosMeses()"       
+                    [formControl]="inforraQtdmesesrraFormControl" [disableTooltip]="desabilitaTooltip(inforraQtdmesesrraFormControl)" 
+                    [ngbTooltip]="validacaoQtdMeses" [disabled]="!temPermissaoBlocoCeDeE" (blur)="adicionaValidators(); validaValorMeses();"
+                        [class.disabled]="!temPermissaoBlocoCeDeE" />
+                    <ng-template #validacaoQtdMeses>
+                        <span *ngIf="
+                            inforraQtdmesesrraFormControl.invalid &&
+                            inforraQtdmesesrraFormControl.hasError('required')
+                          ">
+                          Campo obrigatório.
+                        </span>
+                        <span *ngIf="inforraQtdmesesrraFormControl.invalid && inforraQtdmesesrraFormControl.hasError('valorInvalido') ">
+                            Deve ser maior que 0 (zero).
+                        </span>
+                        <span *ngIf="inforraQtdmesesrraFormControl.invalid && inforraQtdmesesrraFormControl.hasError('campoMesesObrigatorioRRA') ">
+                            Campo obrigatório caso o código da receita seja 188951 - IRRF - RRA.
+                        </span>
+                    </ng-template>
+                </div>
+
+                <div class="col-sm-8 pt-3">
+                    <label class="col-form-label-sm pb-0 mb-1">
+                        <b>Custas Judiciais:</b>
+                    </label>
+                    <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left' }" 
+                    maxlength="21" class="form-control" 
+                    [formControl]="despprocjudVlrdespcustasFormControl" (blur)="adicionaValidators();"
+                    [disableTooltip]="desabilitaTooltip(despprocjudVlrdespcustasFormControl)" [ngbTooltip]="validacaoCustasJudiciais" 
+                    />
+
+                    <ng-template #validacaoCustasJudiciais>
+                        <span *ngIf="
+                            despprocjudVlrdespcustasFormControl.invalid &&
+                            despprocjudVlrdespcustasFormControl.hasError('required')
+                          ">
+                          Campo obrigatório.
+                        </span>
+                    </ng-template>
+                </div>
+
+                <div class="col-sm-8 pt-3">
+                    <label class="col-form-label-sm pb-0 mb-1">
+                        <b>Despesas Advogados:</b>
+                    </label>
+                    <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'left' }" 
+                    maxlength="21" class="form-control" 
+                    [formControl]="despprocjudVlrdespadvogadosFormControl" (blur)="adicionaValidators();"
+                    [disableTooltip]="desabilitaTooltip(despprocjudVlrdespadvogadosFormControl)" [ngbTooltip]="validacaoCustasAdvogados" 
+                    />
+                </div>
+                <ng-template #validacaoCustasAdvogados>
+                    <span *ngIf="
+                        despprocjudVlrdespadvogadosFormControl.invalid &&
+                        despprocjudVlrdespadvogadosFormControl.hasError('required')
+                      ">
+                      Campo obrigatório.
+                    </span>
+                </ng-template>
+
+            </div>
+
+        </div>
+    </form>
+</ng-template>

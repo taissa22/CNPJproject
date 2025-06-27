@@ -1,0 +1,95 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./assets/sap/themes/variables.scss";
+
+ol,
+ul,
+dl {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.iconsSize {
+  font-size: 15px;
+  padding-right: 5px;
+  color: $corRoxa;
+}
+
+.corRoxa {
+  color: $corRoxa;
+}
+
+div#GlobalSite {
+  margin: 0 auto;
+  min-width: 940px;
+  max-width: 1140px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  text-align: left;
+  font-size: 12px;
+}
+
+div#GlobalSite h1 {
+  font-size: 20px;
+  margin: 0 0 2px 0;
+  color: $corRoxoEscuro;
+}
+
+div#GlobalSite h2 {
+  font: 20px thahoma, arial;
+  margin: 15px 0;
+}
+
+div#GlobalSite h3 {
+  font-size: 18px;
+}
+
+div#GlobalSite h4 {
+  font-size: 13px;
+  margin: 5px 0;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.calendar-button {
+  background-image: url("./assets/sap/img/box_calendar.png");
+  width: 20px;
+  height: 20px;
+  box-shadow: none;
+  background-color: transparent;
+  border: none;
+  background-repeat: no-repeat;
+  background-position: 4px;
+  outline: none;
+}
+
+.carregando-tabela {
+  text-align: center;
+}
+
+.carregando-tabela img {
+  height: 20px;
+  margin: auto;
+  margin-top: 4px;
+}
+
+.preselecionado {
+  background-color: #1e90ff !important;
+}
+
+
+.button-pointer{
+  cursor: pointer;
+}

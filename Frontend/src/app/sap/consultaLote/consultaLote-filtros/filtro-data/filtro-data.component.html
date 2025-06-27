@@ -1,0 +1,164 @@
+<div class="filters-box-container " [class.container-full]="!tipoSelecionado">
+  <div class="filters-box-mensagem-centro " *ngIf="!tipoSelecionado ">
+    Selecione o tipo de processo<br />
+    para configurar os critérios de <br />
+    busca
+  </div>
+  <div *ngIf="tipoSelecionado">
+
+    <div class="container">
+
+      <form [formGroup]="form">
+        <div class="row mt-2">
+          <div class="col-3 pl-0">
+            <span style="height: 100%;" class="filters-box-label">Status Contábil:</span>
+          </div>
+          <div class="col-9 pl-4">
+            <div class="col-7 p-0">
+              <div class="row radio">
+                <div class="col-4 "><input type="radio" formControlName="contabil" value="1"> Ativo</div>
+                <div class="col-4 "><input type="radio" formControlName="contabil" value="2"> Inativo</div>
+                <div class="col-4 "><input type="radio" formControlName="contabil" value="3"> Ambos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <form [formGroup]="form">
+        <div class="row mt-2">
+          <div class="col-3 pl-0">
+            <span style="height: 100%;" class="filters-box-label">Status Processo:</span>
+          </div>
+          <div class="col-9 pl-4">
+            <div class="col-7 p-0">
+              <div class="row radio">
+                <div class="col-4 "><input type="radio" formControlName="processo" value="1"> Ativo</div>
+                <div class="col-4 "><input type="radio" formControlName="processo" value="2"> Inativo</div>
+                <div class="col-4 "><input type="radio" formControlName="processo" value="3"> Ambos</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="row mt-2">
+        <div class="col-3 pl-0">
+          <span style="height: 100%;" class="filters-box-label">Data Criação Lote:</span>
+        </div>
+        <div class="col-9 pl-4">
+          <app-data-range [label]="'dataCriacaoLote'"
+            (retDataInicio)="changeData('dataCriacaoLote', true, $event)"
+            (retDataFim)="changeData('dataCriacaoLote', false, $event)"
+            (rangeValido)="onRangeValido('dataCriacaoLote',$event)"
+            [dataInicio]="recuperarData('dataCriacaoLote', true)"
+            [dataFim]="recuperarData('dataCriacaoLote', false)">
+          </app-data-range>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-3 pl-0">
+          <span style="height: 100%;" class="filters-box-label">Data Criação Pedido:</span>
+        </div>
+        <div class="col-9 pl-4">
+          <app-data-range [label]="'dataCriacaoPedido'"
+            (retDataInicio)="changeData('dataCriacaoPedido', true, $event)"
+            (retDataFim)="changeData('dataCriacaoPedido', false, $event)"
+            (rangeValido)="onRangeValido('dataCriacaoPedido',$event)"
+            [dataInicio]="recuperarData('dataCriacaoPedido', true)"
+            [dataFim]="recuperarData('dataCriacaoPedido', false)">
+          </app-data-range>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-3 pl-0">
+          <span style="height: 100%;" class="filters-box-label">Data Cancelamento Lote:</span>
+        </div>
+        <div class="col-9 pl-4">
+          <app-data-range [label]="'dataCancelamentoLote'"
+            (retDataInicio)="changeData('dataCancelamentoLote', true, $event)"
+            (retDataFim)="changeData('dataCancelamentoLote', false, $event)"
+            (rangeValido)="onRangeValido('dataCancelamentoLote',$event)"
+            [dataInicio]="recuperarData('dataCancelamentoLote', true)"
+            [dataFim]="recuperarData('dataCancelamentoLote', false)">
+          </app-data-range>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-3 pl-0">
+          <span style="height: 100%;" class="filters-box-label">Data Erro Processamento:</span>
+        </div>
+        <div class="col-9 pl-4">
+          <app-data-range [label]="'dataErroProcessamento'"
+            (retDataInicio)="changeData('dataErroProcessamento', true, $event)"
+            (retDataFim)="changeData('dataErroProcessamento', false, $event)"
+            (rangeValido)="onRangeValido('dataErroProcessamento',$event)"
+            [dataInicio]="recuperarData('dataErroProcessamento', true)"
+            [dataFim]="recuperarData('dataErroProcessamento', false)">
+          </app-data-range>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-3 pl-0">
+          <span style="height: 100%;" class="filters-box-label">Data Recebimento Fiscal:</span>
+        </div>
+        <div class="col-9 pl-4">
+          <app-data-range [label]="'dataRecebimentoFiscal'"
+            (retDataInicio)="changeData('dataRecebimentoFiscal', true, $event)"
+            (retDataFim)="changeData('dataRecebimentoFiscal', false, $event)"
+            (rangeValido)="onRangeValido('dataRecebimentoFiscal',$event)"
+            [dataInicio]="recuperarData('dataRecebimentoFiscal', true)"
+            [dataFim]="recuperarData('dataRecebimentoFiscal', false)">
+          </app-data-range>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-3 pl-0">
+          <span style="height: 100%;" class="filters-box-label">Data Pagamento Pedido:</span>
+        </div>
+        <div class="col-9 pl-4">
+          <app-data-range [label]="'dataPagamentoPedido'"
+            (retDataInicio)="changeData('dataPagamentoPedido', true, $event)"
+            (retDataFim)="changeData('dataPagamentoPedido', false, $event)"
+            (rangeValido)="onRangeValido('dataPagamentoPedido',$event)"
+            [dataInicio]="recuperarData('dataPagamentoPedido', true)"
+            [dataFim]="recuperarData('dataPagamentoPedido', false)">
+          </app-data-range>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-3 pl-0">
+          <span style="height: 100%;" class="filters-box-label">Data de Envio para o Escritório:</span>
+        </div>
+        <div class="col-9 pl-4">
+          <app-data-range [label]="'dataEnvioEscritorio'"
+            [dataInicio]="recuperarData('dataEnvioEscritorio', true)"
+            [dataFim]="recuperarData('dataEnvioEscritorio', false)"
+            (retDataInicio)="changeData('dataEnvioEscritorio', true, $event)"
+            (retDataFim)="changeData('dataEnvioEscritorio', false, $event)"
+            (rangeValido)="onRangeValido('dataEnvioEscritorio',$event)">
+          </app-data-range>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-3 pl-0">
+          <span style="height: 100%;" class="filters-box-label">Valor Total do Lote:</span>
+        </div>
+        <div class="col-9 pl-4">
+          <app-number-range [maxlengthNumber] = '10' (rangeValido)="onRangeValido('numeroRange',$event)" [texto1]="recuperarNumero(true)"
+            [texto2]="recuperarNumero(false)" (retNumeroInicio)="salvarNumero(true,$event)"
+            (retNumeroFim)="salvarNumero(false, $event)"></app-number-range>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

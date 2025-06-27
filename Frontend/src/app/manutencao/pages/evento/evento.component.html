@@ -1,0 +1,449 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Manutenção - Evento"
+  breadcrump="Manutenção > Cadastros Compartilhados > Evento" [exibirAdicionar]="exibirTabela">
+  <div class="row">
+    <div class="col-12 py-3">
+      <p class="font-purple">
+        Selecioe o tipo de processo para localizar os eventos.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3 pr-1">
+      <label class="col-form-label-sm" for="tipoProcesso">
+        <b>Tipo de Processo:</b>
+      </label>
+      <ng-select
+      [ngStyle]="{'fontSize': '11px'}"
+      [items]="tiposProcesso"
+      bindLabel="descricao"
+      bindValue="id"
+      [formControl] = "tipoProcessoFormControl"
+      appearance="outline"
+      notFoundText="Nenhuma opção disponível"
+      [searchable]="false"
+      [clearable]="false"
+      (change)="selecionarTipoProcesso()"
+      [placeholder]="'Selecione o tipo de processo'"></ng-select>
+    </div>
+    <div class="col-3 pr-1" *ngIf="exibirTabela">
+      <label class="col-form-label-sm" for="tipoProcesso" *ngIf="tipoProcessoFormControl.value !== null">
+        <b>Descrição:</b>
+      </label>
+      <input
+        type="text"
+        class="form-control mr-3"
+        id="descricao"
+        [formControl] = "buscarDescricaoFormControl"
+        placeholder="Digite a descrição ou parte do texto"
+        #input [value]="input.value.toUpperCase()"
+        *ngIf="tipoProcessoFormControl.value !== null"
+        (keydown.enter)="buscarTabela()">
+    </div>
+    <div class="col-6 pr-1 d-flex align-items-end pb-1" *ngIf="exibirTabela" >
+      <button class="btn btn-primary btn-sm" *ngIf="tipoProcessoFormControl.value !== null" (click)="buscarTabela()">Buscar</button>
+    </div>
+
+    <!-- <input #searchField (keyup.enter)="search = searchField.value" type="text" id="nome" maxlength="400"
+        placeholder="Entre com a Descrição" class="form-control"> -->
+  </div>
+
+  <div class="mt-4 row" *ngIf="exibirTabela" >
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" >Eventos</b>
+    </div>
+
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar Eventos e Decisões
+      </button>
+
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportarDependente()" *ngIf="tipoProcessoFormControl.value == 2">
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar Eventos e Eventos Dependentes
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf= "exibirTabela">
+    <sisjur-table (sort)="buscarTabela()" [ngSwitch]="tipoProcessoFormControl.value">
+      <ng-container *ngSwitchCase="9"><!-- Civel Estrategico -->
+        <sisjur-table-header>
+            <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="Id" width="5">Código</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="Descricao" width="23" >Descrição</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="PossuiDecisao" width="7" >Possui Decisão</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="CumprimentoPrazo" width="7" >Cumprimento de Prazo</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="Notificar" width="7" >Notificar via E-mail</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="Ativo" width="3" >Ativo</sisjur-table-header-cell>
+            <sisjur-table-header-cell sort="DescricaoConsumidor" width="52" >Correspondente Cível Consumidor (DE x PARA migração de processo)</sisjur-table-header-cell>
+            <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+            <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+
+        <ng-container *ngFor="let evento of dataSource; let i = index">
+          <sisjur-table-row >
+            <sisjur-table-row-cell>
+              <button type="button" class="btn pt-2 " (click)="buscarDecisao(i)">
+                  <i class="fas fa-plus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada != i"></i>
+                  <i class="fas fa-minus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada == i"></i>
+              </button>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>{{evento.id}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <span [title]="evento.nome" class="text_ellipsis">{{evento.nome}}</span>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>{{evento.possuiDecisao ? "Sim" : "Não" }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.ehPrazo? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.notificarViaEmail? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.ativo? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.ativoConsumidor ? evento.descricaoConsumidor : evento.descricaoConsumidor == null ? " " : evento.descricaoConsumidor + " [INATIVO]"  }}</sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="alterar(evento)"> <i class="fa fa-edit"></i>  </button>
+            </sisjur-table-row-cell>1
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="excluir(evento)"> <i class="fa fa-trash"></i> </button>
+            </sisjur-table-row-cell>
+
+          </sisjur-table-row>
+
+          <sisjur-table-row *ngIf="linhaSelecionada == i" [heightAuto]="true" background="#fff">
+            <sisjur-table-row-cell width="100">
+                <div style="position: relative;" class="esfera" style="width: 100%;">
+                    <decisao-evento [evento]="evento" (retornoChange)="recarregaTela($event)" [tipoProcesso]="tipoProcessoFormControl.value"></decisao-evento>
+                </div>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="1"><!-- Civel Consumidor -->
+        <sisjur-table-header>
+          <sisjur-table-header-cell width="4"></sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Id" width="5">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Descricao" width="22" >Descrição</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="PossuiDecisao" width="8" >Possui Decisão</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="CumprimentoPrazo" width="8" >Cumprimento de Prazo</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Notificar" width="7" >Notificar via E-mail</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Ativo" width="3" >Ativo</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="DescricaoEstrategico " width="52" >Correspondente Cível Estratégico (DE x PARA migração de processo)</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+
+        <ng-container *ngFor="let evento of dataSource; let i = index">
+          <sisjur-table-row >
+            <sisjur-table-row-cell>
+              <button type="button" class="btn pt-2 " (click)="buscarDecisao(i)">
+                  <i class="fas fa-plus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada != i"></i>
+                  <i class="fas fa-minus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada == i"></i>
+              </button>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>{{evento.id}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <span [title]="evento.nome" class="text_ellipsis">{{evento.nome}}</span>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.possuiDecisao ? "Sim" : "Não" }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.ehPrazo? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.notificarViaEmail? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.ativo? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.ativoEstrategico ? evento.descricaoEstrategico : evento.descricaoEstrategico == null ? " " : evento.descricaoEstrategico + " [INATIVO]"  }}</sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="alterar(evento)"> <i class="fa fa-edit"></i>  </button>
+            </sisjur-table-row-cell>1
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="excluir(evento)"> <i class="fa fa-trash"></i> </button>
+            </sisjur-table-row-cell>
+
+          </sisjur-table-row>
+
+          <sisjur-table-row *ngIf="linhaSelecionada == i" [heightAuto]="true" background="#fff">
+            <sisjur-table-row-cell width="100">
+                <div style="position: relative;" class="esfera" style="width: 100%;">
+                    <decisao-evento [evento]="evento" (retornoChange)="recarregaTela($event)" [tipoProcesso]="tipoProcessoFormControl.value"></decisao-evento>
+                </div>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="2"><!-- Trabalhista -->
+        <sisjur-table-header>
+          <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Id" width="5">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Descricao" width="30" >Descrição</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="PossuiDecisao" >Possui Decisão</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="CumprimentoPrazo" >Cumprimento de Prazo</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="ReverCalculo" >Rever Cálculo</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="FinalizacaoEscritorio" >Finalização Escritório</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="FinalizacaoContabil" >Finalização Contábil</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="AlteraExclui">Altera e Exclui</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+
+        <ng-container *ngFor="let evento of dataSource; let i = index">
+          <sisjur-table-row >
+            <sisjur-table-row-cell>
+              <button type="button" class="btn pt-2 " (click)="buscarDecisao(i)">
+                  <i class="fas fa-plus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada != i"></i>
+                  <i class="fas fa-minus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada == i"></i>
+              </button>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>{{evento.id}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <span [title]="evento.nome" class="text_ellipsis">{{evento.nome}}</span>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.possuiDecisao ? "Sim" : "Não" }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.ehPrazo? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.reverCalculo? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.finalizacaoEscritorio? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.finalizacaoContabil? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.alterarExcluir? "Sim" : "Não"}}</sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>
+                <button *ngIf="evento.alterarExcluir" type="button" class="btn btn-icon" (click)="alterar(evento)"> <i class="fa fa-edit"></i>  </button>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>
+                <button *ngIf="evento.alterarExcluir" type="button" class="btn btn-icon" (click)="excluir(evento)"> <i class="fa fa-trash"></i> </button>
+            </sisjur-table-row-cell>
+
+          </sisjur-table-row>
+
+          <sisjur-table-row *ngIf="linhaSelecionada == i" [heightAuto]="true" background="#fff">
+            <sisjur-table-row-cell width="100">
+                <div style="position: relative;" class="esfera" style="width: 100%;">
+                    <decisao-evento [evento]="evento" (retornoChange)="recarregaTela($event)" [tipoProcesso]="tipoProcessoFormControl.value"></decisao-evento>
+                </div>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+
+          <sisjur-table-row *ngIf="linhaSelecionada == i" [heightAuto]="true" background="#fff">
+              <sisjur-table-row-cell width="100">
+              <div style="position: relative;" class="dependente" style="width: 100%;">
+                <evento-dependente [evento]="evento" ></evento-dependente>
+              </div>
+            </sisjur-table-row-cell>
+
+          </sisjur-table-row>
+
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="3"><!-- Administrativo -->
+        <sisjur-table-header>
+          <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Id" width="5">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Descricao" width="30" >Descrição</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="PossuiDecisao" >Possui Decisão</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="CumprimentoPrazo" >Cumprimento de Prazo</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="PreencheMulta" >Preenche Multa</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Instancia" >Instância</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+
+        <ng-container *ngFor="let evento of dataSource; let i = index">
+          <sisjur-table-row >
+            <sisjur-table-row-cell>
+              <button type="button" class="btn pt-2 " (click)="buscarDecisao(i)">
+                  <i class="fas fa-plus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada != i"></i>
+                  <i class="fas fa-minus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada == i"></i>
+              </button>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>{{evento.id}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <span [title]="evento.nome" class="text_ellipsis">{{evento.nome}}</span>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.possuiDecisao ? "Sim" : "Não" }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.ehPrazo? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.preencheMulta? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.instanciaId == 1 ? "Primeira" : (evento.instanciaId == 2 ? "Segunda" : (evento.instanciaId == 3 ? "Terceira" : "") ) }}</sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="alterar(evento)"> <i class="fa fa-edit"></i>  </button>
+            </sisjur-table-row-cell>1
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="excluir(evento)"> <i class="fa fa-trash"></i> </button>
+            </sisjur-table-row-cell>
+
+          </sisjur-table-row>
+
+          <sisjur-table-row *ngIf="linhaSelecionada == i" [heightAuto]="true" background="#fff">
+            <sisjur-table-row-cell width="100">
+                <div style="position: relative;" class="esfera" style="width: 100%;">
+                    <decisao-evento [evento]="evento" (retornoChange)="recarregaTela($event)" [tipoProcesso]="tipoProcessoFormControl.value"></decisao-evento>
+                </div>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+
+        </ng-container>
+      </ng-container>
+
+
+      <ng-container *ngSwitchCase="4"><!--Tributário Administrativo -->
+        <sisjur-table-header>
+          <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Id" width="5">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Descricao" width="30" >Descrição</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="PossuiDecisao" >Possui Decisão</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="CumprimentoPrazo" >Cumprimento de Prazo</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="EscritorioAtualiza" >Ocultar Evento Web</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+
+        <ng-container *ngFor="let evento of dataSource; let i = index">
+          <sisjur-table-row >
+            <sisjur-table-row-cell>
+              <button type="button" class="btn pt-2 " (click)="buscarDecisao(i)">
+                  <i class="fas fa-plus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada != i"></i>
+                  <i class="fas fa-minus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada == i"></i>
+              </button>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>{{evento.id}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <span [title]="evento.nome" class="text_ellipsis">{{evento.nome}}</span>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.possuiDecisao ? "Sim" : "Não" }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.ehPrazo? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.atualizaEscritorio? "Sim" : "Não"}}</sisjur-table-row-cell>
+
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="alterar(evento)"> <i class="fa fa-edit"></i>  </button>
+            </sisjur-table-row-cell>1
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="excluir(evento)"> <i class="fa fa-trash"></i> </button>
+            </sisjur-table-row-cell>
+
+          </sisjur-table-row>
+
+          <sisjur-table-row *ngIf="linhaSelecionada == i" [heightAuto]="true" background="#fff">
+            <sisjur-table-row-cell width="100">
+                <div style="position: relative;" class="esfera" style="width: 100%;">
+                    <decisao-evento [evento]="evento" (retornoChange)="recarregaTela($event)" [tipoProcesso]="tipoProcessoFormControl.value"></decisao-evento>
+                </div>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="5"><!--Tributário Judicial -->
+        <sisjur-table-header>
+          <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Id" width="5">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Descricao" width="30" >Descrição</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="PossuiDecisao" >Possui Decisão</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="CumprimentoPrazo" >Cumprimento de Prazo</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="EscritorioAtualiza" >Ocultar Evento Web</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+
+        <ng-container *ngFor="let evento of dataSource; let i = index">
+          <sisjur-table-row >
+            <sisjur-table-row-cell>
+              <button type="button" class="btn pt-2 " (click)="buscarDecisao(i)">
+                  <i class="fas fa-plus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada != i"></i>
+                  <i class="fas fa-minus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada == i"></i>
+              </button>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>{{evento.id}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <span [title]="evento.nome" class="text_ellipsis">{{evento.nome}}</span>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.possuiDecisao ? "Sim" : "Não" }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.ehPrazo? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.atualizaEscritorio? "Sim" : "Não"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="alterar(evento)"> <i class="fa fa-edit"></i>  </button>
+            </sisjur-table-row-cell>1
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="excluir(evento)"> <i class="fa fa-trash"></i> </button>
+            </sisjur-table-row-cell>
+
+          </sisjur-table-row>
+
+          <sisjur-table-row *ngIf="linhaSelecionada == i" [heightAuto]="true" background="#fff">
+            <sisjur-table-row-cell width="100">
+                <div style="position: relative;" class="esfera" style="width: 100%;">
+                    <decisao-evento [evento]="evento" (retornoChange)="recarregaTela($event)" [tipoProcesso]="tipoProcessoFormControl.value"></decisao-evento>
+                </div>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="6"><!-- Trabalhista Administrativo -->
+        <sisjur-table-header>
+          <sisjur-table-header-cell width="5"></sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Id" width="5">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="Descricao" width="30" >Descrição</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="PossuiDecisao" >Possui Decisão</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+
+        <ng-container *ngFor="let evento of dataSource; let i = index">
+          <sisjur-table-row >
+            <sisjur-table-row-cell>
+              <button type="button" class="btn pt-2 " (click)="buscarDecisao(i)">
+                  <i class="fas fa-plus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada != i"></i>
+                  <i class="fas fa-minus pt-1 " style="color: #6f62b2 !important;" *ngIf="linhaSelecionada == i"></i>
+              </button>
+            </sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>{{evento.id}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <span [title]="evento.nome" class="text_ellipsis">{{evento.nome}}</span>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{evento.possuiDecisao ? "Sim" : "Não" }}</sisjur-table-row-cell>
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="alterar(evento)"> <i class="fa fa-edit"></i>  </button>
+            </sisjur-table-row-cell>1
+
+            <sisjur-table-row-cell>
+                <button type="button" class="btn btn-icon" (click)="excluir(evento)"> <i class="fa fa-trash"></i> </button>
+            </sisjur-table-row-cell>
+
+          </sisjur-table-row>
+
+          <sisjur-table-row *ngIf="linhaSelecionada == i" [heightAuto]="true" background="#fff">
+            <sisjur-table-row-cell width="100">
+                <div style="position: relative;" class="decisao" style="width: 100%;">
+                    <decisao-evento [evento]="evento" (retornoChange)="recarregaTela($event)" [tipoProcesso]="tipoProcessoFormControl.value"></decisao-evento>
+                </div>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+
+        </ng-container>
+      </ng-container>
+
+    </sisjur-table>
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+</div>
+
+</app-manutencao-generica>

@@ -1,0 +1,88 @@
+<app-container-pagina [titulo]="'Fornecedores'" [caminho]="breadcrumb"
+  [texto]="'Os filtros abaixo não são obrigatórios, mas podem ser utilizados para encontrar fornecedores específicos.'"
+  [hasAdicionar]="true"
+  (adicionarClicked)='abrirModalFornecedores(false)'
+  >
+
+  <filtro-fornecedores (onBuscarFornecedores)="onBuscar($event)"></filtro-fornecedores>
+  <div class="row pl-3 pb-3" *ngIf="fornecedoresKeys.length > 0">
+    <div class="col-md-12 divWarn">
+      <span class="warning-lancamento"><span class="fas fa-exclamation-circle"></span>
+        Para alterar ou excluir um fornecedor, basta dar um click sobre a linha para selecioná-la e depois escolher a
+        operação desejada.
+      </span>
+    </div>
+  </div>
+  <div class="row margin pr-3" *ngIf="fornecedoresKeys.length > 0">
+    <div *ngIf="fornecedoresKeys.length > 0" class="col-6">
+      <label>Fornecedores</label>
+    </div>
+    <div class="col-6 d-flex justify-content-end p-0 roxo-padrao">
+      <div class="pr-4" (click)="abrirModalFornecedores(true)"
+      [ngClass]="!fornecedorObj ? 'desabilitado' : ''">
+        <i class="fas fa-edit pr-1" style="font-size:15px"></i>
+        <span style="font-size:12px">Editar</span>
+      </div>
+      <div class="pr-4" (click)="onClickExcluir()"
+      [ngClass]="!fornecedorObj ? 'desabilitado' : ''">
+        <i class="fas fa-trash pr-1" style="font-size:15px"></i>
+        <span style="font-size:12px">Excluir</span>
+      </div>
+      <div (click)="exportarFornecedor()">
+        <i class="fas fa-download pr-1" style="font-size:15px"></i>
+        <span style="font-size:12px">Exportar</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class='overflow-scroll'
+  *ngIf="isNotFound || fornecedoresKeys.length > 0 ">
+    <table class='table table-striped'  *ngIf="isNotFound">
+    <th col nowrap *ngFor="let headerSemBusca of headerSemBusca">
+      <span *ngIf="headerSemBusca">{{ headerSemBusca }}</span>
+      <app-botao-ordenacao [isActive]="false" [disabled]="true">
+      </app-botao-ordenacao>
+    </th>
+    <tr row nowrap   >
+    <td colspan=999 class="tdNot"><label *ngIf="isNotFound" >
+      Nenhum resultado foi encontrado na busca
+    </label></td>
+  </tr>
+
+
+
+  </table>
+
+    <table class='table table-striped' style="border: 1px solid #dee2e6" *ngIf="fornecedoresKeys.length > 0 && !isNotFound">
+      <th col nowrap *ngFor="let header of fornecedoresKeys">
+        <span *ngIf="header">{{ header | fornecedoresManutencaoAlias }}</span>
+        <app-botao-ordenacao [isActive]="isButtonActive(header)" (stateChange)="onChangeOrdenacao(header, $event)">
+        </app-botao-ordenacao>
+      </th>
+
+      <tr row nowrap (click)="onRowClick(fornecedor)" class="table-item" [ngClass]="(fornecedor.selected) && 'selected'"
+        *ngFor="let fornecedor of fornecedores">
+        <td nowrap *ngFor="let header of fornecedoresKeys">
+          <span >{{ fornecedor[header] }}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="row pt-3 d-flex align-items-center" *ngIf="fornecedoresKeys.length > 0 && !isNotFound">
+    <div class="col-sm-6"> <span class="title pr-2">Total de registros: {{ itensTotal }}
+        - Itens por página</span>
+      <app-table-options *ngIf="fornecedoresKeys.length > 0"
+        (valueChange)="onChangeTableLength($event)"
+        [quantidadeItens] = "quantidadeItens"
+        >
+      </app-table-options>
+    </div>
+    <div class="col-sm-6">
+      <app-paginacao-buttons [pageMax]="quantidadeItens" [totalRegistro]="itensTotal"
+        [currentPage]="service.paginaSubject.value" (onPageSelect)="onPageClick($event)"
+        (onClickNextPage)="onPageClick($event)"></app-paginacao-buttons>
+
+    </div>
+  </div>
+</app-container-pagina>

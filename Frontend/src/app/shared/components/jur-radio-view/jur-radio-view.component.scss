@@ -1,0 +1,21 @@
+.descricao{
+    margin-top: 8px;
+    margin-bottom: 0;
+    padding-left: 10px;
+    font-size: 13px;
+    color: #000;
+}
+.selecionado{
+    background: #786bb9; 
+
+    p{
+        color: #fff;
+    } 
+}
+  
+.card-view{
+    margin-left: 0;
+}
+.item{
+    cursor:pointer;
+}

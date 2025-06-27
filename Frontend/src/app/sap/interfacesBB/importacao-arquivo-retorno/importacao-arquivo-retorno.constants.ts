@@ -1,0 +1,25 @@
+ /** @description colunas a serem excluidas da lista de guias */
+ export const excluirHeader = ["codigoLancamento", "codigoProcesso", 'idBBStatusParcela']
+ /** @description ordem das colunas da guias com problemas */
+  export const ordemGuiasProblema = [' numeroProcesso',
+     'codigoComarca',
+     'nomeComarca',
+     'codigoOrgaoBB',
+     'nomeOrgaoBB',
+     'codigoNaturezaAcaoBB',
+     'nomeNaturezaBB',
+     'nomeAutor',
+     'autorCPF_CNPJ',
+     'nomeReu',
+     'reuCPF_CNPJ',
+     'valorParcela',
+     'dataGuia',
+     'guia',
+     'numeroConta',
+     'numeroParcela',
+     'dataEfetivacaoParcelaBB',
+     'idBBStatusParcela',
+     'statusParcelaBB',
+     'descricaoErroGuia',
+     'idProcesso',
+     'idLancamento']

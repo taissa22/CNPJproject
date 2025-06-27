@@ -1,0 +1,132 @@
+.option-box-container{
+  display:block;
+  flex-basis: 25%;
+  min-width: 100px;
+  min-height:400px;
+  /*height: 100%;*/
+  /*max-height: 400px;*/
+  border: solid 1px rgb(180,180,180);
+  overflow: auto;
+  margin-right:5px;
+}
+
+.option-box{
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  color: rgb(120,120,120);
+  position:relative;
+  min-width: 200px;
+}
+
+.option-box-top{
+  height:4px;
+  width: 3px;
+  margin-left:10px;
+  border-left: solid 1px rgb(230,230,230);
+}
+
+.option-box-head{
+  position: relative;
+  display:flex;
+  height: 30px;
+  min-width: 30px;
+  line-height: 30px;
+  font-size: 13px;
+  align-items: center;
+  padding-left: 25px;
+}
+
+.option-box-head.active, .option-box-line.active, .option-box-line.selected.active{
+  background: #786BB9;
+  color: white;
+  font-weight: bold;
+}
+
+.option-box-line{
+  position: relative;
+  display: flex;
+  height: 30px;
+  min-width: 30px;
+  line-height: 30px;
+  font-size: 13px;
+  align-items: center;
+  cursor:pointer;
+}
+
+.option-box-head{ cursor: pointer;}
+
+/*checkmarks & bullets*/
+.option-box-line::after, .option-box-head::after {
+  content:"";
+  text-align:center;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  position: absolute;
+  left: 30px;
+  top: 6px;
+  display: block;
+  width: 14px;
+  height: 14px;
+  border: solid 1px rgb(200,200,200);
+  background: white;
+  border-radius:8px;
+  line-height: 18px;
+  color: rgba(120, 107, 185, 0);
+  content:"✔";
+  transition: color .3s, border .3s, line-height .3s;
+}
+
+.option-box-line.selected, .option-box-head.selected{ font-weight: bold; }
+
+.option-box-line.selected::after, .option-box-head.selected::after{
+  border:solid 1px rgb(200,200,200);
+  line-height: 14px;
+  color: #786BB9;
+  background: white;
+  content:"✔";
+  font-weight: normal;
+}
+
+.option-box-line.active.selected::after, .option-box-head.active.selected::after{
+  background: #c8c2e5;
+  color: white;
+  border:solid 1px white;
+}
+
+
+
+.option-box-head::after{ left: 2px; }
+
+.option-box-line span{
+  padding-left: 50px;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*.option-box-line span{ padding-left: 50px; }*/
+.option-box-line::before, .option-box-head::before{
+  content:"";
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  display: block;
+  width: 0px;
+  height: 100%;
+  border-right: solid 1px rgb(230,230,230);
+}
+
+.option-box-line:last-of-type:before{ height: 50%; }
+
+.option-box-line span::after{
+  content:"";
+  position: absolute;
+  left: 10px;
+  top: 13px;
+  display: block;
+  width: 30px;
+  height: 1px;
+  border-bottom: solid 1px rgb(230,230,230);
+}

@@ -1,0 +1,255 @@
+<section class="header">
+  <h3>Detalhes do consolidado de provisão de pagamentos trabalhistas por pedido (PR)</h3>
+  <a class="botao" href="{{href}}/2.0/relatorios/fechamento/provisao/trabalhista/Relatorio.aspx?CodigoEmpresaCentralizadora={{CodigoEmpresaCentralizadora}}&DataFechamento={{DataFechamento}}&Meses={{Meses}}&Outlier={{Outlier}}&DataFechamentoAnterior={{DataFechamentoAnterior}}&MesesAnterior={{MesesAnterior}}&OutlierAnterior={{OutlierAnterior}}&FiltraCentralizadora={{FiltraCentralizadora}}"><i class="fa fa-angle-double-left"></i> Voltar</a>  
+  <p>Relatórios > Contigência > Trabalhista > Provisão Trabalhista por Média</p>
+  <span style="padding-bottom: 5px;">
+    <button class="botao" (click)="exportar()"><i class="fas fa-download pr-1"></i> Download</button>
+  </span>
+</section>
+
+<section>
+  <table class="cabecalhoGrid">
+    <tr>
+      <td class="tituloDadosHeader" style="width: 140px; padding-left:5px; padding-top: 10px;">
+        Empresa centralizadora:
+      </td>
+      <td style="padding-left:5px; width: 37%; padding-top: 10px; font-size: 11px;">
+        {{dadosCabecalho?.nomeEmpresaCentralizadora}}
+      </td>
+      <td class="tituloDadosHeader" style="width: 90px; padding-top: 10px;">
+        Tipo de pedido:
+      </td>
+      <td style="width: 10%; padding-top: 10px; font-size: 11px;">
+        {{dadosCabecalho?.proprioTerceiro | titlecase}}
+      </td>
+      <td class="tituloDadosHeader" style="width: 80px; padding-top: 10px;">
+        Risco:
+      </td>
+      <td style="padding-top: 10px; font-size: 11px;">
+        {{dadosCabecalho?.riscoPerda | titlecase}}
+      </td>
+    </tr>
+
+    <tr>
+      <td class="tituloDadosHeader" style="padding-left:5px; padding-bottom: 10px;">
+        Empresa do Grupo:
+      </td>
+      <td style="padding-left:5px; padding-bottom: 10px; font-size: 11px;">
+        {{dadosCabecalho?.nomeEmpresaGrupo}}
+      </td>
+      <td></td>
+      <td></td>
+      <td class="tituloDadosHeader" style="padding-bottom: 10px;">
+        Fechamento:
+      </td>
+      <td style="padding-bottom: 10px; font-size: 11px;">
+        {{dadosCabecalho?.dataFechamento | date : 'dd/MM/yyyy'}} - {{dadosCabecalho?.numeroMeses}} meses -
+        {{dadosCabecalho?.tipoDeOutliers}}
+      </td>
+    </tr>
+  </table>
+
+  <div class="table-responsive-xl">
+    <table class="table gridPrincipal">
+      <tr>
+        <th class="tituloGrid"
+          style="min-width: 70px; max-width: 70px; position: sticky; left: -2px; background-color: white"> 
+          Código do Pedido
+        </th>
+        <th class="tituloGrid"
+        style="min-width: 265px; position: sticky; left: 67px; background-color: white; z-index: 1">
+          Descrição do Pedido
+        </th>
+        <th class="tituloGrid" style="min-width: 140px">
+          Quantidade de Pedidos Ativos sem desembolso
+          <span *ngIf="possuiHibrido == 'S'">(Pré)</span>
+          <br>
+          (J)
+        </th>
+        <th class="tituloGrid" style="min-width: 140px">
+          Percentual de Perda de Pedidos Histórico
+          <span *ngIf="possuiHibrido == 'S'">(Pré/Híbrido)</span>
+          <br>
+          (G)
+        </th>
+        <th class="tituloGrid" style="min-width: 150px;">
+          Quantidade de Pedidos Ativos sem desembolso com Expectativa de Perda
+          <span *ngIf="possuiHibrido == 'S'">(Pré)</span>
+          <br>
+          (M = G * J)
+        </th>
+        <th class="tituloGrid" style="min-width: 160px;">
+          <a href="{{href}}/2.0/relatorios/fechamento/provisao/trabalhista/DetalheProvisaoTrabalhistaHistoricoPedido.aspx?CodigoItemFechamentoProvisao={{userId}}&DataFechamento={{DataFechamento}}&Meses={{Meses}}&Outlier={{Outlier}}&DataFechamentoAnterior={{DataFechamentoAnterior}}&MesesAnterior={{MesesAnterior}}&OutlierAnterior={{OutlierAnterior}}&CodigoPedido=0&FiltraCentralizadora={{FiltraCentralizadora}}&CodigoEmpresaCentralizadora={{CodigoEmpresaCentralizadora}}" class="novoLink">
+            Valor Médio Desembolsado de Principal por Pedido PR
+            <span *ngIf="possuiHibrido == 'S'">(Pré/Híbrido)</span>
+            (R$)
+            <br>
+            (I1)
+          </a>
+        </th>
+        <th class="tituloGrid" style="min-width: 160px;">
+          <a href="{{href}}/2.0/relatorios/fechamento/provisao/trabalhista/DetalheProvisaoTrabalhistaHistoricoPedido.aspx?CodigoItemFechamentoProvisao={{userId}}&CodigoPedido=0&DataFechamento={{DataFechamento}}&Meses={{Meses}}&Outlier={{Outlier}}&DataFechamentoAnterior={{DataFechamentoAnterior}}&MesesAnterior={{MesesAnterior}}&OutlierAnterior={{OutlierAnterior}}&FiltraCentralizadora={{FiltraCentralizadora}}&CodigoEmpresaCentralizadora={{CodigoEmpresaCentralizadora}}" class="novoLink">
+            Valor Médio Desembolsado de Correção e Juros por Pedido PR
+            <span *ngIf="possuiHibrido == 'S'">(Pré/Híbrido)</span>
+            (R$)
+            <br>
+            (I2)
+          </a>
+        </th>
+        <th class="tituloGrid" style="min-width: 180px;">
+          Valor Principal da Provisão de Contingência de Pedidos Ativos sem desembolso
+          <span *ngIf="possuiHibrido == 'S'">(Pré)</span>
+          (R$)
+          <br>
+          (O1 = I1 * M)
+        </th>
+        <th class="tituloGrid" style="min-width: 210px;">
+          Valor de Correção e Juros da Provisão de Contingência de Pedidos Ativos sem desembolso
+          <span *ngIf="possuiHibrido == 'S'">(Pré)</span>
+          (R$)
+          <br>
+          (O2 = I2 * M)
+        </th>
+        <th *ngIf="possuiHibrido == 'S'" scope="col" class="tituloGrid" style="min-width: 200px;">
+          Quantidade de Pedidos Ativos sem desembolso (Híbrido)
+          <br>
+          (P)
+        </th>
+        <th *ngIf="possuiHibrido == 'S'" scope="col" class="tituloGrid" style="min-width: 210px;">
+          Percentual de Responsabilidade Oi (Híbrido)
+          <br>
+          (Q)
+        </th>
+        <th *ngIf="possuiHibrido == 'S'" scope="col" class="tituloGrid" style="min-width: 200px;">
+          Quantidade de Pedidos Ativos sem desembolso com Expectativa de Perda (Híbrido)
+          <br>
+          (R = G * P)
+        </th>
+        <th *ngIf="possuiHibrido == 'S'" scope="col" class="tituloGrid" style="min-width: 200px;">
+          Valor Principal da Provisão de Contingência de Pedidos Ativos sem desembolso (Híbrido) (R$)
+          <br>
+          (S1 = I1 * Q * R )
+        </th>
+        <th *ngIf="possuiHibrido == 'S'" scope="col" class="tituloGrid" style="min-width: 210px;">
+          Valor de Correção e Juros da Provisão de Contingência de Pedidos Ativos sem desembolso (Híbrido) (R$)
+          <br>
+          (S2  = I2 * Q * R )
+        </th>
+        <th *ngIf="possuiHibrido == 'S'" scope="col" class="tituloGrid" style="min-width: 200px;">
+          Total do Valor Principal da Provisão de Contingência de Pedidos Ativos sem desembolso (Pré/Híbrido) (R$)
+          <br>
+          (U1 = O1 + S1)
+        </th>
+        <th *ngIf="possuiHibrido == 'S'" scope="col" class="tituloGrid" style="min-width: 210px;">
+          Total do Valor de Correção e Juros da Provisão de Contingência de Pedidos Ativos sem desembolso (Pré/Híbrido) (R$)
+          <br>
+          (U2 = O2 + S2)
+        </th>
+      </tr>
+      <tr *ngFor="let dados of dadosReais">
+        <td class="dadosGrid"
+          style="text-align: center; position: sticky; left: -2px; background-color: white; border: 1px solid #D2D2DA;">
+          {{dados.pedCodPedido}}
+        </td>
+        <td class="dadosGrid"
+          style="text-align: left; position: sticky; left: 67px; background-color: white; border: 1px solid #D2D2DA;">
+          {{dados.nomePedido}}
+        </td>
+        <td class="dadosGrid">
+          {{dados.qtePedidosProvavelP}}
+        </td>
+        <td class="dadosGrid">
+          {{dados.percPerdaProvavelP.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+        <td class="dadosGrid">
+          {{dados.expectativaPerdaP}}
+        </td>
+        <td class="dadosGrid">
+          <button class="linkGrid" (click)="abrirPopUp(dados.pedCodPedido)">
+            {{dados.valorMedioDesembPrincipalP.toLocaleString(undefined, {minimumFractionDigits: 2}) }}
+          </button>
+        </td>
+        <td class="dadosGrid">
+          <button class="linkGrid" (click)="abrirPopUp(dados.pedCodPedido)">
+            {{dados.valorMedioDesembolsoJurosP.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+          </button>
+        </td>
+        <td class="dadosGrid">
+          {{dados.valProvContPrincipalP.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+        <td class="dadosGrid">
+          {{dados.valProvContJurosP.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+        <td class="dadosGrid" *ngIf="possuiHibrido == 'S'">
+          {{dados.qtePedidosProvavelH}}
+        </td>
+        <td class="dadosGrid" *ngIf="possuiHibrido == 'S'">
+          {{dados.perResponsOi.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td> 
+        <td class="dadosGrid" *ngIf="possuiHibrido == 'S'">
+          {{dados.expectativaPerdaH}}
+        </td>
+        <td class="dadosGrid" *ngIf="possuiHibrido == 'S'">
+          {{dados.valProvContPrincipalH.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+        <td class="dadosGrid" *ngIf="possuiHibrido == 'S'">
+          {{dados.valProvContJurosH.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+        <td class="dadosGrid" *ngIf="possuiHibrido == 'S'">
+          {{dados.valProvContPrincipal.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+        <td class="dadosGrid" *ngIf="possuiHibrido == 'S'">
+          {{dados.valProvContJuros.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+      </tr>
+      <tr>
+        <td class="valorTotal" style="text-align: center; position: sticky; left: -2px; border: 1px solid #D2D2DA;"></td>
+        <td class="valorTotal" style="text-align: center; position: sticky; left: 67px; border: 1px solid #D2D2DA;">
+        </td>
+        <td class="valorTotal">{{resultadoTotal?.qtePedidosProvavelP}}</td>
+        <td class="valorTotal"></td>
+        <td class="valorTotal">{{resultadoTotal?.expectativaPerdaP}}</td>
+        <td class="valorTotal"></td>
+        <td class="valorTotal"></td>
+        <td class="valorTotal">{{resultadoTotal?.valProvContPrincipalP.toLocaleString(undefined, {minimumFractionDigits: 2}) }}</td>
+        <td class="valorTotal">{{resultadoTotal?.valProvContJurosP.toLocaleString(undefined, {minimumFractionDigits: 2})}}</td>
+        <td class="valorTotal" *ngIf="possuiHibrido == 'S'">{{resultadoTotal?.qtePedidosProvavelH}}</td>
+        <td class="valorTotal" *ngIf="possuiHibrido == 'S'"></td>
+        <td class="valorTotal" *ngIf="possuiHibrido == 'S'">
+          {{resultadoTotal?.expectativaPerdaH}}
+        </td>
+        <td class="valorTotal" *ngIf="possuiHibrido == 'S'">
+          {{resultadoTotal?.valProvContPrincipalH.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+        <td class="valorTotal" *ngIf="possuiHibrido == 'S'">
+          {{resultadoTotal?.valProvContJurosH.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+        <td class="valorTotal" *ngIf="possuiHibrido == 'S'">
+          {{resultadoTotal?.valProvContPrincipal.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+        <td class="valorTotal" *ngIf="possuiHibrido == 'S'">
+          {{resultadoTotal?.valProvContJuros.toLocaleString(undefined, {minimumFractionDigits: 2})}}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div style="float: right; font-size: 11px; padding-top: 10px;">
+    <span *ngIf="paginaAtual > 1">
+      <span style="padding-right: 4px; cursor: pointer" (click)="primeiraPagina()">|<<</span>
+          <span style="padding-right: 4px; cursor: pointer" (click)="paginaAnterior()">
+            <<</span>
+          </span>
+          Página&nbsp;
+          <input #i type="text" [disabled]="totalDePaginas == 1" inputmode="numeric" pattern="[0-9]*" maxlength="4"
+            [value]="paginaAtual" (keyup.enter)="selecionarPagina(i.value)" (blur)="selecionarPagina(i.value)"
+            (input)="formatInput($any($event).target)" aria-labelledby="paginationInputLabel paginationDescription"
+            style="text-align: center; width: 40px; height: 17px" />
+          de {{totalDePaginas}}
+          <span *ngIf="paginaAtual < totalDePaginas">
+            <span style="padding-left: 4px; cursor: pointer" (click)="proximaPagina()">>></span>
+            <span style="padding-left: 4px; cursor: pointer" (click)="ultimaPagina()">>>|</span>
+          </span>
+  </div>
+
+</section>

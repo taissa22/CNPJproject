@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">{{ titulo }}</h5>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body pt-0" [formGroup]="formulario">
+  <form>
+    <div class="row">
+      <div class="col-md-10">
+        <label class="col-form-label-sm" for="descricao">
+          <b>Descrição:</b>
+        </label>
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          id="descricao" name="descricao"
+          maxlength="30"
+          [formControl]="descricaoFormControl"
+          placement="top-left"
+          [disableTooltip]="desabilitaTooltip(descricaoFormControl)"
+          [ngbTooltip]="validacaoTexto" />
+        <ng-template #validacaoTexto>
+          <span *ngIf="descricaoFormControl.invalid && descricaoFormControl.errors.required">
+            Campo obrigatório
+          </span>
+          <span *ngIf="descricaoFormControl.invalid && descricaoFormControl.errors.maxlength">
+            A descrição não pode ter mais de 30 caracteres
+          </span>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="activeModal.dismiss()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">Confirmar</button>
+</div>
+

@@ -1,0 +1,71 @@
+<div class="geralBox">
+  <div class="abaTitle">Varas Adicionadas</div>
+  <div class="border box overTable">
+
+    <table class='table table-striped fonte-padrao mb-1'
+    style="border: 1px solid #dee2e6"
+    >
+      <th col nowrap *ngFor="let header of listaHeaders">
+        {{header}}
+      </th>
+      <th></th>
+      <tbody *ngIf="dados.length > 0">
+        <tr row nowrap class="table-item" *ngFor="let item of dados; let i = index">
+          <td>{{item.estado}}</td>
+          <td>{{item.comarca}}</td>
+          <td>{{item.vara}}</td>
+          <td>{{item.tipoVara}}</td>
+          <td style="font-size:10px; text-align: right;">
+            <i class="fas fa-trash roxo-padrao fa-2x" style="cursor: pointer;" (click)="excluirVara(i)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="mensagem-tabela m-0" *ngIf="dados.length == 0">
+      Selecione a vara no campo abaixo
+  </p>
+
+  </div>
+
+  <div class="abaTitle">Vara Selecionada</div>
+  <div class="border box2">
+    <div class="container">
+      <div class="row">
+        <div class="col-6 mt-2 p-0 d-flex  align-items-center justify-content-end">
+          <p class="nomeCampo mt-2 mb-0 pr-2">Estado:</p>
+          <combo-box [isWhite]="false" (selectionChange)="selecionarEstado($event)" [opcoes]="comboEstado"
+            [currentIndex]="varaSelecionada.estado" [semResultado] = "'Nenhum resultado encontrado'"> </combo-box>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 mt-2 p-0 d-flex  align-items-center justify-content-end">
+          <p class="nomeCampo mb-0 pr-2">Comarca:</p>
+          <combo-box [isWhite]="false" [isDisabled]="disabledComarca" (selectionChange)="selecionarComarca($event)"
+            [opcoes]="comboComarca" [currentIndex]="varaSelecionada.comarca" [semResultado] = "'Nenhum resultado encontrado'"> </combo-box>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 mt-2 p-0 d-flex  align-items-center justify-content-end">
+          <p class="nomeCampo mb-0 pr-2">Vara:</p>
+          <combo-box [isWhite]="false" [isDisabled]="disabledVara" (selectionChange)="selecionarVara($event)"
+            [opcoes]="comboVara" [currentIndex]="varaSelecionada.vara" [semResultado] = "'Nenhum resultado encontrado'"> </combo-box>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 mt-2 p-0 d-flex  align-items-center justify-content-end">
+          <p class="nomeCampo mb-0 pr-2">Tipo de Vara:</p>
+          <combo-box [isWhite]="false" [isDisabled]="disabledTipoVara" (selectionChange)="selecionarTipoVara($event)"
+            [opcoes]="comboTipoVara" [currentIndex]="varaSelecionada.tipoVara" [semResultado] = "'Nenhum resultado encontrado'"> </combo-box>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div class="btnAdd mt-1">
+    <button (click)='adicionarVara()' class="btn btn-primary"
+    [disabled]="!botaoHabilitado">
+      Adicionar
+    </button>
+  </div>
+</div>

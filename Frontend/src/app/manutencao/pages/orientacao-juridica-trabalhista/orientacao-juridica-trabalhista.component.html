@@ -1,0 +1,80 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Orientação Jurídica Trabalhista"
+  breadcrump="Manutenção > Cadastros Específicos > Trabalhista > Orientação Jurídica">
+  <br>
+  <div class="row">
+    <div class="col-12 py-3">
+      <!-- <p class="font-purple">
+        Selecione o Tipo de Processo para incluir e buscar os Tipos de Audiência.
+      </p> -->
+    </div>
+  </div>
+  <div class="row" style="margin-left: auto;">
+    <div class="d-flex pr-1 " (keydown.enter)="buscarTabela()">     
+        <div style="width: 25rem;">
+        <label for="descricao"> <b>Descrição:</b> </label>
+        <br>
+        <input type="search" 
+        class="fonte-padrao input-tipo-processo" 
+        style="height: 2.5rem; width: 100%;  padding-left: 5px;"  
+        [formControl] = "buscarDescricaoFormControl" 
+        onkeyup="this.value = this.value.toUpperCase();"  
+        placeholder="Entre com o texto da descrição ou parte dele"
+        maxlength="100">
+      </div>
+
+      <div class="ml-3" [ngStyle]="{ marginTop: '0.3rem' }" style="align-self: flex-end">
+        <button type="button" class="btn btn-primary" (click)="buscarTabela()">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+    <div class="mt-4 row">
+
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" >Lista das Orientações Jurídicas Trabalhistas</b>
+    </div>
+
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <div>
+
+    <sisjur-table (sort)="buscarTabela()"> 
+      <sisjur-table-header>       
+        <sisjur-table-header-cell sort="Codigo" width="7"> Código</sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="TipoOrientacaoJuridica" width="25"> Tipo Orientação</sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="Nome" > Nome</sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="Ativo" > Situação</sisjur-table-header-cell>               
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+      </sisjur-table-header>
+
+      <ng-container *ngFor="let Obj of dataSource; let i = index">
+        <sisjur-table-row>
+          <sisjur-table-row-cell> {{Obj.codOrientacaoJuridica}} </sisjur-table-row-cell>
+          <sisjur-table-row-cell> {{Obj.tipoOrientacaoJuridica? Obj.tipoOrientacaoJuridica.descricao : '' }} </sisjur-table-row-cell>
+          <sisjur-table-row-cell> {{Obj.nome}} </sisjur-table-row-cell>                 
+          <sisjur-table-row-cell> {{Obj.ativo ?  "Ativo" : "Inativo" }} </sisjur-table-row-cell>        
+          
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(Obj)"> <i class="fa fa-edit"></i>  </button>            
+        </sisjur-table-row-cell>1
+
+        <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="excluir(Obj)"> <i class="fa fa-trash"></i> </button>            
+        </sisjur-table-row-cell>
+         
+
+        </sisjur-table-row>
+      </ng-container>
+    </sisjur-table>
+    <br>
+    <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>    
+</div>
+
+</app-manutencao-generica>

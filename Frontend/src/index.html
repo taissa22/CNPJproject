@@ -1,0 +1,63 @@
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="pt-br">
+<script>
+
+  function altera_alerta(FcodEscritorio) {
+    window.open('/Juridico/processo/altera_alerta.aspx?codEscritorio=' + FcodEscritorio, 'sss', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,menubar=no,left=0,top=0,width=560,height=400');
+  }
+
+  function abre_popupmenu(num, asufixo) {
+
+    switch (num) {
+      case 1:
+        window.open('/Juridico/faleconosco/faleconosco.aspx?Fsufixo=' + asufixo, '', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,menubar=no,left=0,top=0,width=450,height=460');
+        break;
+    }
+  }	
+</script>
+
+<head>
+  <meta charset="utf-8">
+  <title>Oi - Jurídico</title>
+  <base href="/n">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="./assets/fonts/fontawesome.css" rel="stylesheet" />
+  <link href="./assets/fontawesome-free-6.1.1-web/css/all.min.css" rel="stylesheet" />
+  <link href="./assets/fonts/roboto.css" rel="stylesheet" />
+  <script>
+
+    function altera_alerta(FcodEscritorio)
+    {
+      window.open('/Juridico/processo/altera_alerta.aspx?codEscritorio='+FcodEscritorio,'sss','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,menubar=no,left=0,top=0,width=560,height=400');
+    }
+    
+    function abre_popupmenu(num,asufixo)
+    {
+
+      switch (num) 
+      {
+        case 1:	
+          window.open('/Juridico/faleconosco/faleconosco.aspx?Fsufixo='+asufixo,'','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,menubar=no,left=0,top=0,width=450,height=460');
+          break;
+      }
+    }	
+  </script>
+
+</head>
+
+<body>
+  <app-root>
+    <div class="spinnerContainer">
+      <div class="spinner"></div>
+    </div>
+  </app-root>
+  <style>
+    body {
+      font-family: Roboto;
+    }
+  </style>
+</body>
+
+</html>

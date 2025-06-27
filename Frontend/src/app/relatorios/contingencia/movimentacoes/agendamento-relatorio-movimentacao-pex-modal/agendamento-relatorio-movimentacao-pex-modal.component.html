@@ -1,0 +1,54 @@
+  <h4>Relatório de Movimentações PEX por Média - Agendamento</h4>
+
+  <section class="base-dropdown">
+    <label class="col-form-label-sm" for="descricao-input">
+      <b>Fechamento Inicial:</b>
+    </label>
+
+    <div class="card fechamentos-card">
+      <ul class="list-group">
+        <li (click)="selecionarFechamentoInicial(f.id, f.dataFechamento)" *ngFor="let f of fechamentos" class="list-group-item" [ngStyle]="{'background': fechamentoPexMediaIniCodSolic == f.id && datFechamentoIni == f.dataFechamento ? '#786bb9' : '#fff'}">
+          <div class="row" [ngStyle]="{'color': fechamentoPexMediaIniCodSolic == f.id && datFechamentoIni == f.dataFechamento ? '#fff' : '#777'}">
+             <div class="col-6 px-2">
+              <p><span style="font-weight: bold;">{{ f.dataFechamento | date:'dd/MM/yyyy' }}</span> - {{ f.empresas }}</p>
+              <p>{{ f.numeroMeses }} meses - {{ f.multDesvioPadrao !== null ? f.multDesvioPadrao.toString().replace('.', ',') : f.multDesvioPadrao }} Desvio Padrão</p>
+              <p *ngIf="f.indAplicarHaircut === 'S'">Haircut de {{ f.percentualHaircut }}% aplicado também em processos com garantia</p>
+              <p *ngIf="f.indAplicarHaircut === 'N'">Haircut de {{ f.percentualHaircut }}% aplicado apenas em processos sem garantia</p>
+            </div>
+             <div class="col px-2" style="text-align: right;">
+              <p>Solicitado por {{ f.nomeUsuario }} em {{ f.dataAgendamento  | date:'dd/MM/yyyy' }}  (ID {{ f.id }})</p>
+              <p>Executado em {{ f.dataExecucao  | date:'dd/MM/yyyy' }} às {{ f.dataExecucao  | date:'HH:mm' }}</p>
+             </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <label class="col-form-label-sm" for="descricao-input">
+      <b>Fechamento Final:</b>
+    </label>
+    <div class="card fechamentos-card">
+      <ul class="list-group">
+        <li (click)="selecionarFechamentoFinal(f.id, f.dataFechamento)" *ngFor="let f of fechamentos" fxLayout="row" class="list-group-item" [ngStyle]="{'background': fechamentoPexMediaFimCodSolic == f.id && datFechamentoFim == f.dataFechamento ? '#786bb9' : '#fff'}"
+        style="display: block;">
+          <div class="row" [ngStyle]="{'color': fechamentoPexMediaFimCodSolic == f.id && datFechamentoFim == f.dataFechamento  ? '#fff' : '#888'}">
+            <div class="col-6 px-2">
+              <p><span style="font-weight: bold;">{{ f.dataFechamento | date:'dd/MM/yyyy' }}</span> - {{ f.empresas }}</p>
+              <p>{{ f.numeroMeses }} meses - {{ f.multDesvioPadrao !== null ? f.multDesvioPadrao.toString().replace('.', ',') : f.multDesvioPadrao }} Desvio Padrão</p>
+              <p *ngIf="f.indAplicarHaircut === 'S'">Haircut de {{ f.percentualHaircut }}% aplicado também em processos com garantia</p>
+              <p *ngIf="f.indAplicarHaircut === 'N'">Haircut de {{ f.percentualHaircut }}% aplicado apenas em processos sem garantia</p>
+            </div>
+            <div class="col px-2" style="text-align: right;">
+              <p>Solicitado por {{ f.nomeUsuario }} em {{ f.dataAgendamento  | date:'dd/MM/yyyy' }} (ID {{ f.id }})</p>
+              <p>Executado em {{ f.dataExecucao  | date:'dd/MM/yyyy' }} às {{ f.dataExecucao  | date:'HH:mm' }}</p>
+            </div>
+         </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="footer" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+    <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="verificaDatas()">Agendar</button>
+  </section>
+

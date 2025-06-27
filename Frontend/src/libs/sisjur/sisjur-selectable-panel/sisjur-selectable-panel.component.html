@@ -1,0 +1,14 @@
+<span class="header">{{ header }}</span>
+
+<div class="panel">
+  <div class="checkbox-item" *ngFor="let item of displayItems" (click)="selectItem(item)">
+    <input *ngIf="checkbox" type="checkbox" [checked]="item.selected">
+    <span class="info">{{ item.display }}</span>
+  </div>
+</div>
+
+<div class="checkbox-item" [class.read-only]="displayItems.length === 0" *ngIf="!hideSelectAll && multiSelect"
+  (click)="selectAllItems()">
+  <input type="checkbox" [checked]="allSelected" [disabled]="displayItems.length === 0">
+  <span>Selecionar Todos</span>
+</div>

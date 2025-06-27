@@ -1,0 +1,23 @@
+.mensagem-base-inicial{
+    color: red;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 45px;
+}
+
+.modal-title{
+    padding-left: 0px;
+    font-size: 15px;
+    font-weight: bold;
+}
+::ng-deep {
+    .modal-content {
+        min-width: 370px!important;
+        max-width: 371px!important;
+    }
+    .modal-sm {
+        min-width: 370px!important;
+        max-width: 371px!important;
+    }
+}

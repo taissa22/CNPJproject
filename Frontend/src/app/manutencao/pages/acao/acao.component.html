@@ -1,0 +1,274 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Manutenção - Ação" [breadcrump]="breadcrumb"
+  [exibirAdicionar]="exibirTabela">
+  <div class="row">
+    <div class="col-12 py-3">
+      <p class="font-purple">
+        Selecione o tipo de processo para carregar as ações.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3 pr-1">
+      <label class="col-form-label-sm" for="tipoProcesso">
+        <b>Tipo de Processo:</b>
+      </label>
+      <ng-select [ngStyle]="{'fontSize': '11px'}" [items]="tiposProcesso" bindLabel="descricao" bindValue="id"
+        [formControl]="tipoProcessoFormControl" appearance="outline" notFoundText="Nenhuma opção disponível"
+        [searchable]="false" [clearable]="false" (change)="selecionarTipoProcesso()"
+        [placeholder]="'Selecione o tipo de processo'"></ng-select>
+    </div>
+    <div class="col-3 pr-1" *ngIf="exibirTabela">
+      <label class="col-form-label-sm" for="tipoProcesso" *ngIf="tipoProcessoFormControl.value !== null">
+        <b>Descrição:</b>
+      </label>
+      <input type="search" (search)="onClearInputPesquisar()" class="form-control mr-3" id="descricao" [formControl]="buscarDescricaoFormControl"
+        placeholder="Digite a descrição ou parte do texto" #input [value]="input.value.toUpperCase()"
+        *ngIf="tipoProcessoFormControl.value !== null" (keydown.enter)="buscarTabela()">
+    </div>
+    <div class="col-6 pr-1 d-flex align-items-end pb-1" *ngIf="exibirTabela">
+      <button class="btn btn-primary btn-sm" *ngIf="tipoProcessoFormControl.value !== null"
+        (click)="buscarTabela()">Buscar</button>
+    </div>
+  </div>
+  <div class="mt-4 row" *ngIf="exibirTabela">
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;">Ações</b>
+    </div>
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()">
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="exibirTabela">
+
+    <sisjur-table (sort)="buscarTabela()" [ngSwitch]="tipoProcessoFormControl.value">
+
+     <!-- GRID PARA O JEC -->
+     <ng-container *ngSwitchCase="7">
+        <sisjur-table-header>
+          <sisjur-table-header-cell sort="id" width="5">Código </sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="descricao" width="25">Descrição </sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="naturezaBB" width="25">Natureza da Ação BB</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="enviarAppPreposto" width="70">Enviar para o APP Preposto</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+        <ng-container *ngFor="let acao of dataSource; let i = index">
+          <sisjur-table-row>
+            <sisjur-table-row-cell>{{acao.id}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{acao.descricao }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{acao.naturezaAcaoBBDesc }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{acao.enviarAppPreposto}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="alterar(acao)"> <i class="fa fa-edit"></i> </button>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="excluir(acao)"> <i class="fa fa-trash"></i>
+              </button>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+        </ng-container>
+      </ng-container>
+
+     <!-- GRID PARA O PROCON -->
+     <ng-container *ngSwitchCase="17">
+        <sisjur-table-header>
+          <sisjur-table-header-cell sort="id" width="5">Código </sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="descricao" width="25">Descrição </sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="requerEscritorio" width="25">Requer Preenchimento de Escritório </sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="enviarAppPreposto" width="70">Enviar para o APP Preposto</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        </sisjur-table-header>
+        <ng-container *ngFor="let acao of dataSource; let i = index">
+          <sisjur-table-row>
+            <sisjur-table-row-cell>{{acao.id}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{acao.descricao }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{acao.indRequerEscritorio }}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{acao.enviarAppPreposto}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="alterar(acao)"> <i class="fa fa-edit"></i> </button>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="excluir(acao)"> <i class="fa fa-trash"></i>
+              </button>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+        </ng-container>
+      </ng-container>
+
+      <!-- GRID PARA O CIVEL CONSUMIDOR -->
+      <ng-container *ngSwitchCase="1">
+      <sisjur-table-header>
+        <sisjur-table-header-cell sort="id" width="5">Código </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="descricao" width="25">Descrição </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="naturezaBB" width="25">Natureza da Ação BB</sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="acaoCivelEstrategicoDesc" width="35">Correspondente Cível Estratégico(DExPARA Migração de Processo)</sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="enviarAppPreposto" width="15">Enviar para o APP Preposto</sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+      </sisjur-table-header>
+      <ng-container *ngFor="let acao of dataSource; let i = index">
+        <sisjur-table-row>
+          <sisjur-table-row-cell>{{acao.id}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.descricao }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.naturezaAcaoBBDesc }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.acaoCivelEstrategicoDesc }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.enviarAppPreposto}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(acao)"> <i class="fa fa-edit"></i> </button>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="excluir(acao)"> <i class="fa fa-trash"></i>
+            </button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </ng-container>
+
+    <!-- NOVOS -->
+    <!-- GRID PARA O CIVEL ESTRATEGICO -->
+    <ng-container *ngSwitchCase="9">
+      <sisjur-table-header>
+        <sisjur-table-header-cell sort="id" width="5">Código </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="descricao" width="25">Descrição </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="ativo" width="20">Ativo</sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="acaoCivelConsumidorDesc" width="40">Correspondente Cível Consumidor(DExPARA Migração de Processo)</sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="enviarAppPreposto" width="15">Enviar para o APP Preposto</sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+      </sisjur-table-header>
+      <ng-container *ngFor="let acao of dataSource; let i = index">
+        <sisjur-table-row>
+          <sisjur-table-row-cell>{{acao.id}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.descricao }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.ativo }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.acaoCivelConsumidorDesc}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.enviarAppPreposto}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(acao)"> <i class="fa fa-edit"></i> </button>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="excluir(acao)"> <i class="fa fa-trash"></i>
+            </button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </ng-container>
+
+    <!-- GRID PARA O CRIMINAL JUDICIAL -->
+    <ng-container *ngSwitchCase="15">
+      <sisjur-table-header>
+        <sisjur-table-header-cell sort="id" width="5">Código </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="descricao" width="55">Descrição </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="ativo" width="35">Ativo</sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="enviarAppPreposto" width="40">Enviar para o APP Preposto</sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+      </sisjur-table-header>
+      <ng-container *ngFor="let acao of dataSource; let i = index">
+        <sisjur-table-row>
+          <sisjur-table-row-cell>{{acao.id}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.descricao }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.ativo }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.enviarAppPreposto}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(acao)"> <i class="fa fa-edit"></i> </button>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="excluir(acao)"> <i class="fa fa-trash"></i>
+            </button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </ng-container>
+
+
+    <!-- GRID PARA O PEX -->
+    <ng-container *ngSwitchCase="18">
+      <sisjur-table-header>
+        <sisjur-table-header-cell sort="id" width="5">Código </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="descricao" width="25">Descrição </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="naturezaBB" width="25">Natureza da Ação BB</sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="ativo" width="35">Ativo</sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="enviarAppPreposto" width="15">Enviar para o APP Preposto</sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+      </sisjur-table-header>
+      <ng-container *ngFor="let acao of dataSource; let i = index">
+        <sisjur-table-row>
+          <sisjur-table-row-cell>{{acao.id}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.descricao }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.naturezaAcaoBBDesc }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.ativo }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.enviarAppPreposto}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(acao)"> <i class="fa fa-edit"></i> </button>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="excluir(acao)"> <i class="fa fa-trash"></i>
+            </button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </ng-container>
+
+    <!-- GRID PARA O TRABALHISTA -->
+    <ng-container *ngSwitchCase="2">
+      <sisjur-table-header>
+        <sisjur-table-header-cell sort="id" width="5">Código </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="descricao" width="55">Descrição </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="enviarAppPreposto" width="40">Enviar para o APP Preposto</sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+      </sisjur-table-header>
+      <ng-container *ngFor="let acao of dataSource; let i = index">
+        <sisjur-table-row>
+          <sisjur-table-row-cell>{{acao.id}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.descricao }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.enviarAppPreposto}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(acao)"> <i class="fa fa-edit"></i> </button>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="excluir(acao)"> <i class="fa fa-trash"></i>
+            </button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </ng-container>
+
+    <!-- GRID PARA O TRIBUTARIO JUDICIAL -->
+    <ng-container *ngSwitchCase="5">
+      <sisjur-table-header>
+        <sisjur-table-header-cell sort="id" width="5">Código </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="descricao" width="55">Descrição </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="enviarAppPreposto" width="40">Enviar para o APP Preposto</sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+        <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+      </sisjur-table-header>
+      <ng-container *ngFor="let acao of dataSource; let i = index">
+        <sisjur-table-row>
+          <sisjur-table-row-cell>{{acao.id}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.descricao }}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>{{acao.enviarAppPreposto}}</sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(acao)"> <i class="fa fa-edit"></i> </button>
+          </sisjur-table-row-cell>
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="excluir(acao)"> <i class="fa fa-trash"></i>
+            </button>
+          </sisjur-table-row-cell>
+        </sisjur-table-row>
+      </ng-container>
+    </ng-container>
+
+    </sisjur-table>
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+  </div>
+</app-manutencao-generica>

@@ -1,0 +1,38 @@
+:host ::ng-deep .busca{
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .ng-select{
+  z-index: 999;
+  text-align: left;
+  width: 127px;
+}
+
+:host ::ng-deep .ng-select .ng-select-container{
+  min-height: 22px !important;
+}
+
+combo-box{
+  margin: 0 10px;
+}
+
+:host ::ng-deep .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+ top: 0 !important;
+  left: 0;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+
+.impProc{
+  width: 100%;
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+  height: 1.77rem;
+}
+
+.boxProc{
+  margin-bottom: 0.2rem;
+}

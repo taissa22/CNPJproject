@@ -1,0 +1,36 @@
+export class AcompanhamentoPesquisaResponse {
+  cgcParteEmpresa: string;
+  codComarca: number;
+  codParte: number;
+  codParteEmpresa: number;
+  codProcesso: number;
+  codTipoVara: number;
+  codVara: number;
+  cpfParte: string;
+  descStatusFormulario: string;
+  idEsEmpresaAgrupadora: number;
+  idFormulario: number;
+  indProcessoAtivo: string;
+  indProprioTerceiro: string;
+  infoprocessoNrproctrab: string;
+  logCodUsuario: string;
+  logDataOperacao: Date;
+  nomComarca: string;
+  nomParte: string;
+  nomParteEmpresa: string;
+  nomTipoVara: string;
+  statusFormulario: number;
+  tipoFormulario: string;
+  tipoFormularioTipo: number;
+  finalizadoEscritorio: string;
+  finalizadoContador: string;
+  nrRecibo: string;
+  nomEscritorio: string;
+  nomContador: string;
+  nomeUsuario: string;
+  periodoApuracao: string;
+  exibirHistorico: boolean;
+  exclusaoNrrecibo: string;
+  exibirRetorno: boolean;
+  ehDataFutura?: boolean;
+}

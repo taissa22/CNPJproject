@@ -1,0 +1,223 @@
+<div class="container-agenda">
+    <section class="container-breadcrumb">
+        <h3>Agenda de Audiências Trabalhista</h3>
+        <p>{{ caminhoPaginaAgendaAudiencia }}</p>
+    </section>
+
+    <ng-container *ngTemplateOutlet="criterioPesquisa"></ng-container>
+
+    <div class="mb-3" style="margin-top: 25px;" >
+            
+        <div class="d-flex">
+            <b class="roxo-padrao mt-auto mb-0" style="width: 300px; font-size: 15px;" tabindex="-1">Audiências encontradas ({{this.totalGeralAudiencia}})</b>
+            <button class="btn btn-roxo ml-auto p-0 mr-0" (click)="exportarAgenda()">
+                <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important;"></i>
+                Exportar
+            </button>
+        </div>        
+    </div>
+
+    <div class="action-bar">        
+        <span class="d-flex align-items-center" style="width: 300px;">
+            <label class="mb-0" for="ordenar">Ordenar por:</label>
+            <ng-select style="margin: 0 10px; width: 200px;" id="ordenar" [items]="ordenarPor" bindValue="id"
+                [formControl]="ordenarPorFormControl" bindLabel="descricao" notFoundText="Nenhuma opção disponível"
+                [searchable]="true" [clearable]="false" [multiple]="false" [virtualScroll]="true" [tabIndex]="-1"
+                (change)="buscarPorEstado(false)">
+            </ng-select>
+        </span>
+        <span class="d-flex align-items-center" style="width: 243px;">
+            <input type="checkbox" name="chkPrepostoInativo" id="chkPrepostoInativo"
+                [formControl]="permitirInativosFormControl" (change)="obterPrepostoLista()" tabindex="-1">
+            <label class="mb-0 ml-2" for="chkPrepostoInativo">Permitir seleção de prepostos inativos</label>
+        </span>
+        <span class="d-flex">
+            <ng-container *ngTemplateOutlet="selectEstado"></ng-container>
+        </span>
+    </div>
+
+    <ng-container *ngTemplateOutlet="audienciaEncontrada"></ng-container>
+
+    <div class="d-flex justify-content-between" >
+        <span class="d-flex">
+            <button *ngIf="totalAudienciasRestante > 0" type="button" class="btn btn-primary" (click)="carregarMais()" tabindex="-1">Carregar mais</button>
+        </span>
+
+        <div class="d-flex" *ngIf="totalAudiencias != 0">
+            <span class="d-flex ml-auto footer">
+                <ng-container *ngTemplateOutlet="selectEstado"></ng-container>
+            </span>
+        </div>
+    </div>
+
+  
+
+</div>
+
+
+<ng-template #criterioPesquisa>
+    <div class="filtro-box">
+        <div class="titulo roxo-padrao">
+            <b>Critérios de Pesquisa</b>
+        </div>
+        <div class="d-flex">
+            <div class="colunas">
+                <span tabindex="-1">
+                    <b>Data da Audiência:</b>
+                    <app-data-range #dataRange [dataInicio]="dataInicialFormControl.value"
+                        [dataFim]="dataFinalFormControl.value" (retDataFim)="dataFinalFormControl.setValue($event)"
+                        (retDataInicio)="dataInicialFormControl.setValue($event)">
+                    </app-data-range>
+                </span>
+                <span>
+                    <b>Classificação Hierárquica:</b>
+                    <input tabindex="-1" type="checkbox" name="unico" id="unico" [formControl]="indUnicoFormControl">
+                    <label class="mb-0 ml-2" for="unico" style="width: 39px;">Único</label>
+                    <input tabindex="-1" class="ml-4" type="checkbox" name="primario" id="primario"
+                        [formControl]="indPrimarioFormControl">
+                    <label class="mb-0 ml-2" for="primario">Primário</label>
+                    <input tabindex="-1" class="ml-4" type="checkbox" name="secundario" id="secundario"
+                        [formControl]="indSecundarioFormControl">
+                    <label class="mb-0 ml-2" for="secundario">Secundário</label>
+                </span>
+                <span>
+                    <b>Classificação do Processo:</b>
+                    <input tabindex="-1" type="checkbox" name="proprio" id="proprio"
+                        [formControl]="indProprioFormControl">
+                    <label class="mb-0 ml-2" for="proprio">Próprio</label>
+                    <input tabindex="-1" class="ml-4" type="checkbox" name="terceiro" id="terceiro"
+                        [formControl]="indTerceiroFormControl">
+                    <label class="mb-0 ml-2" for="terceiro">Terceiro</label>
+                </span>
+                <span>
+                    <b>Processo Estratégico:</b>
+                    <input tabindex="-1" type="radio" name="estrategico" id="estrategico-sim" value="1"
+                        [formControl]="processoEstrategicoFormControl">
+                    <label class="mb-0 ml-2" for="proprio" style="width: 57px;">Sim</label>
+                    <input tabindex="-1" type="radio" name="estrategico" id="estrategico-nao" value="2"
+                        [formControl]="processoEstrategicoFormControl">
+                    <label class="mb-0 ml-2" for="proprio" style="width: 64px;">Não</label>
+                    <input tabindex="-1" type="radio" name="estrategico" id="estrategico-indiferente" value="3"
+                        [formControl]="processoEstrategicoFormControl">
+                    <label class="mb-0 ml-2" for="proprio">Indiferente</label>
+                </span>
+            </div>
+
+            <div class="colunas">
+                <span>
+                    <b>Estado:</b>
+                    <ng-select style="margin-right: 9px; width: -webkit-fill-available" id="estado"
+                        [formControl]="estadoListaFormControl" [items]="estadoLista" bindValue="id"
+                        bindLabel="idDescricao" notFoundText="Nenhuma opção disponível" [searchable]="true"
+                        [clearable]="true" [multiple]="true" [closeOnSelect]="false" [virtualScroll]="true"
+                        placeholder="Selecione um estado" [tabIndex]="-1">
+                    </ng-select>
+                </span>
+                <span>
+                    <b>Tipo de Audiência:</b>
+                    <ng-select style="margin-right: 9px; width: -webkit-fill-available" id="tpAudiencia"
+                        [formControl]="tipoAudienciaListaFormControl" [items]="tipoAudienciaLista" bindValue="id"
+                        bindLabel="descricao" bindValue="id" notFoundText="Nenhuma opção disponível" [searchable]="true"
+                        [clearable]="true" [multiple]="true" [closeOnSelect]="false" [virtualScroll]="true"
+                        placeholder="Selecione um tipo de audiência" [tabIndex]="-1">
+                    </ng-select>
+                </span>
+                <span>
+                    <b>Localidade:</b>
+                    <ng-select style="margin-right: 9px; width: -webkit-fill-available" id="locAudiencia"
+                        [formControl]="localidadeListaFormControl" [items]="localidadeLista" bindValue="id"
+                        bindLabel="descricao" bindValue="id" notFoundText="Nenhuma opção disponível" [searchable]="true"
+                        [clearable]="true" [multiple]="true" [closeOnSelect]="false" [virtualScroll]="true"
+                        placeholder="Selecione uma localidade" [tabIndex]="-1">
+                    </ng-select>
+                </span>
+                <span>
+                    <b>Modalidade:</b>
+                    <ng-select style="margin-right: 9px; width: -webkit-fill-available" id="modAudiencia"
+                        [formControl]="modalidadeListaFormControl" [items]="modalidadeLista" bindValue="id"
+                        bindLabel="descricao" bindValue="id" notFoundText="Nenhuma opção disponível" [searchable]="true"
+                        [clearable]="true" [multiple]="true" [closeOnSelect]="false" [virtualScroll]="true"
+                        placeholder="Selecione uma modalidade" [tabIndex]="-1">
+                    </ng-select>
+                </span>
+            </div>
+        </div>
+        <div class="buttons d-flex">
+            <button type="button" class="btn btn-link ml-auto" aria-label="Close" (click)="limparFiltros()" tabindex="-1">Limpar
+                Filtros</button>
+            <button type="button" class="btn btn-primary" (click)="buscar(false, true)" tabindex="-1">Buscar</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #selectEstado>
+    <div class="select-custom">
+        <i class="fas fa-chevron-left roxo-padrao" [ngClass]="{'disabled': isPreviousDisabled()}" (click)="previousOption()"></i>
+        <ng-select class="ng-select-selectEstado" id="selectEstado" bindLabel="idDescricao" bindValue="id" [items]="estadoCustomList" [formControl]="estadoCustomFormControl" notFoundText="Nenhuma opção disponível" [searchable]="true" [clearable]="false"
+            [multiple]="false" [virtualScroll]="true" placeholder="Selecione um estado" [tabIndex]="-1" (change)="buscarPorEstado(false)" [ngbTooltip]="titleSelectEstado()">
+            <ng-template class="ng-select-selectEstado" ng-option-tmp let-item="item" style="z-index: 1;">
+                <div [title]="item.idDescricao">{{item.idDescricao}}</div>
+            </ng-template>
+        </ng-select>
+        <i class="fas fa-chevron-right roxo-padrao" [ngClass]="{'disabled': isNextDisabled()}" (click)="nextOption()"></i>
+    </div>
+
+    <div class="buttons d-flex">
+        <button type="button" class="btn btn-primary" [disabled]="isNextDisabled()" (click)="salvar(true)" tabindex="-1">Salvar e Avançar</button>
+        <button type="button" class="btn btn-primary ml-3" (click)="salvar(false)" tabindex="-1">Salvar</button>
+    </div>
+</ng-template>
+
+<ng-template #audienciaEncontrada>
+    <ng-container *ngFor="let audiencia of audienciasLista; let iAudiencia = index">
+        <div class="box">
+            <div>
+                <b>{{audiencia.dateAudiencia | date:"dd/MM/yyyy"}} {{audiencia.horarioAudiencia | date:"HH:mm"}}</b>
+                <b class="ml-3 mr-3">{{audiencia.estado}} - {{audiencia.comarca}} - {{audiencia.codVara}}° VARA
+                    {{audiencia.tipoVara}}</b>
+                <b class="mr-3">{{audiencia.tipoAudiencia}}</b>
+                <b>{{ descModalidadeLocalidade(audiencia.descLocalidade, audiencia.descModalidade)}}</b>
+                <p *ngIf="audiencia.usuarioUltAteracao != null"  class="ml-auto">Atualizado por {{audiencia.usuarioUltAteracao}} em {{audiencia.dataUltAtualizacao | date:"dd/MM/yyyy HH:mm"}}</p>
+            </div>
+
+            <ng-template #tooltipTemplate let-htmlContent="htmlContent">
+                <span [innerHTML]="ajustaToolTipReclamantes(audiencia.reclamantes)"></span>
+            </ng-template>
+
+            <div>
+                <p style="width: 65px;">Processo:</p>
+                <p>{{audiencia.numeroProcesso}} | {{audiencia.processoAtivo == 'S' ? 'ATIVO' : 'INATIVO'}} | {{audiencia.descrcaoClassificacaoProcesso}} | {{audiencia.descricaoClassificHierarquica}} {{audiencia.estrategico == 'S' ? ' | Estratégico' : ''}} </p>
+                <p class="ml-auto ellipsis" [ngbTooltip]="tooltipTemplate" placement="left">{{ajustaReclamantes(audiencia.reclamantes)}}: {{audiencia.reclamantes}}
+                </p>
+            </div>
+            <div>
+                <p style="width: 65px;">Escritório:</p>
+                <p>{{audiencia.escritorioProcesso}}</p>
+                <p class="ml-auto" *ngIf="temPermissaoParaAlterarConsultarProcesso">
+                    <button type="button" class="btn btn-icon consultar" tabindex="-1" (click)="consultar(audiencia.codProcesso)">
+                        <i class="fa fa-magnifying-glass mr-1"></i> Consultar</button>
+                </p>
+                <p class="ml-2" *ngIf="temPermissaoParaAlterarConsultarProcesso">
+                    <button type="button" class="btn btn-icon editar" tabindex="-1" (click)="editar(audiencia.codProcesso)">
+                        <i class="fa fa-edit mr-1"></i> Editar</button>
+                </p>
+            </div>
+            <div>
+                <b class="roxo-padrao f-15" style="width: 500px;">Reclamada</b>
+                <b class="roxo-padrao f-15">Preposto</b>
+            </div>
+            <hr style="margin-top: 6px;">
+
+            <ng-container *ngFor="let reclamada of audiencia.reclamadas; let iReclamada = index">
+                <div class="d-falign pb-2">
+                    <p class="m-0" style="width: 500px;">{{reclamada.descricao}}</p>
+                    <ng-select [ngClass]="{ 'ng-select-focused': iAudiencia == 0 && iReclamada == 0}" style="margin-right: 12px; width: 45%;" id="preposto{{iAudiencia}}{{iReclamada}}" bindLabel="descricao" [items]="prepostoLista" bindValue="id" notFoundText="Nenhuma opção disponível"
+                        [searchable]="true" [clearable]="true" [multiple]="false" [virtualScroll]="true" placeholder="Selecione um preposto" [(ngModel)]="reclamada.codPreposto" (change)="atualizarPreposto(iAudiencia, iReclamada, $event)">
+                    </ng-select>
+                    <i [title]="'Repetir o último preposto selecionado.'" class="fas fa-share f-15" style="color: #888; cursor: pointer" (click)="replicarPreposto(iAudiencia, iReclamada)"></i>
+                </div>
+            </ng-container>
+
+        </div>
+    </ng-container>
+</ng-template>

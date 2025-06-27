@@ -1,0 +1,80 @@
+<div>
+  <div class="roxo-padrao btn-novo mt-1" *ngIf="temPermissaoBlocoCeDeE">
+    <div class="ml-auto mr-4" style="display: flex;align-items: center;">
+      <i class="fas fa-cloud-upload-alt ml-auto mr-2 fs-2" style="font-size: 28px; cursor: pointer"
+        (click)="carregarBlocoPeriodo()"></i>
+      <span class="fs-1" style="cursor: pointer" (click)="carregarBlocoPeriodo()">Carregar Períodos em Bloco</span>
+    </div>
+    <div class="mr-4" style="display: flex;align-items: center;">
+      <i class="fas fa-cloud-upload-alt ml-auto mr-2 fs-2" style="font-size: 28px; cursor: pointer"
+        (click)="carregarBlocoContribuicao()"></i>
+      <span class="fs-1" style="cursor: pointer" (click)="carregarBlocoContribuicao()">Carregar Contribuições em
+        Bloco</span>
+    </div>
+    <i class="fas fa-plus-circle mr-1 fs-2" (click)="incluir()"></i>
+    <span class="fs-1" (click)="incluir()">Incluir um Registro</span>
+  </div>
+  <div style="margin-top: 25px;">
+    <div class="d-flex">
+        <button class="btn btn-link ml-auto p-0 mr-4" style="cursor: pointer; text-decoration: none;"
+        (click)="exportar()" *ngIf="temDados">
+        <i class="fas fa-download pr-1" style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar Períodos</button>
+        <button class="btn btn-link p-0" style="cursor: pointer; text-decoration: none;" (click)="exportarContribuicoes()"  *ngIf="temDados">
+          <i class="fas fa-download pr-1" style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+          Exportar Contribuições</button>
+    </div>
+    <sisjur-table (sort)="buscarTabela()">
+      <ng-container>
+        <sisjur-table-header>
+          <sisjur-table-header-cell width="3"></sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="periodo" width="14">Período Referência</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="18">Base Calc Contrib Previdenciária</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="22">Base Calc Contrib Previdenciária
+            13°</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="18">Rendimento Tributável IR</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="18">Rendimento Tributável IR 13°</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="4"></sisjur-table-header-cell>
+          <sisjur-table-header-cell *ngIf="temPermissaoBlocoCeDeE" width="4"></sisjur-table-header-cell>
+        </sisjur-table-header>
+        <ng-container *ngFor="let item of dataSource let i = index">
+          <sisjur-table-row>
+            <sisjur-table-row-cell class="ml-0">
+              <button type="button" class="btn" (click)="selecionarPeriodo(i);">
+                <i class="fas fa-plus roxo-padrao mr-1" *ngIf="periodoSelecionado != i"></i>
+                <i class="fas fa-minus roxo-padrao mr-1" *ngIf="periodoSelecionado == i"></i>
+              </button>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{item.calctribPerref}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{item.calctribVrbccpmensal | currency: "BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{item.calctribVrbccp13 | currency: "BRL":"R$":"1.2-2":"pt"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{item.calctribVrrendirrf | currency:"BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>{{item.calctribVrrendirrf13 | currency:"BRL":"R$ ":"1.2-2":"pt"}}</sisjur-table-row-cell>
+            <sisjur-table-row-cell>
+              <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501, item.idEsF2501Calctrib)" *ngIf="!temPermissaoBlocoCeDeE"> <i class="fa fa-magnifying-glass"></i> </button>
+              <button type="button" class="btn btn-icon" (click)="alterar(item.idEsF2501, item.idEsF2501Calctrib)" *ngIf="temPermissaoBlocoCeDeE"> <i class="fa fa-edit"></i> </button>
+            </sisjur-table-row-cell>
+            <sisjur-table-row-cell *ngIf="temPermissaoBlocoCeDeE">
+              <button type="button" class="btn btn-icon"
+                (click)="excluir(item.idEsF2501, item.idEsF2501Calctrib, item.calctribPerref )"> <i
+                  class="fa fa-trash"></i> </button>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+
+          <sisjur-table-row *ngIf="periodoSelecionado == i" [heightAuto]="true" background="#fff">
+            <sisjur-table-row-cell width="100">
+              <div style="position: relative;" class="esfera" style="width: 100%;">
+                <app-esocial-contribuicao-subgrupo (aoAbrirPopup)="aoAbrirPopup.emit()" [codF2501]="item.idEsF2501" [codCalTrib]="item.idEsF2501Calctrib" [temPermissaoBlocoCeDeE]="temPermissaoBlocoCeDeE"></app-esocial-contribuicao-subgrupo>
+              </div>
+            </sisjur-table-row-cell>
+          </sisjur-table-row>
+        </ng-container>
+
+      </ng-container>
+    </sisjur-table>
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" [MostrarQtdPorPagina]="false" [QtdFixaPorPagina]="10"
+        (page)="buscarTabela()"></sisjur-paginator>
+    </div>
+  </div>
+</div>

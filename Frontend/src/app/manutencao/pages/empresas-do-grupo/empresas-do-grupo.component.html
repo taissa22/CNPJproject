@@ -1,0 +1,23 @@
+<app-manutencao-generica
+  tituloLista="Empresas do Grupo"
+  titulo="Manutenção - Empresa do Grupo"
+  [breadcrump]="breadcrumb"
+  [colunas]="colunas"
+  [registros]="obterResultados"
+  [totalDeRegistros]="totalDeRegistros"
+
+  [(pagina)]="pagina"
+  [(ordenacaoColuna)]="ordenacaoColuna"
+  [(ordenacaoDirecao)]="ordenacaoDirecao"
+  [(totalDeRegistrosPorPagina)]="totalDeRegistrosPorPagina"
+
+  (aoClicarNovoRegistro)="abrirDialogoDeCriar()"
+  (aoClicarEditarRegistro)="abrirDialogoDeAtualizar($event)"
+  (aoRemoverRegistro)="remover($event.id)"
+  (aoCarregarRegistros)="trocarPagina()"
+  (aoClicarExportar)="exportar()"
+  [exibirAdicionar]="true">
+
+  <empresa-do-grupo-filtros (obterParametros)="pagina = 1; obter($event)"></empresa-do-grupo-filtros>
+
+</app-manutencao-generica>

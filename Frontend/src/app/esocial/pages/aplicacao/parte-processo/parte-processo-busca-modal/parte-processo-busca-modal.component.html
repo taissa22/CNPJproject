@@ -1,0 +1,30 @@
+<div class="container-modal">
+    <div class="title">
+        <p class="roxo-padrao m-0 mb-0"><b>Selecione o processo desejado e clique em OK para confirmar</b></p>
+    </div>
+    <div class="divContent">
+
+        <ng-container *ngFor="let item of dadosProcessos">
+            <div class="content" [ngStyle]="{'background-color': codigoInternoSelecionado == item.codProcesso ? '#bab1e7' : 'white'}">
+                <div class="selecionavel" (click)="selecionarProcesso(item.codProcesso)">
+                    <b [ngStyle]="{'color': codigoInternoSelecionado == item.codProcesso ? '#141414' : 'dimgray'}">
+            {{item.nroProcessoCartorio}} | {{item.ufVara}} - {{item.nomeComarca}} | {{item.nomeVara}} <br>
+            {{item.indAtivo}}
+            | {{item.nomeEmpresaGrupo}} | {{item.indProprioTerceiro}} | Código Interno: {{item.codProcesso}}
+          </b>
+                </div>
+            </div>
+        </ng-container>
+
+    </div>
+
+    <div class="modal-footer pr-0">
+        <button type="button" class="btn btn-primary mr-3" (click)="buscar()">
+      OK
+    </button>
+        <button type="button" class="btn btn-secondary" (click)="close()">
+      Cancelar
+    </button>
+    </div>
+
+</div>

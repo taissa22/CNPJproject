@@ -1,0 +1,36 @@
+<div class="container pg-interna">
+  <br>
+  <app-container-pagina [titulo]="titulo" [caminho]="breadcrumb" [hasAdicionar]="false" (adicionarClicked)="novo()">
+    <div class="row py-3">
+      <div class="col-12">
+        <p class="font-purple">
+          Para que sua carga seja realizada com sucesso, siga o passo a passo descrito nas instruções para a carga.
+        </p>
+      </div>
+    </div>
+    <painel-carga-de-comprovantes (recarregarLista)="redefinirListagem()"></painel-carga-de-comprovantes>
+    <div class="row pt-5">
+      <div class="col-6">
+        <span class="font-purple w700 font-size-16">
+          Cargas agendadas / executadas
+        </span>
+      </div>
+      <div class="col-6">
+        <span class="float-right" [ngStyle]="{ cursor: 'pointer' }" (click)="redefinirListagem()">
+          <i class="fas fa-sync-alt font-purple pr-1"></i>
+          <span class="font-purple font-size-12">
+            Atualizar lista
+          </span>
+        </span>
+      </div>
+      <div class="col-12">
+        <listagem-carga-de-comprovantes
+          [(comprovantes)]="comprovantes"
+          [totalAgendamentos]="totalAgendamentos"
+          (obterAgendamentos)="obterMaisComprovantes()"
+          (excluir)="excluir($event)">
+        </listagem-carga-de-comprovantes>
+      </div>
+    </div>
+  </app-container-pagina>
+</div>

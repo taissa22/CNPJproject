@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>preview</LangVersion>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <DocumentationFile>bin\Debug\net6.0\Oi.Juridico.WebApi.V2.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
+    <PackageReference Include="Hashids.net" Version="1.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
+    <PackageReference Include="Nager.Date" Version="1.42.0" />
+    <PackageReference Include="Oi.Juridico.AddOn.Configuracoes" Version="1.0.4" />
+    <PackageReference Include="Oi.Juridico.AddOn.CsvHelperTypeConverters" Version="1.0.12" />
+    <PackageReference Include="Oi.Juridico.AddOn.Extensions.Enum" Version="2.2.0" />
+    <PackageReference Include="Oi.Juridico.AddOn.Extensions.IEnumerable" Version="1.7.0" />
+    <PackageReference Include="Oi.UrlCombine" Version="1.0.0" />
+    <PackageReference Include="Serilog" Version="2.12.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="Serilog.Enrichers.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
+    <PackageReference Include="System.Net.Primitives" Version="4.3.1" />
+    <PackageReference Include="UrlCombine" Version="2.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="7.22.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Perlink.Oi.Juridico.Application\Perlink.Oi.Juridico.Application.csproj" />
+    <ProjectReference Include="..\..\Perlink.Oi.Juridico.Domain\Perlink.Oi.Juridico.Domain.csproj" />
+    <ProjectReference Include="..\..\Oi.Juridico.Contextos\Oi.Juridico.Contextos.csproj" />
+    <ProjectReference Include="..\..\Perlink.Oi.Juridico.Infra\Perlink.Oi.Juridico.Infra.csproj" />
+    <ProjectReference Include="..\Oi.Juridico.Contextos.V2\Oi.Juridico.Contextos.V2.csproj" />
+    <ProjectReference Include="..\Oi.Juridico.Shared.V2\Oi.Juridico.Shared.V2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Contingencias\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\RelatorioSolicitacaoLancamentoPex\Enums\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\RelatorioSolicitacaoLancamentoPex\Helper\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Contingencias\" />
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
+</Project>

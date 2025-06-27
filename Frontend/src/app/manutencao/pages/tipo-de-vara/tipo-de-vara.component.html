@@ -1,0 +1,66 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Tipo de Vara" [breadcrump]="breadcrumb"
+  [exibirAdicionar]="true">
+  <br>
+  <div class="row">
+    <div class="col-md-6 pr-1 mb-1">
+      <!-- <input #searchField (keyup.enter)="search = searchField.value" type="text" id="nome" maxlength="400"
+        placeholder="Entre com a Descrição" class="form-control"> -->
+      <app-filtro-busca-padrao (nomeBusca)="search = $event" [placeholder]="'Entre com o nome ou parte do texto'"
+        class="pb-2" [posTop]="'10px'" [posLeft]="'21px'">
+      </app-filtro-busca-padrao>
+    </div>
+
+    <div class="col-md-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()">
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <jur-table [dataSource]="dataSource">
+
+    <jur-column-template flex="10" headerName="Código" sortColumn="codigo" *jurRowData="let row">
+      {{ row.codigo }}
+    </jur-column-template>
+
+    <jur-column-template flex="70" headerName="Nome" sortColumn="nome" *jurRowData="let row">
+      <span style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;" fxFlex>
+        <span style="cursor: pointer; display:inline-block;">
+          {{ row.nome }}
+        </span>
+      </span>
+      <!-- title="{{row.nome}}" -->
+      <!-- [ngbTooltip]="autor['nomeParte'].length > 20? autor['nomeParte'] : '' " tooltipClass='teste'> -->
+    </jur-column-template>
+    
+    <jur-column-template *jurRowData="let row">
+      <ng-template #teste>
+        <span> <b>Cadastrada para:</b></span>
+        <span *ngIf="row.indCivel">Cível Consumidor<br></span>
+        <span *ngIf="row.indCivelEstrategico">Cível Estratégico<br></span>
+        <span *ngIf="row.indTrabalhista">Trabalhista<br></span>
+        <span *ngIf="row.indTributaria">Tributária<br></span>
+        <span *ngIf="row.indJuizado">Juizado Especial Cível<br></span>
+        <span *ngIf="row.indCriminalJudicial">Criminal Judicial<br></span>
+        <span *ngIf="row.indProcon">Procon</span>
+      </ng-template>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <span><i class="fas fa-info-circle mr-2" style="font-size:18px; color: #9597a6; cursor: pointer"
+            [ngbTooltip]="teste" container="body" [autoClose]="'outside'" triggers="manual" #t="ngbTooltip"
+            (click)="t.open()" tooltipClass="tipo-vara-tooltip" placement="left">
+          </i></span>
+        <button type="button" class="btn btn-icon" (click)="alterar(row)">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button type="button" class="btn btn-icon" (click)="excluir(row)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+    </jur-column-template>
+
+  </jur-table>
+
+  <jur-paginator [length]="total"></jur-paginator>
+
+</app-manutencao-generica>

@@ -1,0 +1,17 @@
+<section class="container-breadcrumb">
+  <h3>Importação e Consulta do Arquivo de Retorno</h3>
+  <p>{{breadcrumb}}</p>
+  <p class="filtroSapSelecao"></p>
+  <div class="botaoImportar">
+  <label style="cursor: pointer" class="btn btn-primary">
+    <input type="file"
+          multiple
+          (change)="onFileChange($event)"
+          accept=".txt">
+    <i class="fas fa-folder"></i>
+    Importar Novo Arquivo
+  </label>
+</div>
+</section>
+<app-cpn-filtro [listaFiltro]="listaFiltro" [button]="'Buscar'" (funcBtn)="onClickbtn()"
+  [textNomeFiltro]="'Critérios de seleção dos arquivos'" [enabled] = "isValid"></app-cpn-filtro>

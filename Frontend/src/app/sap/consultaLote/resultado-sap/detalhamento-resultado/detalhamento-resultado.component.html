@@ -1,0 +1,63 @@
+<div class="bg-relatarios" *ngIf="detalheResultado | async as detalhamento">
+  <div class="container">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <div>
+          <div class="sm-parametros roxo-claro">
+            <h6>Detalhamento do lote</h6>
+            <div class="row dados-detalhamento-lote">
+              <div class="col-6">
+                <p>
+                  Empresa do Grupo: {{ detalhamento.nomeEmpresaGrupo }}
+                  <br />
+                  Fornecedor: {{ detalhamento.fornecedor }}
+                  <br />
+                  Qtd Lançamentos: {{ detalhamento.quantLancamento }}
+
+                  <ng-container *ngIf="detalhamento.dataGeracaoArquivoBB.length > 1">
+                    <br />
+                    Dt. Geração Arquivo BB: {{ detalhamento.dataGeracaoArquivoBB }}
+                  </ng-container>
+
+                </p>
+              </div>
+              <div class="col-6">
+                <p>
+                  Forma de pagamento: {{ detalhamento.formaPagamento }}
+                  <br />
+                  Centro de Custo: {{ detalhamento.centroCusto }}
+                  <br />
+
+
+                  Valor:
+                  <span>
+                    {{
+                      detalhamento.valor | currency: "BRL":"":"1.2-2":"pt"
+                    }}</span>
+                  <br />
+                  <ng-container  *ngIf="detalhamento.dataRetornoBB.length > 1">
+                  Dt. Retorno Arquivo BB: {{ detalhamento.dataRetornoBB }}
+                  <br />
+                  </ng-container>
+
+                  <ng-container *ngIf="detalhamento.numeroLoteBB">
+                    N° Lote BB: {{exibirLoteBB}}
+                    <br />
+                    <span *ngIf="temPermissao && detalhamento.exibirLoteBB" class="lote-BB "
+                      (click)="regerarLoteBB(detalhamento.id)"><b><u>Regerar N° do Lote
+                          BB</u></b></span>
+                  </ng-container>
+                </p>
+              </div>
+            </div>
+          </div>
+          <lancamento-historico [seletor]="1"></lancamento-historico>
+          <lancamento-historico [seletor]="2" [borderoExibir]="borderoExist"></lancamento-historico>
+          <lancamento-historico [seletor]="3"></lancamento-historico>
+        </div>
+      </div>
+      <br />
+    </div>
+  </div>
+</div>

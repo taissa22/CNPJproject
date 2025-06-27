@@ -1,0 +1,39 @@
+
+#container-filtro {
+  border: 1px solid #dbdbdb;
+  margin: 0px;
+  border-radius: 2px;
+
+  form {
+    width: 100% !important;
+
+    .chkMarginLeft {
+      margin-left: 20px;
+    }
+  }
+}
+
+.col-form-label-sm {
+  font-size: 1rem !important;
+}
+
+.container-vara {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+
+  .container-vara-title {
+    background: #FFF;
+    max-width: max-content;
+    padding: 0 4px;
+    position: absolute;
+    top: -10px;
+    left: 5px;
+    font-weight: bold;
+    color: #554d80;
+  }
+}
+
+.input-group-append{
+  z-index: 0;
+}

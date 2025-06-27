@@ -1,0 +1,5 @@
+<div class="area-filtro fonte-padrao">
+  <i class="fas fa-search icone-busca "[ngStyle]="{'top': posTop, 'left': posLeft }" ></i>
+  <input type="search" [(ngModel)]="label" placeholder="{{placeholder}}" (keyup.enter)="buscar()"
+    class="input-filtro fonte-padrao form-control">
+</div>

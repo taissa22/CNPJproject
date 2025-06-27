@@ -1,0 +1,187 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "PautaJuizadoComposicaoContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "PautaJuizadoComposicaoContext\\Data",
+   "OutputPath": "PautaJuizadoComposicaoContext\\Entities",
+   "ProjectRootNamespace": "Oi.Juridico.Contextos.V2",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+  "Tables": [
+    {
+      "ExcludedColumns": [
+        "SENHA",
+        "PERFIL",
+        "IND_CIVEL",
+        "IND_TRABALHISTA",
+        "IND_REGULATORIO",
+        "IND_USUARIO_INTERNET",
+        "DSC_EMAIL",
+        "IND_TRIBUTARIO",
+        "IND_ATIVO",
+        "IND_CONTROLADORIA",
+        "IND_BLOQUEADO",
+        "IND_MUDAR_SENHA",
+        "DAT_VALIDADE_SENHA",
+        "IND_JUIZADO",
+        "IND_PERFIL_WEB",
+        "IND_PREPOSTO",
+        "IND_AUTORIZA_SERVICO",
+        "IND_CIVEL_ESTRATEGICO",
+        "DATA_DESATIVACAO",
+        "IND_RESTRITO",
+        "COD_PRIORIDADE_EXEC_REL",
+        "IND_CRIMINAL_ADM",
+        "IND_CRIMINAL_JUDICIAL",
+        "IND_CIVEL_ADM",
+        "IND_PROCON",
+        "IND_AUTORIZA_SERV_PROCON",
+        "OBS_USUARIO",
+        "IND_PEX",
+        "IND_ADM_APROVADOR_ACESSOS",
+        "IND_GESTOR_APROVADOR_ACESSOS",
+        "COD_TIPO_USUARIO_PERFIL",
+        "NUM_CPF",
+        "IND_OPERADOR_CADASTRO",
+        "COD_GESTOR_DEFAULT",
+        "IND_OPERADOR_VALIDACAO_JEC",
+        "IND_OPERADOR_VALIDACAO_CCONS",
+        "COD_SITUACAO_USUARIO",
+        "IND_INATIVACAO_MANUAL",
+        "IND_INATIVACAO_AUTOMATICA",
+        "IND_USUARIO_ESTRANGEIRO",
+        "COD_USUARIO_RESPONSAVEL"
+      ],
+      "Name": "JUR.ACA_USUARIO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.USUARIO_REGIONAL",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PEDIDO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.COMARCA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PREPOSTO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PEDIDO_PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PARTE",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.TIPO_AUDIENCIA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.AUDIENCIA_PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.TIPO_VARA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ASSUNTO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.PROCESSO",
+      "ObjectType": 0
+    },
+    {
+      "ExcludedColumns": [
+        "COD_TIPO_PESSOA",
+        "CGC_PROFISSIONAL",
+        "CPF_PROFISSIONAL",
+        "END_PROFISSIONAL",
+        "COD_CEP",
+        "COD_ESTADO",
+        "DSC_CIDADE",
+        "DSC_BAIRRO",
+        "TELEFONE",
+        "DDD_TELEFONE",
+        "FAX",
+        "DDD_FAX",
+        "CELULAR",
+        "DDD_CELULAR",
+        "DSC_SITE",
+        "IND_ESCRITORIO",
+        "IND_CONTADOR",
+        "IND_AREA_CIVEL",
+        "IND_AREA_TRABALHISTA",
+        "IND_AREA_REGULATORIA",
+        "IND_AREA_TRIBUTARIA",
+        "IND_ALTERAR_VALOR_INTERNET",
+        "SEQ_ADVOGADO",
+        "SEQ_DESPESA",
+        "COD_FORNECEDOR",
+        "ALERTA_EM",
+        "IND_ADVOGADO",
+        "NRO_OAB_ADVOGADO",
+        "IND_AREA_JUIZADO",
+        "COD_ESTADO_OAB",
+        "GLJ_COD_GRUPO_LOTE_JUIZADO",
+        "IND_CIVEL_ESTRATEGICO",
+        "IND_CRIMINAL_ADM",
+        "IND_CRIMINAL_JUDICIAL",
+        "IND_CIVEL_ADM",
+        "IND_PROCON",
+        "IND_PEX",
+        "IND_CONTADOR_PEX",
+        "DESCRICAO_END_ADICIONAIS",
+        "DESCRICAO_TEL_ADICIONAIS",
+        "COD_PROFISSIONAL_SAP",
+        "IND_ATIVO",
+        "IND_OFENSOR"
+      ],
+      "Name": "JUR.PROFISSIONAL",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.ALOCACAO_PREPOSTO",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.GRUPO_JUIZADO_VARA",
+      "ObjectType": 0
+    },
+    {
+      "Name": "JUR.GRUPO_JUIZADO",
+      "ObjectType": 0
+    }
+  ],
+   "UiHint": "SISJUR_DEV",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

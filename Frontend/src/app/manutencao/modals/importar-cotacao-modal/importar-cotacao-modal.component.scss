@@ -1,0 +1,38 @@
+.campo-fator {
+    width: 620px;
+  }
+
+  #corpo-modal{
+    //width:550px;
+    background-color: white;
+  }
+  /* Chrome,Safari,Edge,Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Firefox */
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+  
+  .modal-title{
+    padding-left: 0px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  ::ng-deep {
+    bs-datepicker-container {
+      z-index: 9999 !important;
+    }
+    @media (min-width: 576px){
+      .modal-sm{
+        min-width: 370px!important;
+        max-width:fit-content!important;
+      }
+    }
+  }
+  

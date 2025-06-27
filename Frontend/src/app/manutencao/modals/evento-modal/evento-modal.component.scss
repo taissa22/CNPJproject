@@ -1,0 +1,26 @@
+.modal-title{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.inputs { 
+    margin-top: 20px;
+}
+
+.check-ativo {
+    padding-top: 2.5rem !important;
+    padding-left: 0.25rem !important;
+}
+
+.instancia {
+    padding-top: 0.5rem;
+}
+
+::ng-deep {
+    .evento-modal{
+        .modal-dialog {
+            min-width: 400px!important;
+            max-width: 400px!important;
+        }
+    }
+}

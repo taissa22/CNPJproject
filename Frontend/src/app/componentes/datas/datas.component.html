@@ -1,0 +1,21 @@
+<div class="filters-box-items">
+  <div class="form-inline prlnk-datepicker">
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control " [ngClass]="
+                   {
+                   'erro': dtInicio.erro
+                   }" maxlength='10' rInputMask="99/99/9999" [minDate]="retornaMinMax(minDate)"
+          [maxDate]="retornaMinMax(maxDate)" placeholder="dd/mm/aaaa" (blur)="validarData(dtInicio)" name="dp3"
+          [(ngModel)]="dtInicio.data" ngbDatepicker #f="ngbDatepicker" [navigation]="'arrows'"
+          (focusout)="validarData(dtInicio)" firstDayOfWeek="7" numberData [disabled]="isDisabled">
+        <span *ngIf="dtInicio.erro" class="guarda-erro" title="{{dtInicio.msg}}"></span>
+
+        <div class="input-group-append">
+          <button class="btn calendar" (click)="f.toggle();" type="button" tabindex="-1"><i
+              class="fa-solid fa-calendar-days fa-lg"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

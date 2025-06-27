@@ -1,0 +1,87 @@
+.main {
+    width: 100%;
+    height: 100%;
+    color: #6f62b2;
+    display: flex;
+}
+
+.container {
+    height: 590px;
+}
+
+.title {
+    margin-bottom: 0;
+    padding: 3px;
+    padding-left: 15px;
+}
+
+.options {
+    padding-top: 20px
+}
+
+.valuenull {
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+}
+
+.optionsEmpresas {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#marcarTodas {
+    position: relative;
+    top: 1px;
+    padding-left: 3px;
+}
+
+.radio {
+    position: relative;
+    top: 1px;
+    padding-left: 3px;
+}
+
+.optinsCheck {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+
+    label {
+        padding-top: 3px;
+    }
+}
+
+.empresas {
+    border: 1px solid #dee2e6;
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.tooltipContent {
+    text-align: left;
+    padding: 10px;
+
+    p {
+        font-size: 14px
+    }
+
+    b {
+        font-size: 14px
+    }
+}
+
+.cancelar {
+    background: white !important;
+    color: #786bb9 !important;
+    border: 1px solid #786bb9 !important;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.buttons{
+    margin-left: 685px;
+    position: absolute;
+    bottom: 20px;
+}

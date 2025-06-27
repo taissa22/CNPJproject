@@ -1,0 +1,60 @@
+.btn-roxo {
+  display: inline-block;
+  font-size: 12px;
+  color: #786bb9;
+  font-family: Roboto;
+
+}
+
+.tituloArqEncontrado{
+  font-size: 15px;
+  color: #554D80;
+  font-family: Roboto;
+  font-weight: bold;
+}
+
+:host ::ng-deep .arrowClass {
+  color: #7D70BC;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer !important;
+ }
+
+ :host ::ng-deep .card-container {
+  padding: 8px 0;
+  padding-left: 17px;
+  display: flex;
+  //cursor: default !important;
+}
+
+.title {
+  color: #554D80;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.pad{
+  padding-left: 103px !important;
+}
+
+.valores {
+ color: #555555 ;
+
+}
+
+//vermais
+
+ .verMaisContainer {
+  width: 100%;
+  border: 1px solid #dbdbdb;
+  text-align: center;
+  border-top: none;
+  color: #786bb9;
+  padding: 7px;
+
+}
+
+.vermais{
+  cursor: pointer;
+}
+

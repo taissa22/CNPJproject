@@ -1,0 +1,20 @@
+<section class="container-breadcrumb">
+  <a class="rota"
+  (click) = "clickedBtnVoltar()"
+        *ngIf="rota"
+        [routerLink]="[rota]"
+  >
+        <i class="fa fa-angle-double-left" ></i> {{ textoRota }}
+  </a>
+  <button class="roxo-padrao" *ngIf='hasAdicionar' (click)="clickedBtnAdicionar()">
+    <i class="fas fa-plus-circle fa-lg "></i>
+    {{textoBotao}}
+  </button>
+  <h3 *ngIf="titulo">{{ titulo }}</h3>
+  <p *ngIf="caminho" class="p-0 m-0">{{ caminho }}</p>
+  <p *ngIf="texto" class="texto mt-3">{{ texto }}</p>
+  <ng-content select="[frases]"></ng-content>
+</section>
+<div class="pagina">
+  <ng-content></ng-content>
+</div>

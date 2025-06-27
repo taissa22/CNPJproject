@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <span class="modal-title pl-0"> Inclusão/Alteração de Eventos Dependentes</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+<div class="row">
+  <div class="dualList">
+    <app-dual-list id="dual-perfil" 
+      [label] = "'Eventos'"
+      [dualList]="listaEventos"
+      [habilitaSelecionadas] = "false"> 
+    </app-dual-list>
+  </div>
+</div>
+
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="save()" >Confirmar</button>
+</div>

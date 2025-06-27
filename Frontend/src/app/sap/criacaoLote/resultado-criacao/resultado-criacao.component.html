@@ -1,0 +1,43 @@
+<app-container-pagina (click) = "manterDados()" titulo='Criação de Lotes - {{ nomeProcessoSelecionado }}' caminho='SAP > Lotes > Criação de Lotes'
+    textoRota="Voltar" rota="/sap/lote/criar">
+
+    <h1 class="titulo pt-3">Lotes Disponíveis para Criação</h1>
+    <section class="container-breadcrum ">
+        <ng-container *ngFor="let item of empresasCentralizadoras; index as i">
+            <app-container-expansivel-new [isOpen]="item.isOpen" [id]="item.codigoEmpresaCentralizadora"
+                (openSignal)="onOpen(i)" [ngStyle]="{color: '#554d80'}"
+                *ngIf="((item.totalLote > 0) && (!item.isEmpty))">
+
+                <span class="titulo contentEsquerda">{{item.descricaoEmpresaCentralizadora}}</span>
+
+                <div class="contentDireita">
+                    <div class="alinharDireita">
+                        <div class="campoWarning" style="text-align: left;">
+                            <i class="fas fa-exclamation-circle warning"></i>
+                            <ng-container [ngSwitch]="item.totalLote">
+                                <span *ngSwitchCase="0" class="textoWarning">
+                                    Nenhum Lote
+                                </span>
+                                <span *ngSwitchCase="1" class="textoWarning">
+                                    1 Lote
+                                </span>
+                                <span *ngSwitchDefault class="textoWarning">
+                                    {{item.totalLote}} Lotes
+                                </span>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contentConteudo scroll">
+                    <app-lotes-container
+                     [infoEmpresaCentralizadora]="{codigo: item.codigoEmpresaCentralizadora,
+                                                   totalLotes:item.totalLote}"
+                     *ngIf="item.isOpen">
+                    </app-lotes-container>
+                </div>
+            </app-container-expansivel-new>
+        </ng-container>
+    </section>
+
+</app-container-pagina>

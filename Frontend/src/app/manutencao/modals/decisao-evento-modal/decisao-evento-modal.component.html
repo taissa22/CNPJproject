@@ -1,0 +1,69 @@
+<div class="modal-header">
+  <span *ngIf="!decisaoevento" class="modal-title pl-0"> Inclusão de Decisão</span>
+  <span *ngIf="decisaoevento" class="modal-title pl-0"> Alteração de Decisão</span>
+  <button type="button" class="btn btn-icon" (click)="close()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+<form [formGroup]="formGroup" class="modal-body pt-0">
+  <div class="row">
+    <div class="col">
+      <label class="col-form-label-sm" for="descricao-input"> <b>Descrição:</b> </label>
+      <input type="text" 
+        id="nome-input" 
+        [formControl]="descricaoFormControl" class="form-control"
+        [disableTooltip]="descricaoFormControl.valid || descricaoFormControl.untouched" 
+        [ngbTooltip]="descricaoError"
+        #input [value]="input.value.toUpperCase()"
+        maxlength="50" />
+      <ng-template #descricaoError>
+        <span *ngIf="descricaoFormControl.hasError('required')"> Campo obrigatório </span>
+        <span *ngIf="descricaoFormControl.hasError('maxlength')"> O Limite é de 50 caracteres </span>
+      </ng-template>
+    </div>    
+  </div> 
+
+  <br>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div>
+        <input id="alteracao" type="checkbox" [formControl]="alteracaoRiscoPerdaFormControl"  class="mb-2"> 
+        <label for="alteracao" class="m-0 p-0 pl-1 mb-1">Alteração do Risco de Perda</label>   
+      </div>
+
+      <div *ngIf="evento.ehTrabalhista">       
+        <div>
+          <input id="reverCalculo" type="checkbox" [formControl]="reverCalculoFormControl"  class="mb-2"> 
+          <label for="reverCalculo" class="m-0 p-0 pl-1 mb-1" >Rever Cálculo</label>   
+        </div>     
+      </div>  
+    
+      <div *ngIf="evento.ehTrabalhista">
+        <div>
+          <input id="decisaoDefault" type="checkbox" [formControl]="decisaoDefalutFormControl"> 
+          <label for="decisaoDefault" class="m-0 p-0 pl-1 mb-1" >Decisão Default</label>   
+        </div>      
+      </div>    
+    </div>
+
+    <div class="col-sm-6" *ngIf="alteracaoRiscoPerdaFormControl.value">
+      <label class="col-form-label-sm" for="instancia"> <b>Risco de perda potencial:</b> </label>
+      <ng-select
+      [ngStyle]="{'fontSize': '10px'}"
+      [items]="perdaPotencial"
+      bindLabel="descricao"
+      bindValue="id"
+      [formControl] = "perdaPotencialFormControl"
+      appearance="outline"
+      notFoundText="Nenhuma opção disponível"
+      [searchable]="false"
+      [clearable]="false"></ng-select>
+    </div>
+  </div>  
+</form>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="formGroup.invalid" (click)="save()">Confirmar</button>
+</div>

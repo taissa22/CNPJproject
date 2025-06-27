@@ -1,0 +1,103 @@
+.border {
+  border: 1px solid #ccc;
+}
+
+.color-solic {
+  color: #707070;
+}
+
+.card-grid {
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.card-grid:first-child {
+  border-top: 1px solid #ccc;
+}
+
+.title {
+  display: flex;
+  margin-top: -10px;
+  padding: 0px 5px;
+  background: white;
+  width: 155px;
+  justify-content: center;
+}
+
+.card-busca {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 2rem;
+}
+
+.coluna-busca {
+  width: 50%;
+}
+
+.card-row {
+  display: flex;
+  align-items: center;
+}
+
+.card-label {
+  width: 125px;
+  text-align: end;
+}
+
+.row-card-grid {
+  display: flex;
+  align-items: center;
+}
+
+.tag-status {
+  border-radius: 5px;
+}
+
+.tag-retif {
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  background-color: #800040;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.svg-check {
+  background-color: black;
+  border-radius: 50%;
+  padding: 0.75px;
+  margin-left: 3px;
+}
+
+.alinhamento-botoes {
+  display: flex;
+  text-align: end;
+  justify-content: flex-end;
+}
+.alinhamento-texto-botoes {
+  padding-right: 0% !important;
+}
+
+.paginator-acompanhamento {
+  display: flex;
+  justify-content: space-between;
+}
+
+.paginator-quantidade {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-weight: bold !important;
+}
+
+.green-fill {
+  fill: green;
+}
+
+.orange-fill {
+  fill: orange;
+}
+
+.highlight-icon {
+  fill: yellow; // Defina a cor que preferir para destacar
+}

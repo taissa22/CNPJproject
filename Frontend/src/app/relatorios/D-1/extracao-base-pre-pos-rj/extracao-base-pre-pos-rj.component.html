@@ -1,0 +1,119 @@
+<!-- Popup download dos tipos de processos -->
+<div [ngClass]="this.popupDownload ? 'dialog_container visible' : 'dialog_container'">
+    <div class="dialog">
+        <div class="botao_fechar"><button class="dlg_fechar" (click)="fecharPopupDownload()">X</button></div>
+        <div class="dlg_titulo">Download </div>
+        <div class="dlg_subtitulo">
+            Selecione os tipos de processos que deseja fazer o download.
+        </div>
+
+        <div class="dlg_container">
+            <div class="opcao_linha linha_unica">
+                <div class="dlg_ordinais">
+                    <input type="checkbox" [(ngModel)]="marcarTodosCheckbox"
+                        (change)="comportamentoCheckboxMarcarTodos(this)">
+                </div>
+                <div class="dlg_texto">Marcar Todos</div>
+            </div>
+
+            <div class="checkboxes_grupo">
+                <div class="opcao_linha" *ngFor="let processo of listaTiposProcessos">
+                    <div class="dlg_ordinais">
+                        <input type="checkbox" [(ngModel)]="processo.checkbox"
+                            (change)="comportamentoCheckbox(processo.checkbox)">
+                    </div>
+                    <div class="dlg_texto">{{processo.label}}</div>
+                </div>
+            </div>
+            <div class="botoes_grupo">
+                <button class="btn" (click)="fecharPopupDownload()">Cancelar</button>
+                <button class="btn btn-primary" (click)="fazerDownload()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Titulo da pagina e o breadcrumb -->
+<section class="container-breadcrumb">
+    <h3>{{ tituloPagina }}</h3>
+    <p>{{ caminhoPagina }}</p>
+    <p class="filtroSapSelecao"></p>
+</section>
+
+<!-- Datepicker -->
+<section class="topo">
+    <div class="form-inline grupo-data prlnk-datepicker">
+        <label>Data da extração:</label>
+        <div class="form-group">
+            <div class="input-group">
+                <input class="form-control" name="dp" rInputMask="99/99/9999" #c2="ngModel"
+                    [(ngModel)]="validandoData.data" [displayMonths]="'displayMonths'"
+                    [navigation]="'navigation-arrows'" [outsideDays]="'outsideDays'" [showWeekNumbers]="true"
+                    ngbDatepicker #d="ngbDatepicker" id="inputData" maxlength="10" [ngClass]="{ 'erro': validandoData.erro,
+                                'certo' : !validandoData.erro }" (blur)="validaData(validandoData, c2.status)"
+                    (focusout)="validaData(validandoData, c2.status)">
+                <span *ngIf="validandoData.erro" class="guarda-erro" title="Data Inválida"></span>
+                <div class="input-group-append">
+                    <button class="btn calendar" (click)="d.toggle()" tabindex="-1" type="button" style="z-index:0"><i
+                            class="fa-solid fa-calendar-days fa-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" (click)="buscarExtracaoPorData(d, c2.status)"
+        [disabled]="validandoData.erro || c2.status == 'INVALID'">Buscar</button>
+</section>
+
+<!-- Listar extrações; Não expurgar extração -->
+<section class="lower">
+    <div class="quad">
+        <div class="secao_titulo">Extrações diárias da base de processos:</div>
+
+        <div class="celula_exportacao" *ngFor="let extracoes of listaExtracoesDiarias">
+            <div class="celula_esquerda">
+                <div class="dados_exportacao"><i class="fa-solid fa-calendar-days fa-lg"></i>
+                    <span class="export_date">
+                        {{extracoes.dataExtracao | date:"dd/MM/yyyy"}}
+                    </span>
+                    <span class="info">
+                        Base completa Pré / Pós RJ - Gerado em {{extracoes.dataExecucao | date:"dd/MM/yyyy HH:mm"}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="celula_direita">
+                <div>
+                    <button (click)="abrirPopupDownload(extracoes.id)">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </button>
+                </div>
+                <div class="naoexpurgar">
+                    <input type="checkbox" [(ngModel)]="extracoes.naoExpurgar"
+                        (change)="naoExpurgaExtracao(extracoes.id, extracoes.naoExpurgar)">
+                    <span>Não expurgar</span>
+                </div>
+            </div>
+        </div>
+        <div class="vermais" *ngIf="this.vermais"><button (click)="verMais()">VER MAIS</button></div>
+    </div>
+</section>
+
+<html>
+
+<head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+    <meta name="Robots" content="NOINDEX " />
+</head>
+
+<body></body>
+<script type="text/javascript">
+    var gearPage = document.getElementById('GearPage');
+    if (null != gearPage) {
+        gearPage.parentNode.removeChild(gearPage);
+        document.title = "Erro";
+    }
+</script>
+
+</html>

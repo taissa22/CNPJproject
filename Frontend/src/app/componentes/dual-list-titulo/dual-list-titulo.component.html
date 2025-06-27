@@ -1,0 +1,74 @@
+<!--Listboxes-->
+
+<div class="filters-listbox">
+    <div class="listbox-left">
+        <div class="listbox-label">{{label}} Disponíveis</div>
+
+        <div>
+            <cdk-virtual-scroll-viewport class="listbox-list" itemSize="10" style="height: 450px">
+                <ng-container *cdkVirtualFor="let item of dualListInactive">
+
+                    <li *ngIf="verificarExibicaoTitulo(false, item.id)"
+                        [ngClass]="{'active':item.marcado, 'somente-leitura' : item.somenteLeitura}"
+                        (click)="marcarItem(item)">
+
+                        <span [ngStyle]="{'color': item.ativo != undefined ? !item.ativo ? 'red' : '' : ''}"
+                            *ngIf="!item.selecionado">{{item.titulo}}</span>
+                    </li>
+                    <li *ngFor="let dados of item.dados"
+                        [ngClass]="{'active':dados.marcado, 'somente-leitura' : dados.somenteLeitura}"
+                        (click)="marcarItem(dados)">
+
+                        <span [ngStyle]="{'color': dados.ativo != undefined ? !dados.ativo ? 'red' : '' : ''}"
+                            *ngIf="!dados.selecionado">{{dados.descricao}}</span>
+
+                    </li>
+
+
+                </ng-container>
+            </cdk-virtual-scroll-viewport>
+
+        </div>
+    </div>
+
+    <div class="listbox-buttons">
+        <button (click)="selecionarTodos()" class="bt-select-all"></button>
+        <button (click)="selecionar()" class="bt-select"></button>
+        <button (click)="desselecionar()" class="bt-deselect"></button>
+        <button (click)="desselecionarTodo()" class="bt-deselect-all"></button>
+    </div>
+
+    <div class="listbox-right">
+        <div class="listbox-label">{{label}} Selecionados</div>
+        <cdk-virtual-scroll-viewport class="listbox-list" itemSize="10" style="height: 450px">
+            <ng-container *cdkVirtualFor="let item of dualListActive">
+
+
+                <li *ngIf="verificarExibicaoTitulo(true, item.id)"
+                    [ngClass]="{'active':item.marcado, 'somente-leitura' : item.somenteLeitura}"
+                    (click)="marcarItem(item)">
+
+                    <span [ngStyle]="{'color': item.ativo != undefined ? !item.ativo ? 'red' : '' : ''}"
+                        *ngIf="!item.selecionado">{{item.titulo}}</span>
+                </li>
+                <li 
+                 *ngFor="let dados of item.dados"
+                    [ngClass]="{'active':dados.marcado, 'somente-leitura' : dados.somenteLeitura}"
+                    (click)="marcarItem(dados)">
+
+                    <span  [ngStyle]="{'color': dados.ativo != undefined ? !dados.ativo ? 'red' : '' : ''}"
+                    *ngIf="dados.selecionado">{{dados.descricao}}</span>
+
+                </li>
+
+            </ng-container>
+        </cdk-virtual-scroll-viewport>
+    </div>
+
+</div>
+
+
+
+<!-- 
+<li [ngClass]="{'active':item.marcado, 'somente-leitura' : item.somenteLeitura, 'invisivel' : item.clone}"
+                    *ngFor="let item of dualList" (click)="marcarItem(item)"> -->

@@ -1,0 +1,106 @@
+<app-manutencao-generica (aoClicarNovoRegistro)="incluir()" titulo="Tipo de Prazo"
+  [breadcrump]="breadcrumb" [exibirAdicionar]="exibirTabela">
+  <div class="row">
+    <div class="col-12 py-3">
+      <p class="font-purple">
+        Selecione o Tipo de Processo para incluir e buscar o Tipo de Prazo.
+      </p>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row" style="padding-left: 15px" >
+      <div class="col-md-7 d-flex pr-1" style="padding-left: 0px;" (keydown.enter)="buscar()">
+        <div class="col-md-6 pl-0" style="margin-top: 2.4px;">
+          <label for="tipos-processo" class="mb-2"> <b>Tipo de Processo:</b> </label>        
+          <ng-select 
+            [ngStyle]="{'fontSize': '11px'}"       
+            [items]="tiposProcesso" 
+            id="tipos-processo"
+            bindLabel="descricao" 
+            bindValue="id" 
+            appearance="outline"
+            [formControl]="tiposProcessoFormControl"
+            notFoundText="Nenhuma opção disponível" 
+            [placeholder]="'Selecione o tipo de processo'">            
+          </ng-select>
+        </div>  
+       
+        <div class="col-md-6 pl-0">
+          <label for="descricao"> <b>Descrição:</b> </label>
+          <br>
+          <input type="text" class="mt-2 pl-1 fonte-padrao" style="height: 2.5rem; width: 100%;border-width: 1px;border-color: #80808054;" [formControl]="descricaoFormControl"
+          [placeholder]="'Digite a descrição ou parte do texto'" maxlength="50">
+        </div> 
+  
+     </div>
+  
+  
+      <div class="col-md-5 pl-0" [ngStyle]="{ marginTop: '0.3rem' }" style="align-self: flex-end">
+        <button type="button" class="btn btn-primary" [disabled]="tiposProcessoFormControl.invalid" (click)="buscar()">Buscar</button>      
+      </div>
+    </div>    
+  </form>  
+
+  <div *ngIf= "exibirTabela">
+    <br>
+
+    <div class="mt-4 row">
+
+      <div class="col-sm-6" style="align-self: flex-end;">
+        <b class="roxo-padrao" style="font-size: 15px;" >Tipo de Prazo</b>
+      </div>
+  
+      <div class="col-sm-6" style="text-align: right;">
+        <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+          <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+          Exportar
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <sisjur-table (sort)="buscar()">
+        <sisjur-table-header> 
+          <sisjur-table-header-cell sort="codigo" width="5">Código</sisjur-table-header-cell>
+          <sisjur-table-header-cell sort="descricao" [width]="this.exibeEstrategico || this.exibeConsumidor? 30 : 79">Descrição</sisjur-table-header-cell>        
+          <sisjur-table-header-cell sort="ativo" width="10">Ativo</sisjur-table-header-cell>
+          <sisjur-table-header-cell *ngIf="this.exibeEstrategico" sort="descricaoMigracao" width="50">Correspondente Cível Consumidor (DE x PARA migração de processo)</sisjur-table-header-cell>
+          <sisjur-table-header-cell *ngIf="this.exibeConsumidor" sort="descricaoMigracao" width="50">Correspondente Cível Estratégico (DE x PARA migração de processo)</sisjur-table-header-cell>
+          <sisjur-table-header-cell width="3" ></sisjur-table-header-cell>                 
+          <sisjur-table-header-cell width="3" ></sisjur-table-header-cell>                 
+        </sisjur-table-header>
+          
+    
+        <sisjur-table-row *ngFor="let item of tiposDePrazo;let i = index" >
+          <sisjur-table-row-cell> {{item.codigo}} </sisjur-table-row-cell>
+            
+          <sisjur-table-row-cell>
+            <span fxFlex="nogrow">{{ item.descricao }}</span>
+            <span class="tagServico" *ngIf="item.prazoServico">Prazo de Serviço</span>
+            <span class="tagDocumento" *ngIf="item.prazoDocumento">Prazo Referente a Documento </span>
+          </sisjur-table-row-cell>
+    
+          <sisjur-table-row-cell>{{item.ativo? "Sim" : "Não"}}</sisjur-table-row-cell> 
+          
+          <sisjur-table-row-cell *ngIf="this.exibeEstrategico || this.exibeConsumidor">{{ item.descricaoMigracao }} {{ (item.ativoDePara || !item.descricaoMigracao) ? '' :' [INATIVO]' }} </sisjur-table-row-cell> 
+
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="alterar(item)"> <i class="fa fa-edit"></i>  </button>            
+          </sisjur-table-row-cell>
+            
+          <sisjur-table-row-cell>
+            <button type="button" class="btn btn-icon" (click)="excluir(item)"> <i class="fa fa-trash"></i> </button>
+          </sisjur-table-row-cell>    
+    
+        </sisjur-table-row>       
+      </sisjur-table> 
+    </div>
+
+    <div class="mt-2">
+      <sisjur-paginator [length]="total" (page)="buscar()"></sisjur-paginator>  
+    </div>
+</div>
+
+
+</app-manutencao-generica>

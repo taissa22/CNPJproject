@@ -1,0 +1,22 @@
+<app-manutencao-generica
+  [tituloAdicionar]="tituloAdicionar"
+  [tituloLista]="tituloLista"
+  [titulo]="titulo"
+  [breadcrump]="breadcrump"
+  [colunas]="colunas"
+  [registros]="registros"
+  [totalDeRegistros]="totalDeRegistros"
+  [(pagina)]="pagina"
+  [(ordenacaoColuna)]="ordenacaoColuna"
+  [(ordenacaoDirecao)]="ordenacaoDirecao"
+  [(totalDeRegistrosPorPagina)]="totalDeRegistrosPorPagina"
+  (aoClicarNovoRegistro)="abrirDialogoDeCriar()"
+  (aoClicarEditarRegistro)="abrirDialogoDeAtualizar($event.id)"
+  (aoRemoverRegistro)="remover($event.id)"
+  (aoCarregarRegistros)="obter()"
+  (aoClicarExportar)="exportar()"
+  [exibirAdicionar]="true"
+  [(textopesquisa)]="textopesquisa"
+  [exibirPesquisar]="true"
+  [nomeCampoPesquisado]=nomeCampoPesquisado> 
+</app-manutencao-generica>

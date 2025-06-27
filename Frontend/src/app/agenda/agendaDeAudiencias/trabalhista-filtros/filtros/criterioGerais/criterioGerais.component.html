@@ -1,0 +1,119 @@
+<div class="container" style=" width: 100%;">
+  <form [formGroup]="criteriosForm">
+    <div class="row mt-2">
+      <div class="col-3 pl-0">
+        <span style="height: 100%;" class="filters-box-label justify-content-end">Processos Estratégicos:</span>
+      </div>
+      <div class="col-9 pl-4">
+        <div class="col-6 p-0">
+          <div class="row radio">
+            <div class="col-4  d-flex align-items-center">
+              <input type="radio" formControlName="processo" value="1" id="sim">
+              <label for="sim" class="m-0 pl-1">Sim</label>
+            </div>
+            <div class="col-4  d-flex align-items-center">
+              <input type="radio" formControlName="processo" value="2" id="nao">
+              <label for="nao" class="m-0 pl-1">Não</label>
+            </div>
+            <div class="col-4 d-flex align-items-center">
+              <input type="radio" formControlName="processo" value="3" id="ambos">
+              <label for="ambos" class="m-0 pl-1">Ambos</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-3 pl-0">
+        <span style="height: 100%;" class="filters-box-label justify-content-end">
+          Período de Pendência de Cálculo:
+        </span>
+      </div>
+      <div class="col-9 pl-4">
+        <app-data-range 
+        [dataInicio] = "service.periodoPendenciaInicial"
+        [dataFim] = "service.periodoPendenciaFinal"
+        (retDataFim) = "service.periodoPendenciaFinal = $event"
+        (retDataInicio) =  "service.periodoPendenciaInicial = $event"
+        (rangeValido) = "rangeValido1= $event"
+        >
+        </app-data-range>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-3 pl-0">
+        <span style="height: 100%;" class="filters-box-label justify-content-end">
+          Período de Audiência:
+        </span>
+      </div>
+      <div class="col-9 pl-4">
+        <app-data-range
+        [dataInicio] = "service.periodoAudienciaInicial"
+        [dataFim] = "service.periodoAudienciaFim"
+        (retDataFim) = "service.periodoAudienciaFim = $event"
+        (retDataInicio) =  "service.periodoAudienciaInicial = $event"
+        (rangeValido) = "rangeValido2 = $event"
+        >
+        </app-data-range>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-3 pl-0">
+        <span style="height: 100%;" class="filters-box-label justify-content-end">
+          Classificação Hierárquica:
+        </span>
+      </div>
+      <div class="col-9 pl-4">
+        <div class="col-7 p-0">
+          <div class="row radio">
+            <div class="col-3  d-flex align-items-center">
+              <input type="radio" formControlName="classificacaoHierarquica" value="1" id="unico">
+              <label for="unico" class="m-0 pl-1">Único</label>
+            </div>
+            <div class="col-3  d-flex align-items-center">
+              <input type="radio" formControlName="classificacaoHierarquica" value="2" id="primario">
+              <label for="primario" class="m-0 pl-1">Primário</label>
+            </div>
+            <div class="col-3  d-flex align-items-center">
+              <input type="radio" formControlName="classificacaoHierarquica" value="3" id="secundario">
+              <label for="secundario" class="m-0 pl-1">Secundário</label>
+            </div>
+            <div class="col-3  d-flex align-items-center">
+              <input type="radio" formControlName="classificacaoHierarquica" value="4" id="todos">
+              <label for="todos" class="m-0 pl-1">Todos</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-3 pl-0">
+        <span style="height: 100%;" class="filters-box-label justify-content-end">
+          Classificação Closing:
+        </span>
+      </div>
+      <div class="col-9 pl-4">
+        <div class="col-7 p-0">
+          <div class="row radio">
+            <div class="col-3  d-flex align-items-center">
+              <input type="radio" formControlName="classificacaoClosing" value="1" id="pre">
+              <label for="pre" class="m-0 pl-1">Pré</label>
+            </div>
+            <div class="col-3  d-flex align-items-center">
+              <input type="radio" formControlName="classificacaoClosing" value="2" id="pos">
+              <label for="pos" class="m-0 pl-1">Pós</label>
+            </div>
+            <div class="col-3  d-flex align-items-center">
+              <input type="radio" formControlName="classificacaoClosing" value="3" id="hibrido">
+              <label for="hibrido" class="m-0 pl-1">Híbrido</label>
+            </div>
+            <div class="col-3  d-flex align-items-center">
+              <input type="radio" formControlName="classificacaoClosing" value="4" id="indiferente">
+              <label for="indiferente" class="m-0 pl-1">Indiferente</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,129 @@
+<div class="container-modal">
+  <div class="title">
+    <h4 class="roxo-padrao mb-0">{{ titulo }} Contribuição</h4>
+    <div type="button" class="roxo-padrao" (click)="close()" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-2xl"></i>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" class="modal-body pt-0">
+    <div class="row">
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Código Receita (CR) Contrib. Sociais:</b>
+        </label>
+        <ng-select
+          [items]="codigoReceitaList"
+          class="form-control form-control-select"
+          bindLabel="descricaoConcatenada"
+          bindValue="id"
+          placeholder="Selecione um item"
+          [formControl]="infocrcontribTpcrFormControl"
+          [ngbTooltip]="validacaoCodigoReceita"
+          [disableTooltip]="
+          desabilitaTooltip(infocrcontribTpcrFormControl)"
+          [disabled]="!temPermissaoBlocoCeDeE"
+          [class.disabled]="!temPermissaoBlocoCeDeE"
+        >
+          <ng-template ng-option-tmp let-item="item">
+            <div title="{{ item.descricaoConcatenada }}">
+              {{ item.descricaoConcatenada }}
+            </div>
+          </ng-template>
+        </ng-select>
+        <ng-template #validacaoCodigoReceita>
+          <span
+            *ngIf="
+              infocrcontribTpcrFormControl.invalid &&
+              infocrcontribTpcrFormControl.hasError('required')
+            "
+          >
+            Campo obrigatório.
+          </span>
+        </ng-template>
+      </div>
+
+      <div class="col-sm-6">
+        <label class="col-form-label-sm pb-0 mb-1">
+          <b>Valor Correspondente (CR) Contrib. Sociais:</b>
+        </label>
+        <input
+          type="text"
+          maxlength="21"
+          min="0.01"
+          currencyMask
+          [options]="{
+            prefix: 'R$ ',
+            thousands: '.',
+            decimal: ',',
+            allowNegative: false,
+            align: 'left'
+          }"
+          class="form-control"
+          [formControl]="infocrcontribVrcrFormControl"
+          [disableTooltip]="
+          desabilitaTooltip(infocrcontribVrcrFormControl)"
+          [ngbTooltip]="validacaoValorcorrespondente"
+
+        />
+
+        <ng-template #validacaoValorcorrespondente>
+          <span
+            *ngIf="
+              infocrcontribVrcrFormControl.invalid &&
+              infocrcontribVrcrFormControl.hasError('required')
+            "
+          >
+            Campo Obrigatório.
+          </span>
+          <span
+            *ngIf="
+              infocrcontribVrcrFormControl.invalid &&
+              infocrcontribVrcrFormControl.hasError('min')
+            "
+          >
+            Valor deve ser maior que 0 (zero).
+          </span>
+          <span
+            *ngIf="
+              infocrcontribVrcrFormControl.invalid &&
+              infocrcontribVrcrFormControl.hasError('pattern')
+            "
+          >
+            Campo deve conter até 12 casas decimais antes da virgula e
+            obrigatoriamente duas casa decimais.
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-link"
+        aria-label="Close"
+        (click)="close()"
+        *ngIf="temPermissaoBlocoCeDeE"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="formGroup.invalid"
+        (click)="salvar()"
+        *ngIf="temPermissaoBlocoCeDeE"
+      >
+        Confirmar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="formGroup.invalid"
+        (click)="close()"
+        *ngIf="!temPermissaoBlocoCeDeE"
+      >
+        Fechar
+      </button>
+    </div>
+  </form>
+</div>

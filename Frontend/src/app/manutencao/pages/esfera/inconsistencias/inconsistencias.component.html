@@ -1,0 +1,59 @@
+<app-manutencao-generica  titulo="Esfera"  [exibirAdicionar]="false"  breadcrump="Manutenção > Cadastros Comuns > Esfera" >
+
+  <div class="mt-4 row" >
+    <div class="col-sm-6" style="align-self: flex-end;">
+      <b class="roxo-padrao" style="font-size: 15px;" >Lista de Processos com inconsistências</b>
+    </div>
+
+    <div class="col-sm-6" style="text-align: right;">
+      <button class="btn btn-roxo pr-1 pb-0" (click)="exportar()" >
+        <i class="fas fa-download pr-1 " style="font-size:15px; cursor: pointer !important; font: roboto;"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  <div>
+
+    <sisjur-table (sort)="buscar()"> 
+      <sisjur-table-header>
+        <sisjur-table-header-cell sort="TipoProcesso" width="11"> Tipo de processo </sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="CodigoProcesso" width="8"> Código do processo </sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="NumeroProcesso" width="11"> Número do processo </sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="Estado" width="5" > Estado</sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="ComarcaOrgao" width="7"> Comarca/Órgão</sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="VaraMunicipio" width="8"> Vara/Município</sisjur-table-header-cell>
+        <sisjur-table-header-cell sort="EmpresadoGrupo" width="12"> Empresa do Grupo</sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="Escritorio" width="8">  Escritório</sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="Objeto" width="8" > Objeto/Período</sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="ValorTotalCorrigido" > Valor Total Corrigido</sisjur-table-header-cell>        
+        <sisjur-table-header-cell sort="ValorTotalPago" > Valor Total Pago</sisjur-table-header-cell>     
+      </sisjur-table-header>
+        <ng-container *ngFor="let item of dataSource; let i = index">
+            <sisjur-table-row  >
+                <sisjur-table-row-cell> {{item.tipoProcesso}} </sisjur-table-row-cell>
+                <sisjur-table-row-cell> {{item.codigoProcesso}} </sisjur-table-row-cell>          
+                <sisjur-table-row-cell> {{item.numeroProcesso}} </sisjur-table-row-cell>          
+                <sisjur-table-row-cell> {{item.estado}} </sisjur-table-row-cell>          
+                <sisjur-table-row-cell> {{item.comarcaOrgao}} </sisjur-table-row-cell>          
+                <sisjur-table-row-cell> {{item.varaMunicipio}} </sisjur-table-row-cell>          
+                <sisjur-table-row-cell> {{item.empresadoGrupo}} </sisjur-table-row-cell>          
+                <sisjur-table-row-cell> {{item.escritorio}} </sisjur-table-row-cell>          
+                <sisjur-table-row-cell> {{item.objeto? item.objeto : item.periodo | date: 'dd/MM/yyyy'}} </sisjur-table-row-cell>            
+                <sisjur-table-row-cell> {{item.valorTotalCorrigido | currency : 'R$'}} </sisjur-table-row-cell>  
+                <sisjur-table-row-cell> {{item.valorTotalPago | currency : 'R$'}} </sisjur-table-row-cell>  
+            </sisjur-table-row>
+        </ng-container>
+    </sisjur-table>
+
+    <br>
+    <sisjur-paginator [length]="total" (page)="buscar()"></sisjur-paginator>    
+</div>
+
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-link" aria-label="Close" (click)="close()">Cancelar</button>
+</div>
+
+
+</app-manutencao-generica>

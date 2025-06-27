@@ -1,0 +1,42 @@
+<nav class="navbar navbar-light p-0 top-header" style="background: #d2d2da url(assets/img/bgBody.gif) repeat-x; z-index: 1;">
+
+  <div class="containerTopo m-0 p-0" (click)="modalService.dismiss('Cross click')">
+    <div class="containerBox alinhamento1x">
+      <app-modal-menu-novo style="margin-top: 8px;float: left;"></app-modal-menu-novo>
+    </div>
+    <div class="containerBox alinhamento1x">
+      <h2 class="imagem" (click)="fecharModal()">
+        <img src="assets/img/logo-sisjur.png" />
+      </h2>
+    </div>
+    <div class="containerBox alinhamento3x" style="padding-left: 1.2vw;"><app-pesquisa-header></app-pesquisa-header></div>
+    <div class="containerBox alinhamento2x">
+      <span style="font-size: 115%; color: #ffffff; font-weight: normal;text-decoration:underline;" id="spanNomeDousuario" (click)="modalService.dismiss('Cross click')">
+        <span class="spanUser">Oi</span>
+        <a class="nomeUser" (click)="abrirNovaPaginaUsuario()"> {{currentUser.nome}}  </a>
+      </span><br>
+      <div class="containerInfo">
+        <div class="boxInfo bancoMenu">
+          <label ID="lblNomeBanco" class="ctlNomeBanco" style="font-size: 100%;">{{ currentUser.ambiente }}
+          </label>
+        </div>
+        <div class="boxInfo">
+          <a class="versaoMenu"
+            [href]="versaoUrl">{{ versao }}</a>
+        </div>
+        <div class="boxInfo">
+          <a class="versaoMenu" [href]="controleImplantacaoUrl">Controle de Implantação</a>
+        </div>
+        <div class="boxInfo">
+          <a id="btnFaleConosco" class="versaoMenu" (click)="abrirNovaPaginaFaleConosco()" title="Fale conosco">Fale conosco</a>
+        </div>
+        <div class="boxInfo">
+          <a class="sairMenu" (click)="logout()">Sair</a>
+        </div>
+
+      </div>
+    </div>
+    <div class="containerBox" (click)="fecharModal()"></div>
+    <div class="containerBox alinhamento1x" (click)="fecharModal()"><img style="position: absolute; right: 20px;" src="assets/img/logos/logo{{ numeroLogoOi }}.png" /></div>
+  </div>
+</nav>

@@ -1,0 +1,45 @@
+<div class="gridForm pt-4 pb-4">
+  <table class="table-striped intern-table-background">
+    <thead class="intern-table-background">
+      <tr>
+        <th class="intern-table-background" >Versões do Formulário</th>
+        <th class="intern-table-background"></th>
+      </tr>
+    </thead>
+    <tbody class="content">
+      <ng-template [ngTemplateOutlet]="form2500" *ngIf="formulario2500"></ng-template>
+      <ng-template [ngTemplateOutlet]="form2501" *ngIf="formulario2501"></ng-template>
+
+      <ng-template #form2500>
+        <ng-container  *ngFor="let f2500 of formulario2500; let i = index">
+          <tr *ngIf="i > 0">
+            <td>{{convertEnumFormulario(f2500)}}.</td>
+            <td style="text-align: end;">
+              <i class="roxo-padrao fas fa-search icone-busca" style="font-size: 18px; cursor: pointer;"
+              (click)="consultarFormulario2500(f2500)"></i>
+              <label for="cadastar"
+                style="font-size: 14px; color: #6f62b2; margin-left: 5px; margin-bottom: 0; cursor: pointer"
+                (click)="consultarFormulario2500(f2500)">Consultar</label>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-template>
+
+      <ng-template #form2501>
+        <ng-container  *ngFor="let f2501 of formulario2501; let i = index">
+          <tr *ngIf="i > 0">
+            <td>{{convertEnumFormulario2501(f2501)}} em
+              {{f2501.logDataOperacao | date: 'dd/MM/yyyy HH:mm'}}</td>
+            <td style="text-align: end;">
+              <i class="roxo-padrao fas fa-search icone-busca" style="font-size: 18px; cursor: pointer;"
+              (click)="consultarFormulario2501(f2501)"></i>
+              <label for="cadastar"
+                style="font-size: 14px; color: #6f62b2; margin-left: 5px; margin-bottom: 0; cursor: pointer"
+                (click)="consultarFormulario2501(f2501)">Consultar</label>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-template>
+    </tbody>
+  </table>
+</div>

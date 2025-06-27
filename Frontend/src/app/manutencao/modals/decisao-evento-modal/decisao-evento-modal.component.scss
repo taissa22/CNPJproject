@@ -1,0 +1,17 @@
+.modal-title{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.inputs { 
+    margin-top: 20px;
+}
+ ::ng-deep {     
+     .decisao-evento{
+        .modal-sm {
+            min-width: 430px!important;
+            max-width: 450px!important;
+            min-height: 300px!important;
+        }
+     }
+ }

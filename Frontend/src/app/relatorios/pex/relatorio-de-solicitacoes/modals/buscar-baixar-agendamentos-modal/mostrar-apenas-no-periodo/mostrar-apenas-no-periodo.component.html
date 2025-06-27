@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <span class="modal-title">Selecione um periodo de datas</span>
+    <button type="button" class="btn btn-icon" (click)="close()">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+
+<div class="modal-body ">
+    <div class="row">
+        <div class="col-3" style="    padding-right: 0;
+        margin-left: 5px;
+        margin-top: 5px;
+        max-width: 28% !important;">
+            <label class="titulo-data"> Data de Solicitação:</label>
+        </div>
+        <div class="col-3 p-0">
+            <input class="form-control  float-left input-data" name="dataInicioSolic" rInputMask="99/99/9999"
+                placeholder="dd/mm/yyyy" [formControl]="dataIniSolicitacaoFormControl"
+                (keyup)=" mascaraDataKeyUp(dataIniSolicitacaoFormControl,'inputDataIniSolic')"
+                #dataInicioSolic="ngbDatepicker" [displayMonths]="'displayMonths'"
+                (ngModelChange)="verificarDatas(dataIniSolicitacaoFormControl,dataFimSolicitacaoFormControl,dataIniSolicitacaoFormControl)"
+                [navigation]="'navigation-arrows'" [outsideDays]="'outsideDays'" [showWeekNumbers]="true"
+                (focusout)="resetarFormControlInvalido(dataIniSolicitacaoFormControl);verificarDatas(dataIniSolicitacaoFormControl,dataFimSolicitacaoFormControl,dataIniSolicitacaoFormControl)"
+                ngbDatepicker id="inputDataIniSolic" maxlength="10" style="width:75%">
+            <button class="btn calendar  mt-2" (click)="dataInicioSolic.toggle()" tabindex="-1" type="button"><i
+                    class="fa-solid fa-calendar-days fa-lg"></i>
+            </button>
+        </div>
+        <div class="text-center p-0" style="padding: 7px 10px !important;margin-left: -6px;">
+            <p>até</p>
+        </div>
+        <div class="col-3 p-0">
+            <input class="form-control  float-left input-data" name="dataFimSolic" rInputMask="99/99/9999"
+                placeholder="dd/mm/yyyy" [formControl]="dataFimSolicitacaoFormControl"
+                (keyup)=" mascaraDataKeyUp(dataFimSolicitacaoFormControl,'inputDataFimSolic')" #d2="ngbDatepicker"
+                [displayMonths]="'displayMonths'" [navigation]="'navigation-arrows'" [outsideDays]="'outsideDays'"
+                (focusout)="resetarFormControlInvalido(dataFimSolicitacaoFormControl);verificarDatas(dataIniSolicitacaoFormControl,dataFimSolicitacaoFormControl,dataFimSolicitacaoFormControl,true)"
+                (ngModelChange)="verificarDatas(dataIniSolicitacaoFormControl,dataFimSolicitacaoFormControl,dataFimSolicitacaoFormControl)"
+                [showWeekNumbers]="true" ngbDatepicker id="inputDataFimSolic" maxlength="10" style="width:75%">
+            <button class="btn calendar  mt-2" (click)="d2.toggle()" tabindex="-1" type="button"><i
+                    class="fa-solid fa-calendar-days fa-lg"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="modal-footer pt-0"> 
+    <button type="button" (click)="pesquisar()" class="btn btn-primary">Ok</button>
+</div>
